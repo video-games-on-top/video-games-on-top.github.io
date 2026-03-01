@@ -93,3 +93,12 @@ footer {
   background: #1f2937;
   color: #fff;
 }
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1.5s ease-in forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
