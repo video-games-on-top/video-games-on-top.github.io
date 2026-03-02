@@ -14,7 +14,7 @@ body {
 /* Header / Nav */
 header {
   background: #FEF5E6;
-  color: #fff;
+  color: #000;
   padding: 1rem 2rem;
 }
 
@@ -28,10 +28,11 @@ header nav ul {
   display: flex;
   list-style: none;
   gap: 1rem;
+  color: #000;
 }
 
 header nav a {
-  color: #000;
+  color: #fff;
   text-decoration: none;
   font-weight: 600;
 }
