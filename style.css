@@ -13,7 +13,7 @@ body {
 
 /* Header / Nav */
 header {
-  background: #1f2937;
+  background: #FEF5E6;
   color: #fff;
   padding: 1rem 2rem;
 }
@@ -93,12 +93,7 @@ footer {
   background: #1f2937;
   color: #fff;
 }
-.fade-in {
-  opacity: 0;
-  animation: fadeIn 1.5s ease-in forwards;
+img {
+  width: 50%; 
+  height: auto; 
 }
-
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-  }
