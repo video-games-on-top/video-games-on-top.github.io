@@ -21,8 +21,7 @@ body {
 
 /* Navbar */
 header {
-  background: white;
-  color: #FEF5E6;
+  background: #fef5e6;
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -163,6 +162,6 @@ nav {
   }
 }
 img {
-  width: 50%;   /* image is 50% of the container width */
+  width: 30%;   /* image is 50% of the container width */
   height: auto; /* maintains proportion */
 }
