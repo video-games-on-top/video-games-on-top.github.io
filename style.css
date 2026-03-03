@@ -174,8 +174,8 @@ img {
   text-align: center;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
   transform: translatex(200px);
-  width: 220px;
-  height: 200px;
+  width: 1000px;
+  height: 1000px;
 }
 .cards {
   display: grid;
