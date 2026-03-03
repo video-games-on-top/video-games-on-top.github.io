@@ -3,7 +3,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
 }
 
 body {
@@ -64,7 +63,6 @@ nav {
   color: white;
   text-align: center;
   padding: 8rem 1rem;
-  font-family: 'Poppins', sans-serif;
 }
 
 .hero-content h1 {
@@ -72,7 +70,7 @@ nav {
   font-weight: 700;
   margin-bottom: 1rem;
   animation: fadeUp 1s ease forwards;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Times New Roman", Times, serif;
 }
 
 .hero-content p {
@@ -80,7 +78,7 @@ nav {
   opacity: 0.9;
   margin-bottom: 2rem;
   animation: fadeUp 1.3s ease forwards;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Times New Roman", Times, serif;
 }
 
 .btn-primary {
