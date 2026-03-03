@@ -166,11 +166,23 @@ img {
   width: 30%;   /* image is 50% of the container width */
   height: auto; /* maintains proportion */
 }
-nish {
-  width: 300%;   /* image is 50% of the container width */
-  height: auto; /* maintains proportion */
+.card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;      /* important to crop images nicely */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 250px;         /* height of the card */
+  width: 250px;          /* width of the card */
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  text-align: center;
+  padding: 0;            /* remove padding so image fills completely */
 }
-anish {
-  width: 300%;   /* image is 50% of the container width */
-  height: auto; /* maintains proportion */
+
+.card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;     /* makes image fill and crop if necessary */
+  display: block;
 }
