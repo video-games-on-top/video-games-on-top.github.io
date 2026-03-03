@@ -110,13 +110,13 @@ nav {
 }
 
 /* Cards */
-.cards {
+.box {
   display: grid;
   gap: 2rem;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
 
-.card {
+.box {
   background: white;
   padding: 2rem;
   border-radius: 14px;
@@ -125,12 +125,12 @@ nav {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.card:hover {
+.box:hover {
   transform: translateY(-8px);
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
 }
 
-.card h3 {
+.box h3 {
   margin-bottom: 0.8rem;
   font-weight: 600;
 }
