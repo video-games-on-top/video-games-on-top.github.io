@@ -64,6 +64,7 @@ nav {
   color: white;
   text-align: center;
   padding: 8rem 1rem;
+  font-family: 'Poppins', sans-serif;
 }
 
 .hero-content h1 {
@@ -71,6 +72,7 @@ nav {
   font-weight: 700;
   margin-bottom: 1rem;
   animation: fadeUp 1s ease forwards;
+  font-family: 'Poppins', sans-serif;
 }
 
 .hero-content p {
@@ -78,6 +80,7 @@ nav {
   opacity: 0.9;
   margin-bottom: 2rem;
   animation: fadeUp 1.3s ease forwards;
+  font-family: 'Poppins', sans-serif;
 }
 
 .btn-primary {
@@ -94,15 +97,6 @@ nav {
 
 .btn-primary:hover {
   background: #e5e7eb;
-  transform: translateY(-3px);
-}
-.btn{
-  text-decoration: none;
-  transition: all 0.3s ease;
-  animation: fadeUp 1.6s ease forwards;
-}
-.btn:hover {
-  background: #fef5e6;
   transform: translateY(-3px);
 }
 
