@@ -167,6 +167,14 @@ img {
   width: 30%;   /* image is 50% of the container width */
   height: auto; /* maintains proportion */
 }
+.panel{
+  background: white;
+  padding: 2rem;
+  border-radius: 14px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  transform: translatex(50px); /* move up */
+}
 .cards {
   display: grid;
   gap: 2rem;
