@@ -221,7 +221,7 @@ img {
   object-fit: cover;     /* makes image fill and crop if necessary */
   display: block;
 }
-.timeline {
+.tml {
   width: 200%
   height: 200%
   background: #fef5e6;
