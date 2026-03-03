@@ -173,7 +173,7 @@ img {
   border-radius: 14px;
   text-align: center;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-  transform: translatex(50px); /* move up */
+  transform: translatex(200px);
   width: 220px;
   height: 200px;
 }
