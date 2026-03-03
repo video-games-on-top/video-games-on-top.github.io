@@ -55,6 +55,7 @@ nav {
 
 .nav-links a:hover {
   color: #2563eb;
+  transform: translateY(-3px);
 }
 
 /* Hero Section */
