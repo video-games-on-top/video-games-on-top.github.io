@@ -55,7 +55,7 @@ nav {
 
 .nav-links a:hover {
   color: #2563eb;
-  transform: translateY(-3px);
+  animation: fadeUp 1s ease forwards;
 }
 
 /* Hero Section */
@@ -164,5 +164,13 @@ nav {
 }
 img {
   width: 30%;   /* image is 50% of the container width */
+  height: auto; /* maintains proportion */
+}
+nish {
+  width: 300%;   /* image is 50% of the container width */
+  height: auto; /* maintains proportion */
+}
+anish {
+  width: 300%;   /* image is 50% of the container width */
   height: auto; /* maintains proportion */
 }
