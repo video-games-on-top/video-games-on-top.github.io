@@ -221,7 +221,12 @@ img {
   object-fit: cover;     /* makes image fill and crop if necessary */
   display: block;
 }
-.timeline{
+.timeline {
   width: 300%
   height: 300%
+  background: #fef5e6;
+  padding: 1rem;
+  border-radius: 14px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
 }
