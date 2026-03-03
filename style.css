@@ -162,6 +162,30 @@ nav {
     font-size: 2.2rem;
   }
 }
+.cards {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.card {
+  background: white;
+  padding: 2rem;
+  border-radius: 14px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.card h3 {
+  margin-bottom: 0.8rem;
+  font-weight: 600;
+}
 img {
   width: 30%;   /* image is 50% of the container width */
   height: auto; /* maintains proportion */
