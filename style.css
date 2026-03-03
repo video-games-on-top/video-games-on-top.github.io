@@ -70,7 +70,7 @@ nav {
   font-weight: 700;
   margin-bottom: 1rem;
   animation: fadeUp 1s ease forwards;
-  font-family: "Times New Roman", Times, serif;
+  font-family: 'Chewy', cursive;
 }
 
 .hero-content p {
@@ -78,7 +78,7 @@ nav {
   opacity: 0.9;
   margin-bottom: 2rem;
   animation: fadeUp 1.3s ease forwards;
-  font-family: "Times New Roman", Times, serif;
+  font-family: 'Chewy', cursive;
 }
 
 .btn-primary {
