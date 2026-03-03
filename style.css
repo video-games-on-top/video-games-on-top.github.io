@@ -194,15 +194,17 @@ img {
   font-weight: 600;
 }
 
-.card {
-  background: white;
-  overflow: hidden;      /* important to crop images nicely */
-  justify-content: center;
-  align-items: center;
-  height: 250px;         /* height of the card */
-  width: 250px;          /* width of the card */
-  padding: 0;            /* remove padding so image fills completely */
-}
+.card { background: white; 
+       border-radius: 12px; 
+       overflow: hidden; /* important to crop images nicely */ 
+       display: flex; 
+       justify-content: center; 
+       align-items: center; 
+       height: 250px; /* height of the card */ 
+       width: 250px; /* width of the card */ 
+       box-shadow: 0 6px 15px rgba(0,0,0,0.1); 
+       text-align: center; 
+       padding: 0; /* remove padding so image fills completely */ }
 
 .card-img {
   width: 100%;
