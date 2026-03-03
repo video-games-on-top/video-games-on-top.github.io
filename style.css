@@ -175,8 +175,8 @@ img {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
   transform: translatex(300px);
   transform: translatey(100px);
-  width: 500px;
-  height: 500px;
+  width: 600px;
+  height: 600px;
 }
 .cards {
   display: grid;
