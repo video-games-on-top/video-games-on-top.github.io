@@ -20,7 +20,7 @@ body {
 
 /* Navbar */
 header {
-  background: #1f4d3a;
+  background: #fef5e6;
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -59,7 +59,7 @@ nav {
 
 /* Hero Section */
 #hero {
-  background: linear-gradient(135deg, #2563eb, #4f46e5);
+  background: #1f4d3a;
   color: white;
   text-align: center;
   padding: 8rem 1rem;
