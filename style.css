@@ -96,6 +96,15 @@ nav {
   background: #e5e7eb;
   transform: translateY(-3px);
 }
+.btn{
+  text-decoration: none;
+  transition: all 0.3s ease;
+  animation: fadeUp 1.6s ease forwards;
+}
+.btn:hover {
+  background: #fef5e6;
+  transform: translateY(-3px);
+}
 
 /* Sections */
 .section {
