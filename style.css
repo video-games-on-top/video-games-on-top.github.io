@@ -20,7 +20,7 @@ body {
 
 /* Navbar */
 header {
-  background: #fef5e6;
+  background: #1f4d3a;
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -66,7 +66,7 @@ nav {
 }
 
 .hero-content h1 {
-  font-size: 3rem;
+  font-size: 4.5rem;
   font-weight: 700;
   margin-bottom: 1rem;
   animation: fadeUp 1s ease forwards;
@@ -74,7 +74,7 @@ nav {
 }
 
 .hero-content p {
-  font-size: 1.2rem;
+  font-size: 2rem;
   opacity: 0.9;
   margin-bottom: 2rem;
   animation: fadeUp 1.3s ease forwards;
