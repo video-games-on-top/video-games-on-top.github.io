@@ -173,9 +173,10 @@ img {
   border-radius: 14px;
   text-align: center;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-  transform: translatex(200px);
-  width: 1000px;
-  height: 1000px;
+  transform: translatex(300px);
+  transform: translatey(100px);
+  width: 500px;
+  height: 500px;
 }
 .cards {
   display: grid;
