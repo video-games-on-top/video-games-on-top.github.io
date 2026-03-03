@@ -221,3 +221,7 @@ img {
   object-fit: cover;     /* makes image fill and crop if necessary */
   display: block;
 }
+.timeline{
+  width: 300%
+  height: 300%
+}
