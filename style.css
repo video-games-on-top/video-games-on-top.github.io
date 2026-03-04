@@ -221,12 +221,16 @@ img {
   object-fit: cover;     /* makes image fill and crop if necessary */
   display: block;
 }
-.tml {
+.card1 {
   width: 200%
-  height: 200%
+  height: auto
   background: #fef5e6;
   padding: 1rem;
   border-radius: 14px;
   text-align: center;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+.tml {
+width: 200%
+  height: auto
 }
