@@ -170,6 +170,8 @@ img {
 }
 .panel {
   transition: transform 0.4s ease;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .panel:hover {
   transform: scale(1.05) rotate(-2deg);
