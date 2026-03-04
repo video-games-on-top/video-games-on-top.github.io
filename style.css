@@ -169,23 +169,10 @@ img {
   height: auto; /* maintains proportion */
 }
 .panel {
-  perspective: 1000px;
+  transition: transform 0.4s ease;
 }
-.panel-inner {
-  transition: transform 0.6s;
-  transform-style: preserve-3d;
-}
-.panel:hover .panel-inner {
-  transform: rotateY(180deg);
-}
-.panel-front, .panel-back {
-  backface-visibility: hidden;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
-.panel-back {
-  transform: rotateY(180deg);
+.panel:hover {
+  transform: scale(1.05) rotate(-2deg);
 }
 
 }
