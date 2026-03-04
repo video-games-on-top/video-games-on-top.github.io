@@ -169,7 +169,7 @@ img {
   height: auto; /* maintains proportion */
 }
 .panel {
-  background: ##8db8a5;
+  background: #8db8a5;
   color: #ffffff;
   transition: transform 0.4s ease;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
