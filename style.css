@@ -175,6 +175,8 @@ img {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
   width: 600px;
   height: 600px;
+  transform: translateY(100px);
+  margin: 0rem;
 }
 .cards {
   display: grid;
@@ -257,7 +259,7 @@ height: auto;
   margin-bottom: 0.8rem;
   font-weight: 600;
   font-family: 'Fredoka', sans-serif;
-    font-size: 1rem;
+    font-size: 1.5rem;
   color: #000000;
 }
 
@@ -265,7 +267,7 @@ height: auto;
   margin-bottom: 0.8rem;
   font-weight: 600;
   font-family: 'Fredoka', sans-serif;
-    font-size: 0.5rem;
+    font-size: 1rem;
   color: #000000;
 }
 
