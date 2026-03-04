@@ -173,7 +173,6 @@ img {
   border-radius: 14px;
   text-align: center;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-  transform: translatex(300px);
   transform: translatey(100px);
   width: 600px;
   height: 600px;
@@ -234,3 +233,36 @@ img {
 width: 200%
 height: auto;
 }
+
+.card2 {
+  background: white;
+  padding: 2rem;
+  border-radius: 14px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  font-family: 'Fredoka', sans-serif;
+}
+
+.card2:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  font-family: 'Fredoka', sans-serif;
+}
+
+.card2 h3 {
+  margin-bottom: 0.8rem;
+  font-weight: 600;
+  font-family: 'Fredoka', sans-serif;
+}
+
+.card2 { background: white; 
+       border-radius: 12px; 
+       text-align: center;
+       height: 400px; /* height of the card */ 
+       width: 250px; /* width of the card */ 
+       box-shadow: 0 6px 15px rgba(0,0,0,0.1); 
+       text-align: center; 
+       padding: 0; /* remove padding so image fills completely */ }
+       font-family: 'Fredoka', sans-serif;
+
