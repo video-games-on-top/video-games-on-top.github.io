@@ -3,216 +3,248 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Home | Streets To Shelters</title>
- <link rel="icon" href="images/Logo1.png">
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
+<title>Streets to Shelters</title>
 
-<script>
-tailwind.config = {
-  theme: {
-    extend: {
-      colors: {
-        brand: '#7BAF9E',
-        brandDark: '#5E8F80',
-        cream: '#F4EFE6',
-        deep: '#2B1F1C'
-      },
-      fontFamily: {
-        heading: ['Playfair Display', 'serif'],
-        body: ['Inter', 'sans-serif']
-      }
-    }
-  }
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
 }
-</script>
+
+body{
+background:#f9f9f9;
+}
+
+/* NAVBAR */
+
+nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 60px;
+position:fixed;
+width:100%;
+top:0;
+z-index:100;
+background:rgba(255,255,255,0.85);
+backdrop-filter:blur(10px);
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+font-weight:700;
+font-size:20px;
+color:#1f2937;
+}
+
+.logo img{
+height:40px;
+animation:floatLogo 3s ease-in-out infinite;
+}
+
+@keyframes floatLogo{
+0%{transform:translateY(0)}
+50%{transform:translateY(-6px)}
+100%{transform:translateY(0)}
+}
+
+/* HERO SECTION */
+
+.hero{
+
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+position:relative;
+color:white;
+text-align:left;
+overflow:hidden;
+
+background-image:url('/mnt/data/e45c9995-cbaf-4ebc-917a-ec914d98364b.jpg');
+background-size:cover;
+background-position:center;
+}
+
+.hero::before{
+content:"";
+position:absolute;
+inset:0;
+background:rgba(0,0,0,0.35);
+}
+
+/* HERO CONTENT */
+
+.hero-container{
+
+position:relative;
+display:grid;
+grid-template-columns:1fr;
+max-width:1200px;
+padding:40px;
+}
+
+/* CARD */
+
+.hero-card{
+
+background:rgba(255,255,255,0.95);
+color:#333;
+padding:40px;
+border-radius:20px;
+max-width:520px;
+box-shadow:0 25px 60px rgba(0,0,0,0.25);
+
+animation:fadeUp 1.2s ease;
+}
+
+.hero-card h1{
+
+font-size:42px;
+margin-bottom:20px;
+color:#111;
+}
+
+.hero-card p{
+
+font-size:18px;
+line-height:1.6;
+margin-bottom:30px;
+}
+
+/* BUTTON */
+
+.hero-btn{
+
+display:inline-block;
+padding:14px 30px;
+background:#16a34a;
+color:white;
+border-radius:30px;
+text-decoration:none;
+font-weight:600;
+
+transition:all .3s ease;
+}
+
+.hero-btn:hover{
+
+background:#15803d;
+transform:translateY(-3px);
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+
+}
+
+/* FLOATING ANIMATION */
+
+@keyframes fadeUp{
+
+from{
+opacity:0;
+transform:translateY(40px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+/* FLOATING DOTS (map animation effect) */
+
+.dot{
+position:absolute;
+width:10px;
+height:10px;
+background:red;
+border-radius:50%;
+animation:floatDots 6s infinite ease-in-out;
+}
+
+@keyframes floatDots{
+
+0%{transform:translateY(0)}
+50%{transform:translateY(-12px)}
+100%{transform:translateY(0)}
+
+}
+
+.dot1{top:25%;left:20%}
+.dot2{top:60%;left:35%}
+.dot3{top:40%;left:70%}
+.dot4{top:70%;left:80%}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+.hero-card{
+padding:30px;
+}
+
+.hero-card h1{
+font-size:32px;
+}
+
+}
+
+</style>
 </head>
 
-<body class="bg-cream text-deep font-body scroll-smooth">
+<body>
 
 <!-- NAVBAR -->
-<header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200">
-<div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
-<img src="images/icon (1).png" class="h-12">
+<nav>
 
-<nav class="hidden md:flex gap-8 text-sm font-medium items-center">
-
-<a href="index.html" class="hover:text-brand transition">Home</a>
-
-<!-- Initiatives -->
-<div class="relative group">
-<button class="hover:text-brand transition py-2 flex items-center gap-1">
-Initiatives
-<svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"
-fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-<path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
-</svg>
-</button>
-
-<div class="absolute left-0 top-full w-56 bg-white rounded-2xl shadow-lg
-opacity-0 invisible translate-y-2
-group-hover:opacity-100 group-hover:visible group-hover:translate-y-0
-transition-all duration-300">
-
-<a href="events.html" class="block px-6 py-3 hover:bg-cream rounded-b-2xl">
-Streets to Shelters Events
-</a>
+<div class="logo">
+<img src="your-logo.png">
+Streets to Shelters
 </div>
-</div>
-
-<!-- About -->
-<div class="relative group">
-<button class="hover:text-brand transition py-2 flex items-center gap-1">
-About Us
-<svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"
-fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-<path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
-</svg>
-</button>
-
-<div class="absolute left-0 top-full w-64 bg-white rounded-2xl shadow-lg
-opacity-0 invisible translate-y-2
-group-hover:opacity-100 group-hover:visible group-hover:translate-y-0
-transition-all duration-300">
-
-<a href="about.html" class="block px-6 py-3 hover:bg-cream rounded-t-2xl">
-Streets to Shelters News
-</a>
-<a href="members.html" class="block px-6 py-3 hover:bg-cream">
-Members
-</a>
-<a href="contact.html" class="block px-6 py-3 hover:bg-cream rounded-b-2xl">
-Contact Us
-</a>
-</div>
-</div>
-
-<a href="chapter.html" class="hover:text-brand transition font-semibold">
-Start a Chapter
-</a>
 
 </nav>
 
-<a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
-target="_blank"
-class="hidden md:inline-block bg-brand text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-brandDark transition">
-Donate
+<!-- HERO SECTION -->
+
+<section class="hero">
+
+<div class="dot dot1"></div>
+<div class="dot dot2"></div>
+<div class="dot dot3"></div>
+<div class="dot dot4"></div>
+
+<div class="hero-container">
+
+<div class="hero-card">
+
+<h1>Start a Chapter</h1>
+
+<p>
+Streets to Shelters Chapters are student-led teams dedicated to serving their local communities with compassion and action. Each chapter organizes outreach efforts, builds partnerships, and provides support to individuals experiencing homelessness.
+</p>
+
+<p>
+By starting a chapter, students can lead supply drives, organize community outreach events, and help create pathways from the streets to safe shelter. Together, we can restore dignity, expand opportunity, and strengthen communities one chapter at a time.
+</p>
+
+<a href="#" class="hero-btn">
+Start Your Chapter
 </a>
 
 </div>
-</header>
-
-<!-- HERO -->
-<section class="pt-36 pb-28 bg-cream">
-<div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-
-<div>
-<h1 class="text-5xl md:text-6xl font-heading font-bold leading-tight mb-6">
-Streets to <span class="text-brand">Shelters</span>
-</h1>
-
-<p class="text-lg text-gray-700 mb-8">
-A youth-led nonprofit delivering essential hygiene kits and critical resources directly to homeless shelters in our community.
-</p>
-
-<div class="flex gap-4">
-<a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
-target="_blank"
-class="bg-brand text-white px-8 py-3 rounded-full font-semibold hover:bg-brandDark transition">
-Donate
-</a>
-
-<a href="#impact"
-class="border border-deep px-8 py-3 rounded-full font-semibold hover:bg-deep hover:text-white transition">
-See Our Impact
-</a>
-</div>
-</div>
-
-<div class="bg-brand/20 rounded-3xl p-10">
-<img src="logo.png" alt="Streets To Shelters" class="rounded-2xl">
-</div>
 
 </div>
+
 </section>
-
-<!-- MISSION -->
-<section id="mission" class="py-24 bg-white">
-<div class="max-w-4xl mx-auto text-center px-6">
-<h2 class="text-4xl font-heading font-bold mb-6">Our Mission</h2>
-<p class="text-lg text-gray-700">
-We provide essential resources to homeless shelters through organized drives, strategic partnerships, and consistent youth leadership. We focus on measurable, long-term impact — not one-time gestures.
-</p>
-</div>
-</section>
-
-<!-- IMPACT -->
-<section id="impact" class="py-24 bg-cream">
-<div class="max-w-6xl mx-auto px-6 text-center">
-<h2 class="text-4xl font-heading font-bold mb-14">Our Impact</h2>
-
-<div class="grid md:grid-cols-3 gap-10">
-<div class="bg-white p-10 rounded-3xl shadow-sm">
-<h3 class="text-5xl font-heading font-bold text-brand">0</h3>
-<p class="mt-4 text-gray-600">Care Kits Distributed</p>
-</div>
-
-<div class="bg-white p-10 rounded-3xl shadow-sm">
-<h3 class="text-5xl font-heading font-bold text-brand">0</h3>
-<p class="mt-4 text-gray-600">Community Drives Hosted</p>
-</div>
-
-<div class="bg-white p-10 rounded-3xl shadow-sm">
-<h3 class="text-5xl font-heading font-bold text-brand">0</h3>
-<p class="mt-4 text-gray-600">Shelter Partnerships</p>
-</div>
-</div>
-
-</div>
-</section>
-
-<!-- PROCESS -->
-<section id="process" class="py-24 bg-white">
-<div class="max-w-6xl mx-auto px-6">
-<h2 class="text-4xl font-heading font-bold text-center mb-16">How It Works</h2>
-
-<div class="grid md:grid-cols-3 gap-10 text-center">
-
-<div>
-<div class="text-brand text-4xl font-heading mb-4">01</div>
-<h3 class="font-semibold text-xl mb-3">Fundraise</h3>
-<p class="text-gray-600">
-Partner with businesses and host drives to raise funds and collect supplies.
-</p>
-</div>
-
-<div>
-<div class="text-brand text-4xl font-heading mb-4">02</div>
-<h3 class="font-semibold text-xl mb-3">Assemble</h3>
-<p class="text-gray-600">
-Volunteers organize and assemble hygiene and essential kits.
-</p>
-</div>
-
-<div>
-<div class="text-brand text-4xl font-heading mb-4">03</div>
-<h3 class="font-semibold text-xl mb-3">Deliver</h3>
-<p class="text-gray-600">
-Direct distribution to shelters ensures immediate impact.
-</p>
-</div>
-
-</div>
-</div>
-</section>
-
-<!-- FOOTER -->
-<footer class="bg-deep text-white py-8 text-center">
-© 2026 Streets To Shelters | streets2shelters.org
-</footer>
 
 </body>
 </html>
-
