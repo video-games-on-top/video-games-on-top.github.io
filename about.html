@@ -1,7 +1,104 @@
-<title>About | Streets To Shelters</title>
-<h1 class="text-5xl font-heading font-bold mb-6">About Streets To Shelters</h1>
-<footer class="bg-deep text-white py-12">
-  <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-10 text-center sm:text-left">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Streets to Shelters News | Streets To Shelters</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="images/Logo1.png">
+<script src="https://cdn.tailwindcss.com"></script>
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        brand: '#7BAF9E',
+        brandDark: '#5E8F80',
+        cream: '#F4EFE6',
+        deep: '#2B1F1C'
+      },
+      fontFamily: {
+        heading: ['Playfair Display', 'serif'],
+        body: ['Inter', 'sans-serif']
+      }
+    }
+  }
+}
+</script>
+
+<style>
+html {
+  scroll-behavior: smooth;
+}
+
+/* Scroll Reveal Animation */
+.fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Card Hover Animation */
+.card-hover {
+  transition: all 0.3s ease;
+}
+.card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+}
+
+/* Hover grow */
+.grow-hover {
+  transition: transform 0.3s ease;
+}
+.grow-hover:hover {
+  transform: scale(1.05);
+}
+
+/* Button press */
+.btn-press {
+  transition: all 0.2s ease;
+}
+.btn-press:active {
+  transform: scale(0.97);
+}
+
+/* Smooth dropdown */
+.group:hover .dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.dropdown {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+}
+</style>
+</head>
+
+<body class="bg-cream text-deep font-body">
+
+<!-- NAVBAR -->
+<header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200 fade-up">
+<div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+<!-- LOGO CLICKABLE -->
+<a href="index.html" class="grow-hover">
+  <img src="images/icon (1).png" class="h-12 cursor-pointer">
+</a>
+
+<nav class="hidden md:flex gap-8 text-sm font-medium items-center">
+
+<a href="index.html" class="hover:text-brand transition">Home</a>
 
     <!-- Column 1: Social Media -->
     <div class="space-y-4">
