@@ -6,7 +6,7 @@
 <title>Members | Streets To Shelters</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-   <link rel="icon" href="images/Logo1.png">
+<link rel="icon" href="images/Logo1.png">
 <script src="https://cdn.tailwindcss.com"></script>
 
 <script>
@@ -27,15 +27,74 @@ tailwind.config = {
   }
 }
 </script>
+
+<style>
+html {
+  scroll-behavior: smooth;
+}
+
+/* Scroll Reveal Animation */
+.fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Card Hover Animation */
+.card-hover {
+  transition: all 0.3s ease;
+}
+.card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+}
+
+/* Hover grow */
+.grow-hover {
+  transition: transform 0.3s ease;
+}
+.grow-hover:hover {
+  transform: scale(1.05);
+}
+
+/* Button press */
+.btn-press {
+  transition: all 0.2s ease;
+}
+.btn-press:active {
+  transform: scale(0.97);
+}
+
+/* Smooth dropdown */
+.group:hover .dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.dropdown {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+}
+</style>
 </head>
 
-<body class="bg-cream text-deep font-body scroll-smooth">
+<body class="bg-cream text-deep font-body">
 
 <!-- NAVBAR -->
-<header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200">
+<header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200 fade-up">
 <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
-<img src="images/icon (1).png" class="h-12">
+<!-- LOGO CLICKABLE -->
+<a href="index.html" class="grow-hover">
+  <img src="images/icon (1).png" class="h-12 cursor-pointer">
+</a>
 
 <nav class="hidden md:flex gap-8 text-sm font-medium items-center">
 
@@ -51,12 +110,7 @@ fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
 </svg>
 </button>
 
-<div class="absolute left-0 top-full w-56 bg-white rounded-2xl shadow-lg
-opacity-0 invisible translate-y-2
-group-hover:opacity-100 group-hover:visible group-hover:translate-y-0
-transition-all duration-300">
-
-
+<div class="absolute left-0 top-full w-56 bg-white rounded-2xl shadow-lg dropdown">
 <a href="events.html" class="block px-6 py-3 hover:bg-cream rounded-b-2xl">
 Streets to Shelters Events
 </a>
@@ -73,11 +127,7 @@ fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
 </svg>
 </button>
 
-<div class="absolute left-0 top-full w-64 bg-white rounded-2xl shadow-lg
-opacity-0 invisible translate-y-2
-group-hover:opacity-100 group-hover:visible group-hover:translate-y-0
-transition-all duration-300">
-
+<div class="absolute left-0 top-full w-64 bg-white rounded-2xl shadow-lg dropdown">
 <a href="about.html" class="block px-6 py-3 hover:bg-cream rounded-t-2xl">
 Streets to Shelters News
 </a>
@@ -98,7 +148,7 @@ Start a Chapter
 
 <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
 target="_blank"
-class="hidden md:inline-block bg-brand text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-brandDark transition">
+class="hidden md:inline-block bg-brand text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-brandDark transition grow-hover btn-press shadow-md hover:shadow-xl">
 Donate
 </a>
 
@@ -109,52 +159,65 @@ Donate
 <main class="pt-36 pb-24 max-w-7xl mx-auto px-6 space-y-24">
 
 <!-- EXECUTIVE LEADERSHIP -->
-<section>
+<section class="fade-up">
 <h2 class="text-4xl font-heading font-bold text-center mb-12">Executive Leadership</h2>
 
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 justify-items-center">
 
-<!-- Example card, duplicate for more members -->
-<div class="bg-white p-8 rounded-3xl shadow-sm w-64 text-center">
-<div class="h-32 w-32 mx-auto bg-brand/20 rounded-full mb-6"></div>
+<div class="bg-white p-8 rounded-3xl shadow-sm w-64 text-center card-hover">
+<div class="h-32 w-32 mx-auto bg-brand/20 rounded-full mb-6 grow-hover"></div>
 <h3 class="text-xl font-semibold">Founder & President</h3>
 <p class="text-gray-600 text-sm mt-2">Leads organizational strategy and expansion efforts.</p>
 </div>
 
-<div class="bg-white p-8 rounded-3xl shadow-sm w-64 text-center">
-<div class="h-32 w-32 mx-auto bg-brand/20 rounded-full mb-6"></div>
+<div class="bg-white p-8 rounded-3xl shadow-sm w-64 text-center card-hover">
+<div class="h-32 w-32 mx-auto bg-brand/20 rounded-full mb-6 grow-hover"></div>
 <h3 class="text-xl font-semibold">Operations Director</h3>
 <p class="text-gray-600 text-sm mt-2">Oversees logistics and volunteer coordination.</p>
 </div>
 
-<!-- Add more executive members here -->
 </div>
 </section>
 
 <!-- DIRECTORS & MANAGERS -->
-<section>
+<section class="fade-up">
 <h2 class="text-4xl font-heading font-bold text-center mb-12">Directors & Managers</h2>
 
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 justify-items-center">
 
-<!-- Example card -->
-<div class="bg-white p-8 rounded-3xl shadow-sm w-64 text-center">
-<div class="h-32 w-32 mx-auto bg-brand/20 rounded-full mb-6"></div>
+<div class="bg-white p-8 rounded-3xl shadow-sm w-64 text-center card-hover">
+<div class="h-32 w-32 mx-auto bg-brand/20 rounded-full mb-6 grow-hover"></div>
 <h3 class="text-xl font-semibold">Outreach Manager</h3>
 <p class="text-gray-600 text-sm mt-2">Manages shelter partnerships and community outreach.</p>
 </div>
 
-<div class="bg-white p-8 rounded-3xl shadow-sm w-64 text-center">
-<div class="h-32 w-32 mx-auto bg-brand/20 rounded-full mb-6"></div>
+<div class="bg-white p-8 rounded-3xl shadow-sm w-64 text-center card-hover">
+<div class="h-32 w-32 mx-auto bg-brand/20 rounded-full mb-6 grow-hover"></div>
 <h3 class="text-xl font-semibold">Finance Director</h3>
 <p class="text-gray-600 text-sm mt-2">Oversees budgeting and fundraising strategies.</p>
 </div>
 
-<!-- Add more director/manager cards here -->
 </div>
 </section>
 
 </main>
+
+<script>
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('show');
+    }
+  });
+});
+
+document.querySelectorAll('.fade-up').forEach(el => {
+  observer.observe(el);
+});
+</script>
+
+</body>
+</html>
 
 <!-- FOOTER -->
 <footer class="bg-deep text-white py-8 text-center">
