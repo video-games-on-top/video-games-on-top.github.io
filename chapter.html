@@ -160,18 +160,30 @@ tailwind.config = {
 <main class="pt-36 pb-24 max-w-7xl mx-auto px-6 space-y-24">
 
   <!-- HERO -->
-  <section class="text-center reveal-hero">
-    <h1 class="text-5xl md:text-6xl font-heading font-bold mb-6">
-      Start a Chapter
-    </h1>
-    <p class="text-lg text-gray-700 mb-8">
-      Bring structured impact to your community by launching a youth-led chapter of Streets To Shelters.
-    </p>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfCpZuTW-6sPjbQLBSCpPMr75BQ4sCxHH_WluLateNQyB4rjw/viewform" target="_blank"
-       class="bg-brand text-white px-8 py-4 rounded-full font-semibold hover:bg-brandDark transition">
-      Apply Now
-    </a>
-  </section>
+<section class="text-center reveal-hero relative bg-cover bg-center"
+style="background-image: url('images/world-map.png');">
+
+<!-- overlay for readability -->
+<div class="absolute inset-0 bg-white/80"></div>
+
+<div class="relative z-10 py-24 px-6">
+
+<h1 class="text-5xl md:text-6xl font-heading font-bold mb-6">
+Start a Chapter
+</h1>
+
+<p class="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">
+Bring structured impact to your community by launching a youth-led chapter of Streets To Shelters.
+</p>
+
+<a href="https://docs.google.com/forms/d/e/1FAIpQLSfCpZuTW-6sPjbQLBSCpPMr75BQ4sCxHH_WluLateNQyB4rjw/viewform"
+target="_blank"
+class="bg-brand text-white px-8 py-4 rounded-full font-semibold hover:bg-brandDark transition">
+Apply Now
+</a>
+
+</div>
+</section>
 
   <!-- EXISTING CHAPTERS -->
   <section class="reveal-slide">
