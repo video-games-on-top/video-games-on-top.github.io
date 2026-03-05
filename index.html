@@ -37,6 +37,12 @@ tailwind.config = {
   transition:opacity 900ms ease, transform 900ms ease;
   will-change:opacity, transform;
 }
+  /* Logo transparency fix */
+.logo-transparent{
+  background: transparent !important;
+  mix-blend-mode: multiply;
+  opacity: 0.95;
+}
 .reveal-slide.is-visible{
   opacity:1;
   transform:translateY(0);
@@ -86,7 +92,7 @@ tailwind.config = {
     <!-- ✅ Icon is clickable Home -->
     <a href="index.html" aria-label="Go to Home" class="inline-flex items-center">
       <img src="images/icon (1).png"
-           class="h-12 cursor-pointer transition duration-300 hover:scale-105 active:scale-95"
+           class="h-12 logo-transparent cursor-pointer transition duration-300 hover:scale-105 active:scale-95"
            alt="Streets to Shelters Home">
     </a>
 
