@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Streets to Shelters News | Streets To Shelters</title>
+<title>Contact | Streets To Shelters</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="icon" href="images/Logo1.png">
@@ -33,7 +33,7 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Scroll Reveal Animation */
+/* Scroll Animation */
 .fade-up {
   opacity: 0;
   transform: translateY(40px);
@@ -45,21 +45,12 @@ html {
   transform: translateY(0);
 }
 
-/* Card Hover Animation */
-.card-hover {
-  transition: all 0.3s ease;
-}
-.card-hover:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-}
-
 /* Hover grow */
 .grow-hover {
   transition: transform 0.3s ease;
 }
 .grow-hover:hover {
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 
 /* Button press */
@@ -70,7 +61,7 @@ html {
   transform: scale(0.97);
 }
 
-/* Smooth dropdown */
+/* Dropdown smooth animation */
 .group:hover .dropdown {
   opacity: 1;
   visibility: visible;
@@ -90,6 +81,71 @@ html {
 <!-- NAVBAR -->
 <header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200 fade-up">
 <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+<!-- ✅ LOGO NOW CLICKS TO HOME -->
+<a href="index.html" class="grow-hover">
+  <img src="images/icon (1).png" class="h-12 cursor-pointer">
+</a>
+
+<nav class="hidden md:flex gap-8 text-sm font-medium items-center">
+
+<a href="index.html" class="hover:text-brand transition">Home</a>
+
+<!-- Initiatives -->
+<div class="relative group">
+<button class="hover:text-brand transition py-2 flex items-center gap-1">
+Initiatives
+<svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"
+fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+</svg>
+</button>
+
+<div class="absolute left-0 top-full w-56 bg-white rounded-2xl shadow-lg dropdown">
+
+<a href="events.html" class="block px-6 py-3 hover:bg-cream rounded-b-2xl">
+Streets to Shelters Events
+</a>
+</div>
+</div>
+
+<!-- About -->
+<div class="relative group">
+<button class="hover:text-brand transition py-2 flex items-center gap-1">
+About Us
+<svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"
+fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+</svg>
+</button>
+
+<div class="absolute left-0 top-full w-64 bg-white rounded-2xl shadow-lg dropdown">
+<a href="about.html" class="block px-6 py-3 hover:bg-cream rounded-t-2xl">
+Streets to Shelters News
+</a>
+<a href="members.html" class="block px-6 py-3 hover:bg-cream">
+Members
+</a>
+<a href="contact.html" class="block px-6 py-3 hover:bg-cream rounded-b-2xl">
+Contact Us
+</a>
+</div>
+</div>
+
+<a href="chapter.html" class="hover:text-brand transition font-semibold">
+Start a Chapter
+</a>
+
+</nav>
+
+<a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
+target="_blank"
+class="hidden md:inline-block bg-brand text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-brandDark transition grow-hover btn-press shadow-md hover:shadow-xl">
+Donate
+</a>
+
+</div>
+</header>
 
 <!-- LOGO CLICKABLE -->
 <a href="index.html" class="grow-hover">
