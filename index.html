@@ -1,102 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Streets to Shelters</title>
-  <link rel="icon" href="images/Logo1.png">
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Chewy&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Streets To Shelters</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: '#7BAF9E',
+            brandDark: '#5E8F80',
+            cream: '#F4EFE6',
+            deep: '#2B1F1C'
+          },
+          fontFamily: {
+            heading: ['Playfair Display', 'serif'],
+            body: ['Inter', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
 </head>
-<body>
+<body class="bg-cream text-deep font-body scroll-smooth">
 
-  <!-- Navigation -->
-  <header>
-    <nav class="container">
-      <div href="index.html" class="logo" ><img src="images/icon (1).png" alt="Streets to Shelters"></div>
-      <ul class="nav-links">
-        <li><a href="index.html">About Us</a></li>
-        <li><a href="members.html">Members</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
+<!-- NAVBAR -->
+<header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <div class="flex items-center gap-3">
+      <img src="logo.png" alt="Streets To Shelters Logo" class="h-12 w-auto">
+      <span class="text-xl font-heading font-semibold">Streets To Shelters</span>
+    </div>
+    <nav class="hidden md:flex gap-8 text-sm font-medium">
+      <a href="#mission" class="hover:text-brand">Mission</a>
+      <a href="#impact" class="hover:text-brand">Impact</a>
+      <a href="#process" class="hover:text-brand">How It Works</a>
+      <a href="#team" class="hover:text-brand">Team</a>
+      <a href="#contact" class="hover:text-brand">Contact</a>
     </nav>
-  </header>
+    <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" class="hidden md:inline-block bg-brand text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-brandDark transition">Donate</a>
+  </div>
+</header>
 
-  <!-- Hero -->
-  <section id="hero">
-    <div class="hero-content container">
-      <h1>Streets to Shelters</h1>
-      <p>SPREADING HOPE, ONE KIT AT A TIME</p>
-      <a href="contact.html" class="btn-primary">Get Involved</a>
-    </div>
-  </section>
-
-  <!-- Section 1 -->
-  <section class="container section">
-    <h2>About Us</h2>
-    <p style="text-align:center;" class= "panel" ><br>Streets to Shelters is a student-led nonprofit organization based in San Antonio, Texas, founded on the belief that no one should feel invisible or forgotten during their hardest moments.
-We are dedicated to supporting individuals and families experiencing homelessness by providing care, compassion, and human connection through direct community action.<br>
-</p>
-
-      <div class="panel">
-
-    <h3 style="text-align:center;"><br>What do we do?</h3>
-    <p style="text-align:center;"><br>We create and distribute care kits to homeless shelters and outreach
-groups in our community. Each kit is thoughtfully assembled to meet real needs and provide comfort.
-Our kits may include:<br>
-• Hygiene essentials<br>
-• Socks and basic necessities<br>
-• Seasonal items<br>
-• Handwritten notes of encouragement<br>
-Every kit represents dignity, kindness, and hope.<br></p>
-      </div>
-    <div class= "panel">
-    <h3 style="text-align:center;" ><br>Our goals</h3>
-    <p style="text-align:center;"><br>• Provide essential care packages<br>
-• Create consistent community support<br>
-• Build long-term partnerships<br>
-• Expand outreach programs<br><br></p>
-      </div>
-  </section>
-
-  <!-- Section 2 -->
-  <section class="container section">
-    <h3 style="text-align:center;">We value<br><br></h3>
-    <div class="boxes">
-      <div class="box">
-        <h4>Itegrity</h4>
-        <p>We show integrity by being honest, keeping our promises, and handling every donation responsibly.</p>
-      </div>
-      <div class="box">
-        <h4>Transparency</h4>
-        <p>We are open about how donations are used and clearly communicate our plans and progress.</p>
-      </div>
-      <div class="box">
-        <h4>Compassion</h4>
-        <p>We treat every person with kindness, respect, and understanding.</p>
-      </div>
-      <div class="box">
-        <h4>Accountability</h4>
-        <p>We take responsibility for our actions and ensure all tasks are completed properly.</p>
-      </div>
-      <div class="box">
-        <h4>Community Impact</h4>
-        <p>We work to create meaningful change and positively support those in our community.</p>
+<!-- HERO -->
+<section class="pt-36 pb-28 bg-cream">
+  <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+    <div>
+      <h1 class="text-5xl md:text-6xl font-heading font-bold leading-tight mb-6">
+        From Streets to <span class="text-brand">Stability</span>
+      </h1>
+      <p class="text-lg text-gray-700 mb-8">
+        A youth-led nonprofit delivering essential hygiene kits and critical resources directly to homeless shelters in our community.
+      </p>
+      <div class="flex gap-4">
+        <a href="https://streets2shelters.org" class="bg-brand text-white px-8 py-3 rounded-full font-semibold hover:bg-brandDark transition">Visit streets2shelters.org</a>
+        <a href="#impact" class="border border-deep px-8 py-3 rounded-full font-semibold hover:bg-deep hover:text-white transition">See Our Impact</a>
       </div>
     </div>
-  </section>
-  <!-- Footer -->
-  <footer class="footer"style="text-align:left;">
-     <a href="https://www.instagram.com/streets.to.shelter/" target="_blank" class="footer"> Our Instagram<br></a>
-    <a class="footer"> Email: streetstoshelters.tx@gmail.com<br></a>
-    <a href="index.html" target="_blank" class="footer"> About Us<br></a>
-    <a href="members.html" target="_blank" class="footer"> Members<br></a>
-    <a href="contact.html" class="footer"> Contact Us<br></a>
+    <div class="bg-brand/20 rounded-3xl p-10">
+      <img src="logo.png" alt="Streets To Shelters" class="rounded-2xl">
+    </div>
+  </div>
+</section>
 
-  </footer>
+<!-- MISSION -->
+<section id="mission" class="py-24 bg-white">
+  <div class="max-w-4xl mx-auto text-center px-6">
+    <h2 class="text-4xl font-heading font-bold mb-6">Our Mission</h2>
+    <p class="text-lg text-gray-700">
+      We provide essential resources to homeless shelters through organized drives, strategic partnerships, and consistent youth leadership. We focus on measurable, long-term impact — not one-time gestures.
+    </p>
+  </div>
+</section>
+
+<!-- IMPACT -->
+<section id="impact" class="py-24 bg-cream">
+  <div class="max-w-6xl mx-auto px-6 text-center">
+    <h2 class="text-4xl font-heading font-bold mb-14">Our Impact</h2>
+    <div class="grid md:grid-cols-3 gap-10">
+      <div class="bg-white p-10 rounded-3xl shadow-sm">
+        <h3 class="text-5xl font-heading font-bold text-brand">2,000+</h3>
+        <p class="mt-4 text-gray-600">Care Kits Distributed</p>
+      </div>
+      <div class="bg-white p-10 rounded-3xl shadow-sm">
+        <h3 class="text-5xl font-heading font-bold text-brand">15+</h3>
+        <p class="mt-4 text-gray-600">Community Drives Hosted</p>
+      </div>
+      <div class="bg-white p-10 rounded-3xl shadow-sm">
+        <h3 class="text-5xl font-heading font-bold text-brand">10+</h3>
+        <p class="mt-4 text-gray-600">Shelter Partnerships</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process" class="py-24 bg-white">
+  <div class="max-w-6xl mx-auto px-6">
+    <h2 class="text-4xl font-heading font-bold text-center mb-16">How It Works</h2>
+    <div class="grid md:grid-cols-3 gap-10 text-center">
+      <div>
+        <div class="text-brand text-4xl font-heading mb-4">01</div>
+        <h3 class="font-semibold text-xl mb-3">Fundraise</h3>
+        <p class="text-gray-600">Partner with businesses and host drives to raise funds and collect supplies.</p>
+      </div>
+      <div>
+        <div class="text-brand text-4xl font-heading mb-4">02</div>
+        <h3 class="font-semibold text-xl mb-3">Assemble</h3>
+        <p class="text-gray-600">Volunteers organize and assemble hygiene and essential kits.</p>
+      </div>
+      <div>
+        <div class="text-brand text-4xl font-heading mb-4">03</div>
+        <h3 class="font-semibold text-xl mb-3">Deliver</h3>
+        <p class="text-gray-600">Direct distribution to shelters ensures immediate impact.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team" class="py-24 bg-cream">
+  <div class="max-w-6xl mx-auto px-6 text-center">
+    <h2 class="text-4xl font-heading font-bold mb-14">Our Leadership Team</h2>
+    <div class="grid md:grid-cols-3 gap-10">
+      <div class="bg-white p-8 rounded-3xl shadow-sm">
+        <div class="h-32 w-32 mx-auto bg-brand/20 rounded-full mb-6"></div>
+        <h3 class="text-xl font-semibold">Your Name</h3>
+        <p class="text-sm text-gray-500 mb-4">Founder & President</p>
+        <p class="text-gray-600 text-sm">Leads organizational strategy, partnerships, and expansion efforts.</p>
+      </div>
+      <div class="bg-white p-8 rounded-3xl shadow-sm">
+        <div class="h-32 w-32 mx-auto bg-brand/20 rounded-full mb-6"></div>
+        <h3 class="text-xl font-semibold">Team Member</h3>
+        <p class="text-sm text-gray-500 mb-4">Operations Director</p>
+        <p class="text-gray-600 text-sm">Oversees kit assembly logistics and volunteer coordination.</p>
+      </div>
+      <div class="bg-white p-8 rounded-3xl shadow-sm">
+        <div class="h-32 w-32 mx-auto bg-brand/20 rounded-full mb-6"></div>
+        <h3 class="text-xl font-semibold">Team Member</h3>
+        <p class="text-sm text-gray-500 mb-4">Outreach Director</p>
+        <p class="text-gray-600 text-sm">Manages shelter partnerships and community relations.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHAPTERS -->
+<section id="chapters" class="py-24 bg-white">
+  <div class="max-w-6xl mx-auto px-6 text-center">
+    <h2 class="text-4xl font-heading font-bold mb-6">Our Chapters</h2>
+    <p class="text-gray-600 max-w-3xl mx-auto mb-14">
+      Streets To Shelters is expanding through youth-led chapters. Each chapter operates with structure, accountability, and measurable goals to serve shelters in their local community.
+    </p>
+
+    <div class="grid md:grid-cols-3 gap-10">
+      <div class="bg-cream p-8 rounded-3xl shadow-sm">
+        <h3 class="text-xl font-semibold mb-2">San Antonio, TX</h3>
+        <p class="text-sm text-gray-500 mb-4">Founding Chapter</p>
+        <p class="text-gray-600 text-sm">Leading monthly drives and direct shelter partnerships across the city.</p>
+      </div>
+
+      <div class="bg-cream p-8 rounded-3xl shadow-sm">
+        <h3 class="text-xl font-semibold mb-2">Coming Soon</h3>
+        <p class="text-sm text-gray-500 mb-4">New Chapter</p>
+        <p class="text-gray-600 text-sm">We are onboarding motivated student leaders ready to launch in their cities.</p>
+      </div>
+
+      <div class="bg-cream p-8 rounded-3xl shadow-sm">
+        <h3 class="text-xl font-semibold mb-2">Start a Chapter</h3>
+        <p class="text-sm text-gray-500 mb-4">Youth Leadership Opportunity</p>
+        <p class="text-gray-600 text-sm">Apply to become a Chapter President and bring structured impact to your community.</p>
+        <a href="#contact" class="inline-block mt-4 text-brand font-semibold hover:underline">Apply Now →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="py-24 bg-brand text-white text-center">
+  <h2 class="text-4xl font-heading font-bold mb-6">Be Part of the Solution</h2>
+  <p class="mb-8 text-lg">Every donation funds essential hygiene kits and real community impact.</p>
+  <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" class="bg-white text-brand px-10 py-4 rounded-full font-semibold hover:bg-gray-100 transition">Donate Now</a>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="py-24 bg-white">
+  <div class="max-w-3xl mx-auto px-6 text-center">
+    <h2 class="text-4xl font-heading font-bold mb-8">Contact Us</h2>
+    <p class="text-gray-700 mb-10">Partnerships, volunteering, sponsorships — reach out to our team.</p>
+    <form class="grid gap-6 text-left">
+      <input type="text" placeholder="Your Name" class="p-4 rounded-xl border border-gray-300">
+      <input type="email" placeholder="Your Email" class="p-4 rounded-xl border border-gray-300">
+      <textarea rows="5" placeholder="Your Message" class="p-4 rounded-xl border border-gray-300"></textarea>
+      <button class="bg-brand text-white py-3 rounded-xl font-semibold hover:bg-brandDark transition">Send Message</button>
+    </form>
+  </div>
+</section>
+
+<footer class="bg-deep text-white py-8 text-center">
+  <p>© 2026 Streets To Shelters | streets2shelters.org</p>
+</footer>
 
 </body>
 </html>
+
+
+
