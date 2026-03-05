@@ -6,7 +6,7 @@
 <title>Contact | Streets To Shelters</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-   <link rel="icon" href="images/Logo1.png">
+<link rel="icon" href="images/Logo1.png">
 <script src="https://cdn.tailwindcss.com"></script>
 
 <script>
@@ -27,15 +27,62 @@ tailwind.config = {
   }
 }
 </script>
+
+<style>
+html {
+  scroll-behavior: smooth;
+}
+
+/* Scroll Animation */
+.fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hover grow */
+.grow-hover {
+  transition: transform 0.3s ease;
+}
+.grow-hover:hover {
+  transform: scale(1.03);
+}
+
+/* Button press */
+.btn-press {
+  transition: all 0.2s ease;
+}
+.btn-press:active {
+  transform: scale(0.97);
+}
+
+/* Dropdown smooth animation */
+.group:hover .dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.dropdown {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+}
+</style>
 </head>
 
 <body class="bg-cream text-deep font-body">
 
 <!-- NAVBAR -->
-<header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200">
+<header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200 fade-up">
 <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
-<img src="images/icon (1).png" class="h-12">
+<img src="images/icon (1).png" class="h-12 grow-hover">
 
 <nav class="hidden md:flex gap-8 text-sm font-medium items-center">
 
@@ -51,11 +98,10 @@ fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
 </svg>
 </button>
 
-<div class="absolute left-0 top-full w-56 bg-white rounded-2xl shadow-lg
-opacity-0 invisible translate-y-2
-group-hover:opacity-100 group-hover:visible group-hover:translate-y-0
-transition-all duration-300">
-
+<div class="absolute left-0 top-full w-56 bg-white rounded-2xl shadow-lg dropdown">
+<a href="healthcare.html" class="block px-6 py-3 hover:bg-cream rounded-t-2xl">
+Health Care Access
+</a>
 <a href="events.html" class="block px-6 py-3 hover:bg-cream rounded-b-2xl">
 Streets to Shelters Events
 </a>
@@ -72,11 +118,7 @@ fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
 </svg>
 </button>
 
-<div class="absolute left-0 top-full w-64 bg-white rounded-2xl shadow-lg
-opacity-0 invisible translate-y-2
-group-hover:opacity-100 group-hover:visible group-hover:translate-y-0
-transition-all duration-300">
-
+<div class="absolute left-0 top-full w-64 bg-white rounded-2xl shadow-lg dropdown">
 <a href="about.html" class="block px-6 py-3 hover:bg-cream rounded-t-2xl">
 Streets to Shelters News
 </a>
@@ -97,7 +139,7 @@ Start a Chapter
 
 <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
 target="_blank"
-class="hidden md:inline-block bg-brand text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-brandDark transition">
+class="hidden md:inline-block bg-brand text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-brandDark transition grow-hover btn-press shadow-md hover:shadow-xl">
 Donate
 </a>
 
@@ -107,34 +149,34 @@ Donate
 <!-- CONTACT FORM -->
 <main class="pt-40 pb-24 max-w-3xl mx-auto px-6">
 
-<h1 class="text-5xl font-heading font-bold text-center mb-12">
+<h1 class="text-5xl font-heading font-bold text-center mb-12 fade-up">
 Contact Us
 </h1>
 
 <form action="https://formspree.io/f/mbdanoqz"
 method="POST"
-class="bg-white p-10 rounded-3xl shadow-md space-y-6">
+class="bg-white p-10 rounded-3xl shadow-md space-y-6 fade-up grow-hover">
 
 <div>
 <label class="block mb-2 font-medium">Full Name</label>
 <input type="text" name="name" required
-class="w-full p-4 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand outline-none">
+class="w-full p-4 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand outline-none transition-all duration-300 focus:scale-[1.02]">
 </div>
 
 <div>
 <label class="block mb-2 font-medium">Email Address</label>
 <input type="email" name="email" required
-class="w-full p-4 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand outline-none">
+class="w-full p-4 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand outline-none transition-all duration-300 focus:scale-[1.02]">
 </div>
 
 <div>
 <label class="block mb-2 font-medium">Message</label>
 <textarea name="message" rows="5" required
-class="w-full p-4 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand outline-none"></textarea>
+class="w-full p-4 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand outline-none transition-all duration-300 focus:scale-[1.02]"></textarea>
 </div>
 
 <button type="submit"
-class="w-full bg-brand text-white py-4 rounded-xl font-semibold hover:bg-brandDark transition">
+class="w-full bg-brand text-white py-4 rounded-xl font-semibold hover:bg-brandDark transition btn-press grow-hover shadow-md hover:shadow-xl">
 Send Message
 </button>
 
@@ -142,6 +184,27 @@ Send Message
 
 </main>
 
+<!-- FOOTER -->
+<footer class="bg-deep text-white py-8 text-center fade-up">
+© 2026 Streets To Shelters | streets2shelters.org
+</footer>
+
+<script>
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('show');
+    }
+  });
+});
+
+document.querySelectorAll('.fade-up').forEach(el => {
+  observer.observe(el);
+});
+</script>
+
+</body>
+</html>
 <!-- FOOTER -->
 <footer class="bg-deep text-white py-8 text-center">
 © 2026 Streets To Shelters | streets2shelters.org
