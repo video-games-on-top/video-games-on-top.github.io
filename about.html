@@ -3,236 +3,133 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contact | Streets To Shelters</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="icon" href="images/Logo1.png">
+<title>About / News | Streets to Shelters</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
-
-<script>
-tailwind.config = {
-  theme: {
-    extend: {
-      colors: {
-        brand: '#7BAF9E',
-        brandDark: '#5E8F80',
-        cream: '#F4EFE6',
-        deep: '#2B1F1C'
-      },
-      fontFamily: {
-        heading: ['Playfair Display', 'serif'],
-        body: ['Inter', 'sans-serif']
-      }
-    }
-  }
-}
-</script>
-
-<style>
-html {
-  scroll-behavior: smooth;
-}
-
-/* Scroll Animation */
-.fade-up {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: all 0.8s ease;
-}
-
-.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Hover grow */
-.grow-hover {
-  transition: transform 0.3s ease;
-}
-.grow-hover:hover {
-  transform: scale(1.03);
-}
-
-/* Button press */
-.btn-press {
-  transition: all 0.2s ease;
-}
-.btn-press:active {
-  transform: scale(0.97);
-}
-
-/* Dropdown smooth animation */
-.group:hover .dropdown {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-.dropdown {
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(10px);
-  transition: all 0.3s ease;
-}
-</style>
 </head>
-
-<body class="bg-cream text-deep font-body">
+<body class="bg-cream font-sans text-deep">
 
 <!-- NAVBAR -->
-<header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200 fade-up">
-<div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+<header class="bg-white/85 backdrop-blur fixed w-full z-50 border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <a href="index.html" class="flex items-center gap-3">
+      <img src="your-logo.png" alt="Logo" class="h-12">
+      <span class="font-bold text-lg">Streets to Shelters</span>
+    </a>
 
-<!-- ✅ LOGO NOW CLICKS TO HOME -->
-<a href="index.html" class="grow-hover">
-  <img src="images/icon (1).png" class="h-12 cursor-pointer">
-</a>
+    <nav class="hidden md:flex gap-8 text-sm font-medium items-center">
 
-<nav class="hidden md:flex gap-8 text-sm font-medium items-center">
+      <a href="index.html" class="hover:text-brand transition">Home</a>
 
-<a href="index.html" class="hover:text-brand transition">Home</a>
+      <!-- Initiatives Dropdown -->
+      <div class="relative group">
+        <button class="hover:text-brand transition py-2 flex items-center gap-1">
+          Initiatives
+          <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"
+            fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </button>
+        <div class="absolute left-0 top-full w-56 bg-white rounded-2xl shadow-lg opacity-0 invisible transform translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all">
+          <a href="events.html" class="block px-6 py-3 hover:bg-gray-100 rounded-b-2xl">Streets to Shelters Events</a>
+        </div>
+      </div>
 
-<!-- Initiatives -->
-<div class="relative group">
-<button class="hover:text-brand transition py-2 flex items-center gap-1">
-Initiatives
-<svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"
-fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-<path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
-</svg>
-</button>
+      <!-- About Us Dropdown -->
+      <div class="relative group">
+        <button class="hover:text-brand transition py-2 flex items-center gap-1">
+          About Us
+          <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"
+            fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </button>
+        <div class="absolute left-0 top-full w-64 bg-white rounded-2xl shadow-lg opacity-0 invisible transform translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all">
+          <a href="about.html" class="block px-6 py-3 hover:bg-gray-100 rounded-t-2xl">Streets to Shelters News</a>
+          <a href="members.html" class="block px-6 py-3 hover:bg-gray-100">Members</a>
+          <a href="contact.html" class="block px-6 py-3 hover:bg-gray-100 rounded-b-2xl">Contact Us</a>
+        </div>
+      </div>
 
-<div class="absolute left-0 top-full w-56 bg-white rounded-2xl shadow-lg dropdown">
+      <a href="chapter.html" class="hover:text-brand transition font-semibold">Start a Chapter</a>
+    </nav>
 
-<a href="events.html" class="block px-6 py-3 hover:bg-cream rounded-b-2xl">
-Streets to Shelters Events
-</a>
-</div>
-</div>
-
-<!-- About -->
-<div class="relative group">
-<button class="hover:text-brand transition py-2 flex items-center gap-1">
-About Us
-<svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"
-fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-<path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
-</svg>
-</button>
-
-<div class="absolute left-0 top-full w-64 bg-white rounded-2xl shadow-lg dropdown">
-<a href="about.html" class="block px-6 py-3 hover:bg-cream rounded-t-2xl">
-Streets to Shelters News
-</a>
-<a href="members.html" class="block px-6 py-3 hover:bg-cream">
-Members
-</a>
-<a href="contact.html" class="block px-6 py-3 hover:bg-cream rounded-b-2xl">
-Contact Us
-</a>
-</div>
-</div>
-
-<a href="chapter.html" class="hover:text-brand transition font-semibold">
-Start a Chapter
-</a>
-
-</nav>
-
-<a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
-target="_blank"
-class="hidden md:inline-block bg-brand text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-brandDark transition grow-hover btn-press shadow-md hover:shadow-xl">
-Donate
-</a>
-
-</div>
+    <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
+      target="_blank"
+      class="hidden md:inline-block bg-brand text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-brandDark transition">
+      Donate
+    </a>
+  </div>
 </header>
 
-<!-- LOGO CLICKABLE -->
-<a href="index.html" class="grow-hover">
-  <img src="images/icon (1).png" class="h-12 cursor-pointer">
-</a>
+<!-- MAIN CONTENT -->
+<main class="pt-32 px-6 max-w-7xl mx-auto space-y-16">
 
-<nav class="hidden md:flex gap-8 text-sm font-medium items-center">
+  <!-- PAGE TITLE -->
+  <section class="text-center">
+    <h1 class="text-4xl font-bold mb-4">Latest News & Updates</h1>
+    <p class="text-gray-700 max-w-2xl mx-auto">
+      Stay up to date with Streets to Shelters. Here you’ll find the latest events, community highlights, and announcements from our youth-led organization.
+    </p>
+  </section>
 
-<a href="index.html" class="hover:text-brand transition">Home</a>
+  <!-- NEWS CARDS GRID -->
+  <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
-<!-- Initiatives -->
-<div class="relative group">
-<button class="hover:text-brand transition py-2 flex items-center gap-1">
-Initiatives
-<svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"
-fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-<path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
-</svg>
-</button>
+    <!-- News Item 1 -->
+    <div class="bg-white rounded-3xl shadow-md overflow-hidden hover:shadow-xl transition transform hover:-translate-y-2">
+      <img src="news1.jpg" alt="News Image" class="w-full h-48 object-cover">
+      <div class="p-6">
+        <h2 class="font-bold text-xl mb-2">Community Drive Success</h2>
+        <p class="text-gray-600 mb-4">Our latest hygiene kit drive provided over 500 kits to local shelters this month!</p>
+        <a href="#" class="text-brand font-semibold hover:underline">Read More →</a>
+      </div>
+    </div>
 
-<div class="absolute left-0 top-full w-56 bg-white rounded-2xl shadow-lg dropdown">
-<a href="events.html" class="block px-6 py-3 hover:bg-cream rounded-b-2xl">
-Streets to Shelters Events
-</a>
-</div>
-</div>
+    <!-- News Item 2 -->
+    <div class="bg-white rounded-3xl shadow-md overflow-hidden hover:shadow-xl transition transform hover:-translate-y-2">
+      <img src="news2.jpg" alt="News Image" class="w-full h-48 object-cover">
+      <div class="p-6">
+        <h2 class="font-bold text-xl mb-2">New Chapter Launched</h2>
+        <p class="text-gray-600 mb-4">Students in San Antonio started a new chapter to expand local outreach efforts.</p>
+        <a href="#" class="text-brand font-semibold hover:underline">Read More →</a>
+      </div>
+    </div>
 
-<!-- About -->
-<div class="relative group">
-<button class="hover:text-brand transition py-2 flex items-center gap-1">
-About Us
-<svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"
-fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-<path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
-</svg>
-</button>
+    <!-- News Item 3 -->
+    <div class="bg-white rounded-3xl shadow-md overflow-hidden hover:shadow-xl transition transform hover:-translate-y-2">
+      <img src="news3.jpg" alt="News Image" class="w-full h-48 object-cover">
+      <div class="p-6">
+        <h2 class="font-bold text-xl mb-2">Partnership Announcement</h2>
+        <p class="text-gray-600 mb-4">We’re partnering with local businesses to increase access to hygiene kits and resources.</p>
+        <a href="#" class="text-brand font-semibold hover:underline">Read More →</a>
+      </div>
+    </div>
 
-<div class="absolute left-0 top-full w-64 bg-white rounded-2xl shadow-lg dropdown">
-<a href="about.html" class="block px-6 py-3 hover:bg-cream rounded-t-2xl">
-Streets to Shelters News
-</a>
-<a href="members.html" class="block px-6 py-3 hover:bg-cream">
-Members
-</a>
-<a href="contact.html" class="block px-6 py-3 hover:bg-cream rounded-b-2xl">
-Contact Us
-</a>
-</div>
-</div>
+    <!-- You can duplicate these cards for more news items -->
 
-<a href="chapter.html" class="hover:text-brand transition font-semibold">
-Start a Chapter
-</a>
+  </section>
 
-</nav>
+</main>
 
-<a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
-target="_blank"
-class="hidden md:inline-block bg-brand text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-brandDark transition grow-hover btn-press shadow-md hover:shadow-xl">
-Donate
-</a>
+<!-- FOOTER -->
+<footer class="bg-deep text-white py-12 mt-24">
+  <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-10 text-center sm:text-left">
 
-</div>
-</header>
-<!-- LOGO CLICKABLE -->
-<a href="index.html" class="grow-hover">
-  <img src="images/icon (1).png" class="h-12 cursor-pointer">
-</a>
-
-<nav class="hidden md:flex gap-8 text-sm font-medium items-center">
-
-<a href="index.html" class="hover:text-brand transition">Home</a>
-
-    <!-- Column 1: Social Media -->
+    <!-- Social Media -->
     <div class="space-y-4">
-      <h3 class="font-heading font-bold text-lg mb-2">Follow Us</h3>
+      <h3 class="font-bold text-lg mb-2">Follow Us</h3>
       <div class="flex flex-col gap-2">
         <a href="https://www.instagram.com/streets.to.shelter" target="_blank" class="hover:text-brand hover:underline transition">Instagram</a>
-        <a href="https://www.facebook.com/profile.php?fb_profile_edit_entry_point=%7B%22click_point%22%3A%22edit_profile_button%22%2C%22feature%22%3A%22profile_header%22%7D&id=61586361417282&sk=about" target="_blank" class="hover:text-brand hover:underline transition">Facebook</a>
+        <a href="https://www.facebook.com/streets.to.shelter" target="_blank" class="hover:text-brand hover:underline transition">Facebook</a>
         <a href="https://www.tiktok.com/@streetstoshelters" target="_blank" class="hover:text-brand hover:underline transition">TikTok</a>
         <a href="https://linktr.ee/streets2shelters" target="_blank" class="hover:text-brand hover:underline transition">Linktree</a>
       </div>
     </div>
 
-    <!-- Column 2: Quick Links -->
+    <!-- Quick Links -->
     <div class="space-y-4">
-      <h3 class="font-heading font-bold text-lg mb-2">Quick Links</h3>
+      <h3 class="font-bold text-lg mb-2">Quick Links</h3>
       <div class="flex flex-col gap-2">
         <a href="index.html" class="hover:text-brand hover:underline transition">Home</a>
         <a href="events.html" class="hover:text-brand hover:underline transition">Initiatives / Events</a>
@@ -243,9 +140,9 @@ Donate
       </div>
     </div>
 
-    <!-- Column 3: Support / Donate -->
+    <!-- Donate -->
     <div class="space-y-4">
-      <h3 class="font-heading font-bold text-lg mb-2">Support Us</h3>
+      <h3 class="font-bold text-lg mb-2">Support Us</h3>
       <div class="flex flex-col gap-2">
         <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
           target="_blank"
@@ -258,3 +155,6 @@ Donate
 
   </div>
 </footer>
+
+</body>
+</html>
