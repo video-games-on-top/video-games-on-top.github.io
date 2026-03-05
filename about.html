@@ -4,17 +4,84 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>About / News | Streets to Shelters</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="images/Logo1.png">
 <script src="https://cdn.tailwindcss.com"></script>
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        brand: '#7BAF9E',
+        brandDark: '#5E8F80',
+        cream: '#F4EFE6',
+        deep: '#2B1F1C'
+      },
+      fontFamily: {
+        heading: ['Playfair Display', 'serif'],
+        body: ['Inter', 'sans-serif']
+      }
+    }
+  }
+}
+</script>
+
+<style>
+/* Smooth scroll for fade animations */
+.fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Card hover pop */
+.card-hover {
+  transition: all 0.3s ease;
+}
+.card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+}
+
+/* Dropdown hover */
+.group:hover .dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.dropdown {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+}
+
+/* Hover link style */
+.hover-link {
+  transition: all 0.3s;
+}
+.hover-link:hover {
+  color: #7BAF9E;
+  text-decoration: underline;
+}
+</style>
 </head>
-<body class="bg-cream font-sans text-deep">
+
+<body class="bg-cream text-deep font-body">
 
 <!-- NAVBAR -->
-<header class="bg-white/85 backdrop-blur fixed w-full z-50 border-b border-gray-200">
+<header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200">
   <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
     <a href="index.html" class="flex items-center gap-3">
-      <img src="your-logo.png" alt="Logo" class="h-12">
-      <span class="font-bold text-lg">Streets to Shelters</span>
+      <img src="images/icon (1).png" alt="Logo" class="h-12">
+      <span class="font-heading font-bold text-lg">Streets to Shelters</span>
     </a>
 
     <nav class="hidden md:flex gap-8 text-sm font-medium items-center">
@@ -30,8 +97,8 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
           </svg>
         </button>
-        <div class="absolute left-0 top-full w-56 bg-white rounded-2xl shadow-lg opacity-0 invisible transform translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all">
-          <a href="events.html" class="block px-6 py-3 hover:bg-gray-100 rounded-b-2xl">Streets to Shelters Events</a>
+        <div class="absolute left-0 top-full w-56 bg-white rounded-2xl shadow-lg dropdown">
+          <a href="events.html" class="block px-6 py-3 hover:bg-cream rounded-b-2xl">Streets to Shelters Events</a>
         </div>
       </div>
 
@@ -44,10 +111,10 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
           </svg>
         </button>
-        <div class="absolute left-0 top-full w-64 bg-white rounded-2xl shadow-lg opacity-0 invisible transform translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all">
-          <a href="about.html" class="block px-6 py-3 hover:bg-gray-100 rounded-t-2xl">Streets to Shelters News</a>
-          <a href="members.html" class="block px-6 py-3 hover:bg-gray-100">Members</a>
-          <a href="contact.html" class="block px-6 py-3 hover:bg-gray-100 rounded-b-2xl">Contact Us</a>
+        <div class="absolute left-0 top-full w-64 bg-white rounded-2xl shadow-lg dropdown">
+          <a href="about.html" class="block px-6 py-3 hover:bg-cream rounded-t-2xl">Streets to Shelters News</a>
+          <a href="members.html" class="block px-6 py-3 hover:bg-cream">Members</a>
+          <a href="contact.html" class="block px-6 py-3 hover:bg-cream rounded-b-2xl">Contact Us</a>
         </div>
       </div>
 
@@ -59,54 +126,47 @@
       class="hidden md:inline-block bg-brand text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-brandDark transition">
       Donate
     </a>
+
   </div>
 </header>
 
-<!-- MAIN CONTENT -->
-<main class="pt-32 px-6 max-w-7xl mx-auto space-y-16">
+<!-- MAIN -->
+<main class="pt-36 max-w-7xl mx-auto px-6 space-y-16">
 
-  <!-- PAGE TITLE -->
-  <section class="text-center">
-    <h1 class="text-4xl font-bold mb-4">Latest News & Updates</h1>
+  <!-- Page Title -->
+  <section class="text-center fade-up">
+    <h1 class="text-4xl font-heading font-bold mb-4">News & Updates</h1>
     <p class="text-gray-700 max-w-2xl mx-auto">
-      Stay up to date with Streets to Shelters. Here you’ll find the latest events, community highlights, and announcements from our youth-led organization.
+      Stay up to date with Streets to Shelters. Here you’ll find updates, events, and announcements from our youth-led organization.
     </p>
   </section>
 
-  <!-- NEWS CARDS GRID -->
-  <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-
-    <!-- News Item 1 -->
-    <div class="bg-white rounded-3xl shadow-md overflow-hidden hover:shadow-xl transition transform hover:-translate-y-2">
-      <img src="news1.jpg" alt="News Image" class="w-full h-48 object-cover">
-      <div class="p-6">
-        <h2 class="font-bold text-xl mb-2">Community Drive Success</h2>
-        <p class="text-gray-600 mb-4">Our latest hygiene kit drive provided over 500 kits to local shelters this month!</p>
-        <a href="#" class="text-brand font-semibold hover:underline">Read More →</a>
-      </div>
+  <!-- News Cards -->
+  <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 fade-up">
+    
+    <!-- Example News Card -->
+    <div class="bg-white p-6 rounded-3xl shadow-sm card-hover">
+      <img src="news1.jpg" alt="News" class="w-full h-48 object-cover rounded-2xl mb-4">
+      <h2 class="font-heading font-bold text-xl mb-2">Community Drive Success</h2>
+      <p class="text-gray-600 mb-4">Our latest hygiene kit drive provided over 500 kits to local shelters this month.</p>
+      <a href="#" class="font-semibold hover-link">Read More →</a>
     </div>
 
-    <!-- News Item 2 -->
-    <div class="bg-white rounded-3xl shadow-md overflow-hidden hover:shadow-xl transition transform hover:-translate-y-2">
-      <img src="news2.jpg" alt="News Image" class="w-full h-48 object-cover">
-      <div class="p-6">
-        <h2 class="font-bold text-xl mb-2">New Chapter Launched</h2>
-        <p class="text-gray-600 mb-4">Students in San Antonio started a new chapter to expand local outreach efforts.</p>
-        <a href="#" class="text-brand font-semibold hover:underline">Read More →</a>
-      </div>
+    <div class="bg-white p-6 rounded-3xl shadow-sm card-hover">
+      <img src="news2.jpg" alt="News" class="w-full h-48 object-cover rounded-2xl mb-4">
+      <h2 class="font-heading font-bold text-xl mb-2">New Chapter Launched</h2>
+      <p class="text-gray-600 mb-4">Students in San Antonio started a new chapter to expand local outreach efforts.</p>
+      <a href="#" class="font-semibold hover-link">Read More →</a>
     </div>
 
-    <!-- News Item 3 -->
-    <div class="bg-white rounded-3xl shadow-md overflow-hidden hover:shadow-xl transition transform hover:-translate-y-2">
-      <img src="news3.jpg" alt="News Image" class="w-full h-48 object-cover">
-      <div class="p-6">
-        <h2 class="font-bold text-xl mb-2">Partnership Announcement</h2>
-        <p class="text-gray-600 mb-4">We’re partnering with local businesses to increase access to hygiene kits and resources.</p>
-        <a href="#" class="text-brand font-semibold hover:underline">Read More →</a>
-      </div>
+    <div class="bg-white p-6 rounded-3xl shadow-sm card-hover">
+      <img src="news3.jpg" alt="News" class="w-full h-48 object-cover rounded-2xl mb-4">
+      <h2 class="font-heading font-bold text-xl mb-2">Partnership Announcement</h2>
+      <p class="text-gray-600 mb-4">We’re partnering with local businesses to increase access to hygiene kits and resources.</p>
+      <a href="#" class="font-semibold hover-link">Read More →</a>
     </div>
 
-    <!-- You can duplicate these cards for more news items -->
+    <!-- Duplicate cards as needed -->
 
   </section>
 
@@ -116,45 +176,52 @@
 <footer class="bg-deep text-white py-12 mt-24">
   <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-10 text-center sm:text-left">
 
-    <!-- Social Media -->
+    <!-- Social -->
     <div class="space-y-4">
-      <h3 class="font-bold text-lg mb-2">Follow Us</h3>
+      <h3 class="font-heading font-bold text-lg mb-2">Follow Us</h3>
       <div class="flex flex-col gap-2">
-        <a href="https://www.instagram.com/streets.to.shelter" target="_blank" class="hover:text-brand hover:underline transition">Instagram</a>
-        <a href="https://www.facebook.com/streets.to.shelter" target="_blank" class="hover:text-brand hover:underline transition">Facebook</a>
-        <a href="https://www.tiktok.com/@streetstoshelters" target="_blank" class="hover:text-brand hover:underline transition">TikTok</a>
-        <a href="https://linktr.ee/streets2shelters" target="_blank" class="hover:text-brand hover:underline transition">Linktree</a>
+        <a href="https://www.instagram.com/streets.to.shelter" target="_blank" class="hover-link">Instagram</a>
+        <a href="https://www.facebook.com/streets.to.shelter" target="_blank" class="hover-link">Facebook</a>
+        <a href="https://www.tiktok.com/@streetstoshelters" target="_blank" class="hover-link">TikTok</a>
+        <a href="https://linktr.ee/streets2shelters" target="_blank" class="hover-link">Linktree</a>
       </div>
     </div>
 
     <!-- Quick Links -->
     <div class="space-y-4">
-      <h3 class="font-bold text-lg mb-2">Quick Links</h3>
+      <h3 class="font-heading font-bold text-lg mb-2">Quick Links</h3>
       <div class="flex flex-col gap-2">
-        <a href="index.html" class="hover:text-brand hover:underline transition">Home</a>
-        <a href="events.html" class="hover:text-brand hover:underline transition">Initiatives / Events</a>
-        <a href="about.html" class="hover:text-brand hover:underline transition">About Us</a>
-        <a href="members.html" class="hover:text-brand hover:underline transition">Members</a>
-        <a href="chapter.html" class="hover:text-brand hover:underline transition">Start a Chapter</a>
-        <a href="contact.html" class="hover:text-brand hover:underline transition">Contact</a>
+        <a href="index.html" class="hover-link">Home</a>
+        <a href="events.html" class="hover-link">Initiatives / Events</a>
+        <a href="about.html" class="hover-link">About Us</a>
+        <a href="members.html" class="hover-link">Members</a>
+        <a href="chapter.html" class="hover-link">Start a Chapter</a>
+        <a href="contact.html" class="hover-link">Contact</a>
       </div>
     </div>
 
-    <!-- Donate -->
+    <!-- Support -->
     <div class="space-y-4">
-      <h3 class="font-bold text-lg mb-2">Support Us</h3>
+      <h3 class="font-heading font-bold text-lg mb-2">Support Us</h3>
       <div class="flex flex-col gap-2">
-        <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
-          target="_blank"
-          class="hover:text-brand hover:underline transition">
-          Donate
-        </a>
+        <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" class="hover-link">Donate</a>
         <p class="text-gray-400 text-sm mt-2">© 2026 Streets To Shelters</p>
       </div>
     </div>
 
   </div>
 </footer>
+
+<script>
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('show');
+    }
+  });
+});
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
 
 </body>
 </html>
