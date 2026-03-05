@@ -3,242 +3,208 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Streets to Shelters</title>
+<title>Start a Chapter | Streets to Shelters</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #f9f9f9;
+  color: #1f2937;
 }
 
-body{
-background:#f9f9f9;
+/* Fade up animation */
+.fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-/* NAVBAR */
-
-nav{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:20px 60px;
-position:fixed;
-width:100%;
-top:0;
-z-index:100;
-background:rgba(255,255,255,0.85);
-backdrop-filter:blur(10px);
+/* Card Hover */
+.card-hover {
+  transition: all 0.3s ease;
+}
+.card-hover:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
 }
 
-.logo{
-display:flex;
-align-items:center;
-gap:10px;
-font-weight:700;
-font-size:20px;
-color:#1f2937;
+/* Dropdown hover */
+.group:hover .dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.dropdown {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
 }
 
-.logo img{
-height:40px;
+/* Buttons hover */
+.hero-btn:hover {
+  background-color: #15803d;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
-/* HERO SECTION */
-
-.hero{
-
-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-position:relative;
-color:white;
-text-align:left;
-overflow:hidden;
-
-background-image:url('your-new-image.png'); /* Replace this with the correct image file path */
-background-size:cover;
-background-position:center;
+/* Hero overlay */
+.hero::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  background: rgba(0,0,0,0.35);
 }
-
-.hero::before{
-content:"";
-position:absolute;
-inset:0;
-background:rgba(0,0,0,0.35);
-}
-
-/* HERO CONTENT */
-
-.hero-container{
-
-position:relative;
-display:grid;
-grid-template-columns:1fr;
-max-width:1200px;
-padding:40px;
-}
-
-/* CARD */
-
-.hero-card{
-
-background:rgba(255,255,255,0.95);
-color:#333;
-padding:40px;
-border-radius:20px;
-max-width:520px;
-box-shadow:0 25px 60px rgba(0,0,0,0.25);
-
-animation:fadeUp 1.2s ease;
-}
-
-.hero-card h1{
-
-font-size:42px;
-margin-bottom:20px;
-color:#111;
-}
-
-.hero-card p{
-
-font-size:18px;
-line-height:1.6;
-margin-bottom:30px;
-}
-
-/* BUTTON */
-
-.hero-btn{
-
-display:inline-block;
-padding:14px 30px;
-background:#16a34a;
-color:white;
-border-radius:30px;
-text-decoration:none;
-font-weight:600;
-
-transition:all .3s ease;
-}
-
-.hero-btn:hover{
-
-background:#15803d;
-transform:translateY(-3px);
-box-shadow:0 10px 25px rgba(0,0,0,0.2);
-
-}
-
-/* SUMMARY BOX AT THE TOP */
-
-.summary{
-background:#ffffff;
-border:1px solid #ddd;
-border-radius:10px;
-padding:20px;
-max-width:800px;
-margin: 20px auto 40px auto; /* Centered with top and bottom margins */
-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-font-size:16px;
-line-height:1.6;
-}
-
-.summary h2{
-font-weight:700;
-font-size:20px;
-margin-bottom:10px;
-color:#111;
-}
-
-/* ANIMATION */
-
-@keyframes fadeUp{
-
-from{
-opacity:0;
-transform:translateY(40px);
-}
-
-to{
-opacity:1;
-transform:translateY(0);
-}
-
-}
-
-/* RESPONSIVE */
-
-@media(max-width:768px){
-
-.hero-card{
-padding:30px;
-}
-
-.hero-card h1{
-font-size:32px;
-}
-
-.summary {
-margin: 20px;
-}
-
-}
-
 </style>
 </head>
 
-<body>
+<body class="bg-cream">
 
-<nav>
+<!-- NAVBAR -->
+<header class="bg-white/85 backdrop-blur fixed w-full z-50 border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <!-- Logo -->
+    <a href="index.html" class="flex items-center gap-3">
+      <img src="your-logo.png" alt="Logo" class="h-12">
+      <span class="font-bold text-lg">Streets to Shelters</span>
+    </a>
 
-<div class="logo">
-<img src="your-logo.png">
-Streets to Shelters
+    <!-- Nav links -->
+    <nav class="hidden md:flex gap-8 text-sm font-medium items-center">
+
+      <a href="index.html" class="hover:text-green-700 transition">Home</a>
+
+      <!-- Initiatives Dropdown -->
+      <div class="relative group">
+        <button class="hover:text-green-700 transition py-2 flex items-center gap-1">
+          Initiatives
+          <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"
+            fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </button>
+        <div class="absolute left-0 top-full w-56 bg-white rounded-2xl shadow-lg dropdown">
+          <a href="events.html" class="block px-6 py-3 hover:bg-gray-100 rounded-b-2xl">Streets to Shelters Events</a>
+        </div>
+      </div>
+
+      <!-- About Us Dropdown -->
+      <div class="relative group">
+        <button class="hover:text-green-700 transition py-2 flex items-center gap-1">
+          About Us
+          <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"
+            fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </button>
+        <div class="absolute left-0 top-full w-64 bg-white rounded-2xl shadow-lg dropdown">
+          <a href="about.html" class="block px-6 py-3 hover:bg-gray-100 rounded-t-2xl">Streets to Shelters News</a>
+          <a href="members.html" class="block px-6 py-3 hover:bg-gray-100">Members</a>
+          <a href="contact.html" class="block px-6 py-3 hover:bg-gray-100 rounded-b-2xl">Contact Us</a>
+        </div>
+      </div>
+
+      <a href="chapter.html" class="hover:text-green-700 transition font-semibold">Start a Chapter</a>
+
+    </nav>
+
+    <!-- Donate Button -->
+    <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
+      target="_blank"
+      class="hidden md:inline-block bg-green-700 text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-green-800 transition">
+      Donate
+    </a>
+  </div>
+</header>
+
+<!-- Summary Box -->
+<div class="mt-28 px-6 max-w-3xl mx-auto fade-up">
+  <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-md">
+    <h2 class="font-bold text-xl mb-3">Chapter Summary</h2>
+    <p>
+      Streets to Shelters provides opportunities for students to lead and engage with their local communities by creating chapters. These chapters build empathy and offer tangible support for individuals experiencing homelessness. By establishing a chapter, students can coordinate supply drives, develop community partnerships, and organize impactful outreach efforts. We are dedicated to restoring dignity and expanding opportunity through collective student action.
+    </p>
+  </div>
 </div>
 
-</nav>
-
-<div style="margin-top: 100px;"> <div class="summary">
-<h2>Chapter Summary</h2>
-<p>
-Streets to Shelters provides opportunities for students to lead and engage with their local communities by creating chapters. These chapters build empathy and offer tangible support for individuals experiencing homelessness. By establishing a chapter, students can coordinate supply drives, develop community partnerships, and organize impactful outreach efforts. We are dedicated to restoring dignity and expanding opportunity through collective student action.
-</p>
-</div>
-
-<section class="hero">
-
-<div class="hero-container">
-
-<div class="hero-card">
-
-<h1>Start a Chapter</h1>
-
-<p>
-Streets to Shelters Chapters are student-led teams dedicated to serving their local communities with compassion and action. Each chapter organizes outreach efforts, builds partnerships, and provides support to individuals experiencing homelessness.
-</p>
-
-<p>
-By starting a chapter, students can lead supply drives, organize community outreach events, and help create pathways from the streets to safe shelter. Together, we can restore dignity, expand opportunity, and strengthen communities one chapter at a time.
-</p>
-
-<a href="#" class="hero-btn">
-Start Your Chapter
-</a>
-
-</div>
-
-</div>
-
+<!-- HERO SECTION -->
+<section class="hero relative mt-12">
+  <div class="hero-container max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 items-center relative z-10">
+    <div class="hero-card bg-white p-10 rounded-3xl shadow-sm fade-up card-hover">
+      <h1 class="text-3xl font-bold mb-4">Start a Chapter</h1>
+      <p class="mb-4">
+        Streets to Shelters Chapters are student-led teams dedicated to serving their local communities with compassion and action. Each chapter organizes outreach efforts, builds partnerships, and provides support to individuals experiencing homelessness.
+      </p>
+      <p class="mb-6">
+        By starting a chapter, students can lead supply drives, organize community outreach events, and help create pathways from the streets to safe shelter. Together, we can restore dignity, expand opportunity, and strengthen communities one chapter at a time.
+      </p>
+      <a href="https://forms.gle/your-google-form-link" target="_blank" class="hero-btn">Start Your Chapter</a>
+    </div>
+  </div>
 </section>
 
-</div>
+<!-- FOOTER -->
+<footer class="bg-deep text-white py-12 mt-24">
+  <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-10 text-center sm:text-left">
+
+    <!-- Column 1: Social Media -->
+    <div class="space-y-4">
+      <h3 class="font-bold text-lg mb-2">Follow Us</h3>
+      <div class="flex flex-col gap-2">
+        <a href="https://www.instagram.com/streets.to.shelter" target="_blank" class="hover:text-brand hover:underline transition">Instagram</a>
+        <a href="https://www.facebook.com/streets.to.shelter" target="_blank" class="hover:text-brand hover:underline transition">Facebook</a>
+        <a href="https://www.tiktok.com/@streetstoshelters" target="_blank" class="hover:text-brand hover:underline transition">TikTok</a>
+        <a href="https://linktr.ee/streets2shelters" target="_blank" class="hover:text-brand hover:underline transition">Linktree</a>
+      </div>
+    </div>
+
+    <!-- Column 2: Quick Links -->
+    <div class="space-y-4">
+      <h3 class="font-bold text-lg mb-2">Quick Links</h3>
+      <div class="flex flex-col gap-2">
+        <a href="index.html" class="hover:text-brand hover:underline transition">Home</a>
+        <a href="events.html" class="hover:text-brand hover:underline transition">Initiatives / Events</a>
+        <a href="about.html" class="hover:text-brand hover:underline transition">About Us</a>
+        <a href="members.html" class="hover:text-brand hover:underline transition">Members</a>
+        <a href="chapter.html" class="hover:text-brand hover:underline transition">Start a Chapter</a>
+        <a href="contact.html" class="hover:text-brand hover:underline transition">Contact</a>
+      </div>
+    </div>
+
+    <!-- Column 3: Donate -->
+    <div class="space-y-4">
+      <h3 class="font-bold text-lg mb-2">Support Us</h3>
+      <div class="flex flex-col gap-2">
+        <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
+          target="_blank"
+          class="hover:text-brand hover:underline transition">
+          Donate
+        </a>
+        <p class="text-gray-400 text-sm mt-2">© 2026 Streets To Shelters</p>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+<script>
+// Intersection Observer for fade-up
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('show');
+    }
+  });
+});
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
 
 </body>
 </html>
