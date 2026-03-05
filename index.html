@@ -1,159 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Streets To Shelters</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home | Streets To Shelters</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="icon" href="images/Logo1.png">
-  <script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
 
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brand: '#7BAF9E',
-            brandDark: '#5E8F80',
-            cream: '#F4EFE6',
-            deep: '#2B1F1C'
-          },
-          fontFamily: {
-            heading: ['Playfair Display', 'serif'],
-            body: ['Inter', 'sans-serif']
-          }
-        }
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        brand: '#7BAF9E',
+        brandDark: '#5E8F80',
+        cream: '#F4EFE6',
+        deep: '#2B1F1C'
+      },
+      fontFamily: {
+        heading: ['Playfair Display', 'serif'],
+        body: ['Inter', 'sans-serif']
       }
     }
-  </script>
+  }
+}
+</script>
 </head>
 
-<body class="bg-cream text-deep font-body scroll-smooth">
+<body class="bg-cream text-deep font-body">
 
 <!-- NAVBAR -->
 <header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200">
-  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+<div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
-    <!-- Logo -->
-    <div class="flex items-center gap-3">
-      <img src="images/icon (1).png" alt="Streets To Shelters Logo" class="h-12 w-auto">
-    </div>
+<img src="images/icon (1).png" class="h-12">
 
-    <!-- Navigation -->
-    <nav class="hidden md:flex gap-8 text-sm font-medium items-center">
+<nav class="hidden md:flex gap-8 text-sm font-medium items-center">
 
-      <!-- Home -->
-      <a href="index.html" class="hover:text-brand transition">Home</a>
+<a href="index.html" class="hover:text-brand transition">Home</a>
 
-      <!-- Initiatives Dropdown -->
-      <div class="relative group">
-        <button class="hover:text-brand transition">Initiatives</button>
-        <div class="absolute left-0 mt-4 w-56 bg-white rounded-2xl shadow-lg opacity-0 invisible 
-                    group-hover:opacity-100 group-hover:visible transition duration-300">
-          <a href="healthcare.html" class="block px-6 py-3 hover:bg-cream rounded-t-2xl">
-            Health Care Access
-          </a>
-          <a href="events.html" class="block px-6 py-3 hover:bg-cream rounded-b-2xl">
-            Streets to Shelters Events
-          </a>
-        </div>
-      </div>
+<!-- Initiatives -->
+<div class="relative group">
+<button class="hover:text-brand transition py-2 flex items-center gap-1">
+Initiatives
+<svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"
+fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+</svg>
+</button>
 
-      <!-- About Us Dropdown -->
-      <div class="relative group">
-        <button class="hover:text-brand transition">About Us</button>
-        <div class="absolute left-0 mt-4 w-64 bg-white rounded-2xl shadow-lg opacity-0 invisible 
-                    group-hover:opacity-100 group-hover:visible transition duration-300">
-          <a href="about.html" class="block px-6 py-3 hover:bg-cream rounded-t-2xl">
-            Streets to Shelters
-          </a>
-          <a href="members.html" class="block px-6 py-3 hover:bg-cream">
-            Members
-          </a>
-          <a href="contact.html" class="block px-6 py-3 hover:bg-cream rounded-b-2xl">
-            Contact Us
-          </a>
-        </div>
-      </div>
+<div class="absolute left-0 top-full w-56 bg-white rounded-2xl shadow-lg
+opacity-0 invisible translate-y-2
+group-hover:opacity-100 group-hover:visible group-hover:translate-y-0
+transition-all duration-300">
 
-      <!-- Start a Chapter (Standalone) -->
-      <a href="chapter.html" class="hover:text-brand transition font-semibold">
-        Start a Chapter
-      </a>
+<a href="healthcare.html" class="block px-6 py-3 hover:bg-cream rounded-t-2xl">
+Health Care Access
+</a>
+<a href="events.html" class="block px-6 py-3 hover:bg-cream rounded-b-2xl">
+Streets to Shelters Events
+</a>
+</div>
+</div>
 
-    </nav>
+<!-- About -->
+<div class="relative group">
+<button class="hover:text-brand transition py-2 flex items-center gap-1">
+About Us
+<svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"
+fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+</svg>
+</button>
 
-    <!-- Donate Button -->
-    <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
-       target="_blank"
-       class="hidden md:inline-block bg-brand text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-brandDark transition">
-       Donate
-    </a>
+<div class="absolute left-0 top-full w-64 bg-white rounded-2xl shadow-lg
+opacity-0 invisible translate-y-2
+group-hover:opacity-100 group-hover:visible group-hover:translate-y-0
+transition-all duration-300">
 
-  </div>
+<a href="about.html" class="block px-6 py-3 hover:bg-cream rounded-t-2xl">
+Streets to Shelters
+</a>
+<a href="members.html" class="block px-6 py-3 hover:bg-cream">
+Members
+</a>
+<a href="contact.html" class="block px-6 py-3 hover:bg-cream rounded-b-2xl">
+Contact Us
+</a>
+</div>
+</div>
+
+<a href="chapter.html" class="hover:text-brand transition font-semibold">
+Start a Chapter
+</a>
+
+</nav>
+
+<a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
+target="_blank"
+class="hidden md:inline-block bg-brand text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-brandDark transition">
+Donate
+</a>
+
+</div>
 </header>
 
-<!-- HERO -->
-<section class="pt-36 pb-28 bg-cream">
-  <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-    <div>
-      <h1 class="text-5xl md:text-6xl font-heading font-bold leading-tight mb-6">
-        From Streets to <span class="text-brand">Shelters</span>
-      </h1>
-      <p class="text-lg text-gray-700 mb-8">
-        A youth-led nonprofit delivering essential hygiene kits and critical resources directly to homeless shelters in our community.
-      </p>
-      <div class="flex gap-4">
-        <a href="about.html" class="bg-brand text-white px-8 py-3 rounded-full font-semibold hover:bg-brandDark transition">
-          Learn More
-        </a>
-        <a href="events.html" class="border border-deep px-8 py-3 rounded-full font-semibold hover:bg-deep hover:text-white transition">
-          Upcoming Events
-        </a>
-      </div>
-    </div>
-
-    <div class="bg-brand/20 rounded-3xl p-10">
-      <img src="logo.png" alt="Streets To Shelters" class="rounded-2xl">
-    </div>
-  </div>
-</section>
-
-<!-- IMPACT SECTION -->
-<section class="py-24 bg-white text-center">
-  <div class="max-w-6xl mx-auto px-6">
-    <h2 class="text-4xl font-heading font-bold mb-14">Our Impact</h2>
-    <div class="grid md:grid-cols-3 gap-10">
-      <div class="bg-cream p-10 rounded-3xl shadow-sm">
-        <h3 class="text-5xl font-heading font-bold text-brand">0</h3>
-        <p class="mt-4 text-gray-600">Care Kits Distributed</p>
-      </div>
-      <div class="bg-cream p-10 rounded-3xl shadow-sm">
-        <h3 class="text-5xl font-heading font-bold text-brand">0</h3>
-        <p class="mt-4 text-gray-600">Community Drives Hosted</p>
-      </div>
-      <div class="bg-cream p-10 rounded-3xl shadow-sm">
-        <h3 class="text-5xl font-heading font-bold text-brand">0</h3>
-        <p class="mt-4 text-gray-600">Shelter Partnerships</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA -->
-<section class="py-24 bg-brand text-white text-center">
-  <h2 class="text-4xl font-heading font-bold mb-6">Be Part of the Solution</h2>
-  <p class="mb-8 text-lg">Every donation funds essential hygiene kits and real community impact.</p>
-  <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
-     target="_blank"
-     class="bg-white text-brand px-10 py-4 rounded-full font-semibold hover:bg-gray-100 transition">
-     Donate Now
-  </a>
-</section>
+<main class="pt-40 pb-24 text-center max-w-5xl mx-auto px-6">
+<h1 class="text-5xl font-heading font-bold mb-6">
+From Streets to <span class="text-brand">Shelters</span>
+</h1>
+<p class="text-lg text-gray-700">
+A youth-led nonprofit delivering essential hygiene kits to homeless shelters.
+</p>
+</main>
 
 <footer class="bg-deep text-white py-8 text-center">
-  <p>© 2026 Streets To Shelters | streets2shelters.org</p>
+© 2026 Streets To Shelters | streets2shelters.org
 </footer>
 
 </body>
