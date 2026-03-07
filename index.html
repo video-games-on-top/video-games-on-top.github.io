@@ -35,7 +35,12 @@ tailwind.config = {
 <header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200">
 <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
-<img src="images/icon (1).png" class="h-12">
+    <!-- ✅ Icon is clickable Home -->
+    <a href="index.html" aria-label="Go to Home" class="inline-flex items-center">
+      <img src="images/icon (1).png"
+           class="h-12 cursor-pointer transition duration-300 hover:scale-105 active:scale-95"
+           alt="Streets to Shelters Home">
+    </a>
 
 <nav class="hidden md:flex gap-8 text-sm font-medium items-center">
 
@@ -100,12 +105,7 @@ target="_blank"
 class="hidden md:inline-block bg-brand text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-brandDark transition">
 Donate
 </a>
-    <!-- ✅ Icon is clickable Home -->
-    <a href="index.html" aria-label="Go to Home" class="inline-flex items-center">
-      <img src="images/icon (1).png"
-           class="h-12 cursor-pointer transition duration-300 hover:scale-105 active:scale-95"
-           alt="Streets to Shelters Home">
-    </a>
+
 </div>
 </header>
 
