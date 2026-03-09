@@ -206,6 +206,7 @@ Volunteer
 <footer class="bg-deep text-white py-12">
   <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-10 text-center sm:text-left">
 
+    <!-- Column 1: Social Media -->
     <div class="space-y-4">
       <h3 class="font-heading font-bold text-lg mb-2">Follow Us</h3>
       <div class="flex flex-col gap-2">
@@ -216,6 +217,7 @@ Volunteer
       </div>
     </div>
 
+    <!-- Column 2: Quick Links -->
     <div class="space-y-4">
       <h3 class="font-heading font-bold text-lg mb-2">Quick Links</h3>
       <div class="flex flex-col gap-2">
@@ -223,12 +225,13 @@ Volunteer
         <a href="events.html" class="hover:text-brand hover:underline transition">Initiatives / Events</a>
         <a href="about.html" class="hover:text-brand hover:underline transition">About Us</a>
         <a href="members.html" class="hover:text-brand hover:underline transition">Members</a>
-        <a href="volunteer.html" class="hover:text-brand">Volunteer</a>
+        <a href="volunteer.html" class="hover:text-brand hover:underline transition">Volunteer</a>
         <a href="chapter.html" class="hover:text-brand hover:underline transition">Start a Chapter</a>
         <a href="contact.html" class="hover:text-brand hover:underline transition">Contact</a>
       </div>
     </div>
 
+    <!-- Column 3: Support / Donate -->
     <div class="space-y-4">
       <h3 class="font-heading font-bold text-lg mb-2">Support Us</h3>
       <div class="flex flex-col gap-2">
@@ -246,7 +249,7 @@ Volunteer
 
 <!-- ✅ Reveal on scroll script -->
 <script>
-  const revealEls = document.querySelectorAll('.reveal, .reveal-hero');
+  const revealEls = document.querySelectorAll('.reveal-slide, .reveal-hero, .reveal-item');
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
@@ -255,7 +258,7 @@ Volunteer
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.12 });
+  }, { threshold: 0.15 });
 
   revealEls.forEach(el => observer.observe(el));
 </script>
