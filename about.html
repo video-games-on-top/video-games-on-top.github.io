@@ -129,7 +129,8 @@ tailwind.config = {
 </header>
 
 <!-- MAIN -->
-<main class="pt-36 max-w-7xl mx-auto px-6 space-y-16">
+<main class="pt-36 max-w-7xl mx-auto px-6 space-y-16 pb-40 md:pb-56">
+  <!-- Added pb-40 / md:pb-56 to create gap between last card and footer -->
 
   <!-- Page Title -->
   <section class="text-center fade-up">
@@ -141,32 +142,32 @@ tailwind.config = {
 
   <!-- News Cards -->
   <section class="reveal">
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-    
-    <div class="bg-white p-6 rounded-3xl shadow-sm card-hover reveal">
-      <img src="news1.jpg" alt="News" class="w-full h-48 object-cover rounded-2xl mb-4">
-      <h2 class="font-heading font-bold text-xl mb-2">Community Drive Success</h2>
-      <p class="text-gray-600 mb-4">Our latest hygiene kit drive provided over 500 kits to local shelters this month.</p>
-      <a href="#" class="font-semibold hover-link">Read More →</a>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+
+      <div class="bg-white p-6 rounded-3xl shadow-sm card-hover reveal">
+        <img src="news1.jpg" alt="News" class="w-full h-48 object-cover rounded-2xl mb-4">
+        <h2 class="font-heading font-bold text-xl mb-2">Community Drive Success</h2>
+        <p class="text-gray-600 mb-4">Our latest hygiene kit drive provided over 500 kits to local shelters this month.</p>
+        <a href="#" class="font-semibold hover-link">Read More →</a>
+      </div>
+
+      <div class="bg-white p-6 rounded-3xl shadow-sm card-hover reveal">
+        <img src="news2.jpg" alt="News" class="w-full h-48 object-cover rounded-2xl mb-4">
+        <h2 class="font-heading font-bold text-xl mb-2">New Chapter Launched</h2>
+        <p class="text-gray-600 mb-4">Students in San Antonio started a new chapter to expand local outreach efforts.</p>
+        <a href="#" class="font-semibold hover-link">Read More →</a>
+      </div>
+
+      <div class="bg-white p-6 rounded-3xl shadow-sm card-hover reveal">
+        <img src="news3.jpg" alt="News" class="w-full h-48 object-cover rounded-2xl mb-4">
+        <h2 class="font-heading font-bold text-xl mb-2">Partnership Announcement</h2>
+        <p class="text-gray-600 mb-4">We’re partnering with local businesses to increase access to hygiene kits and resources.</p>
+        <a href="#" class="font-semibold hover-link">Read More →</a>
+      </div>
+
+      <!-- Add more news cards as needed -->
+
     </div>
-
-    <div class="bg-white p-6 rounded-3xl shadow-sm card-hover reveal">
-      <img src="news2.jpg" alt="News" class="w-full h-48 object-cover rounded-2xl mb-4">
-      <h2 class="font-heading font-bold text-xl mb-2">New Chapter Launched</h2>
-      <p class="text-gray-600 mb-4">Students in San Antonio started a new chapter to expand local outreach efforts.</p>
-      <a href="#" class="font-semibold hover-link">Read More →</a>
-    </div>
-
-    <div class="bg-white p-6 rounded-3xl shadow-sm card-hover reveal">
-      <img src="news3.jpg" alt="News" class="w-full h-48 object-cover rounded-2xl mb-4">
-      <h2 class="font-heading font-bold text-xl mb-2">Partnership Announcement</h2>
-      <p class="text-gray-600 mb-4">We’re partnering with local businesses to increase access to hygiene kits and resources.</p>
-      <a href="#" class="font-semibold hover-link">Read More →</a>
-    </div>
-
-    <!-- Add more news cards as needed -->
-
-  </div>
   </section>
 </main>
 
