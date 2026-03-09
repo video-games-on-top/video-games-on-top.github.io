@@ -1,1 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Volunteer | Streets To Shelters</title>
+<link rel="icon" href="images/Logo1.png">
 
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        brand: '#7BAF9E',
+        brandDark: '#5E8F80',
+        cream: '#F4EFE6',
+        deep: '#2B1F1C'
+      },
+      fontFamily: {
+        heading: ['Playfair Display', 'serif'],
+        body: ['Inter', 'sans-serif']
+      }
+    }
+  }
+}
+</script>
+</head>
+
+<body class="bg-cream text-deep font-body scroll-smooth">
+
+<!-- NAVBAR -->
+<header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200">
+<div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+<a href="index.html" class="inline-flex items-center">
+<img src="images/icon (1).png"
+class="h-12 cursor-pointer transition duration-300 hover:scale-105"
+alt="Streets to Shelters Home">
+</a>
+
+<nav class="hidden md:flex gap-8 text-sm font-medium items-center">
+
+<a href="index.html" class="hover:text-brand transition">Home</a>
+
+<div class="relative group">
+<button class="hover:text-brand transition py-2 flex items-center gap-1">
+Initiatives
+<svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"
+fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+</svg>
+</button>
+
+<div class="absolute left-0 top-full w-56 bg-white rounded-2xl shadow-lg
+opacity-0 invisible translate-y-2
+group-hover:opacity-100 group-hover:visible group-hover:translate-y-0
+transition-all duration-300">
+
+<a href="events.html" class="block px-6 py-3 hover:bg-cream rounded-b-2xl">
+Streets to Shelters Events
+</a>
+</div>
+</div>
+
+<div class="relative group">
+<button class="hover:text-brand transition py-2 flex items-center gap-1">
+About Us
+<svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"
+fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+</svg>
+</button>
+
+<div class="absolute left-0 top-full w-64 bg-white rounded-2xl shadow-lg
+opacity-0 invisible translate-y-2
+group-hover:opacity-100 group-hover:visible group-hover:translate-y-0
+transition-all duration-300">
+
+<a href="about.html" class="block px-6 py-3 hover:bg-cream rounded-t-2xl">
+Streets to Shelters News
+</a>
+<a href="members.html" class="block px-6 py-3 hover:bg-cream">
+Members
+</a>
+<a href="contact.html" class="block px-6 py-3 hover:bg-cream rounded-b-2xl">
+Contact Us
+</a>
+</div>
+</div>
+
+<a href="chapter.html" class="hover:text-brand transition font-semibold">
+Start a Chapter
+</a>
+
+<a href="volunteer.html" class="text-brand font-semibold">
+Volunteer
+</a>
+
+</nav>
+
+<a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
+target="_blank"
+class="hidden md:inline-block bg-brand text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-brandDark transition">
+Donate
+</a>
+
+</div>
+</header>
+
+<!-- HERO -->
+<section class="pt-36 pb-24 text-center">
+<div class="max-w-3xl mx-auto px-6">
+
+<h1 class="text-5xl md:text-6xl font-heading font-bold mb-6">
+Become a <span class="text-brand">Volunteer</span>
+</h1>
+
+<p class="text-lg text-gray-700 mb-8">
+Our volunteers help assemble hygiene kits, organize drives, and support
+homeless shelters in our community. Every volunteer helps expand our impact.
+</p>
+
+<a href="YOUR_GOOGLE_FORM_LINK"
+target="_blank"
+class="bg-brand text-white px-10 py-4 rounded-full font-semibold hover:bg-brandDark transition">
+Apply to Volunteer
+</a>
+
+</div>
+</section>
+
+<!-- VOLUNTEER INFO -->
+<section class="py-24 bg-white">
+<div class="max-w-6xl mx-auto px-6 text-center">
+
+<h2 class="text-4xl font-heading font-bold mb-12">
+Ways You Can Help
+</h2>
+
+<div class="grid md:grid-cols-3 gap-10">
+
+<div class="bg-cream p-10 rounded-3xl">
+<h3 class="text-xl font-semibold mb-4">Assemble Care Kits</h3>
+<p class="text-gray-600">
+Help organize hygiene supplies and assemble kits that will be delivered to shelters.
+</p>
+</div>
+
+<div class="bg-cream p-10 rounded-3xl">
+<h3 class="text-xl font-semibold mb-4">Community Drives</h3>
+<p class="text-gray-600">
+Assist with donation drives and help collect essential resources for shelters.
+</p>
+</div>
+
+<div class="bg-cream p-10 rounded-3xl">
+<h3 class="text-xl font-semibold mb-4">Fundraising</h3>
+<p class="text-gray-600">
+Support fundraising efforts that help expand our impact and reach more shelters.
+</p>
+</div>
+
+</div>
+
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-deep text-white py-12">
+<div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-10 text-center sm:text-left">
+
+<div>
+<h3 class="font-heading font-bold text-lg mb-3">Follow Us</h3>
+<div class="flex flex-col gap-2">
+<a href="https://www.instagram.com/streets.to.shelter" class="hover:text-brand">Instagram</a>
+<a href="#" class="hover:text-brand">Facebook</a>
+<a href="#" class="hover:text-brand">TikTok</a>
+<a href="#" class="hover:text-brand">Linktree</a>
+</div>
+</div>
+
+<div>
+<h3 class="font-heading font-bold text-lg mb-3">Quick Links</h3>
+<div class="flex flex-col gap-2">
+<a href="index.html" class="hover:text-brand">Home</a>
+<a href="events.html" class="hover:text-brand">Initiatives / Events</a>
+<a href="about.html" class="hover:text-brand">About Us</a>
+<a href="members.html" class="hover:text-brand">Members</a>
+<a href="volunteer.html" class="hover:text-brand">Volunteer</a>
+<a href="chapter.html" class="hover:text-brand">Start a Chapter</a>
+<a href="contact.html" class="hover:text-brand">Contact</a>
+</div>
+</div>
+
+<div>
+<h3 class="font-heading font-bold text-lg mb-3">Support Us</h3>
+<a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
+class="hover:text-brand">Donate</a>
+<p class="text-gray-400 text-sm mt-4">© 2026 Streets To Shelters</p>
+</div>
+
+</div>
+</footer>
+
+</body>
+</html>
+```
