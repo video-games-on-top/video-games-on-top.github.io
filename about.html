@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About / News | Streets to Shelters</title>
+<title>News | Streets to Shelters</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="icon" href="images/Logo1.png">
 <script src="https://cdn.tailwindcss.com"></script>
@@ -28,14 +28,13 @@ tailwind.config = {
 </script>
 
 <style>
-/* Smooth scroll for fade animations */
-.fade-up {
+/* Fade-up / reveal */
+.fade-up, .reveal {
   opacity: 0;
   transform: translateY(40px);
   transition: all 0.8s ease;
 }
-
-.show {
+.is-visible, .show {
   opacity: 1;
   transform: translateY(0);
 }
@@ -76,10 +75,9 @@ tailwind.config = {
 <body class="bg-cream text-deep font-body">
 
 <!-- NAVBAR -->
-<header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200">
+<header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200 reveal">
   <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
-    <!-- ✅ Icon is clickable Home -->
     <a href="index.html" aria-label="Go to Home" class="inline-flex items-center">
       <img src="images/icon (1).png"
            class="h-12 cursor-pointer transition duration-300 hover:scale-105 active:scale-95"
@@ -87,10 +85,8 @@ tailwind.config = {
     </a>
 
     <nav class="hidden md:flex gap-8 text-sm font-medium items-center">
-
       <a href="index.html" class="hover:text-brand transition">Home</a>
 
-      <!-- Initiatives Dropdown -->
       <div class="relative group">
         <button class="hover:text-brand transition py-2 flex items-center gap-1">
           Initiatives
@@ -104,7 +100,6 @@ tailwind.config = {
         </div>
       </div>
 
-      <!-- About Us Dropdown -->
       <div class="relative group">
         <button class="hover:text-brand transition py-2 flex items-center gap-1">
           About Us
@@ -120,11 +115,8 @@ tailwind.config = {
         </div>
       </div>
 
-<a href="volunteer.html" class="hover:text-brand transition">
-Volunteer
-</a>
-
-      <a href="chapter.html" class="hover:text-brand transition ">Start a Chapter</a>
+      <a href="volunteer.html" class="hover:text-brand transition">Volunteer</a>
+      <a href="chapter.html" class="hover:text-brand transition">Start a Chapter</a>
     </nav>
 
     <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
@@ -148,31 +140,30 @@ Volunteer
   </section>
 
   <!-- News Cards -->
-  <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 fade-up">
+  <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
     
-    <!-- Example News Card -->
-    <div class="bg-white p-6 rounded-3xl shadow-sm card-hover">
+    <div class="bg-white p-6 rounded-3xl shadow-sm card-hover reveal">
       <img src="news1.jpg" alt="News" class="w-full h-48 object-cover rounded-2xl mb-4">
       <h2 class="font-heading font-bold text-xl mb-2">Community Drive Success</h2>
       <p class="text-gray-600 mb-4">Our latest hygiene kit drive provided over 500 kits to local shelters this month.</p>
       <a href="#" class="font-semibold hover-link">Read More →</a>
     </div>
 
-    <div class="bg-white p-6 rounded-3xl shadow-sm card-hover">
+    <div class="bg-white p-6 rounded-3xl shadow-sm card-hover reveal">
       <img src="news2.jpg" alt="News" class="w-full h-48 object-cover rounded-2xl mb-4">
       <h2 class="font-heading font-bold text-xl mb-2">New Chapter Launched</h2>
       <p class="text-gray-600 mb-4">Students in San Antonio started a new chapter to expand local outreach efforts.</p>
       <a href="#" class="font-semibold hover-link">Read More →</a>
     </div>
 
-    <div class="bg-white p-6 rounded-3xl shadow-sm card-hover">
+    <div class="bg-white p-6 rounded-3xl shadow-sm card-hover reveal">
       <img src="news3.jpg" alt="News" class="w-full h-48 object-cover rounded-2xl mb-4">
       <h2 class="font-heading font-bold text-xl mb-2">Partnership Announcement</h2>
       <p class="text-gray-600 mb-4">We’re partnering with local businesses to increase access to hygiene kits and resources.</p>
       <a href="#" class="font-semibold hover-link">Read More →</a>
     </div>
 
-    <!-- Duplicate cards as needed -->
+    <!-- Add more news cards as needed -->
 
   </section>
 
@@ -182,7 +173,6 @@ Volunteer
 <footer class="bg-deep text-white py-12">
   <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-10 text-center sm:text-left">
 
-    <!-- Column 1: Social Media -->
     <div class="space-y-4">
       <h3 class="font-heading font-bold text-lg mb-2">Follow Us</h3>
       <div class="flex flex-col gap-2">
@@ -193,7 +183,6 @@ Volunteer
       </div>
     </div>
 
-    <!-- Column 2: Quick Links -->
     <div class="space-y-4">
       <h3 class="font-heading font-bold text-lg mb-2">Quick Links</h3>
       <div class="flex flex-col gap-2">
@@ -207,15 +196,12 @@ Volunteer
       </div>
     </div>
 
-    <!-- Column 3: Support / Donate -->
     <div class="space-y-4">
       <h3 class="font-heading font-bold text-lg mb-2">Support Us</h3>
       <div class="flex flex-col gap-2">
         <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
            target="_blank"
-           class="hover:text-brand hover:underline transition">
-          Donate
-        </a>
+           class="hover:text-brand hover:underline transition">Donate</a>
         <p class="text-gray-400 text-sm mt-2">© 2026 Streets To Shelters</p>
       </div>
     </div>
@@ -223,7 +209,20 @@ Volunteer
   </div>
 </footer>
 
+<!-- Reveal on scroll script -->
+<script>
+const revealEls = document.querySelectorAll('.fade-up, .reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('is-visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
 
+revealEls.forEach(el => observer.observe(el));
+</script>
 
 </body>
 </html>
