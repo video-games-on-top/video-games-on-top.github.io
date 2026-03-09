@@ -34,13 +34,13 @@ html {
 }
 
 /* Scroll Animation */
-.fade-up {
+.fade-up, .reveal {
   opacity: 0;
   transform: translateY(40px);
   transition: all 0.8s ease;
 }
 
-.show {
+.show, .is-visible {
   opacity: 1;
   transform: translateY(0);
 }
@@ -79,10 +79,9 @@ html {
 <body class="bg-cream text-deep font-body">
 
 <!-- NAVBAR -->
-<header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200 fade-up">
+<header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200 reveal">
 <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
-<!-- ✅ LOGO NOW CLICKS TO HOME -->
 <a href="index.html" class="grow-hover">
   <img src="images/icon (1).png" class="h-12 cursor-pointer">
 </a>
@@ -91,7 +90,6 @@ html {
 
 <a href="index.html" class="hover:text-brand transition">Home</a>
 
-<!-- Initiatives -->
 <div class="relative group">
 <button class="hover:text-brand transition py-2 flex items-center gap-1">
 Initiatives
@@ -102,14 +100,12 @@ fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
 </button>
 
 <div class="absolute left-0 top-full w-56 bg-white rounded-2xl shadow-lg dropdown">
-
 <a href="events.html" class="block px-6 py-3 hover:bg-cream rounded-b-2xl">
 Streets to Shelters Events
 </a>
 </div>
 </div>
 
-<!-- About -->
 <div class="relative group">
 <button class="hover:text-brand transition py-2 flex items-center gap-1">
 About Us
@@ -131,10 +127,11 @@ Contact Us
 </a>
 </div>
 </div>
+
 <a href="volunteer.html" class="hover:text-brand transition">
 Volunteer
 </a>
-<a href="chapter.html" class="hover:text-brand transition ">
+<a href="chapter.html" class="hover:text-brand transition">
 Start a Chapter
 </a>
 
@@ -150,9 +147,9 @@ Donate
 </header>
 
 <!-- CONTACT FORM -->
-<main class="pt-40 pb-24 max-w-3xl mx-auto px-6">
+<main class="pt-40 pb-24 max-w-3xl mx-auto px-6 space-y-12">
 
-<h1 class="text-5xl font-heading font-bold text-center mb-12 fade-up">
+<h1 class="text-5xl font-heading font-bold text-center fade-up">
 Contact Us
 </h1>
 
@@ -191,7 +188,6 @@ Send Message
 <footer class="bg-deep text-white py-12">
   <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-10 text-center sm:text-left">
 
-    <!-- Column 1: Social Media -->
     <div class="space-y-4">
       <h3 class="font-heading font-bold text-lg mb-2">Follow Us</h3>
       <div class="flex flex-col gap-2">
@@ -202,7 +198,6 @@ Send Message
       </div>
     </div>
 
-    <!-- Column 2: Quick Links -->
     <div class="space-y-4">
       <h3 class="font-heading font-bold text-lg mb-2">Quick Links</h3>
       <div class="flex flex-col gap-2">
@@ -216,15 +211,12 @@ Send Message
       </div>
     </div>
 
-    <!-- Column 3: Support / Donate -->
     <div class="space-y-4">
       <h3 class="font-heading font-bold text-lg mb-2">Support Us</h3>
       <div class="flex flex-col gap-2">
         <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
            target="_blank"
-           class="hover:text-brand hover:underline transition">
-          Donate
-        </a>
+           class="hover:text-brand hover:underline transition">Donate</a>
         <p class="text-gray-400 text-sm mt-2">© 2026 Streets To Shelters</p>
       </div>
     </div>
@@ -232,7 +224,21 @@ Send Message
   </div>
 </footer>
 
+<!-- Reveal on scroll script -->
+<script>
+const revealEls = document.querySelectorAll('.fade-up, .reveal');
 
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+
+revealEls.forEach(el => observer.observe(el));
+</script>
 
 </body>
 </html>
