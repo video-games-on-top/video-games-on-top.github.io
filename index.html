@@ -132,20 +132,7 @@ tailwind.config = {
   66% { transform: translateY(30px) rotate(-4deg); }
   100% { transform: translateY(0px) rotate(0deg); }
   /* Cursor trail dots */
-.cursor-dot {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #7BAF9E; /* main green */
-  pointer-events: none;
-  opacity: 0.6;
-  transform: translate(-50%, -50%);
-  transition: transform 0.1s ease, opacity 0.3s ease;
-  z-index: 9999;
-}
+
 }
 
 /* Brand colors */
@@ -331,7 +318,7 @@ tailwind.config = {
 
 </section>
 
-  <div id="cursor-trail"></div>
+
 
 <!-- PROCESS -->
 <section id="process" class="py-24 bg-white reveal-slide">
@@ -438,25 +425,7 @@ tailwind.config = {
   }, { threshold: 0.5 });
   counters.forEach(counter => counterObserver.observe(counter));
 
-  // Create multiple dots for smooth trailing
-const trailCount = 5;
-const dots = [];
 
-for (let i = 0; i < trailCount; i++) {
-  const dot = document.createElement('div');
-  dot.classList.add('cursor-dot');
-  document.body.appendChild(dot);
-  dots.push(dot);
-}
-
-// Move dots with slight delay for trailing effect
-document.addEventListener('mousemove', e => {
-  dots.forEach((dot, i) => {
-    setTimeout(() => {
-      dot.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-    }, i * 30); // delay between dots
-  });
-});
 </script>
 
 </body>
