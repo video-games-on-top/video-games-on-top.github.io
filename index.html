@@ -71,47 +71,62 @@ tailwind.config = {
   transform:translateY(-6px);
   box-shadow:0 18px 40px rgba(0,0,0,0.12);
 }
-.impact-blob{
-position:relative;
-width:650px;
-height:380px;
+.impact-blob {
+  position: relative;
+  width: 650px;
+  height: 380px;
+  background: linear-gradient(135deg, #7BAF9E, #689782);
+  border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  padding: 60px;
 
-background:linear-gradient(135deg,#7BAF9E,#689782);
-
-border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%;
-
-box-shadow:0 30px 60px rgba(0,0,0,0.15);
-
-display:flex;
-align-items:center;
-justify-content:center;
-text-align:center;
-color:white;
-padding:60px;
+  animation: floatBlob 6s ease-in-out infinite alternate;
 }
 
-/* floating bubbles */
-
-.impact-blob::before{
-content:"";
-position:absolute;
-width:60px;
-height:60px;
-border-radius:50%;
-background:linear-gradient(135deg,#7BAF9E,#689782);
-top:-25px;
-left:-25px;
+/* Floating animation for the blob */
+@keyframes floatBlob {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-15px) rotate(2deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
 }
 
-.impact-blob::after{
-content:"";
-position:absolute;
-width:35px;
-height:35px;
-border-radius:50%;
-background:linear-gradient(135deg,#7BAF9E,#689782);
-bottom:-20px;
-left:45%;
+/* Floating bubbles */
+.impact-blob::before,
+.impact-blob::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7BAF9E, #689782);
+}
+
+/* Bubble 1 */
+.impact-blob::before {
+  width: 60px;
+  height: 60px;
+  top: -25px;
+  left: -25px;
+  animation: floatBubble 5s ease-in-out infinite alternate;
+}
+
+/* Bubble 2 */
+.impact-blob::after {
+  width: 35px;
+  height: 35px;
+  bottom: -20px;
+  left: 45%;
+  animation: floatBubble 4s ease-in-out infinite alternate-reverse;
+}
+
+/* Floating animation for bubbles */
+@keyframes floatBubble {
+  0% { transform: translateY(0) translateX(0); opacity: 0.8; }
+  50% { transform: translateY(-20px) translateX(10px); opacity: 0.5; }
+  100% { transform: translateY(0) translateX(0); opacity: 0.8; }
 }
 
 /* Brand colors */
