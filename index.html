@@ -420,6 +420,26 @@ tailwind.config = {
     });
   }, { threshold: 0.5 });
   counters.forEach(counter => counterObserver.observe(counter));
+
+  // Create multiple dots for smooth trailing
+const trailCount = 5;
+const dots = [];
+
+for (let i = 0; i < trailCount; i++) {
+  const dot = document.createElement('div');
+  dot.classList.add('cursor-dot');
+  document.body.appendChild(dot);
+  dots.push(dot);
+}
+
+// Move dots with slight delay for trailing effect
+document.addEventListener('mousemove', e => {
+  dots.forEach((dot, i) => {
+    setTimeout(() => {
+      dot.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+    }, i * 30); // delay between dots
+  });
+});
 </script>
 
 </body>
