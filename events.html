@@ -261,6 +261,19 @@ entry.target.classList.add('is-visible');
 }, { threshold: 0.15 });
 
 revealElements.forEach(el => observer.observe(el));
+    // Mobile Menu Logic Added Here
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const closeMenuBtn = document.getElementById('close-menu-btn');
+  const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+
+  if(mobileMenuBtn && closeMenuBtn && mobileMenuOverlay) {
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenuOverlay.classList.remove('translate-x-full');
+    });
+    closeMenuBtn.addEventListener('click', () => {
+      mobileMenuOverlay.classList.add('translate-x-full');
+    });
+  }
 </script>
 
 </body>
