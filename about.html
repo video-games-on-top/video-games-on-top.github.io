@@ -119,11 +119,19 @@ tailwind.config = {
       <a href="chapter.html" class="hover:text-brand transition">Start a Chapter</a>
     </nav>
 
-    <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
-      target="_blank"
-      class="hidden md:inline-block bg-brand text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-brandDark transition">
-      Donate
-    </a>
+    <div class="flex items-center gap-4">
+      <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
+         target="_blank"
+         class="hidden md:inline-block bg-brand text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-brandDark transition">
+        Donate
+      </a>
+      
+      <button id="mobile-menu-btn" class="md:hidden text-deep focus:outline-none p-2">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
+      </button>
+    </div>
 
   </div>
 </header>
