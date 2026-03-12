@@ -85,31 +85,37 @@ html { scroll-behavior: smooth; }
   transform: translateY(10px);
   transition: all 0.3s ease;
 }
-  /* =========================================
-   SCROLL REVEAL ANIMATIONS
+/* =========================================
+   NEW: CUSTOM MOUSE TRAIL
    ========================================= */
-.reveal-slide, .reveal-left, .reveal-right, .reveal-scale {
-  opacity: 0;
-  will-change: opacity, transform;
-}
-
-.reveal-slide { transform: translateY(40px); transition: opacity 900ms ease, transform 900ms ease; }
-.reveal-left { transform: translateX(-50px); transition: opacity 1000ms ease, transform 1000ms ease; }
-.reveal-right { transform: translateX(50px); transition: opacity 1000ms ease, transform 1000ms ease; }
-.reveal-scale { transform: scale(0.9) translateY(20px); transition: opacity 800ms ease, transform 800ms cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-
-.reveal-hero {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 1000ms ease, transform 1000ms ease;
-}
-
-/* Visible states */
-.reveal-slide.is-visible, .reveal-left.is-visible, .reveal-right.is-visible, .reveal-hero.is-visible {
-  opacity: 1; transform: translate(0);
-}
-.reveal-scale.is-visible {
-  opacity: 1; transform: scale(1) translateY(0);
+@media (pointer: fine) {
+  .cursor-dot, .cursor-outline {
+    position: fixed;
+    top: 0; left: 0;
+    border-radius: 50%;
+    z-index: 9999;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+  }
+  .cursor-dot {
+    width: 8px; height: 8px;
+    background-color: #7BAF9E;
+    transition: width 0.2s, height 0.2s;
+  }
+  .cursor-outline {
+    width: 25px; height: 25px;
+    border: 2px solid rgba(123, 175, 158, 0.5);
+    transition: width 0.2s, height 0.2s;
+  }
+  /* When hovering over links */
+  body.hovering-link .cursor-dot {
+    width: 0px; height: 0px;
+  }
+  body.hovering-link .cursor-outline {
+    width: 60px; height: 60px;
+    background-color: rgba(123, 175, 158, 0.1);
+    border-color: #7BAF9E;
+  }
 }
 
 </style>
