@@ -69,11 +69,44 @@ tailwind.config = {
   color: #7BAF9E;
   text-decoration: underline;
 }
+/* =========================================
+   NEW: CUSTOM MOUSE TRAIL
+   ========================================= */
+@media (pointer: fine) {
+  .cursor-dot, .cursor-outline {
+    position: fixed;
+    top: 0; left: 0;
+    border-radius: 50%;
+    z-index: 9999;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+  }
+  .cursor-dot {
+    width: 8px; height: 8px;
+    background-color: #7BAF9E;
+    transition: width 0.2s, height 0.2s;
+  }
+  .cursor-outline {
+    width: 25px; height: 25px;
+    border: 2px solid rgba(123, 175, 158, 0.5);
+    transition: width 0.2s, height 0.2s;
+  }
+  /* When hovering over links */
+  body.hovering-link .cursor-dot {
+    width: 0px; height: 0px;
+  }
+  body.hovering-link .cursor-outline {
+    width: 60px; height: 60px;
+    background-color: rgba(123, 175, 158, 0.1);
+    border-color: #7BAF9E;
+  }
+}
 </style>
 </head>
 
 <body class="bg-cream text-deep font-body">
-
+<div class="cursor-dot hidden md:block"></div>
+<div class="cursor-outline hidden md:block"></div>
 <!-- NAVBAR -->
 <header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200 reveal">
   <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
@@ -266,6 +299,32 @@ const observer = new IntersectionObserver((entries) => {
   }
 
 revealEls.forEach(el => observer.observe(el));
+  /* --- 2. Custom Cursor Tracking --- */
+    const cursorDot = document.querySelector('.cursor-dot');
+    const cursorOutline = document.querySelector('.cursor-outline');
+
+    if (cursorDot && cursorOutline && window.matchMedia("(pointer: fine)").matches) {
+      window.addEventListener('mousemove', (e) => {
+        const posX = e.clientX;
+        const posY = e.clientY;
+
+        // Instant follow for the dot
+        cursorDot.style.left = `${posX}px`;
+        cursorDot.style.top = `${posY}px`;
+
+        // Slight delay/easing for the outline using the Web Animations API
+        cursorOutline.animate({
+          left: `${posX}px`,
+          top: `${posY}px`
+        }, { duration: 500, fill: "forwards" });
+      });
+
+      // Add interactive state when hovering over links and buttons
+      document.querySelectorAll('a, button').forEach(el => {
+        el.addEventListener('mouseenter', () => document.body.classList.add('hovering-link'));
+        el.addEventListener('mouseleave', () => document.body.classList.remove('hovering-link'));
+      });
+    }
 </script>
 
 </body>
