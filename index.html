@@ -62,6 +62,17 @@ tailwind.config = {
     border-color: #7BAF9E;
   }
 }
+/* Add this inside your <style> tag */
+@media (pointer: fine) {
+  body {
+    cursor: none;
+  }
+
+  /* Make sure buttons and links also don't show the default pointer */
+  a, button {
+    cursor: none;
+  }
+}
 
 /* =========================================
    SCROLL REVEAL ANIMATIONS
