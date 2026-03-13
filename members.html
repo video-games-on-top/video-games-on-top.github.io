@@ -31,39 +31,61 @@ tailwind.config = {
 <style>
 html { scroll-behavior: smooth; }
 
-/* --- Scroll reveal --- */
+/* =========================================
+   UPGRADED: SCROLL REVEAL ANIMATIONS
+   ========================================= */
 .fade-up {
   opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  /* Added a slight scale for a more premium "pop in" feel */
+  transform: translateY(40px) scale(0.95);
+  /* Using cubic-bezier for buttery smooth deceleration */
+  transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: opacity, transform;
 }
-.fade-up.show { opacity: 1; transform: translateY(0); }
+.fade-up.show { 
+  opacity: 1; 
+  transform: translateY(0) scale(1); 
+}
 
-/* --- Scroll reveal delays --- */
-.delay-1 { transition-delay: 0.1s; }
-.delay-2 { transition-delay: 0.2s; }
-.delay-3 { transition-delay: 0.3s; }
-.delay-4 { transition-delay: 0.4s; }
-.delay-5 { transition-delay: 0.5s; }
-.delay-6 { transition-delay: 0.6s; }
-.delay-7 { transition-delay: 0.7s; }
-.delay-8 { transition-delay: 0.8s; }
-.delay-9 { transition-delay: 0.9s; }
-.delay-10 { transition-delay: 1.0s; }
-.delay-11 { transition-delay: 1.1s; }
-.delay-12 { transition-delay: 1.2s; }
-.delay-13 { transition-delay: 1.3s; }
-.delay-14 { transition-delay: 1.4s; }
+/* Tighter delays: 1.4s is too long to wait. Staggered by 0.05s now for a fluid wave. */
+.delay-1 { transition-delay: 0.05s; }
+.delay-2 { transition-delay: 0.10s; }
+.delay-3 { transition-delay: 0.15s; }
+.delay-4 { transition-delay: 0.20s; }
+.delay-5 { transition-delay: 0.25s; }
+.delay-6 { transition-delay: 0.30s; }
+.delay-7 { transition-delay: 0.35s; }
+.delay-8 { transition-delay: 0.40s; }
+.delay-9 { transition-delay: 0.45s; }
+.delay-10 { transition-delay: 0.50s; }
+.delay-11 { transition-delay: 0.55s; }
+.delay-12 { transition-delay: 0.60s; }
+.delay-13 { transition-delay: 0.65s; }
+.delay-14 { transition-delay: 0.70s; }
 
-/* --- Card hover --- */
+/* =========================================
+   UPGRADED: CARD HOVER EFFECTS
+   ========================================= */
 .card-hover {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  /* Smoother lift curve */
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.5s ease;
   will-change: transform, box-shadow;
 }
 .card-hover:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+  transform: translateY(-10px);
+  /* Soft, brand-tinted shadow instead of harsh gray */
+  box-shadow: 0 25px 50px -12px rgba(123, 175, 158, 0.25);
 }
+
+/* New: Image scales up slightly inside the circle when the card is hovered */
+.card-hover img {
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform;
+}
+.card-hover:hover img {
+  transform: scale(1.08);
+}
+
 
 /* --- Logo hover --- */
 .grow-hover { transition: transform 0.3s ease; }
@@ -85,20 +107,17 @@ html { scroll-behavior: smooth; }
   transform: translateY(10px);
   transition: all 0.3s ease;
 }
+
 /* =========================================
-   REPLACE YOUR EXISTING CURSOR CSS WITH THIS
+   CUSTOM CURSOR CSS (UNTOUCHED)
    ========================================= */
 @media (pointer: fine) {
-  /* Hides the default cursor on the entire page */
   html, body {
     cursor: none !important;
   }
-
-  /* Ensures the default cursor stays hidden on clickable items */
   a, button, [role="button"], input, select, textarea {
     cursor: none !important;
   }
-
   .cursor-dot, .cursor-outline {
     position: fixed;
     top: 0; left: 0;
@@ -106,23 +125,18 @@ html { scroll-behavior: smooth; }
     z-index: 9999;
     pointer-events: none;
     transform: translate(-50%, -50%);
-    /* This allows the cursor to flip colors against backgrounds */
     mix-blend-mode: difference; 
   }
-
   .cursor-dot {
     width: 12px; height: 12px;
-    background-color: #F4EFE6; /* Off-white works best with mix-blend-mode */
+    background-color: #F4EFE6; 
     transition: width 0.2s, height 0.2s;
   }
-
   .cursor-outline {
     width: 30px; height: 30px;
     border: 2px solid #567a6f; 
     transition: width 0.2s, height 0.2s;
   }
-
-  /* When hovering over links */
   body.hovering-link .cursor-dot {
     width: 0px; height: 0px;
   }
@@ -139,7 +153,6 @@ html { scroll-behavior: smooth; }
   <div class="cursor-dot hidden md:block"></div>
 <div class="cursor-outline hidden md:block"></div>
 
-<!-- NAVBAR -->
 <header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200 fade-up">
   <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
     <a href="index.html" class="grow-hover"><img src="images/icon (1).png" class="h-12 cursor-pointer"></a>
@@ -214,10 +227,8 @@ html { scroll-behavior: smooth; }
   </nav>
 </div>
 
-<!-- MAIN CONTENT -->
 <main class="pt-36 pb-24 max-w-7xl mx-auto px-6 space-y-24">
 
-<!-- Executive Leadership -->
 <section>
   <h2 class="text-4xl font-heading font-bold text-center mb-12 fade-up">Executive Leadership</h2>
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 justify-center">
@@ -247,7 +258,6 @@ html { scroll-behavior: smooth; }
   </div>
 </section>
 
-<!-- Executive Directors -->
 <section>
   <h2 class="text-4xl font-heading font-bold text-center mb-12 fade-up">Executive Directors</h2>
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 justify-center">
@@ -269,7 +279,6 @@ html { scroll-behavior: smooth; }
   </div>
 </section>
 
-<!-- Directors & Managers -->
 <section>
   <h2 class="text-4xl font-heading font-bold text-center mb-12 fade-up">Directors & Managers</h2>
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 justify-center">
@@ -350,14 +359,18 @@ html { scroll-behavior: smooth; }
 </main>
 
 <script>
-const observer = new IntersectionObserver(entries => {
+/* Upgraded Observer: Unobserves after revealing so it doesn't replay backwards/glitch */
+const observer = new IntersectionObserver((entries, observer) => {
   entries.forEach(entry => {
     if(entry.isIntersecting){
       entry.target.classList.add('show');
+      observer.unobserve(entry.target); // Stops tracking once visible
     }
   });
-});
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
 document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
     // Mobile Menu Logic Added Here
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');
   const closeMenuBtn = document.getElementById('close-menu-btn');
@@ -373,7 +386,6 @@ document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
   }
 </script>
 
-<!-- FOOTER -->
 <footer class="bg-deep text-white py-12">
   <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-10 text-center sm:text-left">
     <div class="space-y-4">
