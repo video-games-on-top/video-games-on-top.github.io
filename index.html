@@ -80,7 +80,7 @@ tailwind.config = {
 /* =========================================
    SCROLL REVEAL ANIMATIONS
    ========================================= */
-.reveal-slide, .reveal-left, .reveal-right, .reveal-scale, .reveal-diagonal {
+.reveal-slide, .reveal-left, .reveal-right, .reveal-scale {
   opacity: 0;
   will-change: opacity, transform;
 }
@@ -90,12 +90,6 @@ tailwind.config = {
 .reveal-right { transform: translateX(50px); transition: opacity 1000ms ease, transform 1000ms ease; }
 .reveal-scale { transform: scale(0.9) translateY(20px); transition: opacity 800ms ease, transform 800ms cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 
-/* NEW: Diagonal + Fade + Overshoot */
-.reveal-diagonal { 
-  transform: translate(60px, 60px); 
-  transition: opacity 1000ms ease, transform 1000ms cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-}
-
 .reveal-hero {
   opacity: 0;
   transform: translateY(40px);
@@ -103,7 +97,7 @@ tailwind.config = {
 }
 
 /* Visible states */
-.reveal-slide.is-visible, .reveal-left.is-visible, .reveal-right.is-visible, .reveal-hero.is-visible, .reveal-diagonal.is-visible {
+.reveal-slide.is-visible, .reveal-left.is-visible, .reveal-right.is-visible, .reveal-hero.is-visible {
   opacity: 1; transform: translate(0);
 }
 .reveal-scale.is-visible {
@@ -156,6 +150,65 @@ tailwind.config = {
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 2rem;
+}
+
+/* =========================================
+   CAROUSEL STYLES
+   ========================================= */
+.carousel-container {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.carousel-item {
+  position: absolute;
+  width: 500px;
+  height: 300px;
+  border-radius: 1rem;
+  transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+  opacity: 0;
+  z-index: 0;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  object-fit: cover;
+}
+.carousel-item.active {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  z-index: 5;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+.carousel-item.prev-1 {
+  opacity: 0.7;
+  transform: translateX(-45%) scale(0.8);
+  z-index: 4;
+}
+.carousel-item.next-1 {
+  opacity: 0.7;
+  transform: translateX(45%) scale(0.8);
+  z-index: 4;
+}
+.carousel-item.prev-2 {
+  opacity: 0.4;
+  transform: translateX(-75%) scale(0.6);
+  z-index: 3;
+}
+.carousel-item.next-2 {
+  opacity: 0.4;
+  transform: translateX(75%) scale(0.6);
+  z-index: 3;
+}
+
+@media (max-width: 768px) {
+  .carousel-container { height: 250px; }
+  .carousel-item { width: 280px; height: 180px; }
+  .carousel-item.prev-1 { transform: translateX(-40%) scale(0.85); }
+  .carousel-item.next-1 { transform: translateX(40%) scale(0.85); }
+  .carousel-item.prev-2 { transform: translateX(-70%) scale(0.65); opacity: 0; /* Hide 2nd level on very small screens for cleanliness */ }
+  .carousel-item.next-2 { transform: translateX(70%) scale(0.65); opacity: 0; }
 }
 </style>
 </head>
@@ -287,8 +340,6 @@ tailwind.config = {
   </div>
 </section>
 
-
-
 <section id="impact" class="py-24 px-6 reveal-slide overflow-hidden">
   <div class="max-w-5xl mx-auto">
     <div class="impact-container shadow-2xl">
@@ -385,47 +436,24 @@ tailwind.config = {
   </div>
 </section>
 
-<section id="gallery" class="pb-24 bg-white overflow-hidden">
+<section id="gallery" class="py-24 bg-cream/50 overflow-hidden reveal-slide">
   <div class="max-w-7xl mx-auto px-6">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-      
-      <div class="reveal-diagonal aspect-square rounded-3xl overflow-hidden shadow-md group hover-lift bg-gray-200" style="transition-delay: 0ms;">
-        <img src="images/sts1.jpg" alt="Gallery Image 1" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-      </div>
-      
-      <div class="reveal-diagonal aspect-square rounded-3xl overflow-hidden shadow-md group hover-lift bg-gray-200" style="transition-delay: 150ms;">
-        <img src="images/sts2.jpg" alt="Gallery Image 2" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-      </div>
-      
-      <div class="reveal-diagonal aspect-square rounded-3xl overflow-hidden shadow-md group hover-lift bg-gray-200" style="transition-delay: 300ms;">
-        <img src="images/sts3.jpg" alt="Gallery Image 3" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-      </div>
-      
-      <div class="reveal-diagonal aspect-square rounded-3xl overflow-hidden shadow-md group hover-lift bg-gray-200" style="transition-delay: 450ms;">
-        <img src="images/sts4.jpg" alt="Gallery Image 4" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-      </div>
-        <div class="reveal-diagonal aspect-square rounded-3xl overflow-hidden shadow-md group hover-lift bg-gray-200" style="transition-delay: 600ms;">
-        <img src="images/sts5.jpg" alt="Gallery Image 1" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-      </div>
-      
-      <div class="reveal-diagonal aspect-square rounded-3xl overflow-hidden shadow-md group hover-lift bg-gray-200" style="transition-delay: 750ms;">
-        <img src="images/sts6.jpg" alt="Gallery Image 2" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-      </div>
-      
-      <div class="reveal-diagonal aspect-square rounded-3xl overflow-hidden shadow-md group hover-lift bg-gray-200" style="transition-delay: 900ms;">
-        <img src="images/sts7.jpg" alt="Gallery Image 3" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-      </div>
-      
-      <div class="reveal-diagonal aspect-square rounded-3xl overflow-hidden shadow-md group hover-lift bg-gray-200" style="transition-delay: 1050ms;">
-        <img src="images/sts8.jpg" alt="Gallery Image 4" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-      </div>
-      
-      <div class="reveal-diagonal aspect-square rounded-3xl overflow-hidden shadow-md group hover-lift bg-gray-200" style="transition-delay: 1200ms;">
-        <img src="images/sts9.jpg" alt="Gallery Image 4" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-      </div>
-      
-      
+    <h2 class="text-4xl font-heading font-bold text-center mb-16 text-deep">Our Journey</h2>
+    <div class="carousel-container mb-12" id="interactive-carousel">
+      <img src="images/sts1.jpg" class="carousel-item" alt="New Image 1">
+      <img src="images/sts2.jpg" class="carousel-item" alt="New Image 2">
+      <img src="images/sts3.jpg" class="carousel-item" alt="New Image 1">
+      <img src="images/sts4.jpg" class="carousel-item" alt="New Image 2">
+      <img src="images/sts5.jpg" class="carousel-item" alt="New Image 1">
+      <img src="images/sts6.jpg" class="carousel-item" alt="New Image 2">
+      <img src="images/sts7.jpg" class="carousel-item" alt="New Image 1">
+      <img src="images/sts8.jpg" class="carousel-item" alt="New Image 2">
+      <img src="images/sts9.jpg" class="carousel-item" alt="New Image 1">
+
     </div>
+    
+    <div class="flex justify-center items-center gap-3" id="carousel-dots">
+      </div>
   </div>
 </section>
 
@@ -461,7 +489,15 @@ tailwind.config = {
       <div class="group flex justify-center transform transition duration-500 hover:-translate-y-2">
         <img src="" alt=" " class="h-16 md:h-20 object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500">
       </div>
-     
+      <div class="group flex justify-center transform transition duration-500 hover:-translate-y-2" style="transition-delay: 100ms;">
+        <img src="" alt=" " class="h-16 md:h-20 object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500">
+      </div>
+      <div class="group flex justify-center transform transition duration-500 hover:-translate-y-2" style="transition-delay: 200ms;">
+        <img src="" alt=" " class="h-16 md:h-20 object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500">
+      </div>
+      <div class="group flex justify-center transform transition duration-500 hover:-translate-y-2" style="transition-delay: 300ms;">
+        <img src="" alt=" " class="h-16 md:h-20 object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500">
+      </div>
     </div>
     <div class="mt-20 text-center">
       <p class="text-gray-500 font-medium">
@@ -471,8 +507,6 @@ tailwind.config = {
     </div>
   </div>
 </section>
-
-
 
 <footer class="bg-deep text-white py-12">
   <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-10 text-center sm:text-left">
@@ -552,8 +586,7 @@ tailwind.config = {
     }
 
     /* --- 3. Scroll Reveal Animations --- */
-    // Added .reveal-diagonal to the querySelectorAll string
-    const revealElements = document.querySelectorAll('.reveal-slide, .reveal-left, .reveal-right, .reveal-scale, .reveal-hero, .reveal-diagonal');
+    const revealElements = document.querySelectorAll('.reveal-slide, .reveal-left, .reveal-right, .reveal-scale, .reveal-hero');
     
     const revealObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
@@ -579,7 +612,7 @@ tailwind.config = {
           const target = +counter.getAttribute('data-target');
           
           // Speed adjustment: target / 50 makes it look smooth
-          const increment = target / 150; 
+          const increment = target / 30; 
           
           const updateCount = () => {
             const current = +counter.innerText;
@@ -604,6 +637,83 @@ tailwind.config = {
       const hero = document.querySelector('.reveal-hero');
       if (hero) hero.classList.add('is-visible');
     }, 100);
+
+    /* --- 6. Interactive Image Carousel --- */
+    const carouselItems = document.querySelectorAll('.carousel-item');
+    const dotsContainer = document.getElementById('carousel-dots');
+    let carouselIndex = 0;
+    let carouselInterval;
+
+    if (carouselItems.length > 0) {
+      // Create navigation dots dynamically based on the number of images
+      carouselItems.forEach((_, idx) => {
+        const dot = document.createElement('button');
+        dot.setAttribute('aria-label', `Go to slide ${idx + 1}`);
+        // Base classes
+        dot.classList.add('h-3', 'rounded-full', 'transition-all', 'duration-300', 'hover:bg-brand');
+        
+        if(idx === 0) {
+          dot.classList.add('bg-brand', 'w-8');
+        } else {
+          dot.classList.add('bg-brand/30', 'w-3');
+        }
+
+        dot.addEventListener('click', () => {
+          carouselIndex = idx;
+          updateCarousel();
+          resetCarouselTimer();
+        });
+        dotsContainer.appendChild(dot);
+      });
+
+      const dots = dotsContainer.querySelectorAll('button');
+
+      const updateCarousel = () => {
+        const total = carouselItems.length;
+        carouselItems.forEach((item, index) => {
+          // Remove all spatial classes
+          item.classList.remove('active', 'prev-1', 'next-1', 'prev-2', 'next-2');
+          
+          // Assign dynamic classes based on current index
+          if (index === carouselIndex) {
+            item.classList.add('active');
+          } else if (index === (carouselIndex - 1 + total) % total) {
+            item.classList.add('prev-1');
+          } else if (index === (carouselIndex + 1) % total) {
+            item.classList.add('next-1');
+          } else if (index === (carouselIndex - 2 + total) % total) {
+            item.classList.add('prev-2');
+          } else if (index === (carouselIndex + 2) % total) {
+            item.classList.add('next-2');
+          }
+        });
+
+        // Update dot styles
+        dots.forEach((dot, idx) => {
+          if(idx === carouselIndex) {
+            dot.classList.add('bg-brand', 'w-8');
+            dot.classList.remove('bg-brand/30', 'w-3');
+          } else {
+            dot.classList.remove('bg-brand', 'w-8');
+            dot.classList.add('bg-brand/30', 'w-3');
+          }
+        });
+      };
+
+      const nextSlide = () => {
+        carouselIndex = (carouselIndex + 1) % carouselItems.length;
+        updateCarousel();
+      };
+
+      const resetCarouselTimer = () => {
+        clearInterval(carouselInterval);
+        carouselInterval = setInterval(nextSlide, 3000); // Auto-scroll every 3 seconds
+      };
+
+      // Initialization
+      updateCarousel();
+      resetCarouselTimer();
+    }
 
   });
 </script>
