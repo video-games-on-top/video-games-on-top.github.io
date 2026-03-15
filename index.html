@@ -80,7 +80,7 @@ tailwind.config = {
 /* =========================================
    SCROLL REVEAL ANIMATIONS
    ========================================= */
-.reveal-slide, .reveal-left, .reveal-right, .reveal-scale {
+.reveal-slide, .reveal-left, .reveal-right, .reveal-scale, .reveal-diagonal {
   opacity: 0;
   will-change: opacity, transform;
 }
@@ -90,6 +90,12 @@ tailwind.config = {
 .reveal-right { transform: translateX(50px); transition: opacity 1000ms ease, transform 1000ms ease; }
 .reveal-scale { transform: scale(0.9) translateY(20px); transition: opacity 800ms ease, transform 800ms cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 
+/* NEW: Diagonal + Fade + Overshoot */
+.reveal-diagonal { 
+  transform: translate(60px, 60px); 
+  transition: opacity 1000ms ease, transform 1000ms cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+}
+
 .reveal-hero {
   opacity: 0;
   transform: translateY(40px);
@@ -97,7 +103,7 @@ tailwind.config = {
 }
 
 /* Visible states */
-.reveal-slide.is-visible, .reveal-left.is-visible, .reveal-right.is-visible, .reveal-hero.is-visible {
+.reveal-slide.is-visible, .reveal-left.is-visible, .reveal-right.is-visible, .reveal-hero.is-visible, .reveal-diagonal.is-visible {
   opacity: 1; transform: translate(0);
 }
 .reveal-scale.is-visible {
@@ -379,6 +385,50 @@ tailwind.config = {
   </div>
 </section>
 
+<section id="gallery" class="pb-24 bg-white overflow-hidden">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+      
+      <div class="reveal-diagonal aspect-square rounded-3xl overflow-hidden shadow-md group hover-lift bg-gray-200" style="transition-delay: 0ms;">
+        <img src="images/sts1.jpg" alt="Gallery Image 1" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+      </div>
+      
+      <div class="reveal-diagonal aspect-square rounded-3xl overflow-hidden shadow-md group hover-lift bg-gray-200" style="transition-delay: 150ms;">
+        <img src="images/sts2.jpg" alt="Gallery Image 2" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+      </div>
+      
+      <div class="reveal-diagonal aspect-square rounded-3xl overflow-hidden shadow-md group hover-lift bg-gray-200" style="transition-delay: 300ms;">
+        <img src="images/sts3.jpg" alt="Gallery Image 3" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+      </div>
+      
+      <div class="reveal-diagonal aspect-square rounded-3xl overflow-hidden shadow-md group hover-lift bg-gray-200" style="transition-delay: 450ms;">
+        <img src="images/sts4.jpg" alt="Gallery Image 4" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+      </div>
+        <div class="reveal-diagonal aspect-square rounded-3xl overflow-hidden shadow-md group hover-lift bg-gray-200" style="transition-delay: 600ms;">
+        <img src="images/sts5.jpg" alt="Gallery Image 1" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+      </div>
+      
+      <div class="reveal-diagonal aspect-square rounded-3xl overflow-hidden shadow-md group hover-lift bg-gray-200" style="transition-delay: 750ms;">
+        <img src="images/sts6.jpg" alt="Gallery Image 2" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+      </div>
+      
+      <div class="reveal-diagonal aspect-square rounded-3xl overflow-hidden shadow-md group hover-lift bg-gray-200" style="transition-delay: 900ms;">
+        <img src="images/sts7.jpg" alt="Gallery Image 3" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+      </div>
+      
+      <div class="reveal-diagonal aspect-square rounded-3xl overflow-hidden shadow-md group hover-lift bg-gray-200" style="transition-delay: 1050ms;">
+        <img src="images/sts8.jpg" alt="Gallery Image 4" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+      </div>
+      
+      <div class="reveal-diagonal aspect-square rounded-3xl overflow-hidden shadow-md group hover-lift bg-gray-200" style="transition-delay: 1200ms;">
+        <img src="images/sts9.jpg" alt="Gallery Image 4" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+      </div>
+      
+      
+    </div>
+  </div>
+</section>
+
 <section class="py-24 bg-cream reveal-scale">
   <div class="max-w-5xl mx-auto px-6 text-center">
     <div class="bg-brand rounded-3xl p-12 md:p-16 shadow-2xl relative overflow-hidden transition-transform duration-500 hover:-translate-y-2 hover:shadow-[0_30px_60px_-15px_rgba(123,175,158,0.5)]">
@@ -411,15 +461,7 @@ tailwind.config = {
       <div class="group flex justify-center transform transition duration-500 hover:-translate-y-2">
         <img src="" alt=" " class="h-16 md:h-20 object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500">
       </div>
-      <div class="group flex justify-center transform transition duration-500 hover:-translate-y-2" style="transition-delay: 100ms;">
-        <img src="" alt=" " class="h-16 md:h-20 object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500">
-      </div>
-      <div class="group flex justify-center transform transition duration-500 hover:-translate-y-2" style="transition-delay: 200ms;">
-        <img src="" alt=" " class="h-16 md:h-20 object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500">
-      </div>
-      <div class="group flex justify-center transform transition duration-500 hover:-translate-y-2" style="transition-delay: 300ms;">
-        <img src="" alt=" " class="h-16 md:h-20 object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500">
-      </div>
+     
     </div>
     <div class="mt-20 text-center">
       <p class="text-gray-500 font-medium">
@@ -510,7 +552,8 @@ tailwind.config = {
     }
 
     /* --- 3. Scroll Reveal Animations --- */
-    const revealElements = document.querySelectorAll('.reveal-slide, .reveal-left, .reveal-right, .reveal-scale, .reveal-hero');
+    // Added .reveal-diagonal to the querySelectorAll string
+    const revealElements = document.querySelectorAll('.reveal-slide, .reveal-left, .reveal-right, .reveal-scale, .reveal-hero, .reveal-diagonal');
     
     const revealObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
@@ -527,36 +570,34 @@ tailwind.config = {
     revealElements.forEach(el => revealObserver.observe(el));
 
     /* --- 4. Impact Number Counter --- */
-    // Note: Make sure to change data-target="0" in your HTML to actual numbers (e.g., data-target="1500")
-/* --- 4. Impact Number Counter --- */
-const counters = document.querySelectorAll('[data-target]');
+    const counters = document.querySelectorAll('[data-target]');
 
-const counterObserver = new IntersectionObserver((entries, observer) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const counter = entry.target;
-      const target = +counter.getAttribute('data-target');
-      
-      // Speed adjustment: target / 50 makes it look smooth
-      const increment = target / 30; 
-      
-      const updateCount = () => {
-        const current = +counter.innerText;
-        if (current < target) {
-          counter.innerText = Math.ceil(current + increment);
-          setTimeout(updateCount, 30);
-        } else {
-          counter.innerText = target;
+    const counterObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const counter = entry.target;
+          const target = +counter.getAttribute('data-target');
+          
+          // Speed adjustment: target / 50 makes it look smooth
+          const increment = target / 30; 
+          
+          const updateCount = () => {
+            const current = +counter.innerText;
+            if (current < target) {
+              counter.innerText = Math.ceil(current + increment);
+              setTimeout(updateCount, 30);
+            } else {
+              counter.innerText = target;
+            }
+          };
+          
+          updateCount();
+          observer.unobserve(counter);
         }
-      };
-      
-      updateCount();
-      observer.unobserve(counter);
-    }
-  });
-}, { threshold: 0.5 });
+      });
+    }, { threshold: 0.5 });
 
-counters.forEach(counter => counterObserver.observe(counter));
+    counters.forEach(counter => counterObserver.observe(counter));
 
     /* --- 5. Trigger Hero Animation on Load --- */
     setTimeout(() => {
