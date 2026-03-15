@@ -297,7 +297,7 @@ tailwind.config = {
             <p class="text-white/80 uppercase tracking-widest text-sm font-semibold">Care Kits Distributed</p>
           </div>
           <div class="space-y-2">
-            <h3 class="text-6xl font-bold font-heading" data-target="15">0<span>+</span></h3>
+            <h3 class="text-6xl font-bold font-heading"><span data-target="15">0</span><span>+</span></h3>
             <p class="text-white/80 uppercase tracking-widest text-sm font-semibold">Volunteers</p>
           </div>
           <div class="space-y-2">
@@ -528,35 +528,35 @@ tailwind.config = {
 
     /* --- 4. Impact Number Counter --- */
     // Note: Make sure to change data-target="0" in your HTML to actual numbers (e.g., data-target="1500")
-    const counters = document.querySelectorAll('.font-heading[data-target]');
-    
-    const counterObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const counter = entry.target;
-          const target = +counter.getAttribute('data-target');
-          const speed = 200; // Lower is faster
-          
-          if (target > 0) {
-            const updateCount = () => {
-              const current = +counter.innerText;
-              const increment = target / speed;
+/* --- 4. Impact Number Counter --- */
+const counters = document.querySelectorAll('[data-target]');
 
-              if (current < target) {
-                counter.innerText = Math.ceil(current + increment);
-                setTimeout(updateCount, 15);
-              } else {
-                counter.innerText = target;
-              }
-            };
-            updateCount();
-          }
-          observer.unobserve(counter);
+const counterObserver = new IntersectionObserver((entries, observer) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const counter = entry.target;
+      const target = +counter.getAttribute('data-target');
+      
+      // Speed adjustment: target / 50 makes it look smooth
+      const increment = target / 50; 
+      
+      const updateCount = () => {
+        const current = +counter.innerText;
+        if (current < target) {
+          counter.innerText = Math.ceil(current + increment);
+          setTimeout(updateCount, 30);
+        } else {
+          counter.innerText = target;
         }
-      });
-    }, { threshold: 0.5 }); // Starts counting when section is 50% visible
+      };
+      
+      updateCount();
+      observer.unobserve(counter);
+    }
+  });
+}, { threshold: 0.5 });
 
-    counters.forEach(counter => counterObserver.observe(counter));
+counters.forEach(counter => counterObserver.observe(counter));
 
     /* --- 5. Trigger Hero Animation on Load --- */
     setTimeout(() => {
