@@ -58,7 +58,7 @@ tailwind.config = {
 
   .cursor-dot {
     width: 12px; height: 12px;
-    background-color: deep; /* Off-white works best with mix-blend-mode */
+    background-color: cream; /* Off-white works best with mix-blend-mode */
     transition: width 0.2s, height 0.2s;
   }
 
@@ -651,12 +651,12 @@ tailwind.config = {
         const dot = document.createElement('button');
         dot.setAttribute('aria-label', `Go to slide ${idx + 1}`);
         // Base classes
-        dot.classList.add('h-3', 'rounded-full', 'transition-all', 'duration-300', 'hover:bg-brand');
+        dot.classList.add('h-5', 'rounded-full', 'transition-all', 'duration-300', 'hover:bg-brand');
         
         if(idx === 0) {
-          dot.classList.add('bg-deep', 'w-8');
+          dot.classList.add('bg-deep', 'w-13');
         } else {
-          dot.classList.add('bg-deep/30', 'w-3');
+          dot.classList.add('bg-deep/30', 'w-5');
         }
 
         dot.addEventListener('click', () => {
@@ -692,11 +692,11 @@ tailwind.config = {
         // Update dot styles
         dots.forEach((dot, idx) => {
           if(idx === carouselIndex) {
-            dot.classList.add('bg-brand', 'w-8');
-            dot.classList.remove('bg-brand/30', 'w-3');
+            dot.classList.add('bg-deep', 'w-13');
+            dot.classList.remove('bg-deep/30', 'w-5');
           } else {
-            dot.classList.remove('bg-brand', 'w-8');
-            dot.classList.add('bg-brand/30', 'w-3');
+            dot.classList.remove('bg-deep', 'w-13');
+            dot.classList.add('bg-deep/30', 'w-5');
           }
         });
       };
