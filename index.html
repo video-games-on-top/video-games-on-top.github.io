@@ -651,12 +651,12 @@ tailwind.config = {
         const dot = document.createElement('button');
         dot.setAttribute('aria-label', `Go to slide ${idx + 1}`);
         // Base classes
-        dot.classList.add('h-5', 'rounded-full', 'transition-all', 'duration-300', 'hover:bg-brand');
+        dot.classList.add('h-3', 'rounded-full', 'transition-all', 'duration-300', 'hover:bg-brand');
         
         if(idx === 0) {
-          dot.classList.add('bg-brand', 'w-13');
+          dot.classList.add('bg-brand', 'w-8');
         } else {
-          dot.classList.add('bg-brand/30', 'w-5');
+          dot.classList.add('bg-brand/30', 'w-3');
         }
 
         dot.addEventListener('click', () => {
