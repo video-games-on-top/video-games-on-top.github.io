@@ -538,7 +538,7 @@ const counterObserver = new IntersectionObserver((entries, observer) => {
       const target = +counter.getAttribute('data-target');
       
       // Speed adjustment: target / 50 makes it look smooth
-      const increment = target / 50; 
+      const increment = target / 30; 
       
       const updateCount = () => {
         const current = +counter.innerText;
