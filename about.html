@@ -277,20 +277,27 @@ tailwind.config = {
 
 <div id="event-modal" class="fixed inset-0 z-[70] flex items-center justify-center p-4 sm:p-6 opacity-0 pointer-events-none transition-opacity duration-300">
   <div class="absolute inset-0 bg-deep/60 backdrop-blur-sm" id="modal-backdrop"></div>
-  <div class="bg-white rounded-3xl w-full max-w-8xl relative z-10 p-8 md:p-12 shadow-2xl transform scale-95 transition-transform duration-300" id="modal-content">
-    <button id="close-modal-btn" class="absolute top-6 right-6 text-gray-400 hover:text-brand transition">
+  
+  <div class="bg-white rounded-3xl w-full max-w-5xl relative z-10 p-6 md:p-10 shadow-2xl transform scale-95 transition-transform duration-300 flex flex-col max-h-[95vh]" id="modal-content">
+    
+    <button id="close-modal-btn" class="absolute top-6 right-6 text-gray-400 hover:text-brand transition z-20">
       <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
     </button>
-    <h2 id="modal-title" class="text-3xl md:text-4xl font-heading font-bold text-deep mb-4">Event Title</h2>
-    <div class="flex flex-col sm:flex-row gap-4 text-sm text-brand font-semibold mb-6">
-      <span id="modal-date" class="bg-brand/10 px-4 py-2 rounded-lg">📅 Date</span>
+    
+    <div class="shrink-0 mb-6 pr-10">
+      <h2 id="modal-title" class="text-3xl md:text-4xl font-heading font-bold text-deep mb-4">Event Title</h2>
+      <div class="flex flex-col sm:flex-row gap-4 text-sm text-brand font-semibold">
+        <span id="modal-date" class="bg-brand/10 px-4 py-2 rounded-lg inline-block w-max">📅 Date</span>
+      </div>
     </div>
-     <iframe 
-      src="https://docs.google.com/document/d/e/2PACX-1vRjNsGp2xVx1EaUoSQ5dTQnG_ZAeLfDrKVJyaxfPhZYhTV8f4UP2qlBvnYE2FhJLdIGY5zQ0yNnUwng/pub?embedded=true"
-      width="100%"
-      height="100%"
-      class="rounded-xl border-0">
-    </iframe>
+    
+    <div class="flex-grow w-full rounded-xl overflow-hidden bg-gray-50 border border-gray-200">
+      <iframe 
+        src="https://docs.google.com/document/d/e/2PACX-1vRjNsGp2xVx1EaUoSQ5dTQnG_ZAeLfDrKVJyaxfPhZYhTV8f4UP2qlBvnYE2FhJLdIGY5zQ0yNnUwng/pub?embedded=true"
+        class="w-full h-full border-0">
+      </iframe>
+    </div>
+
   </div>
 </div>
 
@@ -358,18 +365,18 @@ revealEls.forEach(el => observer.observe(el));
   const mTitle = document.getElementById('modal-title');
   const mDate = document.getElementById('modal-date');
 
-
   // Open modal and insert data
   document.querySelectorAll('.open-modal-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       mTitle.textContent = btn.getAttribute('data-title');
       mDate.textContent = '📅 ' + btn.getAttribute('data-date');
+      
       // Show the modal with a smooth transition
       modal.classList.remove('opacity-0', 'pointer-events-none');
       modalContent.classList.remove('scale-95');
       modalContent.classList.add('scale-100');
     });
-
+  }); // <-- THIS was missing in your code! It closes the .forEach loop.
 
   // Close modal function
   const closeModal = () => {
@@ -380,7 +387,6 @@ revealEls.forEach(el => observer.observe(el));
 
   closeBtn.addEventListener('click', closeModal);
   backdrop.addEventListener('click', closeModal);
-});
 
 </script>
 
