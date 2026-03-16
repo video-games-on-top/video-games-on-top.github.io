@@ -613,13 +613,13 @@ tailwind.config = {
           const target = +counter.getAttribute('data-target');
           
           // Speed adjustment: target / 50 makes it look smooth
-          const increment = target / 30; 
+          const increment = target / 80; 
           
           const updateCount = () => {
             const current = +counter.innerText;
             if (current < target) {
               counter.innerText = Math.ceil(current + increment);
-              setTimeout(updateCount, 30);
+              setTimeout(updateCount, 80);
             } else {
               counter.innerText = target;
             }
@@ -651,12 +651,12 @@ tailwind.config = {
         const dot = document.createElement('button');
         dot.setAttribute('aria-label', `Go to slide ${idx + 1}`);
         // Base classes
-        dot.classList.add('h-5', 'rounded-full', 'transition-all', 'duration-300', 'hover:bg-brand');
+        dot.classList.add('h-5', 'rounded-full', 'transition-all', 'duration-300', 'hover:bg-deep');
         
         if(idx === 0) {
-          dot.classList.add('bg-deep', 'w-13');
+          dot.classList.add('bg-deep', 'w-8');
         } else {
-          dot.classList.add('bg-deep/30', 'w-5');
+          dot.classList.add('bg-deep/30', 'w-3');
         }
 
         dot.addEventListener('click', () => {
@@ -692,11 +692,11 @@ tailwind.config = {
         // Update dot styles
         dots.forEach((dot, idx) => {
           if(idx === carouselIndex) {
-            dot.classList.add('bg-deep', 'w-13');
-            dot.classList.remove('bg-deep/30', 'w-5');
+            dot.classList.add('bg-deep', 'w-8');
+            dot.classList.remove('bg-deep/30', 'w-3');
           } else {
-            dot.classList.remove('bg-deep', 'w-13');
-            dot.classList.add('bg-deep/30', 'w-5');
+            dot.classList.remove('bg-deep', 'w-8');
+            dot.classList.add('bg-deep/30', 'w-3');
           }
         });
       };
