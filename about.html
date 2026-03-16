@@ -219,28 +219,22 @@ tailwind.config = {
 
   <!-- News Cards -->
   <section class="reveal">
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center">
 
-      <div class="bg-white p-6 rounded-3xl shadow-sm card-hover reveal">
-        <img src="news1.jpg" alt="News" class="w-full h-48 object-cover rounded-2xl mb-4">
-        <h2 class="font-heading font-bold text-xl mb-2">Community Drive Success</h2>
-        <p class="text-gray-600 mb-4">Our latest hygiene kit drive provided over 500 kits to local shelters this month.</p>
-        <a href="#" class="font-semibold hover-link">Read More →</a>
-      </div>
+<div class="bg-white p-8 rounded-3xl shadow-sm w-full max-w-[350px] text-center event-card reveal relative overflow-hidden border-2 border-brand/20">
+<h3 class="text-xl font-semibold mb-2">Our First Newspaper</h3>
+<p class="text-gray-600 text-sm mb-2">After launch of streets to shelters, we have published our very first official newspaper!</p>
 
-      <div class="bg-white p-6 rounded-3xl shadow-sm card-hover reveal">
-        <img src="news2.jpg" alt="News" class="w-full h-48 object-cover rounded-2xl mb-4">
-        <h2 class="font-heading font-bold text-xl mb-2">New Chapter Launched</h2>
-        <p class="text-gray-600 mb-4">Students in San Antonio started a new chapter to expand local outreach efforts.</p>
-        <a href="#" class="font-semibold hover-link">Read More →</a>
-      </div>
+<button 
+  class="open-modal-btn text-brand font-semibold hover:underline"
+  data-title="First Official Newspaper"
+  data-date="March 2026"
+data-desc='<iframe src="https://docs.google.com/document/d/e/2PACX-1vRjNsGp2xVx1EaUoSQ5dTQnG_ZAeLfDrKVJyaxfPhZYhTV8f4UP2qlBvnYE2FhJLdIGY5zQ0yNnUwng/pub?embedded=true"></iframe>'>
+  Learn More →
+</button>
+</div>
 
-      <div class="bg-white p-6 rounded-3xl shadow-sm card-hover reveal">
-        <img src="news3.jpg" alt="News" class="w-full h-48 object-cover rounded-2xl mb-4">
-        <h2 class="font-heading font-bold text-xl mb-2">Partnership Announcement</h2>
-        <p class="text-gray-600 mb-4">We’re partnering with local businesses to increase access to hygiene kits and resources.</p>
-        <a href="#" class="font-semibold hover-link">Read More →</a>
-      </div>
+
 
       <!-- Add more news cards as needed -->
 
@@ -281,6 +275,21 @@ tailwind.config = {
     </div>
   </div>
 </footer>
+
+<div id="event-modal" class="fixed inset-0 z-[70] flex items-center justify-center p-4 sm:p-6 opacity-0 pointer-events-none transition-opacity duration-300">
+  <div class="absolute inset-0 bg-deep/60 backdrop-blur-sm" id="modal-backdrop"></div>
+  <div class="bg-white rounded-3xl w-full max-w-8xl relative z-10 p-8 md:p-12 shadow-2xl transform scale-95 transition-transform duration-300" id="modal-content">
+    <button id="close-modal-btn" class="absolute top-6 right-6 text-gray-400 hover:text-brand transition">
+      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+    </button>
+    <h2 id="modal-title" class="text-3xl md:text-4xl font-heading font-bold text-deep mb-4">Event Title</h2>
+    <div class="flex flex-col sm:flex-row gap-4 text-sm text-brand font-semibold mb-6">
+      <span id="modal-date" class="bg-brand/10 px-4 py-2 rounded-lg">📅 Date</span>
+    </div>
+    <p id="modal-desc" class="text-gray-600 leading-relaxed mb-8 font-body">Event description goes here.</p>
+  </div>
+</div>
+
 
 
 <!-- Reveal on scroll script -->
@@ -335,6 +344,44 @@ revealEls.forEach(el => observer.observe(el));
         el.addEventListener('mouseleave', () => document.body.classList.remove('hovering-link'));
       });
     }
+
+    /* --- 4. Event Modal Logic --- */
+  const modal = document.getElementById('event-modal');
+  const modalContent = document.getElementById('modal-content');
+  const backdrop = document.getElementById('modal-backdrop');
+  const closeBtn = document.getElementById('close-modal-btn');
+
+  const mTitle = document.getElementById('modal-title');
+  const mDate = document.getElementById('modal-date');
+  const mLocation = document.getElementById('modal-location');
+  const mDesc = document.getElementById('modal-desc');
+
+  // Open modal and insert data
+  document.querySelectorAll('.open-modal-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      mTitle.textContent = btn.getAttribute('data-title');
+      mDate.textContent = '📅 ' + btn.getAttribute('data-date');
+      mLocation.textContent = '📍 ' + btn.getAttribute('data-location');
+      mDesc.textContent = btn.getAttribute('data-desc');
+
+      // Show the modal with a smooth transition
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      modalContent.classList.remove('scale-95');
+      modalContent.classList.add('scale-100');
+    });
+  });
+
+  // Close modal function
+  const closeModal = () => {
+    modal.classList.add('opacity-0', 'pointer-events-none');
+    modalContent.classList.remove('scale-100');
+    modalContent.classList.add('scale-95');
+  };
+
+  closeBtn.addEventListener('click', closeModal);
+  backdrop.addEventListener('click', closeModal);
+});
+
 </script>
 
 </body>
