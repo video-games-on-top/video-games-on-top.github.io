@@ -116,6 +116,11 @@ tailwind.config = {
     border-color: #567a6f;
   }
 }
+body:has(iframe:hover) .cursor-dot,
+body:has(iframe:hover) .cursor-outline {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
 /* Hide scrollbar for Chrome, Safari and Opera */
 #modal-content::-webkit-scrollbar {
   display: none;
