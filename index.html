@@ -613,13 +613,13 @@ tailwind.config = {
           const target = +counter.getAttribute('data-target');
           
           // Speed adjustment: target / 50 makes it look smooth
-          const increment = target / 80; 
+          const increment = target / 70; 
           
           const updateCount = () => {
             const current = +counter.innerText;
             if (current < target) {
               counter.innerText = Math.ceil(current + increment);
-              setTimeout(updateCount, 80);
+              setTimeout(updateCount, 70);
             } else {
               counter.innerText = target;
             }
@@ -651,7 +651,7 @@ tailwind.config = {
         const dot = document.createElement('button');
         dot.setAttribute('aria-label', `Go to slide ${idx + 1}`);
         // Base classes
-        dot.classList.add('h-5', 'rounded-full', 'transition-all', 'duration-300', 'hover:bg-deep');
+        dot.classList.add('h-3', 'rounded-full', 'transition-all', 'duration-300', 'hover:bg-deep');
         
         if(idx === 0) {
           dot.classList.add('bg-deep', 'w-8');
