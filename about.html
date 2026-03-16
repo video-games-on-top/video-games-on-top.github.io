@@ -357,23 +357,19 @@ revealEls.forEach(el => observer.observe(el));
 
   const mTitle = document.getElementById('modal-title');
   const mDate = document.getElementById('modal-date');
-  const mLocation = document.getElementById('modal-location');
-  const mDesc = document.getElementById('modal-desc');
+
 
   // Open modal and insert data
   document.querySelectorAll('.open-modal-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       mTitle.textContent = btn.getAttribute('data-title');
       mDate.textContent = '📅 ' + btn.getAttribute('data-date');
-      mLocation.textContent = '📍 ' + btn.getAttribute('data-location');
-      mDesc.textContent = btn.getAttribute('data-desc');
-
       // Show the modal with a smooth transition
       modal.classList.remove('opacity-0', 'pointer-events-none');
       modalContent.classList.remove('scale-95');
       modalContent.classList.add('scale-100');
     });
-  });
+
 
   // Close modal function
   const closeModal = () => {
