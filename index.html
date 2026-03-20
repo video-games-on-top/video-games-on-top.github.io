@@ -35,43 +35,49 @@ tailwind.config = {
    CUSTOM CURSOR — lerp-based smooth follow
    ========================================= */
 @media (pointer: fine) {
-  html, body { cursor: none !important; }
-  a, button, [role="button"], input, select, textarea { cursor: none !important; }
+  /* Hides the default cursor on the entire page */
+  html, body {
+    cursor: none !important;
+  }
+
+  /* Ensures the default cursor stays hidden on clickable items */
+  a, button, [role="button"], input, select, textarea {
+    cursor: none !important;
+  }
 
   .cursor-dot, .cursor-outline {
     position: fixed;
-    top: -100px; left: -100px;
+    top: 0; left: 0;
     border-radius: 50%;
     z-index: 9999;
     pointer-events: none;
     transform: translate(-50%, -50%);
-    mix-blend-mode: difference;
-    will-change: left, top;
+    /* This allows the cursor to flip colors against backgrounds */
+    mix-blend-mode: difference; 
   }
 
   .cursor-dot {
-    width: 10px; height: 10px;
-    background-color: #F4EFE6;
+    width: 12px; height: 12px;
+    background-color: #F4EFE6; /* Off-white works best with mix-blend-mode */
+    transition: width 0.2s, height 0.2s;
   }
 
   .cursor-outline {
-    width: 36px; height: 36px;
-    border: 1.5px solid #567a6f;
-    background: transparent;
-    transition: width 0.5s cubic-bezier(0.23, 1, 0.32, 1),
-                height 0.5s cubic-bezier(0.23, 1, 0.32, 1),
-                background-color 0.5s cubic-bezier(0.23, 1, 0.32, 1),
-                border-color 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    width: 30px; height: 30px;
+    border: 2px solid #567a6f; 
+    transition: width 0.2s, height 0.2s;
   }
 
-  body.hovering-link .cursor-dot { width: 0px; height: 0px; }
+  /* When hovering over links */
+  body.hovering-link .cursor-dot {
+    width: 0px; height: 0px;
+  }
   body.hovering-link .cursor-outline {
-    width: 56px; height: 56px;
-    background-color: rgba(86, 122, 111, 0.12);
+    width: 60px; height: 60px;
+    background-color: rgba(86, 122, 111, 0.1);
     border-color: #567a6f;
   }
 }
-
 /* =========================================
    SCROLL REVEAL — expo-out easing
    ========================================= */
