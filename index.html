@@ -372,7 +372,7 @@ header {
 </style>
 </head>
 
-<body class="bg-cream text-deep font-body">
+<body class="bg-cream text-deep font-body scroll-smooth">
 
 <div class="cursor-dot"></div>
 <div class="cursor-outline"></div>
@@ -464,7 +464,7 @@ header {
         <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" class="bg-brand text-white px-8 py-3 rounded-full font-semibold hover:bg-brandDark transition transform hover:-translate-y-1 hover:shadow-lg">
           Donate
         </a>
-        <a href="#impact" id="see-impact-btn" class="border border-deep px-8 py-3 rounded-full font-semibold hover:bg-deep hover:text-white transition transform hover:-translate-y-1">
+        <a href="#impact" class="border border-deep px-8 py-3 rounded-full font-semibold hover:bg-deep hover:text-white transition transform hover:-translate-y-1">
           See Our Impact
         </a>
 
@@ -1006,46 +1006,6 @@ header {
       ro.observe(layer);
       init();
       tick();
-    })();
-    /* --- 8. Smooth Scroll — See Our Impact button --- */
-    (function () {
-      const btn = document.getElementById('see-impact-btn');
-      if (!btn) return;
-
-      // Custom easing: easeInOutQuart — slow start, fast middle, slow land
-      function easeInOutQuart(t) {
-        return t < 0.5
-          ? 8 * t * t * t * t
-          : 1 - Math.pow(-2 * t + 2, 4) / 2;
-      }
-
-      btn.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.getElementById('impact');
-        if (!target) return;
-
-        const startY   = window.scrollY;
-        const headerH  = document.querySelector('header')?.offsetHeight || 80;
-        const targetY  = target.getBoundingClientRect().top + startY - headerH - 24;
-        const distance = targetY - startY;
-        const duration = Math.min(Math.max(Math.abs(distance) * 0.55, 700), 1400); // scale with distance, 700–1400ms
-        let startTime  = null;
-
-        function step(timestamp) {
-          if (!startTime) startTime = timestamp;
-          const elapsed  = timestamp - startTime;
-          const progress = Math.min(elapsed / duration, 1);
-          const ease     = easeInOutQuart(progress);
-
-          window.scrollTo(0, startY + distance * ease);
-
-          if (progress < 1) {
-            requestAnimationFrame(step);
-          }
-        }
-
-        requestAnimationFrame(step);
-      });
     })();
 
 
