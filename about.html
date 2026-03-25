@@ -240,19 +240,48 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.15 });
 revealEls.forEach(el => observer.observe(el));
 
-// Cursor
-const cursorDot = document.querySelector('.cursor-dot');
-const cursorOutline = document.querySelector('.cursor-outline');
-if(cursorDot && cursorOutline && window.matchMedia("(pointer: fine)").matches){
-  window.addEventListener('mousemove', e=>{
-    cursorDot.style.left = cursorOutline.style.left = e.clientX+'px';
-    cursorDot.style.top = cursorOutline.style.top = e.clientY+'px';
-  });
-  document.querySelectorAll('a,button').forEach(el=>{
-    el.addEventListener('mouseenter', ()=>document.body.classList.add('hovering-link'));
-    el.addEventListener('mouseleave', ()=>document.body.classList.remove('hovering-link'));
-  });
-}
+    // Mobile Menu Logic Added Here
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const closeMenuBtn = document.getElementById('close-menu-btn');
+  const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+
+  if(mobileMenuBtn && closeMenuBtn && mobileMenuOverlay) {
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenuOverlay.classList.remove('translate-x-full');
+    });
+    closeMenuBtn.addEventListener('click', () => {
+      mobileMenuOverlay.classList.add('translate-x-full');
+    });
+  }
+
+revealEls.forEach(el => observer.observe(el));
+  /* --- 2. Custom Cursor Tracking --- */
+    const cursorDot = document.querySelector('.cursor-dot');
+    const cursorOutline = document.querySelector('.cursor-outline');
+
+    if (cursorDot && cursorOutline && window.matchMedia("(pointer: fine)").matches) {
+      window.addEventListener('mousemove', (e) => {
+        const posX = e.clientX;
+        const posY = e.clientY;
+
+        // Instant follow for the dot
+        cursorDot.style.left = `${posX}px`;
+        cursorDot.style.top = `${posY}px`;
+
+        // Slight delay/easing for the outline using the Web Animations API
+        cursorOutline.animate({
+          left: `${posX}px`,
+          top: `${posY}px`
+        }, { duration: 100, fill: "forwards" });
+      });
+
+      // Add interactive state when hovering over links and buttons
+      document.querySelectorAll('a, button').forEach(el => {
+        el.addEventListener('mouseenter', () => document.body.classList.add('hovering-link'));
+        el.addEventListener('mouseleave', () => document.body.classList.remove('hovering-link'));
+      });
+    }
+
 
 // Modal logic
 const modal = document.getElementById('event-modal');
