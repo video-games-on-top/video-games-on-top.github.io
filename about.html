@@ -29,46 +29,20 @@ tailwind.config = {
 
 <style>
 /* Fade-up / reveal */
-.fade-up, .reveal {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: all 0.8s ease;
-}
-.is-visible, .show {
-  opacity: 1;
-  transform: translateY(0);
-}
+.fade-up, .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s ease; }
+.is-visible, .show { opacity: 1; transform: translateY(0); }
 
 /* Card hover pop */
-.card-hover {
-  transition: all 0.3s ease;
-}
-.card-hover:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-}
+.card-hover { transition: all 0.3s ease; }
+.card-hover:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
 
 /* Dropdown hover */
-.group:hover .dropdown {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-.dropdown {
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(10px);
-  transition: all 0.3s ease;
-}
+.group:hover .dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+.dropdown { opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s ease; }
 
 /* Hover link style */
-.hover-link {
-  transition: all 0.3s;
-}
-.hover-link:hover {
-  color: #7BAF9E;
-  text-decoration: underline;
-}
+.hover-link { transition: all 0.3s; }
+.hover-link:hover { color: #7BAF9E; text-decoration: underline; }
 
 /* Custom cursor */
 @media (pointer: fine) {
@@ -76,7 +50,8 @@ tailwind.config = {
   a, button, [role="button"], input, select, textarea { cursor: none !important; }
   .cursor-dot, .cursor-outline {
     position: fixed; top: 0; left: 0; border-radius: 50%; z-index: 9999;
-    pointer-events: none; transform: translate(-50%, -50%); mix-blend-mode: difference;
+    pointer-events: none; transform: translate(-50%, -50%);
+    mix-blend-mode: difference;
   }
   .cursor-dot { width: 12px; height: 12px; background-color: #F4EFE6; transition: width 0.2s, height 0.2s; }
   .cursor-outline { width: 30px; height: 30px; border: 2px solid #567a6f; transition: width 0.2s, height 0.2s; }
@@ -99,14 +74,11 @@ body:has(iframe:hover) .cursor-outline { opacity: 0; transition: opacity 0.3s ea
 <!-- NAVBAR -->
 <header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200 reveal">
   <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-
     <a href="index.html" aria-label="Go to Home" class="inline-flex items-center">
       <img src="images/icon (1).png" class="h-12 cursor-pointer transition duration-300 hover:scale-105 active:scale-95" alt="Streets to Shelters Home">
     </a>
-
     <nav class="hidden md:flex gap-8 text-sm font-medium items-center">
       <a href="index.html" class="hover:text-brand transition">Home</a>
-
       <div class="relative group">
         <button class="hover:text-brand transition py-2 flex items-center gap-1">
           Initiatives
@@ -118,7 +90,6 @@ body:has(iframe:hover) .cursor-outline { opacity: 0; transition: opacity 0.3s ea
           <a href="events.html" class="block px-6 py-3 hover:bg-cream rounded-b-2xl">Streets to Shelters Events</a>
         </div>
       </div>
-
       <div class="relative group">
         <button class="hover:text-brand transition py-2 flex items-center gap-1">
           About Us
@@ -132,11 +103,9 @@ body:has(iframe:hover) .cursor-outline { opacity: 0; transition: opacity 0.3s ea
           <a href="contact.html" class="block px-6 py-3 hover:bg-cream rounded-b-2xl">Contact Us</a>
         </div>
       </div>
-
       <a href="volunteer.html" class="hover:text-brand transition">Volunteer</a>
       <a href="chapter.html" class="hover:text-brand transition">Start a Chapter</a>
     </nav>
-
     <div class="flex items-center gap-4">
       <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" class="hidden md:inline-block bg-brand text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-brandDark transition">Donate</a>
       <button id="mobile-menu-btn" class="md:hidden text-deep focus:outline-none p-2">
@@ -145,7 +114,6 @@ body:has(iframe:hover) .cursor-outline { opacity: 0; transition: opacity 0.3s ea
         </svg>
       </button>
     </div>
-
   </div>
 </header>
 
@@ -173,204 +141,107 @@ body:has(iframe:hover) .cursor-outline { opacity: 0; transition: opacity 0.3s ea
 
 <!-- MAIN -->
 <main class="pt-36 max-w-7xl mx-auto px-6 space-y-16 pb-40 md:pb-56">
+<section class="text-center fade-up">
+  <h1 class="text-5xl font-heading font-bold mb-4">News & Updates</h1>
+  <p class="text-gray-700 max-w-2xl mx-auto">
+    Stay up to date with Streets to Shelters. Here you’ll find updates, events, and announcements from our youth-led organization.
+  </p>
+</section>
 
-  <!-- Page Title -->
-  <section class="text-center fade-up">
-    <h1 class="text-5xl font-heading font-bold mb-4">News & Updates</h1>
-    <p class="text-gray-700 max-w-2xl mx-auto">
-      Stay up to date with Streets to Shelters. Here you’ll find updates, events, and announcements from our youth-led organization.
-    </p>
-  </section>
+<!-- News Cards -->
+<section class="reveal">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center">
 
-  <!-- News Cards -->
-  <section class="reveal">
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center">
-
-      <!-- First Card -->
-      <div class="bg-white p-8 rounded-3xl shadow-sm w-full max-w-[350px] text-center event-card reveal relative overflow-hidden border-2 border-brand/20">
-        <h3 class="text-xl font-semibold mb-2">Our First Newspaper</h3>
-        <p class="text-gray-600 text-sm mb-2">After launch of Streets to Shelters, we have published our very first official newspaper!</p>
-        <button class="open-modal-btn text-brand font-semibold hover:underline" data-title="First Official Newspaper" data-date="March 2026" data-image="images/newsletter.png">Learn More →</button>
-      </div>
-
-      <!-- Second Card -->
-      <div class="bg-white p-8 rounded-3xl shadow-sm w-full max-w-[350px] text-center event-card reveal relative overflow-hidden border-2 border-brand/20">
-        <h3 class="text-xl font-semibold mb-2">Second Events Newsletter</h3>
-        <p class="text-gray-600 text-sm mb-2">Our latest updates on events that have occurred since the last newsletter!</p>
-        <button class="open-modal-btn text-brand font-semibold hover:underline" data-title="Second Events Newsletter" data-date="March 2026" data-image="images/newsletter.png">Learn More →</button>
-      </div>
-
+    <!-- First Card -->
+    <div class="bg-white p-8 rounded-3xl shadow-sm w-full max-w-[350px] text-center event-card reveal relative overflow-hidden border-2 border-brand/20">
+      <h3 class="text-xl font-semibold mb-2">Our First Newspaper</h3>
+      <p class="text-gray-600 text-sm mb-2">After launch of streets to shelters, we have published our very first official newspaper!</p>
+      <button class="open-modal-btn text-brand font-semibold hover:underline"
+        data-title="First Official Newspaper"
+        data-date="March 2026"
+        data-iframe="https://docs.google.com/document/d/e/2PACX-1vRjNsGp2xVx1EaUoSQ5dTQnG_ZAeLfDrKVJyaxfPhZYhTV8f4UP2qlBvnYE2FhJLdIGY5zQ0yNnUwng/pub?embedded=true">
+        Learn More →
+      </button>
     </div>
-  </section>
-</main>
 
-<!-- Footer, Modal, and Scripts remain exactly the same as your original code, but modal iframe is replaced with an <img> -->
-
-
-
-      <!-- Add more news cards as needed -->
-
+    <!-- Second Card -->
+    <div class="bg-white p-8 rounded-3xl shadow-sm w-full max-w-[350px] text-center event-card reveal relative overflow-hidden border-2 border-brand/20">
+      <h3 class="text-xl font-semibold mb-2">Second Events Newsletter</h3>
+      <p class="text-gray-600 text-sm mb-2">Our latest updates on events that have occurred since the last newsletter!</p>
+      <button class="open-modal-btn text-brand font-semibold hover:underline"
+        data-title="Second Events Newsletter"
+        data-date="March 2026"
+        data-iframe="https://docs.google.com/document/d/e/2PACX-1vRjNsGp2xVx1EaUoSQ5dTQnG_ZAeLfDrKVJyaxfPhZYhTV8f4UP2qlBvnYE2FhJLdIGY5zQ0yNnUwng/pub?embedded=true">
+        Learn More →
+      </button>
     </div>
-  </section>
-</main>
 
-<!-- FOOTER -->
-<footer class="bg-deep text-white py-12">
-  <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-10 text-center sm:text-left">
-    <div class="space-y-4">
-      <h3 class="font-heading font-bold text-lg mb-2">Follow Us</h3>
-      <div class="flex flex-col gap-2">
-        <a href="https://www.instagram.com/streets.to.shelter" target="_blank" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Instagram</a>
-        <a href="https://www.facebook.com/profile.php?id=61586361417282" target="_blank" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Facebook</a>
-        <a href="https://www.tiktok.com/@streetstoshelters" target="_blank" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">TikTok</a>
-        <a href="https://linktr.ee/streets2shelters" target="_blank" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Linktree</a>
-      </div>
-    </div>
-    <div class="space-y-4">
-      <h3 class="font-heading font-bold text-lg mb-2">Quick Links</h3>
-      <div class="flex flex-col gap-2">
-        <a href="index.html" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Home</a>
-        <a href="events.html" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Events</a>
-        <a href="about.html" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">News</a>
-        <a href="members.html" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Members</a>
-        <a href="volunteer.html" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Volunteer</a>
-        <a href="chapter.html" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Start a Chapter</a>
-        <a href="contact.html" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Contact</a>
-      </div>
-    </div>
-    <div class="space-y-4">
-      <h3 class="font-heading font-bold text-lg mb-2">Support Us</h3>
-      <div class="flex flex-col gap-2">
-        <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Donate</a>
-        <p class="text-gray-400 text-sm mt-2">© 2026 Streets To Shelters</p>
-        </div>
-    </div>
   </div>
-</footer>
+</section>
+</main>
 
+<!-- Modal -->
 <div id="event-modal" class="fixed inset-0 z-[70] flex items-center justify-center p-4 sm:p-6 opacity-0 pointer-events-none transition-opacity duration-300">
   <div class="absolute inset-0 bg-deep/60 backdrop-blur-sm" id="modal-backdrop"></div>
-  
-  <div class="bg-white rounded-3xl w-full max-w-5xl relative z-10 p-6 md:p-10 shadow-2xl transform scale-95 transition-transform duration-300 flex flex-col max-h-[95vh]" id="modal-content">
-    
+  <div class="bg-white rounded-3xl w-full max-w-5xl relative z-10 p-6 md:p-10 shadow-2xl transform scale-95 transition-transform duration-300 flex flex-col max-h-[95vh]">
     <button id="close-modal-btn" class="absolute top-6 right-6 text-gray-400 hover:text-brand transition z-20">
       <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
     </button>
-    
-    <div class="shrink-0 mb-6 pr-10">
-      <h2 id="modal-title" class="text-3xl md:text-4xl font-heading font-bold text-deep mb-4">Event Title</h2>
-      <div class="flex flex-col sm:flex-row gap-4 text-sm text-brand font-semibold">
-        <span id="modal-date" class="bg-brand/10 px-4 py-2 rounded-lg inline-block w-max">📅 Date</span>
-<a id="modal-link" href="https://docs.google.com/document/d/e/2PACX-1vRjNsGp2xVx1EaUoSQ5dTQnG_ZAeLfDrKVJyaxfPhZYhTV8f4UP2qlBvnYE2FhJLdIGY5zQ0yNnUwng/pub" target="_blank" class="bg-brand/10 text-brand px-4 py-2 rounded-lg inline-block w-max transition-all duration-300 hover:bg-brand hover:text-white hover:-translate-y-1 active:scale-95 shadow-sm">🔗 Open in New Tab</a>      
-      </div>
+    <h2 id="modal-title" class="text-3xl md:text-4xl font-heading font-bold text-deep mb-4">Event Title</h2>
+    <div class="flex flex-col sm:flex-row gap-4 text-sm text-brand font-semibold mb-6">
+      <span id="modal-date" class="bg-brand/10 px-4 py-2 rounded-lg inline-block w-max">📅 Date</span>
+      <a id="modal-link" href="#" target="_blank" class="bg-brand/10 text-brand px-4 py-2 rounded-lg inline-block w-max transition-all duration-300 hover:bg-brand hover:text-white hover:-translate-y-1 active:scale-95 shadow-sm">🔗 Open in New Tab</a>
     </div>
-    
-<div class="bg-white rounded-3xl w-full max-w-5xl relative z-10 p-6 md:p-10  transform scale-95 transition-transform duration-300 flex flex-col overflow-y-auto max-h-[90vh]" id="modal-content">
-  
-  <div class="w-full rounded-xl bg-gray-50">
-    <iframe 
-      src="https://docs.google.com/document/d/e/2PACX-1vRjNsGp2xVx1EaUoSQ5dTQnG_ZAeLfDrKVJyaxfPhZYhTV8f4UP2qlBvnYE2FhJLdIGY5zQ0yNnUwng/pub?embedded=true"
-      style="width:100%; height:1500px;" 
-      class="border-0">
-    </iframe>
+    <div id="modal-content" class="w-full flex-1 overflow-auto rounded-xl">
+      <iframe id="modal-iframe" src="" style="width:100%; height:1500px;" class="border-0"></iframe>
+    </div>
   </div>
 </div>
 
-  </div>
-</div>
-
-
-
-<!-- Reveal on scroll script -->
 <script>
 const revealEls = document.querySelectorAll('.fade-up, .reveal');
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
-    if(entry.isIntersecting){
-      entry.target.classList.add('is-visible');
-      observer.unobserve(entry.target);
-    }
+    if(entry.isIntersecting){ entry.target.classList.add('is-visible'); observer.unobserve(entry.target); }
   });
 }, { threshold: 0.15 });
-    // Mobile Menu Logic Added Here
-  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-  const closeMenuBtn = document.getElementById('close-menu-btn');
-  const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
-
-  if(mobileMenuBtn && closeMenuBtn && mobileMenuOverlay) {
-    mobileMenuBtn.addEventListener('click', () => {
-      mobileMenuOverlay.classList.remove('translate-x-full');
-    });
-    closeMenuBtn.addEventListener('click', () => {
-      mobileMenuOverlay.classList.add('translate-x-full');
-    });
-  }
-
 revealEls.forEach(el => observer.observe(el));
-  /* --- 2. Custom Cursor Tracking --- */
-    const cursorDot = document.querySelector('.cursor-dot');
-    const cursorOutline = document.querySelector('.cursor-outline');
 
-    if (cursorDot && cursorOutline && window.matchMedia("(pointer: fine)").matches) {
-      window.addEventListener('mousemove', (e) => {
-        const posX = e.clientX;
-        const posY = e.clientY;
+// Cursor
+const cursorDot = document.querySelector('.cursor-dot');
+const cursorOutline = document.querySelector('.cursor-outline');
+if(cursorDot && cursorOutline && window.matchMedia("(pointer: fine)").matches){
+  window.addEventListener('mousemove', e=>{
+    cursorDot.style.left = cursorOutline.style.left = e.clientX+'px';
+    cursorDot.style.top = cursorOutline.style.top = e.clientY+'px';
+  });
+  document.querySelectorAll('a,button').forEach(el=>{
+    el.addEventListener('mouseenter', ()=>document.body.classList.add('hovering-link'));
+    el.addEventListener('mouseleave', ()=>document.body.classList.remove('hovering-link'));
+  });
+}
 
-        // Instant follow for the dot
-        cursorDot.style.left = `${posX}px`;
-        cursorDot.style.top = `${posY}px`;
+// Modal logic
+const modal = document.getElementById('event-modal');
+const modalIframe = document.getElementById('modal-iframe');
+const modalTitle = document.getElementById('modal-title');
+const modalDate = document.getElementById('modal-date');
+const modalLink = document.getElementById('modal-link');
+const modalClose = document.getElementById('close-modal-btn');
+const modalBackdrop = document.getElementById('modal-backdrop');
 
-        // Slight delay/easing for the outline using the Web Animations API
-        cursorOutline.animate({
-          left: `${posX}px`,
-          top: `${posY}px`
-        }, { duration: 100, fill: "forwards" });
-      });
-
-      // Add interactive state when hovering over links and buttons
-      document.querySelectorAll('a, button').forEach(el => {
-        el.addEventListener('mouseenter', () => document.body.classList.add('hovering-link'));
-        el.addEventListener('mouseleave', () => document.body.classList.remove('hovering-link'));
-      });
-    }
-
-    /* --- 4. Event Modal Logic --- */
-  const modal = document.getElementById('event-modal');
-  const modalContent = document.getElementById('modal-content');
-  const backdrop = document.getElementById('modal-backdrop');
-  const closeBtn = document.getElementById('close-modal-btn');
-
-  const mTitle = document.getElementById('modal-title');
-  const mDate = document.getElementById('modal-date');
-  const mLink = document.getElementById('modal-link');
-
-  // Open modal and insert data
-  document.querySelectorAll('.open-modal-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      mTitle.textContent = btn.getAttribute('data-title');
-      mDate.textContent = '📅 ' + btn.getAttribute('data-date');
-
-      mLink.addEventListener('mouseenter', () => document.body.classList.add('hovering-link'));
-      mLink.addEventListener('mouseleave', () => document.body.classList.remove('hovering-link'));
-      // Show the modal with a smooth transition
-      modal.classList.remove('opacity-0', 'pointer-events-none');
-      modalContent.classList.remove('scale-95');
-      modalContent.classList.add('scale-100');
-      
-    });
-  }); 
-
-  // Close modal function
-  const closeModal = () => {
-    modal.classList.add('opacity-0', 'pointer-events-none');
-    modalContent.classList.remove('scale-100');
-    modalContent.classList.add('scale-95');
-  };
-
-  closeBtn.addEventListener('click', closeModal);
-  backdrop.addEventListener('click', closeModal);
-
+document.querySelectorAll('.open-modal-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    modal.classList.remove('opacity-0','pointer-events-none');
+    modalTitle.textContent = btn.dataset.title;
+    modalDate.textContent = '📅 '+btn.dataset.date;
+    modalIframe.src = btn.dataset.iframe;
+    modalLink.href = btn.dataset.iframe;
+  });
+});
+[modalClose, modalBackdrop].forEach(el=>el.addEventListener('click', ()=>{
+  modal.classList.add('opacity-0','pointer-events-none');
+}));
 </script>
-
 </body>
 </html>
