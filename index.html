@@ -44,7 +44,7 @@ tailwind.config = {
 /* =============================================
    CUSTOM CURSOR — FIX: use will-change, no mix-blend on ring
    ============================================= */
-@media (pointer: fine) {
+/*@media (pointer: fine) {
   html, body { cursor: none !important; }
   a, button, [role="button"], input, select, textarea { cursor: none !important; }
   .cursor-dot, .cursor-ring {
@@ -54,14 +54,14 @@ tailwind.config = {
     z-index: 9998;
     pointer-events: none;
     will-change: transform;
-    /* FIX: use transform for position — far better perf + no drift */
+     FIX: use transform for position — far better perf + no drift 
     transform: translate(-200px, -200px);
   }
   .cursor-dot {
     width: 8px; height: 8px;
     background: #2B1F1C;
     transition: width 0.18s, height 0.18s, opacity 0.18s;
-    /* FIX: removed mix-blend-mode which caused the cursor to disappear on light backgrounds */
+    /* FIX: removed mix-blend-mode which caused the cursor to disappear on light backgrounds 
   }
   .cursor-ring {
     width: 36px; height: 36px;
@@ -72,7 +72,7 @@ tailwind.config = {
   }
   body.cursor-hover .cursor-dot  { width: 0; height: 0; opacity: 0; }
   body.cursor-hover .cursor-ring { width: 56px; height: 56px; background: rgba(86,122,111,0.12); }
-}
+}*/
 
 /* =============================================
    SCROLL REVEAL
