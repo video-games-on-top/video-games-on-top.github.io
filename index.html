@@ -1003,7 +1003,7 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
   C.forEach((c, i) => {
     const el = document.createElement('div');
-    el.style.cssText = `position:absolute;border-radius:50%;transform:translate(-50%,-50%);will-change:left,top;pointer-events:none;width:${c.r*2}px;height:${c.r*2}px;background:${c.c}`;
+    el.style.cssText = `position:absolute;border-radius:50%;transform:translate(-50%,-50%);will-change:left,top;width:${c.r*2}px;height:${c.r*2}px;background:${c.c}`;
     el.id = '_b' + i;
     layer.appendChild(el);
   });
