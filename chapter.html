@@ -5,119 +5,46 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Start a Chapter | Streets To Shelters</title>
 <link rel="icon" href="images/Logo1.png">
-
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
-
 <script>
 tailwind.config = {
   theme: {
     extend: {
-      colors: {
-        brand: '#7BAF9E',
-        brandDark: '#5E8F80',
-        cream: '#F4EFE6',
-        deep: '#2B1F1C'
-      },
-      fontFamily: {
-        heading: ['Playfair Display', 'serif'],
-        body: ['Inter', 'sans-serif']
-      }
+      colors: { brand:'#7BAF9E', brandDark:'#5E8F80', cream:'#F4EFE6', deep:'#2B1F1C' },
+      fontFamily: { heading:['Playfair Display','serif'], body:['Inter','sans-serif'] }
     }
   }
 }
 </script>
-
 <style>
-/* =========================================
-   REPLACE YOUR EXISTING CURSOR CSS WITH THIS
-   ========================================= */
+/* ── Cursor ── */
 @media (pointer: fine) {
-  /* Hides the default cursor on the entire page */
-  html, body {
-    cursor: none !important;
-  }
-
-  /* Ensures the default cursor stays hidden on clickable items */
-  a, button, [role="button"], input, select, textarea {
-    cursor: none !important;
-  }
-
+  html, body { cursor: none !important; }
+  a, button, [role="button"], input, select, textarea { cursor: none !important; }
   .cursor-dot, .cursor-outline {
-    position: fixed;
-    top: 0; left: 0;
-    border-radius: 50%;
-    z-index: 9999;
-    pointer-events: none;
-    transform: translate(-50%, -50%);
-    /* This allows the cursor to flip colors against backgrounds */
-    mix-blend-mode: difference; 
+    position: fixed; top: 0; left: 0;
+    border-radius: 50%; z-index: 9998;
+    pointer-events: none; will-change: transform;
+    transform: translate(-200px, -200px);
   }
-
-  .cursor-dot {
-    width: 12px; height: 12px;
-    background-color: #F4EFE6; /* Off-white works best with mix-blend-mode */
-    transition: width 0.2s, height 0.2s;
-  }
-
-  .cursor-outline {
-    width: 30px; height: 30px;
-    border: 2px solid #567a6f; 
-    transition: width 0.2s, height 0.2s;
-  }
-
-  /* When hovering over links */
-  body.hovering-link .cursor-dot {
-    width: 0px; height: 0px;
-  }
-  body.hovering-link .cursor-outline {
-    width: 60px; height: 60px;
-    background-color: rgba(86, 122, 111, 0.1);
-    border-color: #567a6f;
-  }
-}
-/* =========================================
-   SCROLL REVEAL ANIMATIONS
-   ========================================= */
-.reveal-slide {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 900ms ease, transform 900ms ease;
-  will-change: opacity, transform;
-}
-.reveal-slide.is-visible {
-  opacity: 1;
-  transform: translateY(0);
+  .cursor-dot { width:8px; height:8px; background:#2B1F1C; transition:width 0.18s,height 0.18s,opacity 0.18s; }
+  .cursor-outline { width:36px; height:36px; border:1.5px solid #567a6f;
+    transition:width 0.32s cubic-bezier(0.16,1,0.3,1),height 0.32s cubic-bezier(0.16,1,0.3,1),background 0.32s; }
+  body.hovering-link .cursor-dot  { width:0; height:0; opacity:0; }
+  body.hovering-link .cursor-outline { width:56px; height:56px; background:rgba(86,122,111,0.12); }
 }
 
-.reveal-hero {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 1000ms ease, transform 1000ms ease;
-}
-.reveal-hero.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+/* ── Scroll Reveal ── */
+.reveal-slide { opacity:0; transform:translateY(30px); transition:opacity 900ms ease,transform 900ms ease; will-change:opacity,transform; }
+.reveal-slide.is-visible { opacity:1; transform:translateY(0); }
+.reveal-hero  { opacity:0; transform:translateY(40px); transition:opacity 1000ms ease,transform 1000ms ease; }
+.reveal-hero.is-visible  { opacity:1; transform:translateY(0); }
+.reveal-item  { opacity:0; transform:translateY(24px) scale(0.98); transition:opacity 850ms ease,transform 850ms ease; will-change:opacity,transform; }
+.reveal-item.is-visible  { opacity:1; transform:translateY(0) scale(1); }
 
-.reveal-item {
-  opacity: 0;
-  transform: translateY(24px) scale(0.98);
-  transition: opacity 850ms ease, transform 850ms ease;
-  will-change: opacity, transform;
-}
-.reveal-item.is-visible {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-
-.hover-lift {
-  transition: transform 250ms ease, box-shadow 250ms ease;
-}
-.hover-lift:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 18px 40px rgba(0,0,0,0.12);
-}
+.hover-lift { transition:transform 250ms ease,box-shadow 250ms ease; }
+.hover-lift:hover { transform:translateY(-6px); box-shadow:0 18px 40px rgba(0,0,0,0.12); }
 </style>
 </head>
 
@@ -128,90 +55,74 @@ tailwind.config = {
 
 <header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200">
   <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-
     <a href="index.html" aria-label="Go to Home" class="inline-flex items-center">
-      <img src="images/icon (1).png" class="h-12 cursor-pointer transition duration-300 hover:scale-105 active:scale-95" alt="Streets to Shelters Home">
+      <img src="images/icon (1).png" class="h-12 transition duration-300 hover:scale-105 active:scale-95" alt="Streets to Shelters Home">
     </a>
-
     <nav class="hidden md:flex gap-8 text-sm font-medium items-center">
       <a href="index.html" class="hover:text-brand transition">Home</a>
       <div class="relative group">
         <button class="hover:text-brand transition py-2 flex items-center gap-1">
           Initiatives
-          <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
-          </svg>
+          <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
         </button>
-        <div class="absolute left-0 top-full w-56 bg-white rounded-2xl shadow-lg opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300">
-          <a href="events.html" class="block px-6 py-3 hover:bg-cream rounded-b-2xl">Streets to Shelters Events</a>
+        <div class="absolute left-0 top-full w-56 bg-white rounded-2xl shadow-lg border border-gray-100 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300">
+          <a href="events.html"    class="block px-6 py-3.5 text-sm hover:bg-cream rounded-t-2xl transition-colors">Streets to Shelters Events</a>
+          <a href="volunteer.html" class="block px-6 py-3.5 text-sm hover:bg-cream rounded-b-2xl transition-colors">Volunteer</a>
         </div>
       </div>
-
       <div class="relative group">
         <button class="hover:text-brand transition py-2 flex items-center gap-1">
           About Us
-          <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
-          </svg>
+          <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
         </button>
-        <div class="absolute left-0 top-full w-64 bg-white rounded-2xl shadow-lg opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300">
-          <a href="about.html" class="block px-6 py-3 hover:bg-cream rounded-t-2xl">Streets to Shelters News</a>
-          <a href="members.html" class="block px-6 py-3 hover:bg-cream">Members</a>
-          <a href="contact.html" class="block px-6 py-3 hover:bg-cream rounded-b-2xl">Contact Us</a>
+        <div class="absolute left-0 top-full w-60 bg-white rounded-2xl shadow-lg border border-gray-100 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300">
+          <a href="about.html"   class="block px-6 py-3.5 text-sm hover:bg-cream rounded-t-2xl transition-colors">Streets to Shelters News</a>
+          <a href="members.html" class="block px-6 py-3.5 text-sm hover:bg-cream transition-colors">Members</a>
+          <a href="contact.html" class="block px-6 py-3.5 text-sm hover:bg-cream rounded-b-2xl transition-colors">Contact Us</a>
         </div>
       </div>
-
-      <a href="volunteer.html" class="hover:text-brand transition">Volunteer</a>
       <a href="chapter.html" class="hover:text-brand transition">Start a Chapter</a>
     </nav>
-
     <div class="flex items-center gap-4">
-      <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" class="hidden md:inline-block bg-brand text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-brandDark transition transform hover:scale-105">
-        Donate
-      </a>
-      <button id="mobile-menu-btn" class="md:hidden text-deep focus:outline-none p-2">
-        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-        </svg>
+      <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" rel="noopener"
+         class="hidden md:inline-block bg-brand text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-brandDark transition">Donate</a>
+      <button id="mobile-menu-btn" class="md:hidden text-deep p-2">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/></svg>
       </button>
     </div>
   </div>
 </header>
 
 <div id="mobile-menu-overlay" class="fixed inset-0 bg-white z-[60] flex flex-col p-10 translate-x-full transition-transform duration-300 ease-in-out md:hidden">
-  <div class="flex justify-between items-center mb-12">
+  <div class="flex justify-between items-center mb-10">
     <img src="images/icon (1).png" class="h-10" alt="Streets to Shelters">
     <button id="close-menu-btn" class="text-deep p-2">
-      <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-      </svg>
+      <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
     </button>
   </div>
-  <nav class="flex flex-col gap-6 text-xl font-heading font-bold overflow-y-auto">
-    <a href="index.html" class="hover:text-brand transition">Home</a>
-    <a href="events.html" class="hover:text-brand transition">Events</a>
-    <a href="about.html" class="hover:text-brand transition">News</a>
-    <a href="members.html" class="hover:text-brand transition">Members</a>
+  <nav class="flex flex-col gap-5 text-xl font-heading font-bold">
+    <a href="index.html"     class="hover:text-brand transition">Home</a>
+    <a href="events.html"    class="hover:text-brand transition">Events</a>
+    <a href="about.html"     class="hover:text-brand transition">News</a>
+    <a href="members.html"   class="hover:text-brand transition">Members</a>
     <a href="volunteer.html" class="hover:text-brand transition">Volunteer</a>
-    <a href="chapter.html" class="hover:text-brand transition">Start a Chapter</a>
-    <a href="contact.html" class="hover:text-brand transition">Contact Us</a>
-    <hr class="border-gray-100 my-4">
-    <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" class="bg-brand text-white text-center py-4 rounded-full text-lg">Donate Now</a>
+    <a href="chapter.html"   class="hover:text-brand transition">Start a Chapter</a>
+    <a href="contact.html"   class="hover:text-brand transition">Contact Us</a>
+    <hr class="border-gray-100 my-2">
+    <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" rel="noopener"
+       class="bg-brand text-white text-center py-4 rounded-full text-lg">Donate Now</a>
   </nav>
 </div>
 
 <main class="pt-36 pb-24 max-w-7xl mx-auto px-6 space-y-24">
 
-  <section class="text-center reveal-hero relative bg-cover bg-center overflow-hidden rounded-3xl min-h-[500px] flex items-center justify-center" style="background-image: url('images/world-map.png');">
+  <section class="text-center reveal-hero relative bg-cover bg-center overflow-hidden rounded-3xl min-h-[500px] flex items-center justify-center" style="background-image:url('images/world-map.png');">
     <div class="absolute inset-0 bg-white/80"></div>
     <div class="relative z-10 py-12 px-6">
       <h1 class="text-5xl md:text-6xl font-heading font-bold mb-6">Start a Chapter</h1>
-      <p class="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">
-        Bring structured impact to your community by launching a youth-led chapter of Streets To Shelters.
-      </p>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfCpZuTW-6sPjbQLBSCpPMr75BQ4sCxHH_WluLateNQyB4rjw/viewform" target="_blank" class="bg-brand text-white px-8 py-4 rounded-full font-semibold hover:bg-brandDark transition transform hover:scale-105 inline-block">
-        Apply Now
-      </a>
+      <p class="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">Bring structured impact to your community by launching a youth-led chapter of Streets To Shelters.</p>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfCpZuTW-6sPjbQLBSCpPMr75BQ4sCxHH_WluLateNQyB4rjw/viewform" target="_blank" rel="noopener"
+         class="bg-brand text-white px-8 py-4 rounded-full font-semibold hover:bg-brandDark transition inline-block">Apply Now</a>
     </div>
   </section>
 
@@ -240,93 +151,75 @@ tailwind.config = {
 
 <footer class="bg-deep text-white py-12">
   <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-10 text-center sm:text-left">
-    <div class="space-y-4">
-      <h3 class="font-heading font-bold text-lg mb-2">Follow Us</h3>
-      <div class="flex flex-col gap-2">
-        <a href="https://www.instagram.com/streets.to.shelter" target="_blank" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Instagram</a>
-        <a href="https://www.facebook.com/profile.php?id=61586361417282" target="_blank" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Facebook</a>
-        <a href="https://www.tiktok.com/@streetstoshelters" target="_blank" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">TikTok</a>
-        <a href="https://linktr.ee/streets2shelters" target="_blank" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Linktree</a>
+    <div>
+      <h3 class="text-xs uppercase tracking-widest text-white/50 font-semibold mb-5">Follow Us</h3>
+      <div class="flex flex-col gap-3">
+        <a href="https://www.instagram.com/streets.to.shelter" target="_blank" rel="noopener" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Instagram</a>
+        <a href="https://www.facebook.com/profile.php?id=61586361417282" target="_blank" rel="noopener" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Facebook</a>
+        <a href="https://www.tiktok.com/@streetstoshelters" target="_blank" rel="noopener" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">TikTok</a>
+        <a href="https://linktr.ee/streets2shelters" target="_blank" rel="noopener" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Linktree</a>
       </div>
     </div>
-    <div class="space-y-4">
-      <h3 class="font-heading font-bold text-lg mb-2">Quick Links</h3>
-      <div class="flex flex-col gap-2">
-        <a href="index.html" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Home</a>
-        <a href="events.html" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Events</a>
-        <a href="about.html" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">News</a>
-        <a href="members.html" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Members</a>
+    <div>
+      <h3 class="text-xs uppercase tracking-widest text-white/50 font-semibold mb-5">Quick Links</h3>
+      <div class="flex flex-col gap-3">
+        <a href="index.html"     class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Home</a>
+        <a href="events.html"    class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Events</a>
+        <a href="about.html"     class="hover:text-brand hover:translate-x-1 transition-transform inline-block">News</a>
+        <a href="members.html"   class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Members</a>
         <a href="volunteer.html" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Volunteer</a>
-        <a href="chapter.html" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Start a Chapter</a>
-        <a href="contact.html" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Contact</a>
+        <a href="chapter.html"   class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Start a Chapter</a>
+        <a href="contact.html"   class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Contact</a>
       </div>
     </div>
-    <div class="space-y-4">
-      <h3 class="font-heading font-bold text-lg mb-2">Support Us</h3>
-      <div class="flex flex-col gap-2">
-        <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Donate</a>
-        <p class="text-gray-400 text-sm mt-2">© 2026 Streets To Shelters</p>
-        </div>
+    <div>
+      <h3 class="text-xs uppercase tracking-widest text-white/50 font-semibold mb-5">Support Us</h3>
+      <div class="flex flex-col gap-3">
+        <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" rel="noopener" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Donate</a>
+      </div>
+      <p class="text-white/25 text-xs mt-10">© 2026 Streets To Shelters</p>
     </div>
   </div>
 </footer>
 
-
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+  /* ── Mobile Menu ── */
+  const mobileBtn = document.getElementById('mobile-menu-btn');
+  const closeBtn  = document.getElementById('close-menu-btn');
+  const overlay   = document.getElementById('mobile-menu-overlay');
+  if (mobileBtn && overlay) {
+    mobileBtn.addEventListener('click', () => overlay.classList.remove('translate-x-full'));
+    closeBtn.addEventListener('click',  () => overlay.classList.add('translate-x-full'));
+    overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => overlay.classList.add('translate-x-full')));
+  }
 
-  /* --- 1. Custom Cursor Logic --- */
-  const cursorDot = document.querySelector('.cursor-dot');
-  const cursorOutline = document.querySelector('.cursor-outline');
-
-  if (cursorDot && cursorOutline && window.matchMedia("(pointer: fine)").matches) {
-    window.addEventListener('mousemove', (e) => {
-      const posX = e.clientX;
-      const posY = e.clientY;
-
-      cursorDot.style.left = `${posX}px`;
-      cursorDot.style.top = `${posY}px`;
-
-      cursorOutline.animate({
-        left: `${posX}px`,
-        top: `${posY}px`
-      }, { duration: 100, fill: "forwards" });
-    });
-
+  /* ── Cursor ── */
+  const dot  = document.querySelector('.cursor-dot');
+  const ring = document.querySelector('.cursor-outline');
+  if (dot && ring && window.matchMedia('(pointer: fine)').matches) {
+    let mx = -200, my = -200, rx = -200, ry = -200;
+    window.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      dot.style.transform = `translate(${mx - 4}px, ${my - 4}px)`;
+    }, { passive: true });
+    (function loop() {
+      rx += (mx - rx) * 0.11; ry += (my - ry) * 0.11;
+      ring.style.transform = `translate(${rx - 18}px, ${ry - 18}px)`;
+      requestAnimationFrame(loop);
+    })();
     document.querySelectorAll('a, button').forEach(el => {
       el.addEventListener('mouseenter', () => document.body.classList.add('hovering-link'));
       el.addEventListener('mouseleave', () => document.body.classList.remove('hovering-link'));
     });
   }
 
-  /* --- 2. Scroll Reveal Logic --- */
-  const revealEls = document.querySelectorAll('.reveal-slide, .reveal-hero, .reveal-item');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15 });
-
-  revealEls.forEach(el => observer.observe(el));
-
-  /* --- 3. Mobile Menu Logic --- */
-  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-  const closeMenuBtn = document.getElementById('close-menu-btn');
-  const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
-
-  if(mobileMenuBtn && closeMenuBtn && mobileMenuOverlay) {
-    mobileMenuBtn.addEventListener('click', () => {
-      mobileMenuOverlay.classList.remove('translate-x-full');
-    });
-    closeMenuBtn.addEventListener('click', () => {
-      mobileMenuOverlay.classList.add('translate-x-full');
-    });
-  }
+  /* ── Scroll Reveal ── */
+  const obs = new IntersectionObserver((entries, o) => {
+    entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); o.unobserve(entry.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal-slide, .reveal-hero, .reveal-item').forEach(el => obs.observe(el));
 });
 </script>
-
 </body>
 </html>
