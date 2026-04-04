@@ -5,11 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Home | Streets 2 Shelters</title>
 <link rel="icon" href="images/Logo1.png">
-
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
-
 <script>
 tailwind.config = {
   theme: {
@@ -31,136 +28,149 @@ tailwind.config = {
 </script>
 
 <style>
-/* =========================================
-   CUSTOM CURSOR — lerp-based smooth follow
-   ========================================= */
+/* =============================================
+   SCROLL PROGRESS BAR
+   ============================================= */
+#progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2.5px;
+  background: linear-gradient(90deg, #7BAF9E, #5E8F80);
+  width: 0%;
+  z-index: 9999;
+  transition: width 0.1s linear;
+}
+
+/* =============================================
+   CUSTOM CURSOR
+   ============================================= */
 @media (pointer: fine) {
-  /* Hides the default cursor on the entire page */
-  html, body {
-    cursor: none !important;
-  }
-
-  /* Ensures the default cursor stays hidden on clickable items */
-  a, button, [role="button"], input, select, textarea {
-    cursor: none !important;
-  }
-
-  .cursor-dot, .cursor-outline {
+  html, body { cursor: none !important; }
+  a, button, [role="button"], input, select, textarea { cursor: none !important; }
+  .cursor-dot, .cursor-ring {
     position: fixed;
     top: 0; left: 0;
     border-radius: 50%;
-    z-index: 9999;
+    z-index: 9998;
     pointer-events: none;
     transform: translate(-50%, -50%);
-    /* This allows the cursor to flip colors against backgrounds */
-    mix-blend-mode: difference; 
+    mix-blend-mode: difference;
   }
-
   .cursor-dot {
-    width: 12px; height: 12px;
-    background-color: #F4EFE6; /* Off-white works best with mix-blend-mode */
-    transition: width 0.2s, height 0.2s;
+    width: 8px; height: 8px;
+    background: #F4EFE6;
+    transition: width 0.18s, height 0.18s, opacity 0.18s;
   }
-
-  .cursor-outline {
-    width: 30px; height: 30px;
-    border: 2px solid #567a6f; 
-    transition: width 0.2s, height 0.2s;
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1.5px solid #567a6f;
+    transition: width 0.32s cubic-bezier(0.16,1,0.3,1),
+                height 0.32s cubic-bezier(0.16,1,0.3,1),
+                background 0.32s;
   }
-
-  /* When hovering over links */
-  body.hovering-link .cursor-dot {
-    width: 0px; height: 0px;
-  }
-  body.hovering-link .cursor-outline {
-    width: 60px; height: 60px;
-    background-color: rgba(86, 122, 111, 0.1);
-    border-color: #567a6f;
-  }
+  body.cursor-hover .cursor-dot  { width: 0; height: 0; opacity: 0; }
+  body.cursor-hover .cursor-ring { width: 56px; height: 56px; background: rgba(86,122,111,0.12); }
 }
-/* =========================================
-   SCROLL REVEAL — expo-out easing
-   ========================================= */
-.reveal-slide, .reveal-left, .reveal-right, .reveal-scale {
+
+/* =============================================
+   SCROLL REVEAL
+   ============================================= */
+.r-up, .r-left, .r-right, .r-scale, .r-fade {
   opacity: 0;
   will-change: opacity, transform;
 }
+.r-up    { transform: translateY(44px); }
+.r-left  { transform: translateX(-52px); }
+.r-right { transform: translateX(52px); }
+.r-scale { transform: scale(0.9) translateY(20px); }
+.r-fade  { }
 
-.reveal-slide {
-  transform: translateY(48px);
-  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+.r-up, .r-left, .r-right, .r-fade {
+  transition: opacity 0.85s cubic-bezier(0.16,1,0.3,1),
+              transform 0.85s cubic-bezier(0.16,1,0.3,1);
 }
-.reveal-left {
-  transform: translateX(-56px);
-  transition: opacity 1.05s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 1.05s cubic-bezier(0.16, 1, 0.3, 1);
+.r-scale {
+  transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1),
+              transform 0.8s cubic-bezier(0.34,1.4,0.64,1);
 }
-.reveal-right {
-  transform: translateX(56px);
-  transition: opacity 1.05s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 1.05s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.reveal-scale {
-  transform: scale(0.88) translateY(24px);
-  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
+.is-visible { opacity: 1 !important; transform: none !important; }
 
-.reveal-hero {
+/* =============================================
+   WORD SPLIT — hero heading
+   ============================================= */
+.word-wrap  { display: inline-block; overflow: hidden; vertical-align: bottom; }
+.word-inner {
+  display: inline-block;
+  transform: translateY(110%);
   opacity: 0;
-  transform: translateY(36px);
-  transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.9s cubic-bezier(0.16,1,0.3,1),
+              opacity 0.6s cubic-bezier(0.16,1,0.3,1);
+}
+.word-inner.is-visible { transform: translateY(0); opacity: 1; }
+
+/* =============================================
+   GRAIN OVERLAY
+   ============================================= */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9997;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
 }
 
-/* Visible states */
-.reveal-slide.is-visible, .reveal-left.is-visible,
-.reveal-right.is-visible, .reveal-hero.is-visible {
-  opacity: 1; transform: translate(0);
+/* =============================================
+   NAV
+   ============================================= */
+header { transition: box-shadow 0.4s ease; }
+body.scrolled header { box-shadow: 0 1px 28px rgba(43,31,28,0.09); }
+nav a { position: relative; }
+nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -3px; left: 0;
+  width: 0; height: 1.5px;
+  background: #7BAF9E;
+  transition: width 0.38s cubic-bezier(0.16,1,0.3,1);
 }
-.reveal-scale.is-visible {
-  opacity: 1; transform: scale(1) translateY(0);
+nav a:hover::after { width: 100%; }
+
+/* =============================================
+   MAGNETIC BUTTON
+   ============================================= */
+.magnetic {
+  transition: transform 0.5s cubic-bezier(0.34,1.26,0.64,1) !important;
 }
 
-/* =========================================
-   HOVER MICRO-INTERACTIONS — spring bounce
-   ========================================= */
-.hover-lift {
-  transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
-              box-shadow 0.55s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.hover-lift:hover {
-  transform: translateY(-10px) scale(1.02);
-  box-shadow: 0 28px 56px -12px rgba(123, 175, 158, 0.28);
+/* =============================================
+   FLOATING ANIMATION
+   ============================================= */
+.float-anim { animation: floatY 7s ease-in-out infinite; }
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-16px); }
 }
 
-/* =========================================
-   FLOATING ANIMATION — smooth sine wave
-   ========================================= */
-.float-anim {
-  animation: float 7s ease-in-out infinite;
-}
-@keyframes float {
-  0%   { transform: translateY(0px); }
-  50%  { transform: translateY(-18px); }
-  100% { transform: translateY(0px); }
-}
+/* =============================================
+   HERO TILT CARD
+   ============================================= */
+.tilt-card { transform-style: preserve-3d; transition: transform 0.1s linear; }
 
-/* =========================================
+/* =============================================
    IMPACT BLOB
-   ========================================= */
+   ============================================= */
 .impact-container {
   position: relative;
   background: #7BAF9E;
   border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-  animation: morphing 18s infinite alternate ease-in-out;
-  transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: morphBlob 20s infinite alternate ease-in-out;
   padding: 80px 40px;
   overflow: hidden;
 }
-
-@keyframes morphing {
+@keyframes morphBlob {
   0%   { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
   20%  { border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%; }
   40%  { border-radius: 40% 60% 55% 45% / 60% 44% 56% 40%; }
@@ -168,21 +178,60 @@ tailwind.config = {
   80%  { border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%; }
   100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
 }
-
 .glass-card {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.22);
   border-radius: 2rem;
 }
 
-/* =========================================
-   CAROUSEL — elastic spring transitions
-   ========================================= */
+/* =============================================
+   COUNTER LAND PULSE
+   ============================================= */
+@keyframes numLand {
+  0%   { transform: scale(1.18); }
+  60%  { transform: scale(0.97); }
+  100% { transform: scale(1); }
+}
+.num-landed { animation: numLand 0.45s cubic-bezier(0.34,1.4,0.64,1) forwards; }
+
+/* =============================================
+   MISSION CARDS
+   ============================================= */
+.mission-card {
+  transition: transform 0.55s cubic-bezier(0.34,1.26,0.64,1),
+              box-shadow 0.55s cubic-bezier(0.16,1,0.3,1);
+}
+.mission-card:hover {
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: 0 24px 48px -12px rgba(123,175,158,0.25);
+}
+.mission-card .bar {
+  transition: width 0.6s cubic-bezier(0.16,1,0.3,1);
+  width: 0;
+}
+.mission-card:hover .bar { width: 100%; }
+
+/* =============================================
+   PROCESS — connecting line
+   ============================================= */
+.step-line {
+  position: absolute;
+  top: 28px; left: calc(50% + 40px);
+  width: calc(100% - 80px);
+  height: 1px;
+  background: linear-gradient(90deg, #7BAF9E 0%, transparent 100%);
+  opacity: 0.3;
+}
+@media (max-width: 767px) { .step-line { display: none; } }
+
+/* =============================================
+   CAROUSEL
+   ============================================= */
 .carousel-container {
   position: relative;
-  width: full;
-  height: 600px;
+  height: 520px;
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -190,369 +239,434 @@ tailwind.config = {
 }
 .carousel-item {
   position: absolute;
-  width: 500px;
-  height: 500px;
-  border-radius: 1rem;
-  transition: all 0.75s cubic-bezier(0.34, 1.26, 0.64, 1),
-              opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  opacity: 0;
-  z-index: 0;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  width: 460px; height: 460px;
+  border-radius: 1.25rem;
   object-fit: cover;
+  opacity: 0; z-index: 0;
+  transition: all 0.72s cubic-bezier(0.34,1.15,0.64,1),
+              opacity 0.55s cubic-bezier(0.16,1,0.3,1);
 }
-.carousel-item.active {
-  opacity: 1;
-  transform: translateX(0) scale(1);
-  z-index: 5;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.22);
-}
-.carousel-item.prev-1 {
-  opacity: 0.65;
-  transform: translateX(-45%) scale(0.8);
-  z-index: 4;
-}
-.carousel-item.next-1 {
-  opacity: 0.65;
-  transform: translateX(45%) scale(0.8);
-  z-index: 4;
-}
-.carousel-item.prev-2 {
-  opacity: 0.35;
-  transform: translateX(-75%) scale(0.62);
-  z-index: 3;
-}
-.carousel-item.next-2 {
-  opacity: 0.35;
-  transform: translateX(75%) scale(0.62);
-  z-index: 3;
-}
-
+.carousel-item.active  { opacity:1;  transform:translateX(0) scale(1);         z-index:5; box-shadow:0 24px 60px rgba(0,0,0,0.22); }
+.carousel-item.prev-1  { opacity:.6; transform:translateX(-44%) scale(0.78);   z-index:4; }
+.carousel-item.next-1  { opacity:.6; transform:translateX(44%) scale(0.78);    z-index:4; }
+.carousel-item.prev-2  { opacity:.28;transform:translateX(-74%) scale(0.6);    z-index:3; }
+.carousel-item.next-2  { opacity:.28;transform:translateX(74%) scale(0.6);     z-index:3; }
 #carousel-dots button {
-  transition: width 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
-              background-color 0.35s ease;
+  transition: width 0.4s cubic-bezier(0.34,1.26,0.64,1), background 0.3s ease;
 }
-
 @media (max-width: 768px) {
-  .carousel-container { height: 600px; }
-  .carousel-item { width: 280px; height: 180px; }
-  .carousel-item.prev-1 { transform: translateX(-40%) scale(0.85); }
-  .carousel-item.next-1 { transform: translateX(40%) scale(0.85); }
-  .carousel-item.prev-2 { transform: translateX(-70%) scale(0.65); opacity: 0; }
-  .carousel-item.next-2 { transform: translateX(70%) scale(0.65); opacity: 0; }
+  .carousel-container { height: 300px; }
+  .carousel-item { width: 240px; height: 200px; }
+  .carousel-item.prev-1 { transform: translateX(-38%) scale(0.84); }
+  .carousel-item.next-1 { transform: translateX(38%) scale(0.84); }
+  .carousel-item.prev-2, .carousel-item.next-2 { opacity: 0; }
 }
 
-/* =========================================
-   NAV UNDERLINE SLIDE
-   ========================================= */
-nav a { position: relative; }
-nav a::after {
-  content: '';
-  position: absolute;
-  bottom: -2px; left: 0;
-  width: 0; height: 1.5px;
-  background: #7BAF9E;
-  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+/* =============================================
+   SPONSOR — graceful empty state
+   ============================================= */
+.sponsor-slot {
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-nav a:hover::after { width: 100%; }
-
-/* =========================================
-   MISSION CARD bottom bar
-   ========================================= */
-#mission-details .group .absolute.bottom-0 {
-  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+.sponsor-slot img[src=""] { display: none; }
+.sponsor-slot:has(img[src=""]) {
+  background: repeating-linear-gradient(
+    45deg, rgba(123,175,158,0.05), rgba(123,175,158,0.05) 10px,
+    transparent 10px, transparent 20px
+  );
+  border: 1.5px dashed rgba(123,175,158,0.25);
+  border-radius: 12px;
+  min-height: 72px;
 }
 
-/* =========================================
-   CTA CARD hover lift
-   ========================================= */
+/* =============================================
+   CTA HOVER LIFT
+   ============================================= */
 .cta-lift {
-  transition: transform 0.6s cubic-bezier(0.34, 1.26, 0.64, 1),
-              box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.55s cubic-bezier(0.34,1.15,0.64,1),
+              box-shadow 0.55s ease;
 }
 .cta-lift:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 36px 72px -18px rgba(123, 175, 158, 0.55);
+  transform: translateY(-5px);
+  box-shadow: 0 40px 80px -20px rgba(123,175,158,0.5);
 }
 
-/* Social icon spring */
-.w-11.h-11 {
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-              background-color 0.3s ease,
-              color 0.3s ease,
-              border-color 0.3s ease;
+/* =============================================
+   FOOTER LINK SLIDE
+   ============================================= */
+footer a {
+  transition: color 0.25s ease, transform 0.3s cubic-bezier(0.34,1.26,0.64,1);
+  display: inline-block;
+}
+footer a:hover { color: #7BAF9E; transform: translateX(5px); }
+
+/* =============================================
+   SOCIAL ICON SPRING
+   ============================================= */
+.social-icon {
+  transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1),
+              background-color 0.28s ease, color 0.28s ease, border-color 0.28s ease;
+}
+.social-icon:hover {
+  transform: scale(1.15) rotate(-4deg);
+  background-color: #7BAF9E; color: white; border-color: #7BAF9E;
+}
+
+/* =============================================
+   PAGE FADE-IN
+   ============================================= */
+@keyframes pageFade {
+  from { opacity: 0; transform: translateY(5px); }
+  to   { opacity: 1; transform: none; }
+}
+body { animation: pageFade 0.55s ease both; }
+
+/* =============================================
+   REDUCED MOTION
+   ============================================= */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  .r-up,.r-left,.r-right,.r-scale,.r-fade { opacity:1 !important; transform:none !important; }
+  .word-inner { transform:none !important; opacity:1 !important; }
 }
 </style>
 </head>
 
-<body class="bg-cream text-deep font-body scroll-smooth">
+<body class="bg-cream text-deep font-body">
 
+<div id="progress-bar"></div>
 <div class="cursor-dot"></div>
-<div class="cursor-outline"></div>
+<div class="cursor-ring"></div>
 
-<header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200">
+<!-- ══════════════════════════════════ HEADER ══════════════════════════════════ -->
+<header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200/60">
   <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
-    <a href="index.html" aria-label="Go to Home" class="inline-flex items-center">
-      <img src="images/icon (1).png" class="h-12 cursor-pointer transition duration-300 hover:scale-105 active:scale-95" alt="Streets to Shelters Home">
+    <a href="index.html" aria-label="Streets to Shelters Home">
+      <img src="images/icon (1).png" class="h-11 transition duration-300 hover:scale-105 active:scale-95" alt="Streets to Shelters">
     </a>
 
     <nav class="hidden md:flex gap-8 text-sm font-medium items-center">
-      <a href="index.html" class="hover:text-brand transition">Home</a>
+      <a href="index.html" class="hover:text-brand transition-colors">Home</a>
+
       <div class="relative group">
-        <button class="hover:text-brand transition py-2 flex items-center gap-1">
+        <button class="hover:text-brand transition-colors py-2 flex items-center gap-1.5">
           Initiatives
-          <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
-          </svg>
+          <svg class="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
         </button>
-        <div class="absolute left-0 top-full w-56 bg-white rounded-2xl shadow-lg opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300">
-          <a href="events.html" class="block px-6 py-3 hover:bg-cream rounded-b-2xl">Streets to Shelters Events</a>
-          <a href="volunteer.html" class="block px-6 py-3 hover:bg-cream rounded-b-2xl">Volunteer</a>
+        <div class="absolute left-0 top-full w-56 bg-white rounded-2xl shadow-lg border border-gray-100 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-250">
+          <a href="events.html"    class="block px-6 py-3.5 text-sm hover:bg-cream rounded-t-2xl transition-colors">Streets to Shelters Events</a>
+          <a href="volunteer.html" class="block px-6 py-3.5 text-sm hover:bg-cream rounded-b-2xl transition-colors">Volunteer</a>
         </div>
       </div>
 
       <div class="relative group">
-        <button class="hover:text-brand transition py-2 flex items-center gap-1">
+        <button class="hover:text-brand transition-colors py-2 flex items-center gap-1.5">
           About Us
-          <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
-          </svg>
+          <svg class="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
         </button>
-        <div class="absolute left-0 top-full w-64 bg-white rounded-2xl shadow-lg opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300">
-          <a href="about.html" class="block px-6 py-3 hover:bg-cream rounded-t-2xl">Streets to Shelters News</a>
-          <a href="members.html" class="block px-6 py-3 hover:bg-cream">Members</a>
-          <a href="contact.html" class="block px-6 py-3 hover:bg-cream rounded-b-2xl">Contact Us</a>
+        <div class="absolute left-0 top-full w-60 bg-white rounded-2xl shadow-lg border border-gray-100 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-250">
+          <a href="about.html"   class="block px-6 py-3.5 text-sm hover:bg-cream rounded-t-2xl transition-colors">Streets to Shelters News</a>
+          <a href="members.html" class="block px-6 py-3.5 text-sm hover:bg-cream transition-colors">Members</a>
+          <a href="contact.html" class="block px-6 py-3.5 text-sm hover:bg-cream rounded-b-2xl transition-colors">Contact Us</a>
         </div>
       </div>
 
-      
-      <a href="chapter.html" class="hover:text-brand transition">Start a Chapter</a>
+      <a href="chapter.html" class="hover:text-brand transition-colors">Start a Chapter</a>
     </nav>
 
     <div class="flex items-center gap-4">
-      <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" class="hidden md:inline-block bg-brand text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-brandDark transition transform hover:scale-105">
+      <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
+         target="_blank" rel="noopener"
+         class="magnetic hidden md:inline-block bg-brand text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-brandDark transition-colors">
         Donate
       </a>
-      <button id="mobile-menu-btn" class="md:hidden text-deep focus:outline-none p-2">
-        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+      <button id="mobile-menu-btn" class="md:hidden text-deep p-2" aria-label="Open menu">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
         </svg>
       </button>
     </div>
   </div>
 </header>
 
+<!-- Mobile menu -->
 <div id="mobile-menu-overlay" class="fixed inset-0 bg-white z-[60] flex flex-col p-10 translate-x-full transition-transform duration-300 ease-in-out md:hidden">
-  <div class="flex justify-between items-center mb-12">
+  <div class="flex justify-between items-center mb-10">
     <img src="images/icon (1).png" class="h-10" alt="Streets to Shelters">
-    <button id="close-menu-btn" class="text-deep p-2">
-      <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+    <button id="close-menu-btn" class="text-deep p-2" aria-label="Close menu">
+      <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
       </svg>
     </button>
   </div>
-  <nav class="flex flex-col gap-6 text-xl font-heading font-bold overflow-y-auto">
-    <a href="index.html" class="hover:text-brand transition">Home</a>
-    <a href="events.html" class="hover:text-brand transition">Events</a>
-    <a href="about.html" class="hover:text-brand transition">News</a>
-    <a href="members.html" class="hover:text-brand transition">Members</a>
-    <a href="volunteer.html" class="hover:text-brand transition">Volunteer</a>
-    <a href="chapter.html" class="hover:text-brand transition">Start a Chapter</a>
-    <a href="contact.html" class="hover:text-brand transition">Contact Us</a>
-    <hr class="border-gray-100 my-4">
-    <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" class="bg-brand text-white text-center py-4 rounded-full text-lg">Donate Now</a>
+  <nav class="flex flex-col gap-5 text-xl font-heading font-bold">
+    <a href="index.html"     class="hover:text-brand transition-colors">Home</a>
+    <a href="events.html"    class="hover:text-brand transition-colors">Events</a>
+    <a href="about.html"     class="hover:text-brand transition-colors">News</a>
+    <a href="members.html"   class="hover:text-brand transition-colors">Members</a>
+    <a href="volunteer.html" class="hover:text-brand transition-colors">Volunteer</a>
+    <a href="chapter.html"   class="hover:text-brand transition-colors">Start a Chapter</a>
+    <a href="contact.html"   class="hover:text-brand transition-colors">Contact Us</a>
+    <hr class="border-gray-100 my-2">
+    <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
+       target="_blank" rel="noopener"
+       class="bg-brand text-white text-center py-4 rounded-full text-lg">Donate Now</a>
   </nav>
 </div>
 
-<section class="pt-36 pb-28 bg-cream reveal-hero">
-  <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+<!-- ══════════════════════════════════ HERO ══════════════════════════════════ -->
+<section class="pt-36 pb-28 bg-cream overflow-hidden">
+  <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+
     <div>
-      <h1 class="text-5xl md:text-6xl font-heading font-bold leading-tight mb-6">
+      <!-- Badge -->
+      <div class="r-fade mb-3" style="transition-delay:0.05s">
+        <span class="inline-block bg-brand/10 text-brandDark text-xs font-semibold tracking-widest uppercase px-4 py-1.5 rounded-full border border-brand/20">
+          Youth-Led Nonprofit
+        </span>
+      </div>
+
+      <!-- Split-word heading -->
+      <h1 id="hero-heading" class="text-5xl md:text-6xl font-heading font-bold leading-tight mb-6">
         Streets to <span class="text-brand">Shelters</span>
       </h1>
-      <p class="text-lg text-gray-700 mb-8">
-        A <span class="text-deep font-bold">youth-led nonprofit</span> delivering essential hygiene kits and critical resources directly to <span class="text-deep font-bold">homeless shelters</span> in our community.
+
+      <p class="r-up text-lg text-gray-600 mb-8 leading-relaxed" style="transition-delay:0.32s">
+        A <strong class="text-deep font-semibold">youth-led nonprofit</strong> delivering essential hygiene kits
+        and critical resources directly to <strong class="text-deep font-semibold">homeless shelters</strong> in our community.
       </p>
-      <div class="flex flex-wrap items-center gap-4">
-        <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" class="bg-brand text-white px-8 py-3 rounded-full font-semibold hover:bg-brandDark transition transform hover:-translate-y-1 hover:shadow-lg">
+
+      <div class="r-up flex flex-wrap items-center gap-4" style="transition-delay:0.44s">
+        <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
+           target="_blank" rel="noopener"
+           class="magnetic bg-brand text-white px-8 py-3.5 rounded-full font-semibold hover:bg-brandDark transition-colors shadow-sm hover:shadow-md">
           Donate
         </a>
-        <a href="#impact" class="border border-deep px-8 py-3 rounded-full font-semibold hover:bg-deep hover:text-white transition transform hover:-translate-y-1">
+        <a href="#impact"
+           class="magnetic border-2 border-deep px-8 py-3.5 rounded-full font-semibold hover:bg-deep hover:text-white transition-all duration-300">
           See Our Impact
         </a>
-
-        <div class="flex gap-3 mt-2 sm:mt-0">
-          <a href="https://www.instagram.com/streets.to.shelter" target="_blank" class="w-11 h-11 rounded-full border-2 border-brand flex items-center justify-center hover:bg-brand hover:text-white transition transform hover:scale-110 text-deep">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M7.75 2h8.5C19.99 2 22 4.01 22 7.75v8.5C22 19.99 19.99 22 16.25 22h-8.5C4.01 22 2 19.99 2 16.25v-8.5C2 4.01 4.01 2 7.75 2zm4.25 5a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm5.5-.75a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5z"/></svg>
+        <!-- Social icons -->
+        <div class="flex gap-2.5 ml-1">
+          <a href="https://www.instagram.com/streets.to.shelter" target="_blank" rel="noopener" aria-label="Instagram"
+             class="social-icon w-10 h-10 rounded-full border-2 border-brand flex items-center justify-center text-deep">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor"><path d="M7.75 2h8.5C19.99 2 22 4.01 22 7.75v8.5C22 19.99 19.99 22 16.25 22h-8.5C4.01 22 2 19.99 2 16.25v-8.5C2 4.01 4.01 2 7.75 2zm4.25 5a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm5.5-.75a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5z"/></svg>
           </a>
-          <a href="https://www.facebook.com/profile.php?id=61586361417282" target="_blank" class="w-11 h-11 rounded-full border-2 border-brand flex items-center justify-center hover:bg-brand hover:text-white transition transform hover:scale-110 text-deep">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M22 12a10 10 0 10-11.5 9.9v-7h-2.7v-2.9h2.7V9.4c0-2.7 1.6-4.2 4.1-4.2 1.2 0 2.4.2 2.4.2v2.6h-1.4c-1.4 0-1.8.9-1.8 1.7v2h3.1l-.5 2.9h-2.6v7A10 10 0 0022 12z"/></svg>
+          <a href="https://www.facebook.com/profile.php?id=61586361417282" target="_blank" rel="noopener" aria-label="Facebook"
+             class="social-icon w-10 h-10 rounded-full border-2 border-brand flex items-center justify-center text-deep">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor"><path d="M22 12a10 10 0 10-11.5 9.9v-7h-2.7v-2.9h2.7V9.4c0-2.7 1.6-4.2 4.1-4.2 1.2 0 2.4.2 2.4.2v2.6h-1.4c-1.4 0-1.8.9-1.8 1.7v2h3.1l-.5 2.9h-2.6v7A10 10 0 0022 12z"/></svg>
           </a>
-          <a href="https://www.tiktok.com/@streetstoshelters" target="_blank" class="w-11 h-11 rounded-full border-2 border-brand flex items-center justify-center hover:bg-brand hover:text-white transition transform hover:scale-110 text-deep">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.17-2.89-.6-4.09-1.47-.88-.64-1.62-1.47-2.16-2.4-.02 2.44.04 4.88-.03 7.33-.13 1.2-.45 2.39-1.01 3.44-1.27 2.41-3.87 3.92-6.55 4.02-2.52.12-5.11-.94-6.68-2.95-1.72-2.15-2.04-5.26-.81-7.65 1.14-2.22 3.52-3.7 5.95-3.83v4.04c-.66.07-1.34.25-1.92.6-.96.59-1.52 1.69-1.43 2.81.05 1.16.74 2.22 1.77 2.73.96.48 2.11.45 3.02-.1.97-.58 1.54-1.68 1.48-2.8-.02-2.93-.01-5.85-.01-8.77z"/></svg>
+          <a href="https://www.tiktok.com/@streetstoshelters" target="_blank" rel="noopener" aria-label="TikTok"
+             class="social-icon w-10 h-10 rounded-full border-2 border-brand flex items-center justify-center text-deep">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.17-2.89-.6-4.09-1.47-.88-.64-1.62-1.47-2.16-2.4-.02 2.44.04 4.88-.03 7.33-.13 1.2-.45 2.39-1.01 3.44-1.27 2.41-3.87 3.92-6.55 4.02-2.52.12-5.11-.94-6.68-2.95-1.72-2.15-2.04-5.26-.81-7.65 1.14-2.22 3.52-3.7 5.95-3.83v4.04c-.66.07-1.34.25-1.92.6-.96.59-1.52 1.69-1.43 2.81.05 1.16.74 2.22 1.77 2.73.96.48 2.11.45 3.02-.1.97-.58 1.54-1.68 1.48-2.8-.02-2.93-.01-5.85-.01-8.77z"/></svg>
           </a>
-          <a href="https://linktr.ee/streets2shelters" target="_blank" class="w-11 h-11 rounded-full border-2 border-brand flex items-center justify-center hover:bg-brand hover:text-white transition transform hover:scale-110 text-deep">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M11 2h2v6h4l-5 5-5-5h4zM5 15h14v2H5zM7 19h10v2H7z"/></svg>
+          <a href="https://linktr.ee/streets2shelters" target="_blank" rel="noopener" aria-label="Linktree"
+             class="social-icon w-10 h-10 rounded-full border-2 border-brand flex items-center justify-center text-deep">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor"><path d="M11 2h2v6h4l-5 5-5-5h4zM5 15h14v2H5zM7 19h10v2H7z"/></svg>
           </a>
         </div>
       </div>
     </div>
-    <div class="bg-brand/20 rounded-3xl p-10 float-anim">
-      <img src="" alt="" class="rounded-2xl shadow-xl">
+
+    <!-- Hero visual -->
+    <div class="r-scale" style="transition-delay:0.2s">
+      <div id="hero-card" class="tilt-card relative float-anim">
+        <div class="bg-brand/15 rounded-3xl overflow-hidden shadow-2xl aspect-square max-w-sm mx-auto">
+          <img src="images/sts1.jpg" alt="Streets to Shelters volunteers"
+               class="w-full h-full object-cover"
+               loading="eager"
+               onerror="this.style.display='none'">
+        </div>
+        <!-- Floating stat card — bottom left -->
+        <div class="absolute -bottom-5 -left-5 bg-white rounded-2xl shadow-xl px-5 py-3.5 border border-gray-100 r-left" style="transition-delay:0.6s">
+          <p class="text-xs text-gray-400 uppercase tracking-widest mb-0.5">Active Volunteers</p>
+          <p class="text-2xl font-heading font-bold text-deep">15+</p>
+        </div>
+        <!-- Floating accent card — top right -->
+        <div class="absolute -top-4 -right-4 bg-brand rounded-2xl shadow-xl px-4 py-3 r-right" style="transition-delay:0.7s">
+          <p class="text-xs text-white/70 uppercase tracking-widest mb-0.5">Making</p>
+          <p class="text-lg font-heading font-bold text-white">Real Impact</p>
+        </div>
+      </div>
     </div>
+
   </div>
 </section>
 
-<section id="mission" class="py-24 bg-white reveal-slide">
-  <div class="max-w-4xl mx-auto text-center px-6">
-    <h2 class="text-4xl font-heading font-bold mb-6">Our Mission</h2>
-    <p class="text-lg text-gray-700">
-      We provide <span class="text-brand font-semibold underline decoration-brand/30 underline-offset-4">essential resources</span> to homeless shelters through organized drives, strategic partnerships, and consistent youth leadership. We focus on measurable, long-term <span class="text-brand font-semibold underline decoration-brand/30 underline-offset-4">impact</span> — not one-time gestures.
+<!-- ══════════════════════════════════ MISSION ══════════════════════════════════ -->
+<section id="mission" class="py-24 bg-white">
+  <div class="max-w-4xl mx-auto text-center px-6 r-up">
+    <h2 class="text-4xl font-heading font-bold mb-5">Our Mission</h2>
+    <div class="w-16 h-0.5 bg-brand mx-auto mb-8 rounded-full"></div>
+    <p class="text-lg text-gray-600 leading-relaxed">
+      We provide <span class="text-brand font-semibold underline decoration-brand/30 underline-offset-4">essential resources</span>
+      to homeless shelters through organized drives, strategic partnerships, and consistent youth leadership.
+      We focus on measurable, long-term <span class="text-brand font-semibold underline decoration-brand/30 underline-offset-4">impact</span> — not one-time gestures.
     </p>
   </div>
 </section>
 
-<section id="impact" class="py-24 px-6 reveal-slide overflow-hidden">
+<!-- ══════════════════════════════════ IMPACT COUNTERS ══════════════════════════════════ -->
+<section id="impact" class="py-24 px-6 overflow-hidden r-up">
   <div class="max-w-5xl mx-auto">
     <div class="impact-container shadow-2xl">
       <div class="glass-card p-12 md:p-20 text-center relative z-10 text-white">
         <div class="mb-12">
           <h2 class="text-5xl md:text-6xl font-heading font-bold mb-4">Our Impact</h2>
-          <div class="w-24 h-1 bg-white mx-auto rounded-full opacity-50"></div>
+          <div class="w-20 h-0.5 bg-white/40 mx-auto rounded-full"></div>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-12">
-          <div class="space-y-2">
-            <h3 class="text-6xl font-bold font-heading" data-target="0">0</h3>
-            <p class="text-white/80 uppercase tracking-widest text-sm font-semibold">Care Kits Distributed</p>
+
+          <!-- FIX: kits — target 0, animation skipped gracefully -->
+          <div class="space-y-3">
+            <div class="text-6xl font-bold font-heading" data-target="0" data-suffix="">0</div>
+            <p class="text-white/75 uppercase tracking-widest text-sm font-medium">Care Kits Distributed</p>
           </div>
-          <div class="space-y-2">
-            <h3 class="text-6xl font-bold font-heading"><span data-target="15">0</span><span>+</span></h3>
-            <p class="text-white/80 uppercase tracking-widest text-sm font-semibold">Volunteers</p>
+
+          <!-- FIX: volunteers — suffix lives in data-suffix, not a sibling span -->
+          <div class="space-y-3">
+            <div class="text-6xl font-bold font-heading" data-target="15" data-suffix="+">0+</div>
+            <p class="text-white/75 uppercase tracking-widest text-sm font-medium">Volunteers</p>
           </div>
-          <div class="space-y-2">
-            <h3 class="text-6xl font-bold font-heading" data-target="0">0</h3>
-            <p class="text-white/80 uppercase tracking-widest text-sm font-semibold">Community Events</p>
+
+          <!-- FIX: events — target 0, animation skipped gracefully -->
+          <div class="space-y-3">
+            <div class="text-6xl font-bold font-heading" data-target="0" data-suffix="">0</div>
+            <p class="text-white/75 uppercase tracking-widest text-sm font-medium">Community Events</p>
           </div>
+
         </div>
       </div>
-      <!-- Physics blobs — reacts to cursor -->
       <div id="blob-layer" style="position:absolute;inset:0;overflow:hidden;border-radius:inherit;filter:url(#gooey-filter);z-index:0;pointer-events:none;"></div>
     </div>
   </div>
 </section>
 
-<!-- SVG gooey filter: blur + threshold = liquid merge effect -->
-<svg style="position:absolute;width:0;height:0;overflow:hidden;" aria-hidden="true">
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
   <defs>
     <filter id="gooey-filter" x="-40%" y="-40%" width="180%" height="180%">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="18" result="blur"/>
-      <feColorMatrix in="blur" mode="matrix"
-        values="1 0 0 0 0
-                0 1 0 0 0
-                0 0 1 0 0
-                0 0 0 28 -10" result="goo"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="16" result="blur"/>
+      <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 26 -9" result="goo"/>
       <feComposite in="SourceGraphic" in2="goo" operator="atop"/>
     </filter>
   </defs>
 </svg>
 
+<!-- ══════════════════════════════════ WHY ══════════════════════════════════ -->
 <section id="mission-details" class="py-24 bg-cream/50 overflow-hidden">
-  <div class="max-w-6xl mx-auto px-6">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-stretch">
-      
-      <div class="reveal-left group relative" style="transition-delay: 100ms;">
-        <div class="absolute -inset-1 bg-gradient-to-r from-brand/20 to-transparent rounded-3xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-        <div class="relative h-full bg-white border border-brand/10 p-10 rounded-3xl shadow-sm hover-lift overflow-hidden">
-          <div class="mb-6 inline-flex items-center justify-center w-12 h-12 rounded-xl bg-brand/10 text-brand">
-            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-            </svg>
-          </div>
-          <h2 class="text-3xl font-heading font-bold mb-5 text-deep leading-tight">
-            Why does it <span class="italic">matter?</span>
-          </h2>
-          <p class="text-lg text-gray-600 leading-relaxed font-body">
-            Streets to Shelters provides <span class="text-brand font-semibold underline decoration-brand/30 underline-offset-4">essential supplies</span> and support to those experiencing homelessness. We don't just provide items; we restore <span class="text-brand font-semibold underline decoration-brand/30 underline-offset-4">dignity</span> through care kits that show our community truly cares.
-          </p>
-          <div class="absolute bottom-0 left-0 h-1 w-0 bg-brand group-hover:w-full transition-all duration-500"></div>
-        </div>
-      </div>
+  <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-10 items-stretch">
 
-      <div class="reveal-right group relative" style="transition-delay: 300ms;">
-        <div class="absolute -inset-1 bg-gradient-to-r from-brand/20 to-transparent rounded-3xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-        <div class="relative h-full bg-white border border-brand/10 p-10 rounded-3xl shadow-sm hover-lift overflow-hidden">
-          <div class="mb-6 inline-flex items-center justify-center w-12 h-12 rounded-xl bg-brand/10 text-brand">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-            </svg>
-          </div>
-          <h2 class="text-3xl font-heading font-bold mb-5 text-deep leading-tight">
-            Why we <span class="italic">started?</span>
-          </h2>
-          <p class="text-lg text-gray-600 leading-relaxed font-body">
-            Created by <span class="text-brand font-semibold underline decoration-brand/30 underline-offset-4">students</span> driven by action, we moved past conversation to coordination. By organizing donation drives and building kits, we bridge the gap between student volunteers and local <span class="text-brand font-semibold underline decoration-brand/30 underline-offset-4">outreach programs</span>.
-          </p>
-          <div class="absolute bottom-0 left-0 h-1 w-0 bg-brand group-hover:w-full transition-all duration-500"></div>
-        </div>
+    <div class="mission-card r-left relative bg-white border border-brand/10 p-10 rounded-3xl shadow-sm overflow-hidden" style="transition-delay:0.08s">
+      <div class="mb-6 w-12 h-12 rounded-xl bg-brand/10 flex items-center justify-center text-brand">
+        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
       </div>
-
+      <h2 class="text-3xl font-heading font-bold mb-5 text-deep leading-tight">Why does it <em>matter?</em></h2>
+      <p class="text-gray-600 leading-relaxed">
+        Streets to Shelters provides <span class="text-brand font-semibold underline decoration-brand/30 underline-offset-4">essential supplies</span>
+        and support to those experiencing homelessness. We don't just provide items — we restore
+        <span class="text-brand font-semibold underline decoration-brand/30 underline-offset-4">dignity</span>
+        through care kits that show our community truly cares.
+      </p>
+      <div class="bar absolute bottom-0 left-0 h-[3px] bg-brand rounded-full"></div>
     </div>
+
+    <div class="mission-card r-right relative bg-white border border-brand/10 p-10 rounded-3xl shadow-sm overflow-hidden" style="transition-delay:0.22s">
+      <div class="mb-6 w-12 h-12 rounded-xl bg-brand/10 flex items-center justify-center text-brand">
+        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+      </div>
+      <h2 class="text-3xl font-heading font-bold mb-5 text-deep leading-tight">Why we <em>started?</em></h2>
+      <p class="text-gray-600 leading-relaxed">
+        Created by <span class="text-brand font-semibold underline decoration-brand/30 underline-offset-4">students</span>
+        driven by action, we moved past conversation to coordination. By organizing donation drives and building kits,
+        we bridge the gap between student volunteers and local
+        <span class="text-brand font-semibold underline decoration-brand/30 underline-offset-4">outreach programs</span>.
+      </p>
+      <div class="bar absolute bottom-0 left-0 h-[3px] bg-brand rounded-full"></div>
+    </div>
+
   </div>
 </section>
 
+<!-- ══════════════════════════════════ HOW IT WORKS ══════════════════════════════════ -->
 <section id="process" class="py-24 bg-white overflow-hidden">
   <div class="max-w-6xl mx-auto px-6">
-    <h2 class="text-4xl font-heading font-bold text-center mb-16 reveal-slide">How It Works</h2>
+    <h2 class="text-4xl font-heading font-bold text-center mb-16 r-up">How It Works</h2>
     <div class="grid md:grid-cols-3 gap-10 text-center">
-      <div class="reveal-scale hover-lift p-6 rounded-2xl bg-cream/30" style="transition-delay:0ms;">
-        <div class="text-brand text-4xl font-heading mb-4">01</div>
+
+      <div class="r-scale relative p-8 rounded-2xl bg-cream/40 border border-brand/10 hover:border-brand/30 transition-colors" style="transition-delay:0ms">
+        <div class="step-line"></div>
+        <div class="text-brand text-5xl font-heading font-bold mb-5 leading-none">01</div>
         <h3 class="font-semibold text-xl mb-3">Fundraise</h3>
-        <p class="text-gray-600">Partner with businesses and host drives to raise funds and collect supplies.</p>
+        <p class="text-gray-500 text-sm leading-relaxed">Partner with businesses and host drives to raise funds and collect supplies.</p>
       </div>
-      <div class="reveal-scale hover-lift p-6 rounded-2xl bg-cream/30" style="transition-delay:150ms;">
-        <div class="text-brand text-4xl font-heading mb-4">02</div>
+
+      <div class="r-scale relative p-8 rounded-2xl bg-cream/40 border border-brand/10 hover:border-brand/30 transition-colors" style="transition-delay:0.15s">
+        <div class="step-line"></div>
+        <div class="text-brand text-5xl font-heading font-bold mb-5 leading-none">02</div>
         <h3 class="font-semibold text-xl mb-3">Assemble</h3>
-        <p class="text-gray-600">Volunteers organize and assemble hygiene and essential kits.</p>
+        <p class="text-gray-500 text-sm leading-relaxed">Volunteers organize and assemble hygiene and essential kits.</p>
       </div>
-      <div class="reveal-scale hover-lift p-6 rounded-2xl bg-cream/30" style="transition-delay:300ms;">
-        <div class="text-brand text-4xl font-heading mb-4">03</div>
+
+      <div class="r-scale relative p-8 rounded-2xl bg-cream/40 border border-brand/10 hover:border-brand/30 transition-colors" style="transition-delay:0.3s">
+        <div class="text-brand text-5xl font-heading font-bold mb-5 leading-none">03</div>
         <h3 class="font-semibold text-xl mb-3">Deliver</h3>
-        <p class="text-gray-600">Direct distribution to shelters ensures immediate impact.</p>
+        <p class="text-gray-500 text-sm leading-relaxed">Direct distribution to shelters ensures immediate impact.</p>
       </div>
+
     </div>
   </div>
 </section>
 
-<section id="gallery" class="py-24 bg-creamdark overflow-hidden reveal-slide">
+<!-- ══════════════════════════════════ GALLERY ══════════════════════════════════ -->
+<section id="gallery" class="py-24 bg-creamdark overflow-hidden r-up">
   <div class="max-w-7xl mx-auto px-6">
-    <h2 class="text-4xl font-heading font-bold text-center mb-16 text-deep">Our Journey</h2>
-    <div class="carousel-container mb-12" id="interactive-carousel">
-      <img src="images/sts1.jpg" class="carousel-item" alt="New Image 1">
-      <img src="images/sts2.jpg" class="carousel-item" alt="New Image 2">
-      <img src="images/sts3.jpg" class="carousel-item" alt="New Image 1">
-      <img src="images/sts4.jpg" class="carousel-item" alt="New Image 2">
-      <img src="images/sts5.jpg" class="carousel-item" alt="New Image 1">
-      <img src="images/sts6.jpg" class="carousel-item" alt="New Image 2">
-      <img src="images/sts7.jpg" class="carousel-item" alt="New Image 1">
-      <img src="images/sts8.jpg" class="carousel-item" alt="New Image 2">
-      <img src="images/sts9.jpg" class="carousel-item" alt="New Image 1">
+    <h2 class="text-4xl font-heading font-bold text-center mb-3 text-deep">Our Journey</h2>
+    <p class="text-center text-gray-500/80 mb-14 text-sm">A look at the work we do together</p>
+
+    <div class="carousel-container mb-10" id="interactive-carousel" role="region" aria-label="Photo gallery">
+      <img src="images/sts1.jpg" class="carousel-item" alt="Streets to Shelters — photo 1" loading="lazy">
+      <img src="images/sts2.jpg" class="carousel-item" alt="Streets to Shelters — photo 2" loading="lazy">
+      <img src="images/sts3.jpg" class="carousel-item" alt="Streets to Shelters — photo 3" loading="lazy">
+      <img src="images/sts4.jpg" class="carousel-item" alt="Streets to Shelters — photo 4" loading="lazy">
+      <img src="images/sts5.jpg" class="carousel-item" alt="Streets to Shelters — photo 5" loading="lazy">
+      <img src="images/sts6.jpg" class="carousel-item" alt="Streets to Shelters — photo 6" loading="lazy">
+      <img src="images/sts7.jpg" class="carousel-item" alt="Streets to Shelters — photo 7" loading="lazy">
+      <img src="images/sts8.jpg" class="carousel-item" alt="Streets to Shelters — photo 8" loading="lazy">
+      <img src="images/sts9.jpg" class="carousel-item" alt="Streets to Shelters — photo 9" loading="lazy">
     </div>
-    <div class="flex justify-center items-center gap-3" id="carousel-dots"></div>
+
+    <div class="flex justify-center items-center gap-5">
+      <button id="carousel-prev" aria-label="Previous photo"
+              class="w-10 h-10 rounded-full border-2 border-deep/30 flex items-center justify-center hover:border-deep hover:bg-deep hover:text-white transition-all duration-300">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+      </button>
+      <div class="flex gap-2.5" id="carousel-dots"></div>
+      <button id="carousel-next" aria-label="Next photo"
+              class="w-10 h-10 rounded-full border-2 border-deep/30 flex items-center justify-center hover:border-deep hover:bg-deep hover:text-white transition-all duration-300">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+      </button>
+    </div>
   </div>
 </section>
 
-<section class="py-24 bg-cream reveal-scale">
+<!-- ══════════════════════════════════ DONATE CTA ══════════════════════════════════ -->
+<section class="py-24 bg-cream r-scale">
   <div class="max-w-5xl mx-auto px-6 text-center">
-    <div class="bg-brand rounded-3xl p-12 md:p-16 shadow-2xl relative overflow-hidden cta-lift">
-      <div class="absolute top-0 right-0 -mt-10 -mr-10 w-48 h-48 bg-white opacity-20 rounded-full blur-2xl float-anim"></div>
-      <div class="absolute bottom-0 left-0 -mb-10 -ml-10 w-48 h-48 bg-white opacity-20 rounded-full blur-2xl float-anim" style="animation-delay: 2s;"></div>
-
-      <h2 class="text-4xl md:text-5xl font-heading font-bold text-white mb-6 relative z-10">Help make a kit!</h2>
-      <p class="text-xl text-white/90 mb-10 max-w-2xl mx-auto relative z-10 font-body">
-        Every $25 helps create a care kit for someone in need. Join us in making a direct, immediate impact in our community.
+    <div class="bg-brand rounded-3xl p-12 md:p-16 shadow-xl relative overflow-hidden cta-lift">
+      <div class="absolute top-0 right-0 -mt-12 -mr-12 w-52 h-52 bg-white/20 rounded-full blur-3xl float-anim pointer-events-none"></div>
+      <div class="absolute bottom-0 left-0 -mb-12 -ml-12 w-52 h-52 bg-white/20 rounded-full blur-3xl float-anim pointer-events-none" style="animation-delay:2s"></div>
+      <h2 class="text-4xl md:text-5xl font-heading font-bold text-white mb-5 relative z-10">Help make a kit!</h2>
+      <p class="text-xl text-white/90 mb-10 max-w-2xl mx-auto relative z-10">
+        Every <strong>$25</strong> helps create a care kit for someone in need. Join us in making a direct, immediate impact in our community.
       </p>
-      <div class="flex flex-col sm:flex-row justify-center items-center gap-4 relative z-10">
-        <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" class="w-full sm:w-auto bg-white text-brand px-10 py-4 rounded-full text-lg font-bold hover:bg-cream hover:shadow-lg transition-all duration-300 hover:scale-110">
+      <div class="relative z-10">
+        <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
+           target="_blank" rel="noopener"
+           class="magnetic inline-block bg-white text-brand px-12 py-4 rounded-full text-lg font-bold hover:bg-cream transition-colors shadow-sm hover:shadow-md">
           Donate Now
         </a>
       </div>
@@ -560,326 +674,335 @@ nav a:hover::after { width: 100%; }
   </div>
 </section>
 
-<section id="partners" class="py-24 bg-white reveal-slide">
+<!-- ══════════════════════════════════ SPONSORS ══════════════════════════════════ -->
+<section id="partners" class="py-24 bg-white r-up">
   <div class="max-w-7xl mx-auto px-6">
     <div class="text-center mb-16">
       <h2 class="text-4xl md:text-5xl font-heading font-bold text-deep mb-4">Sponsors & Partners</h2>
-      <div class="w-20 h-1.5 bg-brand mx-auto rounded-full"></div>
-      <p class="text-lg text-gray-600 mt-6 max-w-2xl mx-auto">
-        We are proud to collaborate with local businesses and organizations that share our vision for a community where everyone has their basic needs met.
+      <div class="w-16 h-0.5 bg-brand mx-auto rounded-full mb-6"></div>
+      <p class="text-gray-500 max-w-xl mx-auto">
+        We are proud to collaborate with local businesses and organizations that share our vision.
       </p>
     </div>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-12 items-center">
-      <div class="group flex justify-center transform transition duration-500 hover:-translate-y-2">
-        <img src="" alt=" " class="h-16 md:h-20 object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500">
+    <!-- FIX: sponsor-slot handles empty src gracefully -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-10 items-center">
+      <div class="sponsor-slot group transition-all duration-400 hover:-translate-y-1.5">
+        <img src="" alt=" " class="h-16 object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-400">
       </div>
-      <div class="group flex justify-center transform transition duration-500 hover:-translate-y-2" style="transition-delay: 100ms;">
-        <img src="" alt=" " class="h-16 md:h-20 object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500">
+      <div class="sponsor-slot group transition-all duration-400 hover:-translate-y-1.5" style="transition-delay:0.08s">
+        <img src="" alt=" " class="h-16 object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-400">
       </div>
-      <div class="group flex justify-center transform transition duration-500 hover:-translate-y-2" style="transition-delay: 200ms;">
-        <img src="" alt=" " class="h-16 md:h-20 object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500">
+      <div class="sponsor-slot group transition-all duration-400 hover:-translate-y-1.5" style="transition-delay:0.16s">
+        <img src="" alt=" " class="h-16 object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-400">
       </div>
-      <div class="group flex justify-center transform transition duration-500 hover:-translate-y-2" style="transition-delay: 300ms;">
-        <img src="" alt=" " class="h-16 md:h-20 object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500">
+      <div class="sponsor-slot group transition-all duration-400 hover:-translate-y-1.5" style="transition-delay:0.24s">
+        <img src="" alt=" " class="h-16 object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-400">
       </div>
     </div>
-    <div class="mt-20 text-center">
-      <p class="text-gray-500 font-medium">
-        Want to partner with Streets to Shelters? 
-        <a href="contact.html" class="text-brand border-b-2 border-brand/30 hover:border-brand transition-all ml-1">Get in touch with us &rarr;</a>
+    <div class="mt-16 text-center">
+      <p class="text-gray-400 text-sm">
+        Want to partner with Streets to Shelters?
+        <a href="contact.html" class="text-brand font-medium border-b border-brand/40 hover:border-brand transition-colors ml-1">Get in touch →</a>
       </p>
     </div>
   </div>
 </section>
 
-<footer class="bg-deep text-white py-12">
+<!-- ══════════════════════════════════ FOOTER ══════════════════════════════════ -->
+<footer class="bg-deep text-white py-14">
   <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-10 text-center sm:text-left">
-    <div class="space-y-4">
-      <h3 class="font-heading font-bold text-lg mb-2">Follow Us</h3>
-      <div class="flex flex-col gap-2">
-        <a href="https://www.instagram.com/streets.to.shelter" target="_blank" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Instagram</a>
-        <a href="https://www.facebook.com/profile.php?id=61586361417282" target="_blank" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Facebook</a>
-        <a href="https://www.tiktok.com/@streetstoshelters" target="_blank" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">TikTok</a>
-        <a href="https://linktr.ee/streets2shelters" target="_blank" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Linktree</a>
+    <div>
+      <h3 class="text-xs uppercase tracking-widest text-white/50 font-semibold mb-5">Follow Us</h3>
+      <div class="flex flex-col gap-3">
+        <a href="https://www.instagram.com/streets.to.shelter" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.facebook.com/profile.php?id=61586361417282" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://www.tiktok.com/@streetstoshelters" target="_blank" rel="noopener">TikTok</a>
+        <a href="https://linktr.ee/streets2shelters" target="_blank" rel="noopener">Linktree</a>
       </div>
     </div>
-    <div class="space-y-4">
-      <h3 class="font-heading font-bold text-lg mb-2">Quick Links</h3>
-      <div class="flex flex-col gap-2">
-        <a href="index.html" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Home</a>
-        <a href="events.html" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Events</a>
-        <a href="about.html" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">News</a>
-        <a href="members.html" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Members</a>
-        <a href="volunteer.html" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Volunteer</a>
-        <a href="chapter.html" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Start a Chapter</a>
-        <a href="contact.html" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Contact</a>
+    <div>
+      <h3 class="text-xs uppercase tracking-widest text-white/50 font-semibold mb-5">Quick Links</h3>
+      <div class="flex flex-col gap-3">
+        <a href="index.html">Home</a>
+        <a href="events.html">Events</a>
+        <a href="about.html">News</a>
+        <a href="members.html">Members</a>
+        <a href="volunteer.html">Volunteer</a>
+        <a href="chapter.html">Start a Chapter</a>
+        <a href="contact.html">Contact</a>
       </div>
     </div>
-    <div class="space-y-4">
-      <h3 class="font-heading font-bold text-lg mb-2">Support Us</h3>
-      <div class="flex flex-col gap-2">
-        <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Donate</a>
-        <p class="text-gray-400 text-sm mt-2">© 2026 Streets To Shelters</p>
+    <div>
+      <h3 class="text-xs uppercase tracking-widest text-white/50 font-semibold mb-5">Support Us</h3>
+      <div class="flex flex-col gap-3">
+        <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" rel="noopener">Donate</a>
       </div>
+      <p class="text-white/25 text-xs mt-10">© 2026 Streets To Shelters</p>
     </div>
   </div>
 </footer>
 
+<!-- ══════════════════════════════════ SCRIPTS ══════════════════════════════════ -->
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
 
-    /* --- 1. Mobile Menu Toggle --- */
-    const mobileBtn = document.getElementById('mobile-menu-btn');
-    const closeBtn = document.getElementById('close-menu-btn');
-    const mobileOverlay = document.getElementById('mobile-menu-overlay');
+  /* ─── Mobile Menu ─── */
+  const mobileBtn     = document.getElementById('mobile-menu-btn');
+  const closeBtn      = document.getElementById('close-menu-btn');
+  const mobileOverlay = document.getElementById('mobile-menu-overlay');
+  if (mobileBtn && mobileOverlay) {
+    mobileBtn.addEventListener('click', () => mobileOverlay.classList.remove('translate-x-full'));
+    closeBtn.addEventListener('click',  () => mobileOverlay.classList.add('translate-x-full'));
+    mobileOverlay.querySelectorAll('a').forEach(a =>
+      a.addEventListener('click', () => mobileOverlay.classList.add('translate-x-full'))
+    );
+  }
 
-    if (mobileBtn && closeBtn && mobileOverlay) {
-      mobileBtn.addEventListener('click', () => mobileOverlay.classList.remove('translate-x-full'));
-      closeBtn.addEventListener('click', () => mobileOverlay.classList.add('translate-x-full'));
-    }
+  /* ─── Scroll Progress + Nav shadow ─── */
+  const bar = document.getElementById('progress-bar');
+  window.addEventListener('scroll', () => {
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = (total > 0 ? (window.scrollY / total) * 100 : 0) + '%';
+    document.body.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
 
-    /* --- 2. Custom Cursor — rAF lerp for silky trail --- */
-    const cursorDot     = document.querySelector('.cursor-dot');
-    const cursorOutline = document.querySelector('.cursor-outline');
+  /* ─── Custom Cursor ─── */
+  const dot  = document.querySelector('.cursor-dot');
+  const ring = document.querySelector('.cursor-ring');
+  if (dot && ring && window.matchMedia('(pointer: fine)').matches) {
+    let mx=-200, my=-200, rx=-200, ry=-200;
+    window.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+    });
+    (function loop() {
+      rx += (mx - rx) * 0.11; ry += (my - ry) * 0.11;
+      ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+      requestAnimationFrame(loop);
+    })();
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+    });
+  }
 
-    if (cursorDot && cursorOutline && window.matchMedia('(pointer: fine)').matches) {
-      let mouseX = -100, mouseY = -100;
-      let outX   = -100, outY   = -100;
-      const LERP = 0.12;
-
-      window.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        cursorDot.style.left = mouseX + 'px';
-        cursorDot.style.top  = mouseY + 'px';
-      });
-
-      (function loop() {
-        outX += (mouseX - outX) * LERP;
-        outY += (mouseY - outY) * LERP;
-        cursorOutline.style.left = outX + 'px';
-        cursorOutline.style.top  = outY + 'px';
-        requestAnimationFrame(loop);
-      })();
-
-      document.querySelectorAll('a, button').forEach(el => {
-        el.addEventListener('mouseenter', () => document.body.classList.add('hovering-link'));
-        el.addEventListener('mouseleave', () => document.body.classList.remove('hovering-link'));
-      });
-    }
-
-    /* --- 3. Scroll Reveal --- */
-    const revealEls = document.querySelectorAll('.reveal-slide, .reveal-left, .reveal-right, .reveal-scale, .reveal-hero');
-
-    const revealObs = new IntersectionObserver((entries, obs) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          obs.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-
-    revealEls.forEach(el => revealObs.observe(el));
-
-    /* --- 4. Impact Counter — easeOutQuart via rAF --- */
-    const easeOutQuart = t => 1 - Math.pow(1 - t, 4);
-
-    const counterObs = new IntersectionObserver((entries, obs) => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        const el     = entry.target;
-        const target = +el.getAttribute('data-target');
-        const dur    = 1400;
-        const start  = performance.now();
-
-        (function tick(now) {
-          const p = Math.min((now - start) / dur, 1);
-          el.innerText = Math.round(easeOutQuart(p) * target);
-          if (p < 1) requestAnimationFrame(tick);
-          else el.innerText = target;
-        })(start);
-
-        obs.unobserve(el);
-      });
-    }, { threshold: 0.5 });
-
-    document.querySelectorAll('[data-target]').forEach(el => counterObs.observe(el));
-
-    /* --- 5. Hero on load --- */
-    setTimeout(() => {
-      const hero = document.querySelector('.reveal-hero');
-      if (hero) hero.classList.add('is-visible');
-    }, 80);
-
-    /* --- 6. Carousel --- */
-    const carouselItems = document.querySelectorAll('.carousel-item');
-    const dotsContainer = document.getElementById('carousel-dots');
-    let carouselIndex = 0;
-    let carouselInterval;
-
-    if (carouselItems.length > 0) {
-      carouselItems.forEach((_, idx) => {
-        const dot = document.createElement('button');
-        dot.setAttribute('aria-label', `Go to slide ${idx + 1}`);
-        dot.classList.add('h-3', 'rounded-full', 'transition-all', 'duration-300', 'hover:bg-deep');
-        dot.classList.add(idx === 0 ? 'bg-deep' : 'bg-deep/30', idx === 0 ? 'w-8' : 'w-3');
-        dot.addEventListener('click', () => { carouselIndex = idx; updateCarousel(); resetCarouselTimer(); });
-        dotsContainer.appendChild(dot);
-      });
-
-      const dots = dotsContainer.querySelectorAll('button');
-
-      const updateCarousel = () => {
-        const total = carouselItems.length;
-        carouselItems.forEach((item, i) => {
-          item.classList.remove('active', 'prev-1', 'next-1', 'prev-2', 'next-2');
-          if (i === carouselIndex) item.classList.add('active');
-          else if (i === (carouselIndex - 1 + total) % total) item.classList.add('prev-1');
-          else if (i === (carouselIndex + 1) % total) item.classList.add('next-1');
-          else if (i === (carouselIndex - 2 + total) % total) item.classList.add('prev-2');
-          else if (i === (carouselIndex + 2) % total) item.classList.add('next-2');
+  /* ─── Hero Heading — Word Split ─── */
+  const h1 = document.getElementById('hero-heading');
+  if (h1) {
+    // Walk child nodes, wrap each word in .word-wrap > .word-inner
+    const wrap = node => {
+      if (node.nodeType === 3) { // text node
+        const frag = document.createDocumentFragment();
+        node.textContent.split(/(\s+)/).forEach(part => {
+          if (/^\s+$/.test(part) || part === '') {
+            frag.appendChild(document.createTextNode(part));
+          } else {
+            const w = document.createElement('span'); w.className = 'word-wrap';
+            const i = document.createElement('span'); i.className = 'word-inner';
+            i.textContent = part; w.appendChild(i); frag.appendChild(w);
+          }
         });
-        dots.forEach((dot, i) => {
-          dot.classList.toggle('bg-deep',    i === carouselIndex);
-          dot.classList.toggle('w-8',        i === carouselIndex);
-          dot.classList.toggle('bg-deep/30', i !== carouselIndex);
-          dot.classList.toggle('w-3',        i !== carouselIndex);
-        });
-      };
+        node.replaceWith(frag);
+      } else if (node.nodeType === 1 && node.tagName !== 'SCRIPT') {
+        // Wrap the whole element (e.g. <span class="text-brand">)
+        const w = document.createElement('span'); w.className = 'word-wrap';
+        const i = document.createElement('span'); i.className = 'word-inner';
+        i.appendChild(node.cloneNode(true)); w.appendChild(i);
+        node.replaceWith(w);
+      }
+    };
+    Array.from(h1.childNodes).forEach(wrap);
+    h1.querySelectorAll('.word-inner').forEach((w, idx) => {
+      w.style.transitionDelay = (0.05 + idx * 0.075) + 's';
+    });
+    setTimeout(() => h1.querySelectorAll('.word-inner').forEach(w => w.classList.add('is-visible')), 80);
+  }
 
-      const resetCarouselTimer = () => {
-        clearInterval(carouselInterval);
-        carouselInterval = setInterval(() => {
-          carouselIndex = (carouselIndex + 1) % carouselItems.length;
-          updateCarousel();
-        }, 3000);
-      };
+  /* ─── Hero Card 3D Tilt ─── */
+  const heroCard = document.getElementById('hero-card');
+  if (heroCard) {
+    heroCard.parentElement.addEventListener('mousemove', e => {
+      const r  = heroCard.getBoundingClientRect();
+      const rx2 = ((e.clientY - r.top  - r.height/2) / (r.height/2)) *  6;
+      const ry2 = ((e.clientX - r.left - r.width /2) / (r.width /2)) * -6;
+      heroCard.style.transform = `perspective(800px) rotateX(${rx2}deg) rotateY(${ry2}deg)`;
+    });
+    heroCard.parentElement.addEventListener('mouseleave', () => {
+      heroCard.style.transform = '';
+    });
+  }
 
-      updateCarousel();
-      resetCarouselTimer();
+  /* ─── Scroll Reveal ─── */
+  const revealObs = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      obs.unobserve(entry.target);
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -48px 0px' });
+  document.querySelectorAll('.r-up,.r-left,.r-right,.r-scale,.r-fade').forEach(el => revealObs.observe(el));
+
+  /* ─── Counters — easeOutQuart, skip if target=0 ─── */
+  const easeOut = t => 1 - Math.pow(1 - t, 4);
+  const counterObs = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const target = +el.dataset.target;
+      const suffix = el.dataset.suffix || '';
+      if (target === 0) { el.textContent = '0' + suffix; obs.unobserve(el); return; }
+      const dur = 1600, t0 = performance.now();
+      (function tick(now) {
+        const p = Math.min((now - t0) / dur, 1);
+        el.textContent = Math.round(easeOut(p) * target) + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+        else { el.textContent = target + suffix; el.classList.add('num-landed'); }
+      })(t0);
+      obs.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('[data-target]').forEach(el => counterObs.observe(el));
+
+  /* ─── Carousel — swipe + keyboard + prev/next buttons ─── */
+  const items   = document.querySelectorAll('.carousel-item');
+  const dotsCon = document.getElementById('carousel-dots');
+  const prevBtn = document.getElementById('carousel-prev');
+  const nextBtn = document.getElementById('carousel-next');
+  let cIdx = 0, cTimer = null;
+
+  if (items.length) {
+    const total = items.length;
+
+    items.forEach((_, i) => {
+      const d = document.createElement('button');
+      d.setAttribute('aria-label', `Photo ${i + 1}`);
+      d.className = 'h-2.5 rounded-full transition-all duration-400';
+      d.classList.add(i === 0 ? 'bg-deep w-7' : 'bg-deep/30 w-2.5');
+      d.addEventListener('click', () => { cIdx = i; update(); reset(); });
+      dotsCon.appendChild(d);
+    });
+
+    const dots = dotsCon.querySelectorAll('button');
+
+    function update() {
+      items.forEach((item, i) => {
+        item.classList.remove('active','prev-1','next-1','prev-2','next-2');
+        const d = ((i - cIdx) % total + total) % total;
+        if      (d === 0)         item.classList.add('active');
+        else if (d === 1)         item.classList.add('next-1');
+        else if (d === total - 1) item.classList.add('prev-1');
+        else if (d === 2)         item.classList.add('next-2');
+        else if (d === total - 2) item.classList.add('prev-2');
+      });
+      dots.forEach((d, i) => {
+        d.classList.toggle('bg-deep',    i === cIdx);
+        d.classList.toggle('w-7',        i === cIdx);
+        d.classList.toggle('bg-deep/30', i !== cIdx);
+        d.classList.toggle('w-2.5',      i !== cIdx);
+      });
     }
 
+    function advance(dir) { cIdx = (cIdx + dir + total) % total; update(); reset(); }
+    function reset() { clearInterval(cTimer); cTimer = setInterval(() => advance(1), 3500); }
+
+    prevBtn && prevBtn.addEventListener('click', () => advance(-1));
+    nextBtn && nextBtn.addEventListener('click', () => advance(1));
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft')  advance(-1);
+      if (e.key === 'ArrowRight') advance(1);
+    });
+
+    // Touch / swipe
+    const car = document.getElementById('interactive-carousel');
+    let tx = null;
+    car.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+    car.addEventListener('touchend', e => {
+      if (tx === null) return;
+      const dx = e.changedTouches[0].clientX - tx;
+      if (Math.abs(dx) > 40) advance(dx < 0 ? 1 : -1);
+      tx = null;
+    }, { passive: true });
+
+    update(); reset();
+  }
+
+  /* ─── Magnetic Buttons ─── */
+  document.querySelectorAll('.magnetic').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const r = btn.getBoundingClientRect();
+      btn.style.transform = `translate(${(e.clientX - r.left - r.width/2) * 0.28}px, ${(e.clientY - r.top - r.height/2) * 0.28}px)`;
+    });
+    btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
   });
 
-  /* =============================================
-     GOOEY METABALL BLOBS — cursor physics
-     7 DOM circles filtered through SVG goo filter
-     so they merge like liquid when they overlap
-     ============================================= */
-  (function () {
-    const layer = document.getElementById('blob-layer');
-    if (!layer) return;
-
-    const CONFIGS = [
-      { fx: 0.15, fy: 0.28, r: 105, vx:  0.20, vy:  0.13, color: 'rgba(91,143,128,0.62)' },
-      { fx: 0.78, fy: 0.62, r: 125, vx: -0.15, vy:  0.17, color: 'rgba(123,175,158,0.55)' },
-      { fx: 0.48, fy: 0.14, r:  85, vx:  0.12, vy: -0.20, color: 'rgba(155,200,185,0.50)' },
-      { fx: 0.22, fy: 0.76, r:  98, vx: -0.18, vy: -0.11, color: 'rgba(76,126,113,0.58)' },
-      { fx: 0.68, fy: 0.22, r:  78, vx:  0.22, vy:  0.15, color: 'rgba(123,175,158,0.44)' },
-      { fx: 0.58, fy: 0.84, r:  92, vx: -0.13, vy: -0.18, color: 'rgba(91,143,128,0.50)' },
-      { fx: 0.35, fy: 0.50, r:  68, vx:  0.16, vy:  0.09, color: 'rgba(155,200,185,0.40)' },
-    ];
-
-    const REPEL_R  = 190;
-    const REPEL_F  = 3.8;
-    const DAMP     = 0.978;
-    const MAX_SPD  = 4.5;
-    const NOISE    = 0.032;
-
-    let blobs = [];
-    let mouse = { x: -9999, y: -9999 };
-    let rect  = null;
-
-    /* Build one div per blob */
-    CONFIGS.forEach((c, i) => {
-      const el = document.createElement('div');
-      const sz = c.r * 2;
-      el.style.cssText = [
-        'position:absolute',
-        'border-radius:50%',
-        'transform:translate(-50%,-50%)',
-        'will-change:left,top',
-        'pointer-events:none',
-        `width:${sz}px`,
-        `height:${sz}px`,
-        `background:${c.color}`,
-      ].join(';');
-      el.id = '_blob' + i;
-      layer.appendChild(el);
+  /* ─── Hero on load ─── */
+  setTimeout(() => {
+    document.querySelectorAll('.r-fade').forEach(el => el.classList.add('is-visible'));
+    document.querySelectorAll('section:first-of-type .r-up').forEach((el, i) => {
+      setTimeout(() => el.classList.add('is-visible'), 100 + i * 60);
     });
+  }, 100);
 
-    function init() {
-      rect = layer.getBoundingClientRect();
-      blobs = CONFIGS.map((c, i) => ({
-        el: document.getElementById('_blob' + i),
-        x: c.fx * rect.width,  y: c.fy * rect.height,
-        ox: c.fx * rect.width, oy: c.fy * rect.height,
-        r: c.r, vx: c.vx, vy: c.vy,
-      }));
-    }
+});
 
-    /* Track mouse relative to the blob layer */
-    window.addEventListener('mousemove', e => {
-      rect = layer.getBoundingClientRect();
-      mouse.x = e.clientX - rect.left;
-      mouse.y = e.clientY - rect.top;
+/* ─── Gooey Metaballs ─── */
+(function() {
+  const layer = document.getElementById('blob-layer');
+  if (!layer) return;
+  const C = [
+    {fx:.15,fy:.28,r:100,vx: .20,vy: .13,c:'rgba(91,143,128,.60)'},
+    {fx:.78,fy:.62,r:120,vx:-.15,vy: .17,c:'rgba(123,175,158,.52)'},
+    {fx:.48,fy:.14,r: 80,vx: .12,vy:-.20,c:'rgba(155,200,185,.48)'},
+    {fx:.22,fy:.76,r: 95,vx:-.18,vy:-.11,c:'rgba(76,126,113,.55)'},
+    {fx:.68,fy:.22,r: 75,vx: .22,vy: .15,c:'rgba(123,175,158,.42)'},
+    {fx:.58,fy:.84,r: 88,vx:-.13,vy:-.18,c:'rgba(91,143,128,.48)'},
+    {fx:.35,fy:.50,r: 65,vx: .16,vy: .09,c:'rgba(155,200,185,.38)'},
+  ];
+  C.forEach((c,i) => {
+    const el = document.createElement('div');
+    el.style.cssText = `position:absolute;border-radius:50%;transform:translate(-50%,-50%);will-change:left,top;pointer-events:none;width:${c.r*2}px;height:${c.r*2}px;background:${c.c}`;
+    el.id = '_b'+i; layer.appendChild(el);
+  });
+  let blobs=[], mouse={x:-9999,y:-9999}, rect=null;
+  function init() {
+    rect = layer.getBoundingClientRect();
+    blobs = C.map((c,i) => ({
+      el:document.getElementById('_b'+i),
+      x:c.fx*rect.width, y:c.fy*rect.height,
+      ox:c.fx*rect.width, oy:c.fy*rect.height,
+      r:c.r, vx:c.vx, vy:c.vy
+    }));
+  }
+  window.addEventListener('mousemove', e => {
+    rect = layer.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+  });
+  function tick() {
+    if (!blobs.length) { requestAnimationFrame(tick); return; }
+    const W = rect ? rect.width : layer.offsetWidth;
+    const H = rect ? rect.height : layer.offsetHeight;
+    blobs.forEach(b => {
+      const dx=b.x-mouse.x, dy=b.y-mouse.y, d=Math.sqrt(dx*dx+dy*dy);
+      if (d < 190 && d > 1) { const f=Math.pow((190-d)/190,1.5); b.vx+=(dx/d)*f*3.6; b.vy+=(dy/d)*f*3.6; }
+      b.vx += (Math.random()-.5)*.03;
+      b.vy += (Math.random()-.5)*.03;
+      b.vx += (b.ox-b.x)*.0007; b.vy += (b.oy-b.y)*.0007;
+      b.vx *= .978; b.vy *= .978;
+      const spd=Math.sqrt(b.vx*b.vx+b.vy*b.vy);
+      if (spd > 4.2) { b.vx=b.vx/spd*4.2; b.vy=b.vy/spd*4.2; }
+      b.x+=b.vx; b.y+=b.vy;
+      const m=b.r*.3;
+      if(b.x<m){b.vx+=.7;b.x=m;} if(b.x>W-m){b.vx-=.7;b.x=W-m;}
+      if(b.y<m){b.vy+=.7;b.y=m;} if(b.y>H-m){b.vy-=.7;b.y=H-m;}
+      b.el.style.left=b.x+'px'; b.el.style.top=b.y+'px';
     });
-    window.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
-
-    function tick() {
-      if (!blobs.length) { requestAnimationFrame(tick); return; }
-      const W = rect ? rect.width  : layer.offsetWidth;
-      const H = rect ? rect.height : layer.offsetHeight;
-
-      blobs.forEach(b => {
-        const dx   = b.x - mouse.x;
-        const dy   = b.y - mouse.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-
-        /* Cursor repulsion — exponential falloff so it feels punchy */
-        if (dist < REPEL_R && dist > 1) {
-          const force = Math.pow((REPEL_R - dist) / REPEL_R, 1.5);
-          b.vx += (dx / dist) * force * REPEL_F;
-          b.vy += (dy / dist) * force * REPEL_F;
-        }
-
-        /* Gentle random drift so blobs never freeze */
-        b.vx += (Math.random() - 0.5) * NOISE;
-        b.vy += (Math.random() - 0.5) * NOISE;
-
-        /* Soft spring back toward original position */
-        b.vx += (b.ox - b.x) * 0.0007;
-        b.vy += (b.oy - b.y) * 0.0007;
-
-        /* Friction + speed cap */
-        b.vx *= DAMP;
-        b.vy *= DAMP;
-        const spd = Math.sqrt(b.vx * b.vx + b.vy * b.vy);
-        if (spd > MAX_SPD) { b.vx = b.vx / spd * MAX_SPD; b.vy = b.vy / spd * MAX_SPD; }
-
-        b.x += b.vx;
-        b.y += b.vy;
-
-        /* Soft wall bounce */
-        const m = b.r * 0.3;
-        if (b.x < m)     { b.vx += 0.8; b.x = m; }
-        if (b.x > W - m) { b.vx -= 0.8; b.x = W - m; }
-        if (b.y < m)     { b.vy += 0.8; b.y = m; }
-        if (b.y > H - m) { b.vy -= 0.8; b.y = H - m; }
-
-        /* GPU-composited position update */
-        b.el.style.left = b.x + 'px';
-        b.el.style.top  = b.y + 'px';
-      });
-
-      requestAnimationFrame(tick);
-    }
-
-    new ResizeObserver(init).observe(layer);
-    init();
-    tick();
-  })();
+    requestAnimationFrame(tick);
+  }
+  new ResizeObserver(init).observe(layer);
+  init(); tick();
+})();
 </script>
+
 </body>
 </html>
