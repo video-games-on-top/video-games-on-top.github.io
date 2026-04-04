@@ -30,7 +30,7 @@ tailwind.config = {
 
 <style>
 /* =========================================
-   REPLACE YOUR EXISTING CURSOR CSS WITH THIS
+   CUSTOM CURSOR — lerp-based smooth follow
    ========================================= */
 @media (pointer: fine) {
   /* Hides the default cursor on the entire page */
@@ -146,6 +146,10 @@ transition-all duration-300">
 Streets to Shelters Events
 </a>
 
+<a href="volunteer.html" class="hover:text-brand transition">
+Volunteer
+</a>
+
 </div>
 </div>
 
@@ -176,9 +180,7 @@ Contact Us
 </div>
 </div>
 
-<a href="volunteer.html" class="hover:text-brand transition">
-Volunteer
-</a>
+
 
 <a href="chapter.html" class="hover:text-brand transition">
 Start a Chapter
@@ -311,29 +313,35 @@ Check out our upcoming and past community events. Join us to make a direct impac
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* --- 1. Custom Cursor Logic --- */
-  const cursorDot = document.querySelector('.cursor-dot');
-  const cursorOutline = document.querySelector('.cursor-outline');
+  /* --- 2. Custom Cursor — rAF lerp for silky trail --- */
+    const cursorDot     = document.querySelector('.cursor-dot');
+    const cursorOutline = document.querySelector('.cursor-outline');
 
-  if (cursorDot && cursorOutline && window.matchMedia("(pointer: fine)").matches) {
-    window.addEventListener('mousemove', (e) => {
-      const posX = e.clientX;
-      const posY = e.clientY;
+    if (cursorDot && cursorOutline && window.matchMedia('(pointer: fine)').matches) {
+      let mouseX = -100, mouseY = -100;
+      let outX   = -100, outY   = -100;
+      const LERP = 0.12;
 
-      cursorDot.style.left = `${posX}px`;
-      cursorDot.style.top = `${posY}px`;
+      window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursorDot.style.left = mouseX + 'px';
+        cursorDot.style.top  = mouseY + 'px';
+      });
 
-      cursorOutline.animate({
-        left: `${posX}px`,
-        top: `${posY}px`
-      }, { duration: 100, fill: "forwards" });
-    });
+      (function loop() {
+        outX += (mouseX - outX) * LERP;
+        outY += (mouseY - outY) * LERP;
+        cursorOutline.style.left = outX + 'px';
+        cursorOutline.style.top  = outY + 'px';
+        requestAnimationFrame(loop);
+      })();
 
-    document.querySelectorAll('a, button').forEach(el => {
-      el.addEventListener('mouseenter', () => document.body.classList.add('hovering-link'));
-      el.addEventListener('mouseleave', () => document.body.classList.remove('hovering-link'));
-    });
-  }
+      document.querySelectorAll('a, button').forEach(el => {
+        el.addEventListener('mouseenter', () => document.body.classList.add('hovering-link'));
+        el.addEventListener('mouseleave', () => document.body.classList.remove('hovering-link'));
+      });
+    }
 
   /* --- 2. Scroll Reveal Logic --- */
   const revealElements = document.querySelectorAll('.reveal, .reveal-hero');
