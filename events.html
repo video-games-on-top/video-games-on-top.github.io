@@ -29,52 +29,39 @@ tailwind.config = {
 </script>
 
 <style>
-/* =========================================
-   CUSTOM CURSOR — lerp-based smooth follow
-   ========================================= */
+/* =============================================
+   CUSTOM CURSOR
+   ============================================= */
 @media (pointer: fine) {
-  /* Hides the default cursor on the entire page */
-  html, body {
-    cursor: none !important;
-  }
-
-  /* Ensures the default cursor stays hidden on clickable items */
-  a, button, [role="button"], input, select, textarea {
-    cursor: none !important;
-  }
-
-  .cursor-dot, .cursor-outline {
+  html, body { cursor: none !important; }
+  a, button, [role="button"], input, select, textarea { cursor: none !important; }
+  .cursor-dot, .cursor-ring {
     position: fixed;
     top: 0; left: 0;
     border-radius: 50%;
-    z-index: 9999;
+    z-index: 9998;
     pointer-events: none;
     transform: translate(-50%, -50%);
-    /* This allows the cursor to flip colors against backgrounds */
-    mix-blend-mode: difference; 
+    mix-blend-mode: difference;
   }
-
   .cursor-dot {
-    width: 12px; height: 12px;
-    background-color: #F4EFE6; /* Off-white works best with mix-blend-mode */
-    transition: width 0.2s, height 0.2s;
+    width: 8px; height: 8px;
+    background: #F4EFE6;
+    transition: width 0.18s, height 0.18s, opacity 0.18s;
   }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1.5px solid #567a6f;
+    transition: width 0.32s cubic-bezier(0.16,1,0.3,1),
+                height 0.32s cubic-bezier(0.16,1,0.3,1),
+                background 0.32s;
+  }
+  body.cursor-hover .cursor-dot  { width: 0; height: 0; opacity: 0; }
+  body.cursor-hover .cursor-ring { width: 56px; height: 56px; background: rgba(86,122,111,0.12); }
+}
 
-  .cursor-outline {
-    width: 30px; height: 30px;
-    border: 2px solid #567a6f; 
-    transition: width 0.2s, height 0.2s;
-  }
 
-  /* When hovering over links */
-  body.hovering-link .cursor-dot {
-    width: 0px; height: 0px;
-  }
-  body.hovering-link .cursor-outline {
-    width: 60px; height: 60px;
-    background-color: rgba(86, 122, 111, 0.1);
-    border-color: #567a6f;
-  }
+
 }
 /* =========================================
    SCROLL REVEAL & CARDS
