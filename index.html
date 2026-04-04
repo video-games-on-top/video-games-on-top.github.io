@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Home | Streets2Shelters</title>
+<title>Home | Streets 2 Shelters</title>
 <link rel="icon" href="images/Logo1.png">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
@@ -538,7 +538,7 @@ body { animation: pageFade 0.55s ease both; }
           </div>
         </div>
       </div>
-      <div id="blob-layer" style="position:absolute;inset:0;overflow:hidden;border-radius:inherit;filter:url(#gooey-filter);z-index:0;"></div>
+      <div id="blob-layer" style="position:absolute;inset:0;overflow:hidden;border-radius:inherit;filter:url(#gooey-filter);z-index:0;pointer-events:none;"></div>
     </div>
   </div>
 </section>
@@ -1003,7 +1003,7 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
   C.forEach((c, i) => {
     const el = document.createElement('div');
-    el.style.cssText = `position:absolute;border-radius:50%;transform:translate(-50%,-50%);will-change:left,top;width:${c.r*2}px;height:${c.r*2}px;background:${c.c}`;
+    el.style.cssText = `position:absolute;border-radius:50%;transform:translate(-50%,-50%);will-change:left,top;pointer-events:none;width:${c.r*2}px;height:${c.r*2}px;background:${c.c}`;
     el.id = '_b' + i;
     layer.appendChild(el);
   });
