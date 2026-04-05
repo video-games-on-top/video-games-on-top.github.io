@@ -42,11 +42,14 @@ tailwind.config = {
 }
 
 /* =============================================
-   CUSTOM CURSOR — FIX: use will-change, no mix-blend on ring
+   CUSTOM CURSOR
+   FIX: use * selector so img, svg, div, canvas etc.
+   all inherit cursor:none — previously only html/body
+   and a/button were covered, causing the native cursor
+   to reappear over carousel images and other elements.
    ============================================= */
 @media (pointer: fine) {
-  html, body { cursor: none !important; }
-  a, button, [role="button"], input, select, textarea { cursor: none !important; }
+  * { cursor: none !important; }
   .cursor-dot, .cursor-ring {
     position: fixed;
     top: 0; left: 0;
@@ -54,14 +57,12 @@ tailwind.config = {
     z-index: 9998;
     pointer-events: none;
     will-change: transform;
-     /*FIX: use transform for position — far better perf + no drift */
     transform: translate(-200px, -200px);
   }
   .cursor-dot {
     width: 8px; height: 8px;
     background: #2B1F1C;
     transition: width 0.18s, height 0.18s, opacity 0.18s;
-    /* FIX: removed mix-blend-mode which caused the cursor to disappear on light backgrounds*/
   }
   .cursor-ring {
     width: 36px; height: 36px;
@@ -229,7 +230,7 @@ nav a:hover::after { width: 100%; }
 @media (max-width: 767px) { .step-line { display: none; } }
 
 /* =============================================
-   CAROUSEL — FIX: add explicit z-index stacking context
+   CAROUSEL
    ============================================= */
 .carousel-container {
   position: relative;
@@ -244,7 +245,6 @@ nav a:hover::after { width: 100%; }
   width: 460px; height: 460px;
   border-radius: 1.25rem;
   object-fit: cover;
-  /* FIX: start fully hidden, JS assigns active class immediately */
   opacity: 0;
   z-index: 0;
   transition: all 0.72s cubic-bezier(0.34,1.15,0.64,1),
@@ -321,10 +321,15 @@ footer a:hover { color: #7BAF9E; transform: translateX(5px); }
 
 /* =============================================
    PAGE FADE-IN
+   FIX: removed transform from keyframes. A transform on <body>
+   creates a new containing block for position:fixed children,
+   making the cursor dots reference the body instead of the
+   viewport — causing a permanent coordinate desync on some
+   machines. Opacity-only fade avoids this entirely.
    ============================================= */
 @keyframes pageFade {
-  from { opacity: 0; transform: translateY(5px); }
-  to   { opacity: 1; transform: none; }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 body { animation: pageFade 0.55s ease both; }
 
@@ -758,30 +763,61 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.classList.toggle('scrolled', window.scrollY > 60);
   }, { passive: true });
 
-  /* ─────────────────────────────────────────────────────────
-     CUSTOM CURSOR — FIX
-     Problem 1: mix-blend-mode:difference on the dot made it
-       invisible on light backgrounds (cream = near-white).
-     Problem 2: The ring used left/top which triggered layout
-       on every frame. Switching to transform: translate()
-       keeps it on the compositor thread and eliminates drift.
-     Problem 3: mouseenter/mouseleave on a, button needed to
-       be re-registered after the DOM is fully settled.
-  ───────────────────────────────────────────────────────── */
+  /* ─── Custom Cursor ───────────────────────────────────────────
+     While the mouse is MOVING: cursor is visible and tracks fine.
+     While SCROLLING: mousemove stops firing (browser behaviour) so
+     the cursor freezes at its last position — which looks like a
+     bug. Fix: on every scroll event we set a short timer. If no
+     mousemove fires within ~80 ms we fade the cursor out so it
+     doesn't appear stuck. The next mousemove restores it and
+     snaps it to the correct position before fading back in.
+  ─────────────────────────────────────────────────────────────── */
   const dot  = document.querySelector('.cursor-dot');
   const ring = document.querySelector('.cursor-ring');
   if (dot && ring && window.matchMedia('(pointer: fine)').matches) {
     let mx = -200, my = -200;
     let rx = -200, ry = -200;
+    let cursorShown = true;
+    let scrollTimer = null;
 
-    // Dot follows instantly via transform
+    function showCursor() {
+      if (!cursorShown) {
+        dot.style.transition  = 'opacity 0.15s ease, width 0.18s, height 0.18s';
+        ring.style.transition = 'opacity 0.15s ease, width 0.32s cubic-bezier(0.16,1,0.3,1), height 0.32s cubic-bezier(0.16,1,0.3,1), background 0.32s';
+        dot.style.opacity  = '1';
+        ring.style.opacity = '1';
+        cursorShown = true;
+      }
+    }
+
+    function hideCursor() {
+      if (cursorShown) {
+        dot.style.transition  = 'opacity 0.08s ease';
+        ring.style.transition = 'opacity 0.08s ease';
+        dot.style.opacity  = '0';
+        ring.style.opacity = '0';
+        cursorShown = false;
+      }
+    }
+
     window.addEventListener('mousemove', e => {
       mx = e.clientX;
       my = e.clientY;
+      // Snap ring to dot position instantly before showing so it
+      // doesn't lerp in from the old position after a scroll.
+      if (!cursorShown) { rx = mx; ry = my; }
       dot.style.transform = `translate(${mx - 4}px, ${my - 4}px)`;
+      showCursor();
+      // Cancel any pending scroll-hide
+      clearTimeout(scrollTimer);
     }, { passive: true });
 
-    // Ring follows with lerp via transform — no left/top
+    // Hide while scrolling; restore automatically on next mousemove
+    window.addEventListener('scroll', () => {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(hideCursor, 80);
+    }, { passive: true });
+
     (function loop() {
       rx += (mx - rx) * 0.11;
       ry += (my - ry) * 0.11;
@@ -789,14 +825,10 @@ document.addEventListener('DOMContentLoaded', () => {
       requestAnimationFrame(loop);
     })();
 
-    // Hover effect — attach to all interactive elements
-    function attachHover() {
-      document.querySelectorAll('a, button').forEach(el => {
-        el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-        el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-      });
-    }
-    attachHover();
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+    });
   }
 
   /* ─── Hero Heading — Word Split ─── */
@@ -843,17 +875,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* ─────────────────────────────────────────────────────────
-     SCROLL REVEAL — FIX
-     Problem: Hero-section .r-up and .r-fade elements were
-     being triggered inside a setTimeout that ran AFTER the
-     IntersectionObserver already checked them (they were
-     in-viewport at load, so the observer fired immediately
-     but is-visible wasn't being added reliably for hero els).
-     Fix: The observer handles ALL elements including hero.
-     We also force-trigger in-viewport elements on load so
-     elements already visible without scrolling animate in.
-  ───────────────────────────────────────────────────────── */
+  /* ─── Scroll Reveal ─── */
   const revealObs = new IntersectionObserver((entries, obs) => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
@@ -866,7 +888,7 @@ document.addEventListener('DOMContentLoaded', () => {
     revealObs.observe(el);
   });
 
-  /* ─── Counters — easeOutQuart, skip if target=0 ─── */
+  /* ─── Counters ─── */
   const easeOut = t => 1 - Math.pow(1 - t, 4);
   const counterObs = new IntersectionObserver((entries, obs) => {
     entries.forEach(entry => {
@@ -887,18 +909,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { threshold: 0.5 });
   document.querySelectorAll('[data-target]').forEach(el => counterObs.observe(el));
 
-  /* ─────────────────────────────────────────────────────────
-     CAROUSEL — FIX
-     Problem 1: update() was called before the browser had
-       laid out the items, so no class changes took effect.
-     Problem 2: The items had no default translateX, so even
-       after JS set classes the CSS transitions were a no-op
-       on the first render (no "from" state).
-     Fix: Wrap initial update() in requestAnimationFrame so
-       the browser has committed a layout pass first.
-       Also set an explicit starting transform on all items
-       before the first class assignment.
-  ───────────────────────────────────────────────────────── */
+  /* ─── Carousel ─── */
   const items   = Array.from(document.querySelectorAll('.carousel-item'));
   const dotsCon = document.getElementById('carousel-dots');
   const prevBtn = document.getElementById('carousel-prev');
@@ -909,7 +920,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (items.length) {
     const total = items.length;
 
-    // Build dots
     items.forEach((_, i) => {
       const d = document.createElement('button');
       d.setAttribute('aria-label', `Photo ${i + 1}`);
@@ -930,7 +940,6 @@ document.addEventListener('DOMContentLoaded', () => {
         else if (d === total - 1)   item.classList.add('prev-1');
         else if (d === 2)           item.classList.add('next-2');
         else if (d === total - 2)   item.classList.add('prev-2');
-        // items with no class stay fully hidden (opacity:0, z-index:0 from base CSS)
       });
       dots.forEach((d, i) => {
         d.classList.toggle('bg-deep',    i === cIdx);
@@ -959,7 +968,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.key === 'ArrowRight') advance(1);
     });
 
-    // Touch swipe
     const car = document.getElementById('interactive-carousel');
     let tx = null;
     car.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
@@ -970,7 +978,6 @@ document.addEventListener('DOMContentLoaded', () => {
       tx = null;
     }, { passive: true });
 
-    // FIX: defer first update so the browser has done a layout pass
     requestAnimationFrame(() => {
       update();
       reset();
@@ -988,7 +995,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-/* ─── Gooey Metaballs ─── */
+/* ─── Gooey Metaballs
+   FIX: blobs now use transform:translate() instead of left/top.
+   left/top changes force a layout pass on the main thread every
+   single rAF frame, causing jank that made the cursor stutter
+   and appear frozen. transform runs purely on the compositor
+   thread with zero layout cost.
+─── */
 (function() {
   const layer = document.getElementById('blob-layer');
   if (!layer) return;
@@ -1001,13 +1014,18 @@ document.addEventListener('DOMContentLoaded', () => {
     {fx:.58,fy:.84,r: 88,vx:-.13,vy:-.18,c:'rgba(91,143,128,.48)'},
     {fx:.35,fy:.50,r: 65,vx: .16,vy: .09,c:'rgba(155,200,185,.38)'},
   ];
+
+  /* FIX: removed transform:translate(-50%,-50%) and will-change:left,top.
+     Position is now driven entirely by style.transform in the tick loop. */
   C.forEach((c, i) => {
     const el = document.createElement('div');
-    el.style.cssText = `position:absolute;border-radius:50%;transform:translate(-50%,-50%);will-change:left,top;pointer-events:none;width:${c.r*2}px;height:${c.r*2}px;background:${c.c}`;
+    el.style.cssText = `position:absolute;top:0;left:0;border-radius:50%;will-change:transform;pointer-events:none;width:${c.r*2}px;height:${c.r*2}px;background:${c.c}`;
     el.id = '_b' + i;
     layer.appendChild(el);
   });
+
   let blobs = [], mouse = {x:-9999,y:-9999}, rect = null;
+
   function init() {
     rect = layer.getBoundingClientRect();
     blobs = C.map((c, i) => ({
@@ -1017,11 +1035,13 @@ document.addEventListener('DOMContentLoaded', () => {
       r: c.r, vx: c.vx, vy: c.vy
     }));
   }
+
   window.addEventListener('mousemove', e => {
     rect = layer.getBoundingClientRect();
     mouse.x = e.clientX - rect.left;
     mouse.y = e.clientY - rect.top;
   });
+
   function tick() {
     if (!blobs.length) { requestAnimationFrame(tick); return; }
     const W = rect ? rect.width  : layer.offsetWidth;
@@ -1042,11 +1062,12 @@ document.addEventListener('DOMContentLoaded', () => {
       if (b.x > W-m) { b.vx -= .7; b.x = W-m; }
       if (b.y < m)   { b.vy += .7; b.y = m; }
       if (b.y > H-m) { b.vy -= .7; b.y = H-m; }
-      b.el.style.left = b.x + 'px';
-      b.el.style.top  = b.y + 'px';
+      /* FIX: use transform instead of left/top — compositor-only, zero layout cost */
+      b.el.style.transform = `translate(${b.x - b.r}px, ${b.y - b.r}px)`;
     });
     requestAnimationFrame(tick);
   }
+
   new ResizeObserver(init).observe(layer);
   init(); tick();
 })();
