@@ -870,7 +870,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     Array.from(h1.childNodes).forEach(wrap);
     h1.querySelectorAll('.word-inner').forEach((w, idx) => {
-      w.style.transitionDelay = (0.05 + idx * 0.025) + 's';
+      w.style.transitionDelay = (0.005 + idx * 0.025) + 's';
     });
     setTimeout(() => h1.querySelectorAll('.word-inner').forEach(w => w.classList.add('is-visible')), 80);
   }
