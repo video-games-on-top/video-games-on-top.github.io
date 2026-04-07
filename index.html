@@ -341,6 +341,14 @@ body { animation: pageFade 0.55s ease both; }
   .r-up,.r-left,.r-right,.r-scale,.r-fade { opacity:1 !important; transform:none !important; }
   .word-inner { transform:none !important; opacity:1 !important; }
 }
+  body.no-cursor {
+  cursor: auto !important;
+}
+
+body.no-cursor .cursor-dot,
+body.no-cursor .cursor-outline {
+  display: none !important;
+}
 </style>
 </head>
 
