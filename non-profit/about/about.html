@@ -5,167 +5,101 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>News | Streets to Shelters</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="icon" href="images/Logo1.png">
+<link rel="icon" href="../images/Logo1.png">
+<link rel="stylesheet" href="../non-profit/style.css">
 <script src="https://cdn.tailwindcss.com"></script>
-<script>
-tailwind.config = {
-  theme: {
-    extend: {
-      colors: { brand:'#7BAF9E', brandDark:'#5E8F80', cream:'#F4EFE6', deep:'#2B1F1C' },
-      fontFamily: { heading:['Playfair Display','serif'], body:['Inter','sans-serif'] }
-    }
-  }
-}
-</script>
+<script>tailwind.config={theme:{extend:{colors:{brand:'#7BAF9E',brandDark:'#5E8F80',cream:'#F4EFE6',deep:'#2B1F1C'},fontFamily:{heading:['Playfair Display','serif'],body:['Inter','sans-serif']}}}}</script>
 <style>
-.fade-up, .reveal { opacity:0; transform:translateY(40px); transition:all 0.8s ease; }
-.is-visible, .show { opacity:1; transform:translateY(0); }
-.card-hover { transition:all 0.3s ease; }
-.card-hover:hover { transform:translateY(-8px); box-shadow:0 20px 40px rgba(0,0,0,0.08); }
-#modal-content::-webkit-scrollbar { display:none; }
-#modal-content { -ms-overflow-style:none; scrollbar-width:none; }
-
-/* ── Cursor ── */
-@media (pointer: fine) {
-  html, body { cursor: none !important; }
-  a, button, [role="button"], input, select, textarea { cursor: none !important; }
-  .cursor-dot, .cursor-outline {
-    position: fixed; top: 0; left: 0;
-    border-radius: 50%; z-index: 9998;
-    pointer-events: none; will-change: transform;
-    transform: translate(-200px, -200px);
-  }
-  .cursor-dot { width:8px; height:8px; background:#2B1F1C; transition:width 0.18s,height 0.18s,opacity 0.18s; }
-  .cursor-outline { width:36px; height:36px; border:1.5px solid #567a6f;
-    transition:width 0.32s cubic-bezier(0.16,1,0.3,1),height 0.32s cubic-bezier(0.16,1,0.3,1),background 0.32s; }
-  body.hovering-link .cursor-dot  { width:0; height:0; opacity:0; }
-  body.hovering-link .cursor-outline { width:56px; height:56px; background:rgba(86,122,111,0.12); }
-}
+#modal-content::-webkit-scrollbar{display:none}
+#modal-content{-ms-overflow-style:none;scrollbar-width:none}
 </style>
 </head>
 <body class="bg-cream text-deep font-body scroll-smooth">
+<div id="sts-progress"></div>
+<div class="cursor-dot"></div><div class="cursor-ring"></div>
 
-<div class="cursor-dot"></div>
-<div class="cursor-outline"></div>
-
-<!-- ══════════════════════════════════ HEADER ══════════════════════════════════ -->
-<header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200/60">
+<header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200/70">
   <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-
-    <a href="index.html" aria-label="Streets to Shelters Home">
-      <img src="images/icon (1).png" class="h-11 transition duration-300 hover:scale-105 active:scale-95" alt="Streets to Shelters">
-    </a>
-
+    <a href="../home/index.html" class="inline-flex items-center"><img src="../images/icon (1).png" class="h-12 transition duration-300 hover:scale-105 active:scale-95" alt="Streets to Shelters"></a>
     <nav class="hidden md:flex gap-8 text-sm font-medium items-center">
-      <a href="index/" class="hover:text-brand transition-colors">Home</a>
-
+      <a href="../home/index.html" class="nav-top-link hover:text-brand transition-colors">Home</a>
       <div class="relative group">
-        <button class="hover:text-brand transition-colors py-2 flex items-center gap-1.5">
-          Initiatives
-          <svg class="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-        </button>
-        <div class="absolute left-0 top-full w-56 bg-white rounded-2xl shadow-lg border border-gray-100 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-250">
-          <a href="events/"    class="block px-6 py-3.5 text-sm hover:bg-cream rounded-t-2xl transition-colors">Streets to Shelters Events</a>
-          <a href="volunteer/" class="block px-6 py-3.5 text-sm hover:bg-cream rounded-b-2xl transition-colors">Volunteer</a>
+        <button class="hover:text-brand transition-colors py-2 flex items-center gap-1">Initiatives<svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></button>
+        <div class="absolute left-0 top-full pt-2 w-60 opacity-0 invisible translate-y-1 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-10">
+          <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+            <a href="../events/events.html" class="nav-drop-link block px-6 py-3.5 text-sm hover:bg-cream/70 transition-colors">Streets to Shelters Events</a>
+            <a href="../volunteer/volunteer.html" class="nav-drop-link block px-6 py-3.5 text-sm hover:bg-cream/70 transition-colors">Volunteer</a>
+          </div>
         </div>
       </div>
-
       <div class="relative group">
-        <button class="hover:text-brand transition-colors py-2 flex items-center gap-1.5">
-          About Us
-          <svg class="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-        </button>
-        <div class="absolute left-0 top-full w-60 bg-white rounded-2xl shadow-lg border border-gray-100 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-250">
-          <a href="about/"   class="block px-6 py-3.5 text-sm hover:bg-cream rounded-t-2xl transition-colors">Streets to Shelters News</a>
-          <a href="members/" class="block px-6 py-3.5 text-sm hover:bg-cream transition-colors">Members</a>
-          <a href="contact/" class="block px-6 py-3.5 text-sm hover:bg-cream rounded-b-2xl transition-colors">Contact Us</a>
+        <button class="hover:text-brand transition-colors py-2 flex items-center gap-1">About Us<svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></button>
+        <div class="absolute left-0 top-full pt-2 w-64 opacity-0 invisible translate-y-1 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-10">
+          <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+            <a href="../news/about.html" class="nav-drop-link block px-6 py-3.5 text-sm hover:bg-cream/70 transition-colors">Streets to Shelters News</a>
+            <a href="../members/members.html" class="nav-drop-link block px-6 py-3.5 text-sm hover:bg-cream/70 transition-colors">Members</a>
+            <a href="../contact/contact.html" class="nav-drop-link block px-6 py-3.5 text-sm hover:bg-cream/70 transition-colors">Contact Us</a>
+          </div>
         </div>
       </div>
-
-      <a href="chapter/" class="hover:text-brand transition-colors">Start a Chapter</a>
+      <a href="../chapter/chapter.html" class="nav-top-link hover:text-brand transition-colors">Start a Chapter</a>
     </nav>
-
-    <div class="flex items-center gap-4">
-      <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
-         target="_blank" rel="noopener"
-         class="magnetic hidden md:inline-block bg-brand text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-brandDark transition-colors">
-        Donate
-      </a>
-      <button id="mobile-menu-btn" class="md:hidden text-deep p-2" aria-label="Open menu">
-        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
-        </svg>
-      </button>
+    <div class="flex items-center gap-3">
+      <button id="sts-cursor-btn" class="hidden md:inline-flex" title="Toggle custom cursor"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86 1.08 1.9c.7 1.26 2.3 1.68 3.58 1l.09-.05c1.26-.7 1.68-2.3.98-3.58l-1.06-1.87 6.5-.44c.5-.04.65-.68.23-.95L5.5 3.21z"/></svg><span>Cursor</span></button>
+      <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" rel="noopener" class="sts-magnetic hidden md:inline-block bg-brand text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-brandDark transition-colors">Donate</a>
+      <button id="mobile-menu-btn" class="md:hidden text-deep p-2"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/></svg></button>
     </div>
   </div>
 </header>
 
 <div id="mobile-menu-overlay" class="fixed inset-0 bg-white z-[60] flex flex-col p-10 translate-x-full transition-transform duration-300 ease-in-out md:hidden">
-  <div class="flex justify-between items-center mb-10">
-    <img src="images/icon (1).png" class="h-10" alt="Streets to Shelters">
-    <button id="close-menu-btn" class="text-deep p-2">
-      <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-    </button>
-  </div>
+  <div class="flex justify-between items-center mb-10"><img src="../images/icon (1).png" class="h-10" alt="Streets to Shelters"><button id="close-menu-btn" class="text-deep p-2"><svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button></div>
   <nav class="flex flex-col gap-5 text-xl font-heading font-bold">
-    <a href="index.html"     class="hover:text-brand transition">Home</a>
-    <a href="events.html"    class="hover:text-brand transition">Events</a>
-    <a href="about.html"     class="hover:text-brand transition">News</a>
-    <a href="members.html"   class="hover:text-brand transition">Members</a>
-    <a href="volunteer.html" class="hover:text-brand transition">Volunteer</a>
-    <a href="chapter.html"   class="hover:text-brand transition">Start a Chapter</a>
-    <a href="contact.html"   class="hover:text-brand transition">Contact Us</a>
+    <a href="../home/index.html" class="hover:text-brand transition">Home</a>
+    <a href="../events/events.html" class="hover:text-brand transition">Events</a>
+    <a href="../news/about.html" class="hover:text-brand transition">News</a>
+    <a href="../members/members.html" class="hover:text-brand transition">Members</a>
+    <a href="../volunteer/volunteer.html" class="hover:text-brand transition">Volunteer</a>
+    <a href="../chapter/chapter.html" class="hover:text-brand transition">Start a Chapter</a>
+    <a href="../contact/contact.html" class="hover:text-brand transition">Contact Us</a>
     <hr class="border-gray-100 my-2">
-    <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" rel="noopener"
-       class="bg-brand text-white text-center py-4 rounded-full text-lg">Donate Now</a>
+    <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" rel="noopener" class="bg-brand text-white text-center py-4 rounded-full text-lg">Donate Now</a>
   </nav>
 </div>
 
 <main class="pt-36 max-w-7xl mx-auto px-6 space-y-16 pb-40 md:pb-56">
-  <section class="text-center fade-up">
-    <h1 class="text-5xl font-heading font-bold mb-4">News & Updates</h1>
+  <section class="text-center sts-reveal">
+    <h1 class="text-5xl font-heading font-bold mb-4">News &amp; Updates</h1>
     <p class="text-gray-700 max-w-2xl mx-auto">Stay up to date with Streets to Shelters. Here you'll find updates, events, and announcements from our youth-led organization.</p>
   </section>
-
-  <section class="reveal">
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center">
-
-      <div class="bg-white p-8 rounded-3xl shadow-sm w-full max-w-[350px] text-center event-card reveal relative overflow-hidden border-2 border-brand/20">
+  <section>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center">
+      <div class="sts-reveal sts-d1 sts-card bg-white p-8 rounded-3xl shadow-sm w-full max-w-[350px] text-center border-2 border-brand/20">
+        <div class="w-10 h-10 bg-brand/10 rounded-xl flex items-center justify-center mx-auto mb-4"><svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></div>
         <h3 class="text-xl font-semibold mb-2">Our First Newspaper</h3>
-        <p class="text-gray-600 text-sm mb-2">After launch of streets to shelters, we have published our very first official newspaper!</p>
-        <button class="open-modal-btn text-brand font-semibold hover:underline"
-          data-title="First Official Newspaper"
-          data-date="March 2026"
-          data-iframe="https://docs.google.com/document/d/e/2PACX-1vRjNsGp2xVx1EaUoSQ5dTQnG_ZAeLfDrKVJyaxfPhZYhTV8f4UP2qlBvnYE2FhJLdIGY5zQ0yNnUwng/pub?embedded=true">
-          Learn More →
-        </button>
+        <p class="text-gray-600 text-sm mb-2">After launch of Streets to Shelters, we published our very first official newspaper!</p>
+        <p class="text-xs text-gray-400 uppercase tracking-wider mb-4">March 2026</p>
+        <button class="open-modal-btn sts-magnetic text-brand font-semibold hover:text-brandDark transition-colors" data-title="First Official Newspaper" data-date="March 2026" data-iframe="https://docs.google.com/document/d/e/2PACX-1vRjNsGp2xVx1EaUoSQ5dTQnG_ZAeLfDrKVJyaxfPhZYhTV8f4UP2qlBvnYE2FhJLdIGY5zQ0yNnUwng/pub?embedded=true">Read More →</button>
       </div>
-
-      <div class="bg-white p-8 rounded-3xl shadow-sm w-full max-w-[350px] text-center event-card reveal relative overflow-hidden border-2 border-brand/20">
+      <div class="sts-reveal sts-d2 sts-card bg-white p-8 rounded-3xl shadow-sm w-full max-w-[350px] text-center border-2 border-brand/20">
+        <div class="w-10 h-10 bg-brand/10 rounded-xl flex items-center justify-center mx-auto mb-4"><svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div>
         <h3 class="text-xl font-semibold mb-2">Second Events Newsletter</h3>
         <p class="text-gray-600 text-sm mb-2">Our latest updates on events that have occurred since the last newsletter!</p>
-        <button class="open-modal-btn text-brand font-semibold hover:underline"
-          data-title="Second Events Newsletter"
-          data-date="March 2026"
-          data-iframe="images/newsletter.png">
-          Learn More →
-        </button>
+        <p class="text-xs text-gray-400 uppercase tracking-wider mb-4">March 2026</p>
+        <button class="open-modal-btn sts-magnetic text-brand font-semibold hover:text-brandDark transition-colors" data-title="Second Events Newsletter" data-date="March 2026" data-iframe="../images/newsletter.png">Read More →</button>
       </div>
-
     </div>
   </section>
 </main>
 
-<div id="event-modal" class="fixed inset-0 z-[70] flex items-center justify-center p-4 sm:p-6 opacity-0 pointer-events-none transition-opacity duration-300">
+<div id="event-modal" class="sts-modal-wrap fixed inset-0 z-[70] flex items-center justify-center p-4 sm:p-6">
   <div class="absolute inset-0 bg-deep/60 backdrop-blur-sm" id="modal-backdrop"></div>
-  <div class="bg-white rounded-3xl w-full max-w-5xl relative z-10 p-6 md:p-10 shadow-2xl transform scale-95 transition-transform duration-300 flex flex-col max-h-[95vh]">
-    <button id="close-modal-btn" class="absolute top-6 right-6 text-gray-400 hover:text-brand transition z-20">
-      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-    </button>
-    <h2 id="modal-title" class="text-3xl md:text-4xl font-heading font-bold text-deep mb-4">Event Title</h2>
+  <div class="sts-modal-box bg-white rounded-3xl w-full max-w-5xl relative z-10 p-6 md:p-10 shadow-2xl flex flex-col max-h-[95vh]">
+    <button id="close-modal-btn" class="absolute top-6 right-6 text-gray-400 hover:text-brand transition-colors z-20"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+    <h2 id="modal-title" class="text-3xl md:text-4xl font-heading font-bold text-deep mb-4"></h2>
     <div class="flex flex-col sm:flex-row gap-4 text-sm text-brand font-semibold mb-6">
-      <span id="modal-date" class="bg-brand/10 px-4 py-2 rounded-lg inline-block w-max">📅 Date</span>
-      <a id="modal-link" href="#" target="_blank" class="bg-brand/10 text-brand px-4 py-2 rounded-lg inline-block w-max transition-all duration-300 hover:bg-brand hover:text-white hover:-translate-y-1 active:scale-95 shadow-sm">🔗 Open in New Tab</a>
+      <span id="modal-date" class="bg-brand/10 px-4 py-2 rounded-lg w-max">📅</span>
+      <a id="modal-link" href="#" target="_blank" rel="noopener" class="sts-magnetic bg-brand/10 text-brand px-4 py-2 rounded-lg w-max hover:bg-brand hover:text-white transition-all duration-300 shadow-sm">🔗 Open in New Tab</a>
     </div>
     <div id="modal-content" class="w-full flex-1 overflow-auto rounded-xl">
       <iframe id="modal-iframe" src="" style="width:100%;height:1500px;" class="border-0"></iframe>
@@ -175,94 +109,40 @@ tailwind.config = {
 
 <footer class="bg-deep text-white py-12">
   <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-10 text-center sm:text-left">
-    <div>
-      <h3 class="text-xs uppercase tracking-widest text-white/50 font-semibold mb-5">Follow Us</h3>
-      <div class="flex flex-col gap-3">
-        <a href="https://www.instagram.com/streets.to.shelter" target="_blank" rel="noopener" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Instagram</a>
-        <a href="https://www.facebook.com/profile.php?id=61586361417282" target="_blank" rel="noopener" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Facebook</a>
-        <a href="https://www.tiktok.com/@streetstoshelters" target="_blank" rel="noopener" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">TikTok</a>
-        <a href="https://linktr.ee/streets2shelters" target="_blank" rel="noopener" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Linktree</a>
-      </div>
-    </div>
-    <div>
-      <h3 class="text-xs uppercase tracking-widest text-white/50 font-semibold mb-5">Quick Links</h3>
-      <div class="flex flex-col gap-3">
-        <a href="index.html"     class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Home</a>
-        <a href="events.html"    class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Events</a>
-        <a href="about.html"     class="hover:text-brand hover:translate-x-1 transition-transform inline-block">News</a>
-        <a href="members.html"   class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Members</a>
-        <a href="volunteer.html" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Volunteer</a>
-        <a href="chapter.html"   class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Start a Chapter</a>
-        <a href="contact.html"   class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Contact</a>
-      </div>
-    </div>
-    <div>
-      <h3 class="text-xs uppercase tracking-widest text-white/50 font-semibold mb-5">Support Us</h3>
-      <div class="flex flex-col gap-3">
-        <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" rel="noopener" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Donate</a>
-      </div>
-      <p class="text-white/25 text-xs mt-10">© 2026 Streets To Shelters</p>
-    </div>
+    <div><h3 class="text-xs uppercase tracking-widest text-white/50 font-semibold mb-5">Follow Us</h3><div class="flex flex-col gap-3"><a href="https://www.instagram.com/streets.to.shelter" target="_blank" rel="noopener">Instagram</a><a href="https://www.facebook.com/profile.php?id=61586361417282" target="_blank" rel="noopener">Facebook</a><a href="https://www.tiktok.com/@streetstoshelters" target="_blank" rel="noopener">TikTok</a><a href="https://linktr.ee/streets2shelters" target="_blank" rel="noopener">Linktree</a></div></div>
+    <div><h3 class="text-xs uppercase tracking-widest text-white/50 font-semibold mb-5">Quick Links</h3><div class="flex flex-col gap-3"><a href="../home/index.html">Home</a><a href="../events/events.html">Events</a><a href="../news/about.html">News</a><a href="../members/members.html">Members</a><a href="../volunteer/volunteer.html">Volunteer</a><a href="../chapter/chapter.html">Start a Chapter</a><a href="../contact/contact.html">Contact</a></div></div>
+    <div><h3 class="text-xs uppercase tracking-widest text-white/50 font-semibold mb-5">Support Us</h3><div class="flex flex-col gap-3"><a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" rel="noopener">Donate</a></div><p class="text-white/25 text-xs mt-10">© 2026 Streets To Shelters</p></div>
   </div>
 </footer>
 
+<script src="../non-profit/script.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  /* ── Mobile Menu ── */
-  const mobileBtn = document.getElementById('mobile-menu-btn');
-  const closeBtn  = document.getElementById('close-menu-btn');
-  const overlay   = document.getElementById('mobile-menu-overlay');
-  if (mobileBtn && overlay) {
-    mobileBtn.addEventListener('click', () => overlay.classList.remove('translate-x-full'));
-    closeBtn.addEventListener('click',  () => overlay.classList.add('translate-x-full'));
-    overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => overlay.classList.add('translate-x-full')));
-  }
-
-  /* ── Cursor ── */
-  const dot  = document.querySelector('.cursor-dot');
-  const ring = document.querySelector('.cursor-outline');
-  if (dot && ring && window.matchMedia('(pointer: fine)').matches) {
-    let mx = -200, my = -200, rx = -200, ry = -200;
-    window.addEventListener('mousemove', e => {
-      mx = e.clientX; my = e.clientY;
-      dot.style.transform = `translate(${mx - 4}px, ${my - 4}px)`;
-    }, { passive: true });
-    (function loop() {
-      rx += (mx - rx) * 0.11; ry += (my - ry) * 0.11;
-      ring.style.transform = `translate(${rx - 18}px, ${ry - 18}px)`;
-      requestAnimationFrame(loop);
-    })();
-    document.querySelectorAll('a, button').forEach(el => {
-      el.addEventListener('mouseenter', () => document.body.classList.add('hovering-link'));
-      el.addEventListener('mouseleave', () => document.body.classList.remove('hovering-link'));
-    });
-  }
-
-  /* ── Scroll Reveal ── */
-  const obs = new IntersectionObserver((entries, o) => {
-    entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); o.unobserve(entry.target); } });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.fade-up, .reveal').forEach(el => obs.observe(el));
-
-  /* ── Modal ── */
-  const modal      = document.getElementById('event-modal');
-  const modalIframe= document.getElementById('modal-iframe');
+  const modal = document.getElementById('event-modal');
+  const modalIframe = document.getElementById('modal-iframe');
   const modalTitle = document.getElementById('modal-title');
-  const modalDate  = document.getElementById('modal-date');
-  const modalLink  = document.getElementById('modal-link');
-  const modalClose = document.getElementById('close-modal-btn');
-  const backdrop   = document.getElementById('modal-backdrop');
-  document.querySelectorAll('.open-modal-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      modal.classList.remove('opacity-0', 'pointer-events-none');
-      modalTitle.textContent = btn.dataset.title;
-      modalDate.textContent  = '📅 ' + btn.dataset.date;
-      modalIframe.src        = btn.dataset.iframe;
-      modalLink.href         = btn.dataset.iframe;
-    });
-  });
-  [modalClose, backdrop].forEach(el => el.addEventListener('click', () => modal.classList.add('opacity-0', 'pointer-events-none')));
+  const modalDate = document.getElementById('modal-date');
+  const modalLink = document.getElementById('modal-link');
+  const closeBtn = document.getElementById('close-modal-btn');
+  const backdrop = document.getElementById('modal-backdrop');
+
+  function openModal(btn) {
+    modalTitle.textContent = btn.dataset.title;
+    modalDate.textContent = '📅 ' + btn.dataset.date;
+    modalIframe.src = btn.dataset.iframe;
+    modalLink.href = btn.dataset.iframe;
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+    setTimeout(() => { modalIframe.src = ''; }, 320);
+  }
+  document.querySelectorAll('.open-modal-btn').forEach(btn => btn.addEventListener('click', () => openModal(btn)));
+  closeBtn.addEventListener('click', closeModal);
+  backdrop.addEventListener('click', closeModal);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 });
 </script>
-</body>
-</html>
+</body></html>
