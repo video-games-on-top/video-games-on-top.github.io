@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c5e2120c-4b45-48a8-b5a7-cec9cee5a1f3" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/chapter.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/contact.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/events.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/members.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/news.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/volunteer.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/about/about.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chapter/chapter.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/contact/contact.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/events/events.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/Anish.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/Logo1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/Nish.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/Ronith.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/Ru1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/dude.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/ethan.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/harjit.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/icon (1).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/kavin.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/me.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/nathan.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/newsletter.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/photos.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/revanth.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/sahil.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/sts1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/sts10.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/sts11.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/sts2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/sts3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/sts4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/sts5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/sts6.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/sts7.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/sts8.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/sts9.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/tejas.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/timline.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/vidip.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/script.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/members/members.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/volunteer/volunteer.html" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;video-games-on-top&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/video-games-on-top/video-games-on-top.github.io.git&quot;,
+    &quot;accountId&quot;: &quot;a1dc245b-3c0e-48ac-a281-3ca6cbdd39c3&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="3AMjyLhK5PaUCSzECMhNQlD0zxi" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;
+  }
+}</component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c5e2120c-4b45-48a8-b5a7-cec9cee5a1f3" name="Changes" comment="" />
+      <created>1772409586897</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1772409586897</updated>
+    </task>
+    <servers />
+  </component>
+</project>
