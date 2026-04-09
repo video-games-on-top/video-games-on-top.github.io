@@ -18,66 +18,65 @@
         }
     </script>
     <style>
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior:smooth; }
+
+        /* ── Nav underline — top-level links only ── */
+        .nav-link { position:relative; }
+        .nav-link::after {
+          content:''; position:absolute; bottom:-3px; left:0;
+          width:0; height:1.5px; background:#7BAF9E;
+          transition:width 0.38s cubic-bezier(0.16,1,0.3,1);
+        }
+        .nav-link:hover::after { width:100%; }
 
         /* ── Scroll Reveal ── */
-        .fade-up {
-          opacity: 0;
-          transform: translateY(40px) scale(0.95);
-          transition: opacity 0.8s cubic-bezier(0.25,1,0.5,1), transform 0.8s cubic-bezier(0.25,1,0.5,1);
-          will-change: opacity, transform;
+        .r-up, .r-scale {
+          opacity:0; will-change:opacity,transform;
         }
-        .fade-up.show { opacity:1; transform:translateY(0) scale(1); }
+        .r-up   { transform:translateY(40px); transition:opacity 0.85s cubic-bezier(0.16,1,0.3,1), transform 0.85s cubic-bezier(0.16,1,0.3,1); }
+        .r-scale { transform:scale(0.92) translateY(20px); transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.34,1.4,0.64,1); }
+        .is-visible { opacity:1!important; transform:none!important; }
 
-        .delay-1  { transition-delay: 0.05s; } .delay-2  { transition-delay: 0.10s; }
-        .delay-3  { transition-delay: 0.15s; } .delay-4  { transition-delay: 0.20s; }
-        .delay-5  { transition-delay: 0.25s; } .delay-6  { transition-delay: 0.30s; }
-        .delay-7  { transition-delay: 0.35s; } .delay-8  { transition-delay: 0.40s; }
-        .delay-9  { transition-delay: 0.45s; } .delay-10 { transition-delay: 0.50s; }
-        .delay-11 { transition-delay: 0.55s; } .delay-12 { transition-delay: 0.60s; }
-        .delay-13 { transition-delay: 0.65s; } .delay-14 { transition-delay: 0.70s; }
+        .d1  { transition-delay:0.05s; } .d2  { transition-delay:0.10s; }
+        .d3  { transition-delay:0.15s; } .d4  { transition-delay:0.20s; }
+        .d5  { transition-delay:0.25s; } .d6  { transition-delay:0.30s; }
+        .d7  { transition-delay:0.35s; } .d8  { transition-delay:0.40s; }
+        .d9  { transition-delay:0.45s; } .d10 { transition-delay:0.50s; }
+        .d11 { transition-delay:0.55s; } .d12 { transition-delay:0.60s; }
+        .d13 { transition-delay:0.65s; } .d14 { transition-delay:0.70s; }
 
-        /* ── Card Hover ── */
-        .card-hover { transition:transform 0.5s cubic-bezier(0.175,0.885,0.32,1.275),box-shadow 0.5s ease; will-change:transform,box-shadow; }
+        /* ── Card hover ── */
+        .card-hover {
+          transition:transform 0.5s cubic-bezier(0.175,0.885,0.32,1.275), box-shadow 0.5s ease;
+          will-change:transform,box-shadow;
+        }
         .card-hover:hover { transform:translateY(-10px); box-shadow:0 25px 50px -12px rgba(123,175,158,0.25); }
         .card-hover img { transition:transform 0.6s cubic-bezier(0.25,1,0.5,1); will-change:transform; }
         .card-hover:hover img { transform:scale(1.08); }
 
-        /* ── Cursor ── */
-        @media (pointer: fine) {
-          html, body { cursor: none !important; }
-          a, button, [role="button"], input, select, textarea { cursor: none !important; }
-          .cursor-dot, .cursor-outline {
-            position: fixed; top: 0; left: 0;
-            border-radius: 50%; z-index: 9998;
-            pointer-events: none; will-change: transform;
-            transform: translate(-200px, -200px);
-          }
-          .cursor-dot { width:8px; height:8px; background:#2B1F1C; transition:width 0.18s,height 0.18s,opacity 0.18s; }
-          .cursor-outline { width:36px; height:36px; border:1.5px solid #567a6f;
-            transition:width 0.32s cubic-bezier(0.16,1,0.3,1),height 0.32s cubic-bezier(0.16,1,0.3,1),background 0.32s; }
-          body.hovering-link .cursor-dot  { width:0; height:0; opacity:0; }
-          body.hovering-link .cursor-outline { width:56px; height:56px; background:rgba(86,122,111,0.12); }
-        }
+        /* ── Magnetic ── */
+        .magnetic { transition:transform 0.5s cubic-bezier(0.34,1.26,0.64,1)!important; }
+
+        /* ── Footer links ── */
+        footer a { transition:color 0.25s ease, transform 0.3s cubic-bezier(0.34,1.26,0.64,1); display:inline-block; }
+        footer a:hover { color:#7BAF9E; transform:translateX(5px); }
+
+        @keyframes pageFade { from{opacity:0} to{opacity:1} }
+        body { animation:pageFade 0.5s ease both; }
     </style>
 </head>
 
 <body class="bg-cream text-deep font-body">
 
-<!-- FIX: removed 'hidden md:block' — CSS handles visibility -->
-<div class="cursor-dot"></div>
-<div class="cursor-outline"></div>
-
-<!-- FIX: removed 'fade-up' class from header — header was starting invisible -->
 <header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         <a href="index.html" aria-label="Go to Home" class="inline-flex items-center">
             <img src="images/icon (1).png" class="h-12 transition duration-300 hover:scale-105 active:scale-95" alt="Streets to Shelters Home">
         </a>
         <nav class="hidden md:flex gap-8 text-sm font-medium items-center">
-            <a href="index.html" class="hover:text-brand transition">Home</a>
+            <a href="index.html" class="nav-link hover:text-brand transition">Home</a>
             <div class="relative group">
-                <button class="hover:text-brand transition py-2 flex items-center gap-1">
+                <button class="nav-link hover:text-brand transition py-2 flex items-center gap-1">
                     Initiatives
                     <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                 </button>
@@ -87,21 +86,21 @@
                 </div>
             </div>
             <div class="relative group">
-                <button class="hover:text-brand transition py-2 flex items-center gap-1">
+                <button class="nav-link hover:text-brand transition py-2 flex items-center gap-1">
                     About Us
                     <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                 </button>
                 <div class="absolute left-0 top-full w-60 bg-white rounded-2xl shadow-lg border border-gray-100 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300">
-                    <a href="about.html"   class="block px-6 py-3.5 text-sm hover:bg-cream rounded-t-2xl transition-colors">Streets to Shelters News</a>
+                    <a href="news.html"    class="block px-6 py-3.5 text-sm hover:bg-cream rounded-t-2xl transition-colors">Streets to Shelters News</a>
                     <a href="members.html" class="block px-6 py-3.5 text-sm hover:bg-cream transition-colors">Members</a>
                     <a href="contact.html" class="block px-6 py-3.5 text-sm hover:bg-cream rounded-b-2xl transition-colors">Contact Us</a>
                 </div>
             </div>
-            <a href="chapter.html" class="hover:text-brand transition">Start a Chapter</a>
+            <a href="chapter.html" class="nav-link hover:text-brand transition">Start a Chapter</a>
         </nav>
         <div class="flex items-center gap-4">
             <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" rel="noopener"
-               class="hidden md:inline-block bg-brand text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-brandDark transition">Donate</a>
+               class="magnetic hidden md:inline-block bg-brand text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-brandDark transition">Donate</a>
             <button id="mobile-menu-btn" class="md:hidden text-deep p-2">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/></svg>
             </button>
@@ -119,7 +118,7 @@
     <nav class="flex flex-col gap-5 text-xl font-heading font-bold">
         <a href="index.html"     class="hover:text-brand transition">Home</a>
         <a href="events.html"    class="hover:text-brand transition">Events</a>
-        <a href="about.html"     class="hover:text-brand transition">News</a>
+        <a href="news.html"      class="hover:text-brand transition">News</a>
         <a href="members.html"   class="hover:text-brand transition">Members</a>
         <a href="volunteer.html" class="hover:text-brand transition">Volunteer</a>
         <a href="chapter.html"   class="hover:text-brand transition">Start a Chapter</a>
@@ -133,23 +132,23 @@
 <main class="pt-36 pb-24 max-w-7xl mx-auto px-6 space-y-24">
 
     <section>
-        <h2 class="text-4xl font-heading font-bold text-center mb-12 fade-up">Executive Leadership</h2>
+        <h2 class="text-4xl font-heading font-bold text-center mb-12 r-up">Executive Leadership</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 justify-center">
-            <div class="bg-white p-6 rounded-3xl shadow-sm text-center card-hover fade-up delay-1">
+            <div class="bg-white p-6 rounded-3xl shadow-sm text-center card-hover r-scale d1">
                 <div class="mx-auto mb-6 w-48 h-48 sm:w-56 sm:h-56 overflow-hidden rounded-full">
                     <img src="images/Nish.jpg" alt="Founder" class="w-full h-full object-cover">
                 </div>
                 <h3 class="text-xl font-semibold">Founder & CEO</h3>
                 <p class="text-gray-600 text-sm mt-2">Nishwanth Reddy Vennapusa</p>
             </div>
-            <div class="bg-white p-6 rounded-3xl shadow-sm text-center card-hover fade-up delay-2">
+            <div class="bg-white p-6 rounded-3xl shadow-sm text-center card-hover r-scale d2">
                 <div class="mx-auto mb-6 w-48 h-48 sm:w-56 sm:h-56 overflow-hidden rounded-full">
                     <img src="images/Ronith.png" alt="Finance Director" class="w-full h-full object-cover">
                 </div>
                 <h3 class="text-xl font-semibold">Co-Founder & Executive Director of Finance, Fundraising & Logistics</h3>
                 <p class="text-gray-600 text-sm mt-2">Ronith Gayyi</p>
             </div>
-            <div class="bg-white p-6 rounded-3xl shadow-sm text-center card-hover fade-up delay-3">
+            <div class="bg-white p-6 rounded-3xl shadow-sm text-center card-hover r-scale d3">
                 <div class="mx-auto mb-6 w-48 h-48 sm:w-56 sm:h-56 overflow-hidden rounded-full">
                     <img src="images/Anish.jpg" alt="Community Director" class="w-full h-full object-cover">
                 </div>
@@ -160,16 +159,16 @@
     </section>
 
     <section>
-        <h2 class="text-4xl font-heading font-bold text-center mb-12 fade-up">Executive Directors</h2>
+        <h2 class="text-4xl font-heading font-bold text-center mb-12 r-up">Executive Directors</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 justify-center">
-            <div class="bg-white p-6 rounded-3xl shadow-sm text-center card-hover fade-up delay-4">
+            <div class="bg-white p-6 rounded-3xl shadow-sm text-center card-hover r-scale d4">
                 <div class="mx-auto mb-6 w-48 h-48 sm:w-56 sm:h-56 overflow-hidden rounded-full">
                     <img src="images/revanth.jpg" alt="Communications" class="w-full h-full object-cover">
                 </div>
                 <h3 class="text-xl font-semibold">Executive Director of Communications & Social Media</h3>
                 <p class="text-gray-600 text-sm mt-2">Revanth Movva</p>
             </div>
-            <div class="bg-white p-6 rounded-3xl shadow-sm text-center card-hover fade-up delay-5">
+            <div class="bg-white p-6 rounded-3xl shadow-sm text-center card-hover r-scale d5">
                 <div class="mx-auto mb-6 w-48 h-48 sm:w-56 sm:h-56 overflow-hidden rounded-full">
                     <img src="images/vidip.jpg" alt="Sponsorship" class="w-full h-full object-cover">
                 </div>
@@ -180,72 +179,72 @@
     </section>
 
     <section>
-        <h2 class="text-4xl font-heading font-bold text-center mb-12 fade-up">Directors & Managers</h2>
+        <h2 class="text-4xl font-heading font-bold text-center mb-12 r-up">Directors & Managers</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 justify-center">
-            <div class="bg-white p-6 rounded-3xl shadow-sm text-center card-hover fade-up delay-6">
+            <div class="bg-white p-6 rounded-3xl shadow-sm text-center card-hover r-scale d6">
                 <div class="mx-auto mb-6 w-48 h-48 sm:w-56 sm:h-56 overflow-hidden rounded-full">
                     <img src="images/Ru1.jpg" alt="Sponsorship Manager" class="w-full h-full object-cover">
                 </div>
                 <h3 class="text-xl font-semibold">Sponsorship & Partnerships Manager</h3>
                 <p class="text-gray-600 text-sm mt-2">Rudraksh Yelmawar</p>
             </div>
-            <div class="bg-white p-6 rounded-3xl shadow-sm text-center card-hover fade-up delay-7">
+            <div class="bg-white p-6 rounded-3xl shadow-sm text-center card-hover r-scale d7">
                 <div class="mx-auto mb-6 w-48 h-48 sm:w-56 sm:h-56 overflow-hidden rounded-full">
                     <img src="images/ethan.jpg" alt="Finance Director" class="w-full h-full object-cover">
                 </div>
                 <h3 class="text-xl font-semibold">Finance Director</h3>
                 <p class="text-gray-600 text-sm mt-2">Ethan Osborne Mahiques</p>
             </div>
-            <div class="bg-white p-6 rounded-3xl shadow-sm text-center card-hover fade-up delay-8">
+            <div class="bg-white p-6 rounded-3xl shadow-sm text-center card-hover r-scale d8">
                 <div class="mx-auto mb-6 w-48 h-48 sm:w-56 sm:h-56 overflow-hidden rounded-full">
                     <img src="images/me.jpg" alt="Tech Coordinator" class="w-full h-full object-cover">
                 </div>
                 <h3 class="text-xl font-semibold">Technology & Systems Coordinator</h3>
                 <p class="text-gray-600 text-sm mt-2">Advik Reddy Muddasani</p>
             </div>
-            <div class="bg-white p-6 rounded-3xl shadow-sm text-center card-hover fade-up delay-9">
+            <div class="bg-white p-6 rounded-3xl shadow-sm text-center card-hover r-scale d9">
                 <div class="mx-auto mb-6 w-48 h-48 sm:w-56 sm:h-56 overflow-hidden rounded-full">
                     <img src="images/harjit.jpg" alt="Logistics Manager" class="w-full h-full object-cover">
                 </div>
                 <h3 class="text-xl font-semibold">Logistics & Supplies Manager</h3>
                 <p class="text-gray-600 text-sm mt-2">Harjot Singh Jaura</p>
             </div>
-            <div class="bg-white p-6 rounded-3xl shadow-sm text-center card-hover fade-up delay-10">
+            <div class="bg-white p-6 rounded-3xl shadow-sm text-center card-hover r-scale d10">
                 <div class="mx-auto mb-6 w-48 h-48 sm:w-56 sm:h-56 overflow-hidden rounded-full">
                     <img src="images/nathan.jpg" alt="Fundraising" class="w-full h-full object-cover">
                 </div>
                 <h3 class="text-xl font-semibold">Fundraising Director</h3>
                 <p class="text-gray-600 text-sm mt-2">Nathaniel Martinez</p>
             </div>
-            <div class="bg-white p-6 rounded-3xl shadow-sm text-center card-hover fade-up delay-11">
+            <div class="bg-white p-6 rounded-3xl shadow-sm text-center card-hover r-scale d11">
                 <div class="mx-auto mb-6 w-48 h-48 sm:w-56 sm:h-56 overflow-hidden rounded-full">
                     <img src="images/" alt="" class="w-full h-full object-cover">
                 </div>
                 <h3 class="text-xl font-semibold">Marketing & Social Media Manager</h3>
                 <p class="text-gray-600 text-sm mt-2">Mayank Sandra</p>
             </div>
-            <div class="bg-white p-6 rounded-3xl shadow-sm text-center card-hover fade-up delay-12">
+            <div class="bg-white p-6 rounded-3xl shadow-sm text-center card-hover r-scale d12">
                 <div class="mx-auto mb-6 w-48 h-48 sm:w-56 sm:h-56 overflow-hidden rounded-full">
                     <img src="images/tejas.jpg" alt="Events Director" class="w-full h-full object-cover">
                 </div>
                 <h3 class="text-xl font-semibold">Director of Events & Outreach</h3>
                 <p class="text-gray-600 text-sm mt-2">Tejas Pendyala</p>
             </div>
-            <div class="bg-white p-6 rounded-3xl shadow-sm text-center card-hover fade-up delay-13">
+            <div class="bg-white p-6 rounded-3xl shadow-sm text-center card-hover r-scale d13">
                 <div class="mx-auto mb-6 w-48 h-48 sm:w-56 sm:h-56 overflow-hidden rounded-full">
                     <img src="images/vidsdaip.jpg" alt="Communications Officer" class="w-full h-full object-cover">
                 </div>
                 <h3 class="text-xl font-semibold">Communications Officer</h3>
                 <p class="text-gray-600 text-sm mt-2">Deetya Mallikarjun</p>
             </div>
-            <div class="bg-white p-6 rounded-3xl shadow-sm text-center card-hover fade-up delay-14">
+            <div class="bg-white p-6 rounded-3xl shadow-sm text-center card-hover r-scale d14">
                 <div class="mx-auto mb-6 w-48 h-48 sm:w-56 sm:h-56 overflow-hidden rounded-full">
                     <img src="images/kavin.jpg" alt="Community Engagement Lead" class="w-full h-full object-cover">
                 </div>
                 <h3 class="text-xl font-semibold">Community Engagement Lead</h3>
                 <p class="text-gray-600 text-sm mt-2">Kavin Tripathi</p>
             </div>
-            <div class="bg-white p-6 rounded-3xl shadow-sm text-center card-hover fade-up delay-14">
+            <div class="bg-white p-6 rounded-3xl shadow-sm text-center card-hover r-scale d14">
                 <div class="mx-auto mb-6 w-48 h-48 sm:w-56 sm:h-56 overflow-hidden rounded-full">
                     <img src="images/trfy.jpg" alt="Volunteer Coordinator" class="w-full h-full object-cover">
                 </div>
@@ -262,28 +261,28 @@
         <div>
             <h3 class="text-xs uppercase tracking-widest text-white/50 font-semibold mb-5">Follow Us</h3>
             <div class="flex flex-col gap-3">
-                <a href="https://www.instagram.com/streets.to.shelter" target="_blank" rel="noopener" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Instagram</a>
-                <a href="https://www.facebook.com/profile.php?id=61586361417282" target="_blank" rel="noopener" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Facebook</a>
-                <a href="https://www.tiktok.com/@streetstoshelters" target="_blank" rel="noopener" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">TikTok</a>
-                <a href="https://linktr.ee/streets2shelters" target="_blank" rel="noopener" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Linktree</a>
+                <a href="https://www.instagram.com/streets.to.shelter" target="_blank" rel="noopener">Instagram</a>
+                <a href="https://www.facebook.com/profile.php?id=61586361417282" target="_blank" rel="noopener">Facebook</a>
+                <a href="https://www.tiktok.com/@streetstoshelters" target="_blank" rel="noopener">TikTok</a>
+                <a href="https://linktr.ee/streets2shelters" target="_blank" rel="noopener">Linktree</a>
             </div>
         </div>
         <div>
             <h3 class="text-xs uppercase tracking-widest text-white/50 font-semibold mb-5">Quick Links</h3>
             <div class="flex flex-col gap-3">
-                <a href="index.html"     class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Home</a>
-                <a href="events.html"    class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Events</a>
-                <a href="about.html"     class="hover:text-brand hover:translate-x-1 transition-transform inline-block">News</a>
-                <a href="members.html"   class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Members</a>
-                <a href="volunteer.html" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Volunteer</a>
-                <a href="chapter.html"   class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Start a Chapter</a>
-                <a href="contact.html"   class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Contact</a>
+                <a href="index.html">Home</a>
+                <a href="events.html">Events</a>
+                <a href="news.html">News</a>
+                <a href="members.html">Members</a>
+                <a href="volunteer.html">Volunteer</a>
+                <a href="chapter.html">Start a Chapter</a>
+                <a href="contact.html">Contact</a>
             </div>
         </div>
         <div>
             <h3 class="text-xs uppercase tracking-widest text-white/50 font-semibold mb-5">Support Us</h3>
             <div class="flex flex-col gap-3">
-                <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" rel="noopener" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Donate</a>
+                <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" rel="noopener">Donate</a>
             </div>
             <p class="text-white/25 text-xs mt-10">© 2026 Streets To Shelters</p>
         </div>
@@ -302,31 +301,20 @@
         overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => overlay.classList.add('translate-x-full')));
       }
 
-      /* ── Cursor ── */
-      const dot  = document.querySelector('.cursor-dot');
-      const ring = document.querySelector('.cursor-outline');
-      if (dot && ring && window.matchMedia('(pointer: fine)').matches) {
-        let mx = -200, my = -200, rx = -200, ry = -200;
-        window.addEventListener('mousemove', e => {
-          mx = e.clientX; my = e.clientY;
-          dot.style.transform = `translate(${mx - 4}px, ${my - 4}px)`;
-        }, { passive: true });
-        (function loop() {
-          rx += (mx - rx) * 0.11; ry += (my - ry) * 0.11;
-          ring.style.transform = `translate(${rx - 18}px, ${ry - 18}px)`;
-          requestAnimationFrame(loop);
-        })();
-        document.querySelectorAll('a, button').forEach(el => {
-          el.addEventListener('mouseenter', () => document.body.classList.add('hovering-link'));
-          el.addEventListener('mouseleave', () => document.body.classList.remove('hovering-link'));
-        });
-      }
-
       /* ── Scroll Reveal ── */
       const obs = new IntersectionObserver((entries, o) => {
-        entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('show'); o.unobserve(entry.target); } });
-      }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-      document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+        entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); o.unobserve(entry.target); } });
+      }, { threshold: 0.07, rootMargin:'0px 0px -50px 0px' });
+      document.querySelectorAll('.r-up, .r-scale').forEach(el => obs.observe(el));
+
+      /* ── Magnetic Buttons ── */
+      document.querySelectorAll('.magnetic').forEach(btn => {
+        btn.addEventListener('mousemove', e => {
+          const r = btn.getBoundingClientRect();
+          btn.style.transform = `translate(${(e.clientX - r.left - r.width/2) * 0.28}px, ${(e.clientY - r.top - r.height/2) * 0.28}px)`;
+        });
+        btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+      });
     });
 </script>
 </body>

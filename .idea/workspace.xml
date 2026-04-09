@@ -5,17 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c5e2120c-4b45-48a8-b5a7-cec9cee5a1f3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/chapter.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/contact.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/events.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/members.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/news.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/volunteer.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/about/about.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/chapter/chapter.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/contact/contact.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/css/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/events/events.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/images/Anish.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/images/Logo1.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/images/Nish.jpg" beforeDir="false" />
@@ -47,9 +36,6 @@
       <change beforePath="$PROJECT_DIR$/images/tejas.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/images/timline.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/images/vidip.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/script.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/members/members.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/volunteer/volunteer.html" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,6 +47,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {

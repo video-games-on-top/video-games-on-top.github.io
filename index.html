@@ -11,359 +11,176 @@
     tailwind.config = {
       theme: {
         extend: {
-          colors: {
-            brand: '#7BAF9E',
-            brandDark: '#5E8F80',
-            cream: '#F4EFE6',
-            deep: '#2B1F1C',
-            creamdark: '#c3bfb8'
-          },
-          fontFamily: {
-            heading: ['Playfair Display', 'serif'],
-            body: ['Inter', 'sans-serif']
-          }
+          colors: { brand:'#7BAF9E', brandDark:'#5E8F80', cream:'#F4EFE6', deep:'#2B1F1C', creamdark:'#c3bfb8' },
+          fontFamily: { heading:['Playfair Display','serif'], body:['Inter','sans-serif'] }
         }
       }
     }
   </script>
-
   <style>
-    /* =============================================
-       SCROLL PROGRESS BAR
-       ============================================= */
+    /* ── Scroll Progress ── */
     #progress-bar {
-      position: fixed;
-      top: 0; left: 0;
-      height: 2.5px;
-      background: linear-gradient(90deg, #7BAF9E, #5E8F80);
-      width: 0%;
-      z-index: 9999;
-      transition: width 0.1s linear;
+      position:fixed; top:0; left:0; height:2.5px;
+      background:linear-gradient(90deg,#7BAF9E,#5E8F80);
+      width:0%; z-index:9999; transition:width 0.1s linear;
     }
 
-    /* =============================================
-       CUSTOM CURSOR
-       FIX: use * selector so img, svg, div, canvas etc.
-       all inherit cursor:none — previously only html/body
-       and a/button were covered, causing the native cursor
-       to reappear over carousel images and other elements.
-       ============================================= */
-    @media (pointer: fine) {
-      * { cursor: none !important; }
-      .cursor-dot, .cursor-ring {
-        position: fixed;
-        top: 0; left: 0;
-        border-radius: 50%;
-        z-index: 9998;
-        pointer-events: none;
-        will-change: transform;
-        transform: translate(-200px, -200px);
-      }
-      .cursor-dot {
-        width: 8px; height: 8px;
-        background: #2B1F1C;
-        transition: width 0.18s, height 0.18s, opacity 0.18s;
-      }
-      .cursor-ring {
-        width: 36px; height: 36px;
-        border: 1.5px solid #567a6f;
-        transition: width 0.32s cubic-bezier(0.16,1,0.3,1),
-                    height 0.32s cubic-bezier(0.16,1,0.3,1),
-                    background 0.32s;
-      }
-      body.cursor-hover .cursor-dot  { width: 0; height: 0; opacity: 0; }
-      body.cursor-hover .cursor-ring { width: 56px; height: 56px; background: rgba(86,122,111,0.12); }
+    /* ── Nav underline — top-level links only ── */
+    .nav-link { position:relative; }
+    .nav-link::after {
+      content:''; position:absolute; bottom:-3px; left:0;
+      width:0; height:1.5px; background:#7BAF9E;
+      transition:width 0.38s cubic-bezier(0.16,1,0.3,1);
     }
+    .nav-link:hover::after { width:100%; }
 
-    /* =============================================
-       SCROLL REVEAL
-       ============================================= */
-    .r-up, .r-left, .r-right, .r-scale, .r-fade {
-      opacity: 0;
-      will-change: opacity, transform;
+    /* ── Scroll Reveal ── */
+    .r-up,.r-left,.r-right,.r-scale,.r-fade { opacity:0; will-change:opacity,transform; }
+    .r-up    { transform:translateY(44px); }
+    .r-left  { transform:translateX(-52px); }
+    .r-right { transform:translateX(52px); }
+    .r-scale { transform:scale(0.9) translateY(20px); }
+    .r-up,.r-left,.r-right,.r-fade {
+      transition:opacity 0.85s cubic-bezier(0.16,1,0.3,1), transform 0.85s cubic-bezier(0.16,1,0.3,1);
     }
-    .r-up    { transform: translateY(44px); }
-    .r-left  { transform: translateX(-52px); }
-    .r-right { transform: translateX(52px); }
-    .r-scale { transform: scale(0.9) translateY(20px); }
-    .r-fade  { }
+    .r-scale { transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.34,1.4,0.64,1); }
+    .is-visible { opacity:1!important; transform:none!important; }
 
-    .r-up, .r-left, .r-right, .r-fade {
-      transition: opacity 0.85s cubic-bezier(0.16,1,0.3,1),
-                  transform 0.85s cubic-bezier(0.16,1,0.3,1);
-    }
-    .r-scale {
-      transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1),
-                  transform 0.8s cubic-bezier(0.34,1.4,0.64,1);
-    }
-    .is-visible { opacity: 1 !important; transform: none !important; }
-
-    /* =============================================
-       WORD SPLIT — hero heading
-       ============================================= */
-    .word-wrap  { display: inline-block; overflow: hidden; vertical-align: bottom; }
+    /* ── Word Split — hero heading ── */
+    .word-wrap  { display:inline-block; overflow:hidden; vertical-align:bottom; }
     .word-inner {
-      display: inline-block;
-      transform: translateY(110%);
-      opacity: 0;
-      transition: transform 0.9s cubic-bezier(0.16,1,0.3,1),
-                  opacity 0.6s cubic-bezier(0.16,1,0.3,1);
+      display:inline-block; transform:translateY(110%); opacity:0;
+      transition:transform 0.9s cubic-bezier(0.16,1,0.3,1), opacity 0.6s cubic-bezier(0.16,1,0.3,1);
     }
-    .word-inner.is-visible { transform: translateY(0); opacity: 1; }
+    .word-inner.is-visible { transform:translateY(0); opacity:1; }
 
-    /* =============================================
-       GRAIN OVERLAY
-       ============================================= */
+    /* ── Grain ── */
     body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      z-index: 9997;
-      pointer-events: none;
-      opacity: 0.025;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-size: 160px 160px;
+      content:''; position:fixed; inset:0; z-index:9997; pointer-events:none; opacity:0.025;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size:160px 160px;
     }
 
-    /* =============================================
-       NAV
-       ============================================= */
-    header { transition: box-shadow 0.4s ease; }
-    body.scrolled header { box-shadow: 0 1px 28px rgba(43,31,28,0.09); }
-    nav a { position: relative; }
-    nav a::after {
-      content: '';
-      position: absolute;
-      bottom: -3px; left: 0;
-      width: 0; height: 1.5px;
-      background: #7BAF9E;
-      transition: width 0.38s cubic-bezier(0.16,1,0.3,1);
-    }
-    nav a:hover::after { width: 100%; }
+    /* ── Nav shadow on scroll ── */
+    header { transition:box-shadow 0.4s ease; }
+    body.scrolled header { box-shadow:0 1px 28px rgba(43,31,28,0.09); }
 
-    /* =============================================
-       MAGNETIC BUTTON
-       ============================================= */
-    .magnetic {
-      transition: transform 0.5s cubic-bezier(0.34,1.26,0.64,1) !important;
-    }
+    /* ── Magnetic ── */
+    .magnetic { transition:transform 0.5s cubic-bezier(0.34,1.26,0.64,1)!important; }
 
-    /* =============================================
-       FLOATING ANIMATION
-       ============================================= */
-    .float-anim { animation: floatY 7s ease-in-out infinite; }
-    @keyframes floatY {
-      0%, 100% { transform: translateY(0); }
-      50%       { transform: translateY(-16px); }
-    }
+    /* ── Float ── */
+    .float-anim { animation:floatY 7s ease-in-out infinite; }
+    @keyframes floatY { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-16px)} }
 
-    /* =============================================
-       HERO TILT CARD
-       ============================================= */
-    .tilt-card { transform-style: preserve-3d; transition: transform 0.1s linear; }
+    /* ── Hero Tilt ── */
+    .tilt-card { transform-style:preserve-3d; transition:transform 0.1s linear; }
 
-    /* =============================================
-       IMPACT BLOB
-       ============================================= */
+    /* ── Impact blob ── */
     .impact-container {
-      position: relative;
-      background: #7BAF9E;
-      border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-      animation: morphBlob 20s infinite alternate ease-in-out;
-      padding: 80px 40px;
-      overflow: hidden;
+      position:relative; background:#7BAF9E;
+      border-radius:30% 70% 70% 30%/30% 30% 70% 70%;
+      animation:morphBlob 20s infinite alternate ease-in-out;
+      padding:80px 40px; overflow:hidden;
     }
     @keyframes morphBlob {
-      0%   { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
-      20%  { border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%; }
-      40%  { border-radius: 40% 60% 55% 45% / 60% 44% 56% 40%; }
-      60%  { border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%; }
-      80%  { border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%; }
-      100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+      0%   {border-radius:30% 70% 70% 30%/30% 30% 70% 70%}
+      20%  {border-radius:58% 42% 75% 25%/76% 46% 54% 24%}
+      40%  {border-radius:40% 60% 55% 45%/60% 44% 56% 40%}
+      60%  {border-radius:50% 50% 33% 67%/55% 27% 73% 45%}
+      80%  {border-radius:33% 67% 58% 42%/63% 68% 32% 37%}
+      100% {border-radius:30% 70% 70% 30%/30% 30% 70% 70%}
     }
     .glass-card {
-      background: rgba(255,255,255,0.12);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(255,255,255,0.22);
-      border-radius: 2rem;
+      background:rgba(255,255,255,0.12); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+      border:1px solid rgba(255,255,255,0.22); border-radius:2rem;
     }
 
-    /* =============================================
-       COUNTER LAND PULSE
-       ============================================= */
-    @keyframes numLand {
-      0%   { transform: scale(1.18); }
-      60%  { transform: scale(0.97); }
-      100% { transform: scale(1); }
-    }
-    .num-landed { animation: numLand 0.45s cubic-bezier(0.34,1.4,0.64,1) forwards; }
+    /* ── Counter land ── */
+    @keyframes numLand { 0%{transform:scale(1.18)} 60%{transform:scale(0.97)} 100%{transform:scale(1)} }
+    .num-landed { animation:numLand 0.45s cubic-bezier(0.34,1.4,0.64,1) forwards; }
 
-    /* =============================================
-       MISSION CARDS
-       ============================================= */
-    .mission-card {
-      transition: transform 0.55s cubic-bezier(0.34,1.26,0.64,1),
-                  box-shadow 0.55s cubic-bezier(0.16,1,0.3,1);
-    }
-    .mission-card:hover {
-      transform: translateY(-8px) scale(1.01);
-      box-shadow: 0 24px 48px -12px rgba(123,175,158,0.25);
-    }
-    .mission-card .bar {
-      transition: width 0.6s cubic-bezier(0.16,1,0.3,1);
-      width: 0;
-    }
-    .mission-card:hover .bar { width: 100%; }
+    /* ── Mission cards ── */
+    .mission-card { transition:transform 0.55s cubic-bezier(0.34,1.26,0.64,1), box-shadow 0.55s cubic-bezier(0.16,1,0.3,1); }
+    .mission-card:hover { transform:translateY(-8px) scale(1.01); box-shadow:0 24px 48px -12px rgba(123,175,158,0.25); }
+    .mission-card .bar { transition:width 0.6s cubic-bezier(0.16,1,0.3,1); width:0; }
+    .mission-card:hover .bar { width:100%; }
 
-    /* =============================================
-       PROCESS — connecting line
-       ============================================= */
+    /* ── Process step line ── */
     .step-line {
-      position: absolute;
-      top: 28px; left: calc(50% + 40px);
-      width: calc(100% - 80px);
-      height: 1px;
-      background: linear-gradient(90deg, #7BAF9E 0%, transparent 100%);
-      opacity: 0.3;
+      position:absolute; top:28px; left:calc(50% + 40px);
+      width:calc(100% - 80px); height:1px;
+      background:linear-gradient(90deg,#7BAF9E 0%,transparent 100%); opacity:0.3;
     }
-    @media (max-width: 767px) { .step-line { display: none; } }
+    @media(max-width:767px){.step-line{display:none}}
 
-    /* =============================================
-       CAROUSEL
-       ============================================= */
-    .carousel-container {
-      position: relative;
-      height: 520px;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+    /* ── Carousel ── */
+    .carousel-container { position:relative; height:520px; overflow:hidden; display:flex; justify-content:center; align-items:center; }
     .carousel-item {
-      position: absolute;
-      width: 460px; height: 460px;
-      border-radius: 1.25rem;
-      object-fit: cover;
-      opacity: 0;
-      z-index: 0;
-      transition: all 0.72s cubic-bezier(0.34,1.15,0.64,1),
-                  opacity 0.55s cubic-bezier(0.16,1,0.3,1);
+      position:absolute; width:460px; height:460px; border-radius:1.25rem; object-fit:cover;
+      opacity:0; z-index:0;
+      transition:all 0.72s cubic-bezier(0.34,1.15,0.64,1), opacity 0.55s cubic-bezier(0.16,1,0.3,1);
     }
-    .carousel-item.active  { opacity:1;  transform:translateX(0) scale(1);         z-index:5; box-shadow:0 24px 60px rgba(0,0,0,0.22); }
-    .carousel-item.prev-1  { opacity:.6; transform:translateX(-44%) scale(0.78);   z-index:4; }
-    .carousel-item.next-1  { opacity:.6; transform:translateX(44%) scale(0.78);    z-index:4; }
-    .carousel-item.prev-2  { opacity:.28;transform:translateX(-74%) scale(0.6);    z-index:3; }
-    .carousel-item.next-2  { opacity:.28;transform:translateX(74%) scale(0.6);     z-index:3; }
-    #carousel-dots button {
-      transition: width 0.4s cubic-bezier(0.34,1.26,0.64,1), background 0.3s ease;
-    }
-    @media (max-width: 768px) {
-      .carousel-container { height: 300px; }
-      .carousel-item { width: 240px; height: 200px; }
-      .carousel-item.prev-1 { transform: translateX(-38%) scale(0.84); }
-      .carousel-item.next-1 { transform: translateX(38%) scale(0.84); }
-      .carousel-item.prev-2, .carousel-item.next-2 { opacity: 0; }
+    .carousel-item.active  { opacity:1;  transform:translateX(0) scale(1);       z-index:5; box-shadow:0 24px 60px rgba(0,0,0,0.22); }
+    .carousel-item.prev-1  { opacity:.6; transform:translateX(-44%) scale(0.78); z-index:4; }
+    .carousel-item.next-1  { opacity:.6; transform:translateX(44%) scale(0.78);  z-index:4; }
+    .carousel-item.prev-2  { opacity:.28;transform:translateX(-74%) scale(0.6);  z-index:3; }
+    .carousel-item.next-2  { opacity:.28;transform:translateX(74%) scale(0.6);   z-index:3; }
+    #carousel-dots button { transition:width 0.4s cubic-bezier(0.34,1.26,0.64,1), background 0.3s ease; }
+    @media(max-width:768px){
+      .carousel-container{height:300px}
+      .carousel-item{width:240px;height:200px}
+      .carousel-item.prev-1{transform:translateX(-38%) scale(0.84)}
+      .carousel-item.next-1{transform:translateX(38%) scale(0.84)}
+      .carousel-item.prev-2,.carousel-item.next-2{opacity:0}
     }
 
-    /* =============================================
-       SPONSOR — graceful empty state
-       ============================================= */
-    .sponsor-slot {
-      height: 72px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .sponsor-slot img[src=""] { display: none; }
-    .sponsor-slot:has(img[src=""]) {
-      background: repeating-linear-gradient(
-        45deg, rgba(123,175,158,0.05), rgba(123,175,158,0.05) 10px,
-        transparent 10px, transparent 20px
-      );
-      border: 1.5px dashed rgba(123,175,158,0.25);
-      border-radius: 12px;
-      min-height: 72px;
+    /* ── Sponsor slots ── */
+    .sponsor-slot { height:72px; display:flex; align-items:center; justify-content:center; }
+    .sponsor-slot img[src=""] { display:none; }
+    .sponsor-slot:has(img[src=""]){
+      background:repeating-linear-gradient(45deg,rgba(123,175,158,0.05),rgba(123,175,158,0.05) 10px,transparent 10px,transparent 20px);
+      border:1.5px dashed rgba(123,175,158,0.25); border-radius:12px; min-height:72px;
     }
 
-    /* =============================================
-       CTA HOVER LIFT
-       ============================================= */
-    .cta-lift {
-      transition: transform 0.55s cubic-bezier(0.34,1.15,0.64,1),
-                  box-shadow 0.55s ease;
-    }
-    .cta-lift:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 40px 80px -20px rgba(123,175,158,0.5);
-    }
+    /* ── CTA lift ── */
+    .cta-lift { transition:transform 0.55s cubic-bezier(0.34,1.15,0.64,1), box-shadow 0.55s ease; }
+    .cta-lift:hover { transform:translateY(-5px); box-shadow:0 40px 80px -20px rgba(123,175,158,0.5); }
 
-    /* =============================================
-       FOOTER LINK SLIDE
-       ============================================= */
-    footer a {
-      transition: color 0.25s ease, transform 0.3s cubic-bezier(0.34,1.26,0.64,1);
-      display: inline-block;
-    }
-    footer a:hover { color: #7BAF9E; transform: translateX(5px); }
+    /* ── Footer links ── */
+    footer a { transition:color 0.25s ease, transform 0.3s cubic-bezier(0.34,1.26,0.64,1); display:inline-block; }
+    footer a:hover { color:#7BAF9E; transform:translateX(5px); }
 
-    /* =============================================
-       SOCIAL ICON SPRING
-       ============================================= */
-    .social-icon {
-      transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1),
-                  background-color 0.28s ease, color 0.28s ease, border-color 0.28s ease;
-    }
-    .social-icon:hover {
-      transform: scale(1.15) rotate(-4deg);
-      background-color: #7BAF9E; color: white; border-color: #7BAF9E;
-    }
+    /* ── Social icons ── */
+    .social-icon { transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1), background-color 0.28s ease, color 0.28s ease, border-color 0.28s ease; }
+    .social-icon:hover { transform:scale(1.15) rotate(-4deg); background-color:#7BAF9E; color:white; border-color:#7BAF9E; }
 
-    /* =============================================
-       PAGE FADE-IN
-       FIX: removed transform from keyframes. A transform on <body>
-       creates a new containing block for position:fixed children,
-       making the cursor dots reference the body instead of the
-       viewport — causing a permanent coordinate desync on some
-       machines. Opacity-only fade avoids this entirely.
-       ============================================= */
-    @keyframes pageFade {
-      from { opacity: 0; }
-      to   { opacity: 1; }
-    }
-    body { animation: pageFade 0.55s ease both; }
+    /* ── Page fade-in ── */
+    @keyframes pageFade { from{opacity:0} to{opacity:1} }
+    body { animation:pageFade 0.55s ease both; }
 
-    /* =============================================
-       REDUCED MOTION
-       ============================================= */
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-      .r-up,.r-left,.r-right,.r-scale,.r-fade { opacity:1 !important; transform:none !important; }
-      .word-inner { transform:none !important; opacity:1 !important; }
+    /* ── Reduced motion ── */
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}
+      .r-up,.r-left,.r-right,.r-scale,.r-fade{opacity:1!important;transform:none!important}
+      .word-inner{transform:none!important;opacity:1!important}
     }
-
   </style>
 </head>
 
 <body class="bg-cream text-deep font-body">
 
 <div id="progress-bar"></div>
-<div class="cursor-dot"></div>
-<div class="cursor-ring"></div>
 
-<!-- ══════════════════════════════════ HEADER ══════════════════════════════════ -->
+<!-- ── HEADER ── -->
 <header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200/60">
   <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-
     <a href="index.html" aria-label="Streets to Shelters Home">
       <img src="images/icon (1).png" class="h-11 transition duration-300 hover:scale-105 active:scale-95" alt="Streets to Shelters">
     </a>
-
     <nav class="hidden md:flex gap-8 text-sm font-medium items-center">
-      <a href="index.html" class="hover:text-brand transition-colors">Home</a>
-
+      <a href="index.html" class="nav-link hover:text-brand transition-colors">Home</a>
       <div class="relative group">
-        <button class="hover:text-brand transition-colors py-2 flex items-center gap-1.5">
+        <button class="nav-link hover:text-brand transition-colors py-2 flex items-center gap-1.5">
           Initiatives
           <svg class="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
         </button>
@@ -372,22 +189,19 @@
           <a href="volunteer.html" class="block px-6 py-3.5 text-sm hover:bg-cream rounded-b-2xl transition-colors">Volunteer</a>
         </div>
       </div>
-
       <div class="relative group">
-        <button class="hover:text-brand transition-colors py-2 flex items-center gap-1.5">
+        <button class="nav-link hover:text-brand transition-colors py-2 flex items-center gap-1.5">
           About Us
           <svg class="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
         </button>
         <div class="absolute left-0 top-full w-60 bg-white rounded-2xl shadow-lg border border-gray-100 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-250">
-          <a href="about.html"   class="block px-6 py-3.5 text-sm hover:bg-cream rounded-t-2xl transition-colors">Streets to Shelters News</a>
+          <a href="news.html"    class="block px-6 py-3.5 text-sm hover:bg-cream rounded-t-2xl transition-colors">Streets to Shelters News</a>
           <a href="members.html" class="block px-6 py-3.5 text-sm hover:bg-cream transition-colors">Members</a>
           <a href="contact.html" class="block px-6 py-3.5 text-sm hover:bg-cream rounded-b-2xl transition-colors">Contact Us</a>
         </div>
       </div>
-
-      <a href="chapter.html" class="hover:text-brand transition-colors">Start a Chapter</a>
+      <a href="chapter.html" class="nav-link hover:text-brand transition-colors">Start a Chapter</a>
     </nav>
-
     <div class="flex items-center gap-4">
       <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
          target="_blank" rel="noopener"
@@ -400,16 +214,6 @@
         </svg>
       </button>
     </div>
-    <button id="cursor-toggle"
-            class="fixed bottom-6 right-6 z-[9999] bg-white border border-gray-300 shadow-md w-12 h-12 rounded-full flex items-center justify-center hover:bg-gray-100 transition">
-
-      <svg id="cursor-icon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-deep"
-           fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M5 3l14 9-6 2-2 6-6-17z" />
-      </svg>
-
-    </button>
   </div>
 </header>
 
@@ -426,7 +230,7 @@
   <nav class="flex flex-col gap-5 text-xl font-heading font-bold">
     <a href="index.html"     class="hover:text-brand transition-colors">Home</a>
     <a href="events.html"    class="hover:text-brand transition-colors">Events</a>
-    <a href="about.html"     class="hover:text-brand transition-colors">News</a>
+    <a href="news.html"      class="hover:text-brand transition-colors">News</a>
     <a href="members.html"   class="hover:text-brand transition-colors">Members</a>
     <a href="volunteer.html" class="hover:text-brand transition-colors">Volunteer</a>
     <a href="chapter.html"   class="hover:text-brand transition-colors">Start a Chapter</a>
@@ -438,28 +242,22 @@
   </nav>
 </div>
 
-<!-- ══════════════════════════════════ HERO ══════════════════════════════════ -->
+<!-- ── HERO ── -->
 <section class="pt-36 pb-28 bg-cream overflow-hidden">
   <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
-
     <div>
-      <!-- Badge -->
       <div class="r-fade mb-3" style="transition-delay:0.05s">
         <span class="inline-block bg-brand/10 text-brandDark text-xs font-semibold tracking-widest uppercase px-4 py-1.5 rounded-full border border-brand/20">
           Youth-Led Nonprofit
         </span>
       </div>
-
-      <!-- Split-word heading -->
       <h1 id="hero-heading" class="text-5xl md:text-6xl font-heading font-bold leading-tight mb-6">
         Streets to <span class="text-brand">Shelters</span>
       </h1>
-
       <p class="r-up text-lg text-gray-600 mb-8 leading-relaxed" style="transition-delay:0.32s">
         A <strong class="text-deep font-semibold">youth-led nonprofit</strong> delivering essential hygiene kits
         and critical resources directly to <strong class="text-deep font-semibold">homeless shelters</strong> in our community.
       </p>
-
       <div class="r-up flex flex-wrap items-center gap-4" style="transition-delay:0.44s">
         <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
            target="_blank" rel="noopener"
@@ -470,7 +268,6 @@
            class="magnetic border-2 border-deep px-8 py-3.5 rounded-full font-semibold hover:bg-deep hover:text-white transition-all duration-300">
           See Our Impact
         </a>
-        <!-- Social icons -->
         <div class="flex gap-2.5 ml-1">
           <a href="https://www.instagram.com/streets.to.shelter" target="_blank" rel="noopener" aria-label="Instagram"
              class="social-icon w-10 h-10 rounded-full border-2 border-brand flex items-center justify-center text-deep">
@@ -491,33 +288,25 @@
         </div>
       </div>
     </div>
-
-    <!-- Hero visual -->
     <div class="r-scale" style="transition-delay:0.2s">
       <div id="hero-card" class="tilt-card relative float-anim">
         <div class="bg-brand/15 rounded-3xl overflow-hidden shadow-2xl aspect-square max-w-sm mx-auto">
-          <img src="images/sts1.jpg" alt="Streets to Shelters volunteers"
-               class="w-full h-full object-cover"
-               loading="eager"
-               onerror="this.style.display='none'">
+          <img src="images/sts1.jpg" alt="Streets to Shelters volunteers" class="w-full h-full object-cover" loading="eager" onerror="this.style.display='none'">
         </div>
-        <!-- Floating stat card — bottom left -->
         <div class="absolute -bottom-5 -left-5 bg-white rounded-2xl shadow-xl px-5 py-3.5 border border-gray-100 r-left" style="transition-delay:0.6s">
-          <p class="text-xs text-gray-400 uppercase tracking-widest mb-0.5"> Volunteers</p>
+          <p class="text-xs text-gray-400 uppercase tracking-widest mb-0.5">Volunteers</p>
           <p class="text-2xl font-heading font-bold text-deep">15+</p>
         </div>
-        <!-- Floating accent card — top right -->
         <div class="absolute -top-4 -right-4 bg-brand rounded-2xl shadow-xl px-4 py-3 r-right" style="transition-delay:0.7s">
           <p class="text-xs text-white/70 uppercase tracking-widest mb-0.5">Making</p>
           <p class="text-lg font-heading font-bold text-white">Real Impact</p>
         </div>
       </div>
     </div>
-
   </div>
 </section>
 
-<!-- ══════════════════════════════════ MISSION ══════════════════════════════════ -->
+<!-- ── MISSION ── -->
 <section id="mission" class="py-24 bg-white">
   <div class="max-w-4xl mx-auto text-center px-6 r-up">
     <h2 class="text-4xl font-heading font-bold mb-5">Our Mission</h2>
@@ -530,7 +319,7 @@
   </div>
 </section>
 
-<!-- ══════════════════════════════════ IMPACT COUNTERS ══════════════════════════════════ -->
+<!-- ── IMPACT COUNTERS ── -->
 <section id="impact" class="py-24 px-6 overflow-hidden r-up">
   <div class="max-w-5xl mx-auto">
     <div class="impact-container shadow-2xl">
@@ -569,10 +358,9 @@
   </defs>
 </svg>
 
-<!-- ══════════════════════════════════ WHY ══════════════════════════════════ -->
+<!-- ── WHY ── -->
 <section id="mission-details" class="py-24 bg-cream/50 overflow-hidden">
   <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-10 items-stretch">
-
     <div class="mission-card r-left relative bg-white border border-brand/10 p-10 rounded-3xl shadow-sm overflow-hidden" style="transition-delay:0.08s">
       <div class="mb-6 w-12 h-12 rounded-xl bg-brand/10 flex items-center justify-center text-brand">
         <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
@@ -586,7 +374,6 @@
       </p>
       <div class="bar absolute bottom-0 left-0 h-[3px] bg-brand rounded-full"></div>
     </div>
-
     <div class="mission-card r-right relative bg-white border border-brand/10 p-10 rounded-3xl shadow-sm overflow-hidden" style="transition-delay:0.22s">
       <div class="mb-6 w-12 h-12 rounded-xl bg-brand/10 flex items-center justify-center text-brand">
         <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
@@ -600,11 +387,10 @@
       </p>
       <div class="bar absolute bottom-0 left-0 h-[3px] bg-brand rounded-full"></div>
     </div>
-
   </div>
 </section>
 
-<!-- ══════════════════════════════════ HOW IT WORKS ══════════════════════════════════ -->
+<!-- ── HOW IT WORKS ── -->
 <section id="process" class="py-24 bg-white overflow-hidden">
   <div class="max-w-6xl mx-auto px-6">
     <h2 class="text-4xl font-heading font-bold text-center mb-16 r-up">How It Works</h2>
@@ -630,28 +416,23 @@
   </div>
 </section>
 
-<!-- ══════════════════════════════════ GALLERY ══════════════════════════════════ -->
+<!-- ── GALLERY ── -->
 <section id="gallery" class="py-24 bg-creamdark overflow-hidden r-up">
   <div class="max-w-7xl mx-auto px-6">
     <h2 class="text-4xl font-heading font-bold text-center mb-3 text-deep">Our Journey</h2>
     <p class="text-center text-gray-500/80 mb-14 text-sm">A look at the work we do together</p>
-
     <div class="carousel-container mb-10" id="interactive-carousel" role="region" aria-label="Photo gallery">
-      <img src="images/sts1.jpg" class="carousel-item" alt="Streets to Shelters — photo 1" loading="lazy">
-      <img src="images/sts7.jpg" class="carousel-item" alt="Streets to Shelters — photo 7" loading="lazy">
-      <img src="images/sts3.jpg" class="carousel-item" alt="Streets to Shelters — photo 3" loading="lazy">
-      <img src="images/sts11.png" class="carousel-item" alt="Streets to Shelters — photo 7" loading="lazy">
-      <img src="images/sts4.jpg" class="carousel-item" alt="Streets to Shelters — photo 4" loading="lazy">
-      <img src="images/sts5.jpg" class="carousel-item" alt="Streets to Shelters — photo 5" loading="lazy">
-      <img src="images/sts9.jpg" class="carousel-item" alt="Streets to Shelters — photo 9" loading="lazy">
-      <img src="images/sts6.jpg" class="carousel-item" alt="Streets to Shelters — photo 6" loading="lazy">
-      <img src="images/sts8.jpg" class="carousel-item" alt="Streets to Shelters — photo 8" loading="lazy">
-      <img src="images/sts10.png" class="carousel-item" alt="Streets to Shelters — photo 7" loading="lazy">
-
-
-
+      <img src="images/sts1.jpg"  class="carousel-item" alt="Streets to Shelters — photo 1"  loading="lazy">
+      <img src="images/sts7.jpg"  class="carousel-item" alt="Streets to Shelters — photo 7"  loading="lazy">
+      <img src="images/sts3.jpg"  class="carousel-item" alt="Streets to Shelters — photo 3"  loading="lazy">
+      <img src="images/sts11.png" class="carousel-item" alt="Streets to Shelters — photo 11" loading="lazy">
+      <img src="images/sts4.jpg"  class="carousel-item" alt="Streets to Shelters — photo 4"  loading="lazy">
+      <img src="images/sts5.jpg"  class="carousel-item" alt="Streets to Shelters — photo 5"  loading="lazy">
+      <img src="images/sts9.jpg"  class="carousel-item" alt="Streets to Shelters — photo 9"  loading="lazy">
+      <img src="images/sts6.jpg"  class="carousel-item" alt="Streets to Shelters — photo 6"  loading="lazy">
+      <img src="images/sts8.jpg"  class="carousel-item" alt="Streets to Shelters — photo 8"  loading="lazy">
+      <img src="images/sts10.png" class="carousel-item" alt="Streets to Shelters — photo 10" loading="lazy">
     </div>
-
     <div class="flex justify-center items-center gap-5">
       <button id="carousel-prev" aria-label="Previous photo"
               class="w-10 h-10 rounded-full border-2 border-deep/30 flex items-center justify-center hover:border-deep hover:bg-deep hover:text-white transition-all duration-300">
@@ -666,7 +447,7 @@
   </div>
 </section>
 
-<!-- ══════════════════════════════════ DONATE CTA ══════════════════════════════════ -->
+<!-- ── DONATE CTA ── -->
 <section class="py-24 bg-cream r-scale">
   <div class="max-w-5xl mx-auto px-6 text-center">
     <div class="bg-brand rounded-3xl p-12 md:p-16 shadow-xl relative overflow-hidden cta-lift">
@@ -687,15 +468,13 @@
   </div>
 </section>
 
-<!-- ══════════════════════════════════ SPONSORS ══════════════════════════════════ -->
+<!-- ── SPONSORS ── -->
 <section id="partners" class="py-24 bg-white r-up">
   <div class="max-w-7xl mx-auto px-6">
     <div class="text-center mb-16">
       <h2 class="text-4xl md:text-5xl font-heading font-bold text-deep mb-4">Sponsors & Partners</h2>
       <div class="w-16 h-0.5 bg-brand mx-auto rounded-full mb-6"></div>
-      <p class="text-gray-500 max-w-xl mx-auto">
-        We are proud to collaborate with local businesses and organizations that share our vision.
-      </p>
+      <p class="text-gray-500 max-w-xl mx-auto">We are proud to collaborate with local businesses and organizations that share our vision.</p>
     </div>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-10 items-center">
       <div class="sponsor-slot group transition-all duration-400 hover:-translate-y-1.5">
@@ -720,7 +499,7 @@
   </div>
 </section>
 
-<!-- ══════════════════════════════════ FOOTER ══════════════════════════════════ -->
+<!-- ── FOOTER ── -->
 <footer class="bg-deep text-white py-14">
   <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-10 text-center sm:text-left">
     <div>
@@ -737,7 +516,7 @@
       <div class="flex flex-col gap-3">
         <a href="index.html">Home</a>
         <a href="events.html">Events</a>
-        <a href="about.html">News</a>
+        <a href="news.html">News</a>
         <a href="members.html">Members</a>
         <a href="volunteer.html">Volunteer</a>
         <a href="chapter.html">Start a Chapter</a>
@@ -754,11 +533,10 @@
   </div>
 </footer>
 
-<!-- ══════════════════════════════════ SCRIPTS ══════════════════════════════════ -->
 <script>
   document.addEventListener('DOMContentLoaded', () => {
 
-    /* ─── Mobile Menu ─── */
+    /* ── Mobile Menu ── */
     const mobileBtn     = document.getElementById('mobile-menu-btn');
     const closeBtn      = document.getElementById('close-menu-btn');
     const mobileOverlay = document.getElementById('mobile-menu-overlay');
@@ -770,7 +548,7 @@
       );
     }
 
-    /* ─── Scroll Progress + Nav shadow ─── */
+    /* ── Scroll Progress + Nav shadow ── */
     const bar = document.getElementById('progress-bar');
     window.addEventListener('scroll', () => {
       const total = document.documentElement.scrollHeight - window.innerHeight;
@@ -778,75 +556,7 @@
       document.body.classList.toggle('scrolled', window.scrollY > 60);
     }, { passive: true });
 
-    /* ─── Custom Cursor ───────────────────────────────────────────
-       While the mouse is MOVING: cursor is visible and tracks fine.
-       While SCROLLING: mousemove stops firing (browser behaviour) so
-       the cursor freezes at its last position — which looks like a
-       bug. Fix: on every scroll event we set a short timer. If no
-       mousemove fires within ~80 ms we fade the cursor out so it
-       doesn't appear stuck. The next mousemove restores it and
-       snaps it to the correct position before fading back in.
-    ─────────────────────────────────────────────────────────────── */
-    const dot  = document.querySelector('.cursor-dot');
-    const ring = document.querySelector('.cursor-ring');
-    if (dot && ring && window.matchMedia('(pointer: fine)').matches) {
-      let mx = -200, my = -200;
-      let rx = -200, ry = -200;
-      let cursorShown = true;
-      let scrollTimer = null;
-
-      function showCursor() {
-        if (!cursorShown) {
-          dot.style.transition  = 'opacity 0.15s ease, width 0.18s, height 0.18s';
-          ring.style.transition = 'opacity 0.15s ease, width 0.32s cubic-bezier(0.16,1,0.3,1), height 0.32s cubic-bezier(0.16,1,0.3,1), background 0.32s';
-          dot.style.opacity  = '1';
-          ring.style.opacity = '1';
-          cursorShown = true;
-        }
-      }
-
-      function hideCursor() {
-        if (cursorShown) {
-          dot.style.transition  = 'opacity 0.08s ease';
-          ring.style.transition = 'opacity 0.08s ease';
-          dot.style.opacity  = '0';
-          ring.style.opacity = '0';
-          cursorShown = false;
-        }
-      }
-
-      window.addEventListener('mousemove', e => {
-        mx = e.clientX;
-        my = e.clientY;
-        // Snap ring to dot position instantly before showing so it
-        // doesn't lerp in from the old position after a scroll.
-        if (!cursorShown) { rx = mx; ry = my; }
-        dot.style.transform = `translate(${mx - 4}px, ${my - 4}px)`;
-        showCursor();
-        // Cancel any pending scroll-hide
-        clearTimeout(scrollTimer);
-      }, { passive: true });
-
-      // Hide while scrolling; restore automatically on next mousemove
-      window.addEventListener('scroll', () => {
-        clearTimeout(scrollTimer);
-        scrollTimer = setTimeout(hideCursor, 80);
-      }, { passive: true });
-
-      (function loop() {
-        rx += (mx - rx) * 0.11;
-        ry += (my - ry) * 0.11;
-        ring.style.transform = `translate(${rx - 18}px, ${ry - 18}px)`;
-        requestAnimationFrame(loop);
-      })();
-
-      document.querySelectorAll('a, button').forEach(el => {
-        el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-        el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-      });
-    }
-
-    /* ─── Hero Heading — Word Split ─── */
+    /* ── Hero Heading Word Split ── */
     const h1 = document.getElementById('hero-heading');
     if (h1) {
       const wrap = node => {
@@ -876,7 +586,7 @@
       setTimeout(() => h1.querySelectorAll('.word-inner').forEach(w => w.classList.add('is-visible')), 80);
     }
 
-    /* ─── Hero Card 3D Tilt ─── */
+    /* ── Hero Card 3D Tilt ── */
     const heroCard = document.getElementById('hero-card');
     if (heroCard) {
       heroCard.parentElement.addEventListener('mousemove', e => {
@@ -885,12 +595,10 @@
         const ry2 = ((e.clientX - r.left - r.width  / 2) / (r.width  / 2)) * -6;
         heroCard.style.transform = `perspective(800px) rotateX(${rx2}deg) rotateY(${ry2}deg)`;
       });
-      heroCard.parentElement.addEventListener('mouseleave', () => {
-        heroCard.style.transform = '';
-      });
+      heroCard.parentElement.addEventListener('mouseleave', () => { heroCard.style.transform = ''; });
     }
 
-    /* ─── Scroll Reveal ─── */
+    /* ── Scroll Reveal ── */
     const revealObs = new IntersectionObserver((entries, obs) => {
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
@@ -898,12 +606,9 @@
         obs.unobserve(entry.target);
       });
     }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.r-up,.r-left,.r-right,.r-scale,.r-fade').forEach(el => revealObs.observe(el));
 
-    document.querySelectorAll('.r-up, .r-left, .r-right, .r-scale, .r-fade').forEach(el => {
-      revealObs.observe(el);
-    });
-
-    /* ─── Counters ─── */
+    /* ── Counters ── */
     const easeOut = t => 1 - Math.pow(1 - t, 4);
     const counterObs = new IntersectionObserver((entries, obs) => {
       entries.forEach(entry => {
@@ -924,17 +629,14 @@
     }, { threshold: 0.5 });
     document.querySelectorAll('[data-target]').forEach(el => counterObs.observe(el));
 
-    /* ─── Carousel ─── */
+    /* ── Carousel ── */
     const items   = Array.from(document.querySelectorAll('.carousel-item'));
     const dotsCon = document.getElementById('carousel-dots');
     const prevBtn = document.getElementById('carousel-prev');
     const nextBtn = document.getElementById('carousel-next');
-    let cIdx = 0;
-    let cTimer = null;
-
+    let cIdx = 0, cTimer = null;
     if (items.length) {
       const total = items.length;
-
       items.forEach((_, i) => {
         const d = document.createElement('button');
         d.setAttribute('aria-label', `Photo ${i + 1}`);
@@ -943,46 +645,32 @@
         d.addEventListener('click', () => { cIdx = i; update(); reset(); });
         dotsCon.appendChild(d);
       });
-
       const dots = dotsCon.querySelectorAll('button');
-
       function update() {
         items.forEach((item, i) => {
-          item.classList.remove('active', 'prev-1', 'next-1', 'prev-2', 'next-2');
+          item.classList.remove('active','prev-1','next-1','prev-2','next-2');
           const d = ((i - cIdx) % total + total) % total;
-          if      (d === 0)           item.classList.add('active');
-          else if (d === 1)           item.classList.add('next-1');
-          else if (d === total - 1)   item.classList.add('prev-1');
-          else if (d === 2)           item.classList.add('next-2');
-          else if (d === total - 2)   item.classList.add('prev-2');
+          if      (d === 0)         item.classList.add('active');
+          else if (d === 1)         item.classList.add('next-1');
+          else if (d === total - 1) item.classList.add('prev-1');
+          else if (d === 2)         item.classList.add('next-2');
+          else if (d === total - 2) item.classList.add('prev-2');
         });
         dots.forEach((d, i) => {
-          d.classList.toggle('bg-deep',    i === cIdx);
-          d.classList.toggle('w-7',        i === cIdx);
+          d.classList.toggle('bg-deep', i === cIdx);
+          d.classList.toggle('w-7', i === cIdx);
           d.classList.toggle('bg-deep/30', i !== cIdx);
-          d.classList.toggle('w-2.5',      i !== cIdx);
+          d.classList.toggle('w-2.5', i !== cIdx);
         });
       }
-
-      function advance(dir) {
-        cIdx = (cIdx + dir + total) % total;
-        update();
-        reset();
-      }
-
-      function reset() {
-        clearInterval(cTimer);
-        cTimer = setInterval(() => advance(1), 3500);
-      }
-
+      function advance(dir) { cIdx = (cIdx + dir + total) % total; update(); reset(); }
+      function reset() { clearInterval(cTimer); cTimer = setInterval(() => advance(1), 3500); }
       prevBtn && prevBtn.addEventListener('click', () => advance(-1));
       nextBtn && nextBtn.addEventListener('click', () => advance(1));
-
       document.addEventListener('keydown', e => {
         if (e.key === 'ArrowLeft')  advance(-1);
         if (e.key === 'ArrowRight') advance(1);
       });
-
       const car = document.getElementById('interactive-carousel');
       let tx = null;
       car.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
@@ -992,55 +680,40 @@
         if (Math.abs(dx) > 40) advance(dx < 0 ? 1 : -1);
         tx = null;
       }, { passive: true });
-
-      requestAnimationFrame(() => {
-        update();
-        reset();
-      });
+      requestAnimationFrame(() => { update(); reset(); });
     }
 
-    /* ─── Magnetic Buttons ─── */
+    /* ── Magnetic Buttons ── */
     document.querySelectorAll('.magnetic').forEach(btn => {
       btn.addEventListener('mousemove', e => {
         const r = btn.getBoundingClientRect();
-        btn.style.transform = `translate(${(e.clientX - r.left - r.width  / 2) * 0.28}px, ${(e.clientY - r.top  - r.height / 2) * 0.28}px)`;
+        btn.style.transform = `translate(${(e.clientX - r.left - r.width/2) * 0.28}px, ${(e.clientY - r.top - r.height/2) * 0.28}px)`;
       });
       btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
     });
 
   });
 
-  /* ─── Gooey Metaballs
-     FIX: blobs now use transform:translate() instead of left/top.
-     left/top changes force a layout pass on the main thread every
-     single rAF frame, causing jank that made the cursor stutter
-     and appear frozen. transform runs purely on the compositor
-     thread with zero layout cost.
-  ─── */
+  /* ── Gooey Metaballs ── */
   (function() {
     const layer = document.getElementById('blob-layer');
     if (!layer) return;
     const C = [
-      {fx:.15,fy:.28,r:100,vx: .20,vy: .13,c:'rgba(91,143,128,.60)'},
-      {fx:.78,fy:.62,r:120,vx:-.15,vy: .17,c:'rgba(123,175,158,.52)'},
-      {fx:.48,fy:.14,r: 80,vx: .12,vy:-.20,c:'rgba(155,200,185,.48)'},
-      {fx:.22,fy:.76,r: 95,vx:-.18,vy:-.11,c:'rgba(76,126,113,.55)'},
-      {fx:.68,fy:.22,r: 75,vx: .22,vy: .15,c:'rgba(123,175,158,.42)'},
-      {fx:.58,fy:.84,r: 88,vx:-.13,vy:-.18,c:'rgba(91,143,128,.48)'},
-      {fx:.35,fy:.50,r: 65,vx: .16,vy: .09,c:'rgba(155,200,185,.38)'},
+      {fx:.15,fy:.28,r:100,vx:.20,vy:.13,c:'rgba(91,143,128,.60)'},
+      {fx:.78,fy:.62,r:120,vx:-.15,vy:.17,c:'rgba(123,175,158,.52)'},
+      {fx:.48,fy:.14,r:80,vx:.12,vy:-.20,c:'rgba(155,200,185,.48)'},
+      {fx:.22,fy:.76,r:95,vx:-.18,vy:-.11,c:'rgba(76,126,113,.55)'},
+      {fx:.68,fy:.22,r:75,vx:.22,vy:.15,c:'rgba(123,175,158,.42)'},
+      {fx:.58,fy:.84,r:88,vx:-.13,vy:-.18,c:'rgba(91,143,128,.48)'},
+      {fx:.35,fy:.50,r:65,vx:.16,vy:.09,c:'rgba(155,200,185,.38)'},
     ];
-
-    /* FIX: removed transform:translate(-50%,-50%) and will-change:left,top.
-       Position is now driven entirely by style.transform in the tick loop. */
     C.forEach((c, i) => {
       const el = document.createElement('div');
       el.style.cssText = `position:absolute;top:0;left:0;border-radius:50%;will-change:transform;pointer-events:none;width:${c.r*2}px;height:${c.r*2}px;background:${c.c}`;
       el.id = '_b' + i;
       layer.appendChild(el);
     });
-
     let blobs = [], mouse = {x:-9999,y:-9999}, rect = null;
-
     function init() {
       rect = layer.getBoundingClientRect();
       blobs = C.map((c, i) => ({
@@ -1050,16 +723,14 @@
         r: c.r, vx: c.vx, vy: c.vy
       }));
     }
-
     window.addEventListener('mousemove', e => {
       rect = layer.getBoundingClientRect();
       mouse.x = e.clientX - rect.left;
       mouse.y = e.clientY - rect.top;
     });
-
     function tick() {
       if (!blobs.length) { requestAnimationFrame(tick); return; }
-      const W = rect ? rect.width  : layer.offsetWidth;
+      const W = rect ? rect.width : layer.offsetWidth;
       const H = rect ? rect.height : layer.offsetHeight;
       blobs.forEach(b => {
         const dx = b.x - mouse.x, dy = b.y - mouse.y;
@@ -1077,16 +748,13 @@
         if (b.x > W-m) { b.vx -= .7; b.x = W-m; }
         if (b.y < m)   { b.vy += .7; b.y = m; }
         if (b.y > H-m) { b.vy -= .7; b.y = H-m; }
-        /* FIX: use transform instead of left/top — compositor-only, zero layout cost */
         b.el.style.transform = `translate(${b.x - b.r}px, ${b.y - b.r}px)`;
       });
       requestAnimationFrame(tick);
     }
-
     new ResizeObserver(init).observe(layer);
     init(); tick();
   })();
 </script>
-
 </body>
 </html>

@@ -18,48 +18,53 @@
         }
     </script>
     <style>
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior:smooth; }
 
-        .fade-up, .reveal { opacity:0; transform:translateY(40px); transition:all 0.8s ease; }
-        .show, .is-visible { opacity:1; transform:translateY(0); }
-
-        .btn-press { transition:all 0.2s ease; }
-        .btn-press:active { transform:scale(0.97); }
-
-        /* ── Cursor ── */
-        @media (pointer: fine) {
-          html, body { cursor: none !important; }
-          a, button, [role="button"], input, select, textarea { cursor: none !important; }
-          .cursor-dot, .cursor-outline {
-            position: fixed; top: 0; left: 0;
-            border-radius: 50%; z-index: 9998;
-            pointer-events: none; will-change: transform;
-            transform: translate(-200px, -200px);
-          }
-          .cursor-dot { width:8px; height:8px; background:#2B1F1C; transition:width 0.18s,height 0.18s,opacity 0.18s; }
-          .cursor-outline { width:36px; height:36px; border:1.5px solid #567a6f;
-            transition:width 0.32s cubic-bezier(0.16,1,0.3,1),height 0.32s cubic-bezier(0.16,1,0.3,1),background 0.32s; }
-          body.hovering-link .cursor-dot  { width:0; height:0; opacity:0; }
-          body.hovering-link .cursor-outline { width:56px; height:56px; background:rgba(86,122,111,0.12); }
+        /* ── Nav underline — top-level links only ── */
+        .nav-link { position:relative; }
+        .nav-link::after {
+          content:''; position:absolute; bottom:-3px; left:0;
+          width:0; height:1.5px; background:#7BAF9E;
+          transition:width 0.38s cubic-bezier(0.16,1,0.3,1);
         }
+        .nav-link:hover::after { width:100%; }
+
+        /* ── Scroll Reveal ── */
+        .r-up, .r-left, .r-scale {
+          opacity:0; will-change:opacity,transform;
+        }
+        .r-up   { transform:translateY(40px); transition:opacity 0.85s cubic-bezier(0.16,1,0.3,1), transform 0.85s cubic-bezier(0.16,1,0.3,1); }
+        .r-left { transform:translateX(-40px); transition:opacity 0.85s cubic-bezier(0.16,1,0.3,1), transform 0.85s cubic-bezier(0.16,1,0.3,1); }
+        .r-scale { transform:scale(0.95) translateY(16px); transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.34,1.4,0.64,1); }
+        .is-visible { opacity:1!important; transform:none!important; }
+
+        /* ── Magnetic ── */
+        .magnetic { transition:transform 0.5s cubic-bezier(0.34,1.26,0.64,1)!important; }
+
+        /* ── Input focus ── */
+        .form-input { transition:all 0.3s ease; }
+        .form-input:focus { transform:scale(1.01); }
+
+        /* ── Footer links ── */
+        footer a { transition:color 0.25s ease, transform 0.3s cubic-bezier(0.34,1.26,0.64,1); display:inline-block; }
+        footer a:hover { color:#7BAF9E; transform:translateX(5px); }
+
+        @keyframes pageFade { from{opacity:0} to{opacity:1} }
+        body { animation:pageFade 0.5s ease both; }
     </style>
 </head>
 
 <body class="bg-cream text-deep font-body">
 
-<div class="cursor-dot"></div>
-<div class="cursor-outline"></div>
-
-<!-- FIX: removed 'reveal' class from header — header was starting invisible -->
 <header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         <a href="index.html" aria-label="Go to Home" class="inline-flex items-center">
             <img src="images/icon (1).png" class="h-12 transition duration-300 hover:scale-105 active:scale-95" alt="Streets to Shelters Home">
         </a>
         <nav class="hidden md:flex gap-8 text-sm font-medium items-center">
-            <a href="index.html" class="hover:text-brand transition">Home</a>
+            <a href="index.html" class="nav-link hover:text-brand transition">Home</a>
             <div class="relative group">
-                <button class="hover:text-brand transition py-2 flex items-center gap-1">
+                <button class="nav-link hover:text-brand transition py-2 flex items-center gap-1">
                     Initiatives
                     <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                 </button>
@@ -69,21 +74,21 @@
                 </div>
             </div>
             <div class="relative group">
-                <button class="hover:text-brand transition py-2 flex items-center gap-1">
+                <button class="nav-link hover:text-brand transition py-2 flex items-center gap-1">
                     About Us
                     <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                 </button>
                 <div class="absolute left-0 top-full w-60 bg-white rounded-2xl shadow-lg border border-gray-100 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300">
-                    <a href="about.html"   class="block px-6 py-3.5 text-sm hover:bg-cream rounded-t-2xl transition-colors">Streets to Shelters News</a>
+                    <a href="news.html"    class="block px-6 py-3.5 text-sm hover:bg-cream rounded-t-2xl transition-colors">Streets to Shelters News</a>
                     <a href="members.html" class="block px-6 py-3.5 text-sm hover:bg-cream transition-colors">Members</a>
                     <a href="contact.html" class="block px-6 py-3.5 text-sm hover:bg-cream rounded-b-2xl transition-colors">Contact Us</a>
                 </div>
             </div>
-            <a href="chapter.html" class="hover:text-brand transition">Start a Chapter</a>
+            <a href="chapter.html" class="nav-link hover:text-brand transition">Start a Chapter</a>
         </nav>
         <div class="flex items-center gap-4">
             <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" rel="noopener"
-               class="hidden md:inline-block bg-brand text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-brandDark transition">Donate</a>
+               class="magnetic hidden md:inline-block bg-brand text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-brandDark transition">Donate</a>
             <button id="mobile-menu-btn" class="md:hidden text-deep p-2">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/></svg>
             </button>
@@ -101,7 +106,7 @@
     <nav class="flex flex-col gap-5 text-xl font-heading font-bold">
         <a href="index.html"     class="hover:text-brand transition">Home</a>
         <a href="events.html"    class="hover:text-brand transition">Events</a>
-        <a href="about.html"     class="hover:text-brand transition">News</a>
+        <a href="news.html"      class="hover:text-brand transition">News</a>
         <a href="members.html"   class="hover:text-brand transition">Members</a>
         <a href="volunteer.html" class="hover:text-brand transition">Volunteer</a>
         <a href="chapter.html"   class="hover:text-brand transition">Start a Chapter</a>
@@ -112,31 +117,59 @@
     </nav>
 </div>
 
-<main class="pt-40 pb-24 max-w-3xl mx-auto px-6 space-y-12">
-    <h1 class="text-5xl font-heading font-bold text-center fade-up">Contact Us</h1>
+<main class="pt-40 pb-24 max-w-6xl mx-auto px-6">
 
-    <form action="https://formspree.io/f/mbdanoqz" method="POST"
-          class="bg-white p-10 rounded-3xl shadow-md space-y-6 fade-up">
+    <div class="grid md:grid-cols-2 gap-16 items-start">
+
+        <!-- Left: Form -->
         <div>
-            <label class="block mb-2 font-medium">Full Name</label>
-            <input type="text" name="name" required
-                   class="w-full p-4 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand outline-none transition-all duration-300 focus:scale-[1.02]">
+            <h1 class="text-5xl font-heading font-bold mb-3 r-up">Contact Us</h1>
+            <p class="text-gray-600 mb-8 r-up" style="transition-delay:0.08s">Have a question, partnership idea, or just want to say hello? We'd love to hear from you.</p>
+
+            <form action="https://formspree.io/f/mbdanoqz" method="POST"
+                  class="bg-white p-10 rounded-3xl shadow-md space-y-6 r-scale" style="transition-delay:0.12s">
+                <div>
+                    <label class="block mb-2 font-medium">Full Name</label>
+                    <input type="text" name="name" required
+                           class="form-input w-full p-4 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand outline-none">
+                </div>
+                <div>
+                    <label class="block mb-2 font-medium">Email Address</label>
+                    <input type="email" name="email" required
+                           class="form-input w-full p-4 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand outline-none">
+                </div>
+                <div>
+                    <label class="block mb-2 font-medium">Message</label>
+                    <textarea name="message" rows="5" required
+                              class="form-input w-full p-4 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand outline-none"></textarea>
+                </div>
+                <button type="submit"
+                        class="magnetic w-full bg-brand text-white py-4 rounded-xl font-semibold hover:bg-brandDark transition shadow-md hover:shadow-xl active:scale-95">
+                    Send Message
+                </button>
+            </form>
         </div>
-        <div>
-            <label class="block mb-2 font-medium">Email Address</label>
-            <input type="email" name="email" required
-                   class="w-full p-4 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand outline-none transition-all duration-300 focus:scale-[1.02]">
+
+        <!-- Right: Image collage + info -->
+        <div class="r-left space-y-6" style="transition-delay:0.1s">
+            <div class="rounded-3xl overflow-hidden aspect-[4/3] shadow-xl">
+                <img src="images/sts1.jpg" alt="Streets to Shelters team" class="w-full h-full object-cover">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="rounded-2xl overflow-hidden aspect-square">
+                    <img src="images/sts7.jpg" alt="Volunteer" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                </div>
+                <div class="rounded-2xl overflow-hidden aspect-square">
+                    <img src="images/sts4.jpg" alt="Community" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                </div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-brand/10">
+                <p class="text-sm text-gray-500 uppercase tracking-widest font-semibold mb-1">Website</p>
+                <p class="font-medium text-deep">streets2shelters.org</p>
+            </div>
         </div>
-        <div>
-            <label class="block mb-2 font-medium">Message</label>
-            <textarea name="message" rows="5" required
-                      class="w-full p-4 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand outline-none transition-all duration-300 focus:scale-[1.02]"></textarea>
-        </div>
-        <button type="submit"
-                class="w-full bg-brand text-white py-4 rounded-xl font-semibold hover:bg-brandDark transition btn-press shadow-md hover:shadow-xl">
-            Send Message
-        </button>
-    </form>
+
+    </div>
 </main>
 
 <footer class="bg-deep text-white py-12">
@@ -144,28 +177,28 @@
         <div>
             <h3 class="text-xs uppercase tracking-widest text-white/50 font-semibold mb-5">Follow Us</h3>
             <div class="flex flex-col gap-3">
-                <a href="https://www.instagram.com/streets.to.shelter" target="_blank" rel="noopener" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Instagram</a>
-                <a href="https://www.facebook.com/profile.php?id=61586361417282" target="_blank" rel="noopener" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Facebook</a>
-                <a href="https://www.tiktok.com/@streetstoshelters" target="_blank" rel="noopener" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">TikTok</a>
-                <a href="https://linktr.ee/streets2shelters" target="_blank" rel="noopener" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Linktree</a>
+                <a href="https://www.instagram.com/streets.to.shelter" target="_blank" rel="noopener">Instagram</a>
+                <a href="https://www.facebook.com/profile.php?id=61586361417282" target="_blank" rel="noopener">Facebook</a>
+                <a href="https://www.tiktok.com/@streetstoshelters" target="_blank" rel="noopener">TikTok</a>
+                <a href="https://linktr.ee/streets2shelters" target="_blank" rel="noopener">Linktree</a>
             </div>
         </div>
         <div>
             <h3 class="text-xs uppercase tracking-widest text-white/50 font-semibold mb-5">Quick Links</h3>
             <div class="flex flex-col gap-3">
-                <a href="index.html"     class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Home</a>
-                <a href="events.html"    class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Events</a>
-                <a href="about.html"     class="hover:text-brand hover:translate-x-1 transition-transform inline-block">News</a>
-                <a href="members.html"   class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Members</a>
-                <a href="volunteer.html" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Volunteer</a>
-                <a href="chapter.html"   class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Start a Chapter</a>
-                <a href="contact.html"   class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Contact</a>
+                <a href="index.html">Home</a>
+                <a href="events.html">Events</a>
+                <a href="news.html">News</a>
+                <a href="members.html">Members</a>
+                <a href="volunteer.html">Volunteer</a>
+                <a href="chapter.html">Start a Chapter</a>
+                <a href="contact.html">Contact</a>
             </div>
         </div>
         <div>
             <h3 class="text-xs uppercase tracking-widest text-white/50 font-semibold mb-5">Support Us</h3>
             <div class="flex flex-col gap-3">
-                <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" rel="noopener" class="hover:text-brand hover:translate-x-1 transition-transform inline-block">Donate</a>
+                <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" rel="noopener">Donate</a>
             </div>
             <p class="text-white/25 text-xs mt-10">© 2026 Streets To Shelters</p>
         </div>
@@ -184,31 +217,20 @@
         overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => overlay.classList.add('translate-x-full')));
       }
 
-      /* ── Cursor ── */
-      const dot  = document.querySelector('.cursor-dot');
-      const ring = document.querySelector('.cursor-outline');
-      if (dot && ring && window.matchMedia('(pointer: fine)').matches) {
-        let mx = -200, my = -200, rx = -200, ry = -200;
-        window.addEventListener('mousemove', e => {
-          mx = e.clientX; my = e.clientY;
-          dot.style.transform = `translate(${mx - 4}px, ${my - 4}px)`;
-        }, { passive: true });
-        (function loop() {
-          rx += (mx - rx) * 0.11; ry += (my - ry) * 0.11;
-          ring.style.transform = `translate(${rx - 18}px, ${ry - 18}px)`;
-          requestAnimationFrame(loop);
-        })();
-        document.querySelectorAll('a, button').forEach(el => {
-          el.addEventListener('mouseenter', () => document.body.classList.add('hovering-link'));
-          el.addEventListener('mouseleave', () => document.body.classList.remove('hovering-link'));
-        });
-      }
-
       /* ── Scroll Reveal ── */
       const obs = new IntersectionObserver((entries, o) => {
         entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); o.unobserve(entry.target); } });
-      }, { threshold: 0.12 });
-      document.querySelectorAll('.fade-up, .reveal').forEach(el => obs.observe(el));
+      }, { threshold: 0.07, rootMargin:'0px 0px -40px 0px' });
+      document.querySelectorAll('.r-up, .r-left, .r-scale').forEach(el => obs.observe(el));
+
+      /* ── Magnetic Buttons ── */
+      document.querySelectorAll('.magnetic').forEach(btn => {
+        btn.addEventListener('mousemove', e => {
+          const r = btn.getBoundingClientRect();
+          btn.style.transform = `translate(${(e.clientX - r.left - r.width/2) * 0.28}px, ${(e.clientY - r.top - r.height/2) * 0.28}px)`;
+        });
+        btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+      });
     });
 </script>
 </body>
