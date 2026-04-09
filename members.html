@@ -63,6 +63,47 @@
 
         @keyframes pageFade { from{opacity:0} to{opacity:1} }
         body { animation:pageFade 0.5s ease both; }
+        /* ===== FLIP CARD ===== */
+.flip-card {
+  perspective: 1000px;
+  height: 360px;
+}
+
+.flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.7s cubic-bezier(0.16,1,0.3,1);
+  transform-style: preserve-3d;
+}
+
+/* Hover flip (desktop) */
+.flip-card:hover .flip-inner {
+  transform: rotateY(180deg);
+}
+
+/* Click flip (mobile support) */
+.flip-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+/* Front & Back */
+.flip-front,
+.flip-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 1.5rem;
+}
+
+/* Back side */
+.flip-back {
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
     </style>
 </head>
 
@@ -134,12 +175,27 @@
     <section>
         <h2 class="text-4xl font-heading font-bold text-center mb-12 r-up">Executive Leadership</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 justify-center">
-            <div class="bg-white p-6 rounded-3xl shadow-sm text-center card-hover r-scale d1">
-                <div class="mx-auto mb-6 w-48 h-48 sm:w-56 sm:h-56 overflow-hidden rounded-full">
-                    <img src="images/Nish.jpg" alt="Founder" class="w-full h-full object-cover">
+            <div class="flip-card card-hover r-scale d1">
+                <div class="flip-inner">
+
+                    <!-- FRONT -->
+                    <div class="flip-front bg-white p-6 shadow-sm text-center">
+                        <div class="mx-auto mb-6 w-48 h-48 sm:w-56 sm:h-56 overflow-hidden rounded-full">
+                            <img src="images/Nish.jpg" class="w-full h-full object-cover">
+                        </div>
+                        <h3 class="text-xl font-semibold">Founder & CEO</h3>
+                        <p class="text-gray-600 text-sm mt-2">Nishwanth Reddy Vennapusa</p>
+                    </div>
+
+                    <!-- BACK -->
+                    <div class="flip-back bg-white p-6 shadow-sm text-center">
+                        <h3 class="text-lg font-semibold mb-2">About</h3>
+                        <p class="text-sm text-gray-600 leading-relaxed">
+                            Hey, I’m Nishwanth! I’m a high school student at Clark High School in Texas interested in leadership, service, and building businesses that create real impact. I’m passionate about basketball and hope to attend UPenn in the future to help build solutions that make the world better.
+                        </p>
+                    </div>
+
                 </div>
-                <h3 class="text-xl font-semibold">Founder & CEO</h3>
-                <p class="text-gray-600 text-sm mt-2">Nishwanth Reddy Vennapusa</p>
             </div>
             <div class="bg-white p-6 rounded-3xl shadow-sm text-center card-hover r-scale d2">
                 <div class="mx-auto mb-6 w-48 h-48 sm:w-56 sm:h-56 overflow-hidden rounded-full">
