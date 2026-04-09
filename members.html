@@ -18,101 +18,208 @@
         }
     </script>
     <style>
-        html { scroll-behavior:smooth; }
+        html { scroll-behavior: smooth; }
 
-        /* ── Nav underline — top-level links only ── */
-        .nav-link { position:relative; }
+        /* ── Nav underline ── */
+        .nav-link { position: relative; }
         .nav-link::after {
-          content:''; position:absolute; bottom:-3px; left:0;
-          width:0; height:1.5px; background:#7BAF9E;
-          transition:width 0.38s cubic-bezier(0.16,1,0.3,1);
+          content: ''; position: absolute; bottom: -3px; left: 0;
+          width: 0; height: 1.5px; background: #7BAF9E;
+          transition: width 0.38s cubic-bezier(0.16,1,0.3,1);
         }
-        .nav-link:hover::after { width:100%; }
+        .nav-link:hover::after { width: 100%; }
 
         /* ── Scroll Reveal ── */
         .r-up, .r-scale {
-          opacity:0; will-change:opacity,transform;
+          opacity: 0; will-change: opacity, transform;
         }
-        .r-up   { transform:translateY(40px); transition:opacity 0.85s cubic-bezier(0.16,1,0.3,1), transform 0.85s cubic-bezier(0.16,1,0.3,1); }
-        .r-scale { transform:scale(0.92) translateY(20px); transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.34,1.4,0.64,1); }
-        .is-visible { opacity:1!important; transform:none!important; }
-
-        .d1  { transition-delay:0.05s; } .d2  { transition-delay:0.10s; }
-        .d3  { transition-delay:0.15s; } .d4  { transition-delay:0.20s; }
-        .d5  { transition-delay:0.25s; } .d6  { transition-delay:0.30s; }
-        .d7  { transition-delay:0.35s; } .d8  { transition-delay:0.40s; }
-        .d9  { transition-delay:0.45s; } .d10 { transition-delay:0.50s; }
-        .d11 { transition-delay:0.55s; } .d12 { transition-delay:0.60s; }
-        .d13 { transition-delay:0.65s; } .d14 { transition-delay:0.70s; }
-
-        /* ── Card hover ── */
-        .card-hover {
-          transition:transform 0.5s cubic-bezier(0.175,0.885,0.32,1.275), box-shadow 0.5s ease;
-          will-change:transform,box-shadow;
+        .r-up {
+          transform: translateY(40px);
+          transition: opacity 0.85s cubic-bezier(0.16,1,0.3,1), transform 0.85s cubic-bezier(0.16,1,0.3,1);
         }
-        .card-hover:hover { transform:translateY(-10px); box-shadow:0 25px 50px -12px rgba(123,175,158,0.25); }
-        .card-hover img { transition:transform 0.6s cubic-bezier(0.25,1,0.5,1); will-change:transform; }
-        .card-hover:hover img { transform:scale(1.08); }
+        .r-scale {
+          transform: scale(0.93) translateY(20px);
+          transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.34,1.4,0.64,1);
+        }
+        .is-visible { opacity: 1 !important; transform: none !important; }
+
+        .d1  { transition-delay: 0.04s; } .d2  { transition-delay: 0.08s; }
+        .d3  { transition-delay: 0.12s; } .d4  { transition-delay: 0.16s; }
+        .d5  { transition-delay: 0.20s; } .d6  { transition-delay: 0.24s; }
+        .d7  { transition-delay: 0.28s; } .d8  { transition-delay: 0.32s; }
+        .d9  { transition-delay: 0.36s; } .d10 { transition-delay: 0.40s; }
+        .d11 { transition-delay: 0.44s; } .d12 { transition-delay: 0.48s; }
+        .d13 { transition-delay: 0.52s; } .d14 { transition-delay: 0.56s; }
 
         /* ── Magnetic ── */
-        .magnetic { transition:transform 0.5s cubic-bezier(0.34,1.26,0.64,1)!important; }
+        .magnetic { transition: transform 0.5s cubic-bezier(0.34,1.26,0.64,1) !important; }
 
         /* ── Footer links ── */
-        footer a { transition:color 0.25s ease, transform 0.3s cubic-bezier(0.34,1.26,0.64,1); display:inline-block; }
-        footer a:hover { color:#7BAF9E; transform:translateX(5px); }
+        footer a {
+          transition: color 0.25s ease, transform 0.3s cubic-bezier(0.34,1.26,0.64,1);
+          display: inline-block;
+        }
+        footer a:hover { color: #7BAF9E; transform: translateX(5px); }
 
-        @keyframes pageFade { from{opacity:0} to{opacity:1} }
-        body { animation:pageFade 0.5s ease both; }
-       /* ===== FLIP CARD ===== */
-.flip-card {
-  perspective: 1000px;
-  height: 450px;
-  position: relative;
-}
+        @keyframes pageFade { from { opacity: 0 } to { opacity: 1 } }
+        body { animation: pageFade 0.5s ease both; }
 
-.flip-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transition: transform 0.7s cubic-bezier(0.16,1,0.3,1);
-  transform-style: preserve-3d;
-}
+        /* ─────────────────────────────
+           FLIP CARD
+           Desktop: CSS hover flips
+           Mobile: JS .flipped class flips
+        ───────────────────────────── */
+        .flip-card {
+          perspective: 1000px;
+          height: 420px;
+        }
 
-.flip-card:hover .flip-inner {
-  transform: rotateY(180deg);
-}
+        .flip-inner {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          transition: transform 0.7s cubic-bezier(0.16,1,0.3,1);
+          transform-style: preserve-3d;
+        }
 
-.flip-inner.flipped {
-  transform: rotateY(180deg);
-}
+        /* Only trigger CSS hover flip on devices that actually support hover (desktops) */
+        @media (hover: hover) and (pointer: fine) {
+          .flip-card:hover .flip-inner {
+            transform: rotateY(180deg);
+          }
+        }
 
-.flip-front,
-.flip-back {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  border-radius: 1.5rem;
-  overflow: hidden;
-}
+        /* JS-driven flip (for mobile tap & desktop click) */
+        .flip-inner.flipped {
+          transform: rotateY(180deg) !important;
+        }
 
-.flip-front {
-  transform: translateZ(0);
-}
+        .flip-front,
+        .flip-back {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          backface-visibility: hidden;
+          -webkit-backface-visibility: hidden;
+          border-radius: 1.5rem;
+          overflow: hidden;
+        }
 
-.flip-back {
-  transform: rotateY(180deg) translateZ(0);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
+        .flip-front {
+          transform: translateZ(0.1px);
+        }
+
+        .flip-back {
+          transform: rotateY(180deg) translateZ(0.1px);
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          padding: 2rem;
+        }
+
+        /* ── Card lift on desktop only ── */
+        @media (hover: hover) and (pointer: fine) {
+          .card-hover {
+            transition: transform 0.5s cubic-bezier(0.175,0.885,0.32,1.275), box-shadow 0.5s ease;
+            will-change: transform, box-shadow;
+          }
+          .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px -12px rgba(123,175,158,0.25);
+          }
+        }
+
+        /* ── Tap hint badge (mobile only) ── */
+        .tap-hint {
+          display: none;
+        }
+        @media (hover: none) {
+          .tap-hint {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+            color: #7BAF9E;
+            background: rgba(123,175,158,0.1);
+            border: 1px solid rgba(123,175,158,0.3);
+            border-radius: 999px;
+            padding: 3px 10px;
+            margin-top: 8px;
+            letter-spacing: 0.02em;
+            pointer-events: none;
+          }
+        }
+
+        /* ── Section divider ── */
+        .section-divider {
+          width: 48px;
+          height: 3px;
+          background: #7BAF9E;
+          border-radius: 999px;
+          margin: 0 auto 2.5rem;
+        }
+
+        /* ── Chapter CTA ── */
+        .chapter-card {
+          background: #2B1F1C;
+          border-radius: 2rem;
+          overflow: hidden;
+          position: relative;
+        }
+        .chapter-card::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(ellipse at 70% 50%, rgba(123,175,158,0.18) 0%, transparent 65%);
+          pointer-events: none;
+        }
+
+        /* ── Step badge ── */
+        .step-badge {
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          background: rgba(123,175,158,0.18);
+          border: 1.5px solid rgba(123,175,158,0.4);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 13px;
+          font-weight: 600;
+          color: #7BAF9E;
+          flex-shrink: 0;
+        }
+
+        /* ── Placeholder avatar ── */
+        .avatar-placeholder {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: linear-gradient(135deg, #e8f3ef 0%, #d4e9e2 100%);
+          font-size: 2.5rem;
+          font-weight: 700;
+          color: #7BAF9E;
+          letter-spacing: -1px;
+        }
+
+        /* ── Back card accent line ── */
+        .back-accent {
+          width: 32px;
+          height: 3px;
+          background: #7BAF9E;
+          border-radius: 999px;
+          margin: 0 auto 1rem;
+        }
     </style>
 </head>
 
 <body class="bg-cream text-deep font-body">
 
+<!-- ═══════════════════════════════════ HEADER ═══════════════════════════════════ -->
 <header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         <a href="index.html" aria-label="Go to Home" class="inline-flex items-center">
@@ -144,20 +251,28 @@
             <a href="chapter.html" class="nav-link hover:text-brand transition">Start a Chapter</a>
         </nav>
         <div class="flex items-center gap-4">
-            <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" rel="noopener"
-               class="magnetic hidden md:inline-block bg-brand text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-brandDark transition">Donate</a>
-            <button id="mobile-menu-btn" class="md:hidden text-deep p-2">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/></svg>
+            <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
+               target="_blank" rel="noopener"
+               class="magnetic hidden md:inline-block bg-brand text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-brandDark transition">
+                Donate
+            </a>
+            <button id="mobile-menu-btn" class="md:hidden text-deep p-2" aria-label="Open menu">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+                </svg>
             </button>
         </div>
     </div>
 </header>
 
+<!-- ═══════════════════════════════════ MOBILE MENU ═══════════════════════════════════ -->
 <div id="mobile-menu-overlay" class="fixed inset-0 bg-white z-[60] flex flex-col p-10 translate-x-full transition-transform duration-300 ease-in-out md:hidden">
     <div class="flex justify-between items-center mb-10">
         <img src="images/icon (1).png" class="h-10" alt="Streets to Shelters">
-        <button id="close-menu-btn" class="text-deep p-2">
-            <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        <button id="close-menu-btn" class="text-deep p-2" aria-label="Close menu">
+            <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
         </button>
     </div>
     <nav class="flex flex-col gap-5 text-xl font-heading font-bold">
@@ -169,31 +284,51 @@
         <a href="chapter.html"   class="hover:text-brand transition">Start a Chapter</a>
         <a href="contact.html"   class="hover:text-brand transition">Contact Us</a>
         <hr class="border-gray-100 my-2">
-        <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" rel="noopener"
-           class="bg-brand text-white text-center py-4 rounded-full text-lg">Donate Now</a>
+        <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
+           target="_blank" rel="noopener"
+           class="bg-brand text-white text-center py-4 rounded-full text-lg">
+            Donate Now
+        </a>
     </nav>
 </div>
 
-<main class="pt-36 pb-24 max-w-7xl mx-auto px-6 space-y-24">
+<!-- ═══════════════════════════════════ HERO ═══════════════════════════════════ -->
+<section class="pt-40 pb-16 text-center px-6">
+    <p class="r-up text-brand text-sm font-semibold tracking-widest uppercase mb-3">Our Team</p>
+    <h1 class="r-up d1 font-heading text-5xl md:text-6xl font-bold leading-tight mb-4">The People Behind<br>the Mission</h1>
+    <p class="r-up d2 text-gray-500 text-lg max-w-xl mx-auto">
+        Dedicated students turning compassion into action — one shelter at a time.
+    </p>
+</section>
 
+<!-- ═══════════════════════════════════ MAIN CONTENT ═══════════════════════════════════ -->
+<main class="pb-24 max-w-7xl mx-auto px-6 space-y-24">
+
+    <!-- ── Executive Leadership ── -->
     <section>
-        <h2 class="text-4xl font-heading font-bold text-center mb-12 r-up">Executive Leadership</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 justify-center">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-heading font-bold r-up">Executive Leadership</h2>
+            <div class="section-divider mt-4 r-up d1"></div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-4xl mx-auto">
 
             <!-- Nish -->
             <div class="flip-card card-hover r-scale d1">
-                <div class="flip-inner">
-                    <div class="flip-front bg-white p-6 text-center">
-                        <div class="mx-auto mb-6 w-56 h-56 overflow-hidden rounded-full">
-                            <img src="images/Nish.jpg" class="w-full h-full object-cover">
+                <div class="flip-inner" data-flip>
+                    <div class="flip-front bg-white p-6 text-center shadow-sm">
+                        <div class="mx-auto mb-5 w-44 h-44 overflow-hidden rounded-full ring-4 ring-brand/10">
+                            <img src="images/Nish.jpg" class="w-full h-full object-cover" alt="Nishwanth Reddy Vennapusa">
                         </div>
-                        <h3 class="text-xl font-semibold">Founder & CEO</h3>
-                        <p class="text-gray-600 text-sm mt-2">Nishwanth Reddy Vennapusa</p>
+                        <h3 class="text-lg font-semibold leading-snug">Founder & CEO</h3>
+                        <p class="text-brand text-sm font-medium mt-2">Nishwanth Reddy Vennapusa</p>
+                        <span class="tap-hint">Tap to learn more</span>
                     </div>
-                    <div class="flip-back bg-white p-6 text-center">
-                        <h3 class="text-lg font-semibold mb-2">About</h3>
-                        <p class="text-sm text-gray-600 leading-relaxed">
-                            Hey, I’m Nishwanth! I’m a high school student at Clark High School in Texas interested in leadership, service, and building businesses that create real impact. I’m passionate about basketball and hope to attend UPenn in the future to help build solutions that make the world better.
+                    <div class="flip-back bg-gradient-to-br from-brand to-brandDark text-white text-center">
+                        <div class="back-accent" style="background:rgba(255,255,255,0.4);"></div>
+                        <h3 class="text-base font-semibold mb-3">About Nishwanth</h3>
+                        <p class="text-sm leading-relaxed text-white/90">
+                            I'm Nishwanth — a high school student at Clark High School passionate about leadership, service, and building businesses that create real impact. I love basketball and hope to attend UPenn to build solutions that make the world better.
                         </p>
                     </div>
                 </div>
@@ -201,36 +336,42 @@
 
             <!-- Ronith -->
             <div class="flip-card card-hover r-scale d2">
-                <div class="flip-inner">
-                    <div class="flip-front bg-white p-6 text-center">
-                        <div class="mx-auto mb-6 w-56 h-56 overflow-hidden rounded-full">
-                            <img src="images/Ronith.png" class="w-full h-full object-cover">
+                <div class="flip-inner" data-flip>
+                    <div class="flip-front bg-white p-6 text-center shadow-sm">
+                        <div class="mx-auto mb-5 w-44 h-44 overflow-hidden rounded-full ring-4 ring-brand/10">
+                            <img src="images/Ronith.png" class="w-full h-full object-cover" alt="Ronith Gayyi">
                         </div>
-                        <h3 class="text-xl font-semibold">Co-Founder & Executive Director of Finance, Fundraising & Logistics</h3>
-                        <p class="text-gray-600 text-sm mt-2">Ronith Gayyi</p>
+                        <h3 class="text-lg font-semibold leading-snug">Co-Founder & Executive Director<br><span class="text-gray-400 text-xs font-normal">Finance, Fundraising & Logistics</span></h3>
+                        <p class="text-brand text-sm font-medium mt-2">Ronith Gayyi</p>
+                        <span class="tap-hint">Tap to learn more</span>
                     </div>
-                    <div class="flip-back bg-white p-6 text-center">
-                        <h3 class="text-lg font-semibold mb-2">About</h3>
-                        <p class="text-sm text-gray-600 leading-relaxed">
-                            Hey, I'm Ronith. I love playing and watching basketball, and I'm really involved in my community. I'm always excited to jump in and help whenever there's a chance to give back.                        </p>
+                    <div class="flip-back bg-gradient-to-br from-brand to-brandDark text-white text-center">
+                        <div class="back-accent" style="background:rgba(255,255,255,0.4);"></div>
+                        <h3 class="text-base font-semibold mb-3">About Ronith</h3>
+                        <p class="text-sm leading-relaxed text-white/90">
+                            I'm Ronith. I love playing and watching basketball, and I'm really involved in my community. I'm always excited to jump in and help whenever there's a chance to give back.
+                        </p>
                     </div>
                 </div>
             </div>
 
             <!-- Anish -->
             <div class="flip-card card-hover r-scale d3">
-                <div class="flip-inner">
-                    <div class="flip-front bg-white p-6 text-center">
-                        <div class="mx-auto mb-6 w-56 h-56 overflow-hidden rounded-full">
-                            <img src="images/Anish.jpg" class="w-full h-full object-cover">
+                <div class="flip-inner" data-flip>
+                    <div class="flip-front bg-white p-6 text-center shadow-sm">
+                        <div class="mx-auto mb-5 w-44 h-44 overflow-hidden rounded-full ring-4 ring-brand/10">
+                            <img src="images/Anish.jpg" class="w-full h-full object-cover" alt="Anish Matharasi">
                         </div>
-                        <h3 class="text-xl font-semibold">Co-Founder & Executive Director of Community & Technology</h3>
-                        <p class="text-gray-600 text-sm mt-2">Anish Matharasi</p>
+                        <h3 class="text-lg font-semibold leading-snug">Co-Founder & Executive Director<br><span class="text-gray-400 text-xs font-normal">Community & Technology</span></h3>
+                        <p class="text-brand text-sm font-medium mt-2">Anish Matharasi</p>
+                        <span class="tap-hint">Tap to learn more</span>
                     </div>
-                    <div class="flip-back bg-white p-6 text-center">
-                        <h3 class="text-lg font-semibold mb-2">About</h3>
-                        <p class="text-sm text-gray-600 leading-relaxed">
-                            My name is Anish, a 14-year-old student at HCHS with a strong passion for music. I play the piano, guitar, and cello, using music as a creative outlet and a way to express myself. I joined this nonprofit because giving back to my community matters deeply to me, and I'm committed to supporting this project through every challenge and success.                        </p>
+                    <div class="flip-back bg-gradient-to-br from-brand to-brandDark text-white text-center">
+                        <div class="back-accent" style="background:rgba(255,255,255,0.4);"></div>
+                        <h3 class="text-base font-semibold mb-3">About Anish</h3>
+                        <p class="text-sm leading-relaxed text-white/90">
+                            I'm Anish, a 14-year-old at HCHS passionate about music — piano, guitar, and cello. Giving back to my community matters deeply to me, and I'm committed to supporting this project through every challenge and success.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -238,45 +379,53 @@
         </div>
     </section>
 
+    <!-- ── Executive Directors ── -->
     <section>
-        <h2 class="text-4xl font-heading font-bold text-center mb-12 r-up">Executive Directors</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 justify-center">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-heading font-bold r-up">Executive Directors</h2>
+            <div class="section-divider mt-4 r-up d1"></div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-10 max-w-2xl mx-auto">
 
             <!-- Revanth -->
-            <div class="flip-card card-hover r-scale d4">
-                <div class="flip-inner">
-                    <div class="flip-front bg-white p-6 text-center">
-                        <div class="mx-auto mb-6 w-56 h-56 overflow-hidden rounded-full">
-                            <img src="images/revanth.jpg" class="w-full h-full object-cover">
+            <div class="flip-card card-hover r-scale d2">
+                <div class="flip-inner" data-flip>
+                    <div class="flip-front bg-white p-6 text-center shadow-sm">
+                        <div class="mx-auto mb-5 w-44 h-44 overflow-hidden rounded-full ring-4 ring-brand/10">
+                            <img src="images/revanth.jpg" class="w-full h-full object-cover" alt="Revanth Movva">
                         </div>
-                        <h3 class="text-xl font-semibold">Executive Director of Communications & Social Media</h3>
-                        <p class="text-gray-600 text-sm mt-2">Revanth Movva</p>
+                        <h3 class="text-lg font-semibold leading-snug">Executive Director<br><span class="text-gray-400 text-xs font-normal">Communications & Social Media</span></h3>
+                        <p class="text-brand text-sm font-medium mt-2">Revanth Movva</p>
+                        <span class="tap-hint">Tap to learn more</span>
                     </div>
-                    <div class="flip-back bg-white p-6 text-center">
-                        <h3 class="text-lg font-semibold mb-2">About</h3>
-                        <p class="text-sm text-gray-600 leading-relaxed">
-                            I’m a 15-year-old,
-                            Freshman at Reagan High, originally from Los
-                            Angeles, and I’m fluent in Telugu. I’m involved in Boy Scouts and
-                            volunteering, passionate about things like cooking, Basketball, running, and meeting new people, and I hope to attend UCLA to study medicine and help people.                        </p>
+                    <div class="flip-back bg-gradient-to-br from-brand to-brandDark text-white text-center">
+                        <div class="back-accent" style="background:rgba(255,255,255,0.4);"></div>
+                        <h3 class="text-base font-semibold mb-3">About Revanth</h3>
+                        <p class="text-sm leading-relaxed text-white/90">
+                            I'm 15, a Freshman at Reagan High, originally from LA, and fluent in Telugu. I'm in Boy Scouts, passionate about cooking, basketball, and meeting new people — and I hope to attend UCLA to study medicine.
+                        </p>
                     </div>
                 </div>
             </div>
 
             <!-- Vidip -->
-            <div class="flip-card card-hover r-scale d5">
-                <div class="flip-inner">
-                    <div class="flip-front bg-white p-6 text-center">
-                        <div class="mx-auto mb-6 w-56 h-56 overflow-hidden rounded-full">
-                            <img src="images/vidip.jpg" class="w-full h-full object-cover">
+            <div class="flip-card card-hover r-scale d3">
+                <div class="flip-inner" data-flip>
+                    <div class="flip-front bg-white p-6 text-center shadow-sm">
+                        <div class="mx-auto mb-5 w-44 h-44 overflow-hidden rounded-full ring-4 ring-brand/10">
+                            <img src="images/vidip.jpg" class="w-full h-full object-cover" alt="Vidip Muttireddy">
                         </div>
-                        <h3 class="text-xl font-semibold">Executive Director of Sponsorship & Outreach</h3>
-                        <p class="text-gray-600 text-sm mt-2">Vidip Muttireddy</p>
+                        <h3 class="text-lg font-semibold leading-snug">Executive Director<br><span class="text-gray-400 text-xs font-normal">Sponsorship & Outreach</span></h3>
+                        <p class="text-brand text-sm font-medium mt-2">Vidip Muttireddy</p>
+                        <span class="tap-hint">Tap to learn more</span>
                     </div>
-                    <div class="flip-back bg-white p-6 text-center">
-                        <h3 class="text-lg font-semibold mb-2">About</h3>
-                        <p class="text-sm text-gray-600 leading-relaxed">
-                            I’m Vidip, the Executive Director of Sponsorship & Outreach here, with a passion for using innovation to make a positive impact in the community. I love basketball and art, and I believe that both creativity and teamwork have the power to bring people together. Through my work and personal interests, I enjoy contributing to initiatives that foster growth, collaboration, and meaningful change.                        </p>
+                    <div class="flip-back bg-gradient-to-br from-brand to-brandDark text-white text-center">
+                        <div class="back-accent" style="background:rgba(255,255,255,0.4);"></div>
+                        <h3 class="text-base font-semibold mb-3">About Vidip</h3>
+                        <p class="text-sm leading-relaxed text-white/90">
+                            I'm Vidip, passionate about using innovation to create community impact. I love basketball and art — I believe creativity and teamwork can bring people together and drive meaningful change.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -284,193 +433,305 @@
         </div>
     </section>
 
+    <!-- ── Directors & Managers ── -->
     <section>
-        <h2 class="text-4xl font-heading font-bold text-center mb-12 r-up">Directors & Managers</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 justify-center">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-heading font-bold r-up">Directors & Managers</h2>
+            <div class="section-divider mt-4 r-up d1"></div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
 
             <!-- Rudraksh -->
-            <div class="flip-card card-hover r-scale d6">
-                <div class="flip-inner">
-                    <div class="flip-front bg-white p-6 text-center">
-                        <div class="mx-auto mb-6 w-56 h-56 overflow-hidden rounded-full">
-                            <img src="images/Ru1.jpg" class="w-full h-full object-cover">
+            <div class="flip-card card-hover r-scale d2">
+                <div class="flip-inner" data-flip>
+                    <div class="flip-front bg-white p-5 text-center shadow-sm">
+                        <div class="mx-auto mb-4 w-40 h-40 overflow-hidden rounded-full ring-4 ring-brand/10">
+                            <img src="images/Ru1.jpg" class="w-full h-full object-cover" alt="Rudraksh Yelmawar">
                         </div>
-                        <h3 class="text-xl font-semibold">Sponsorship & Partnerships Manager</h3>
-                        <p class="text-gray-600 text-sm mt-2">Rudraksh Yelmawar</p>
+                        <h3 class="text-base font-semibold leading-snug">Sponsorship & Partnerships Manager</h3>
+                        <p class="text-brand text-xs font-medium mt-2">Rudraksh Yelmawar</p>
+                        <span class="tap-hint">Tap to learn more</span>
                     </div>
-                    <div class="flip-back bg-white p-6 text-center">
-                        <h3 class="text-lg font-semibold mb-2">About</h3>
-                        <p class="text-sm text-gray-600 leading-relaxed">
-                            I am a 15-year-old high school student at Clark High School, serving as the Sponsorship and Partnership Manager for streets to shelter. I am committed to building meaningful partnerships and supporting organizational growth through strategic collaboration. In the future, I aspire to attend the University of Texas at Austin and pursue opportunities that allow me to grow academically and professionally while making a positive impact.                        </p>
+                    <div class="flip-back bg-gradient-to-br from-brand to-brandDark text-white text-center">
+                        <div class="back-accent" style="background:rgba(255,255,255,0.4);"></div>
+                        <h3 class="text-sm font-semibold mb-2">About Rudraksh</h3>
+                        <p class="text-xs leading-relaxed text-white/90">
+                            I'm 15 at Clark High School, committed to building meaningful partnerships and strategic collaboration. I aspire to attend UT Austin and make a positive impact academically and professionally.
+                        </p>
                     </div>
                 </div>
             </div>
 
             <!-- Ethan -->
-            <div class="flip-card card-hover r-scale d7">
-                <div class="flip-inner">
-                    <div class="flip-front bg-white p-6 text-center">
-                        <div class="mx-auto mb-6 w-56 h-56 overflow-hidden rounded-full">
-                            <img src="images/ethan.jpg" class="w-full h-full object-cover">
+            <div class="flip-card card-hover r-scale d3">
+                <div class="flip-inner" data-flip>
+                    <div class="flip-front bg-white p-5 text-center shadow-sm">
+                        <div class="mx-auto mb-4 w-40 h-40 overflow-hidden rounded-full ring-4 ring-brand/10">
+                            <img src="images/ethan.jpg" class="w-full h-full object-cover" alt="Ethan Osborne Mahiques">
                         </div>
-                        <h3 class="text-xl font-semibold">Finance Director</h3>
-                        <p class="text-gray-600 text-sm mt-2">Ethan Osborne Mahiques</p>
+                        <h3 class="text-base font-semibold leading-snug">Finance Director</h3>
+                        <p class="text-brand text-xs font-medium mt-2">Ethan Osborne Mahiques</p>
+                        <span class="tap-hint">Tap to learn more</span>
                     </div>
-                    <div class="flip-back bg-white p-6 text-center">
-                        <h3 class="text-lg font-semibold mb-2">About</h3>
-                        <p class="text-sm text-gray-600 leading-relaxed">
-                            Hi I’m Ethan and I’m excited to start working with my community. I will use my math skills to be the finance director coordinator here at Streets for Shelter                        </p>
+                    <div class="flip-back bg-gradient-to-br from-brand to-brandDark text-white text-center">
+                        <div class="back-accent" style="background:rgba(255,255,255,0.4);"></div>
+                        <h3 class="text-sm font-semibold mb-2">About Ethan</h3>
+                        <p class="text-xs leading-relaxed text-white/90">
+                            Hi, I'm Ethan! I'm excited to contribute my math skills as Finance Director here at Streets to Shelters and start making a difference in my community.
+                        </p>
                     </div>
                 </div>
             </div>
 
             <!-- Advik -->
-            <div class="flip-card card-hover r-scale d8">
-                <div class="flip-inner">
-                    <div class="flip-front bg-white p-6 text-center">
-                        <div class="mx-auto mb-6 w-56 h-56 overflow-hidden rounded-full">
-                            <img src="images/me.jpg" class="w-full h-full object-cover">
+            <div class="flip-card card-hover r-scale d4">
+                <div class="flip-inner" data-flip>
+                    <div class="flip-front bg-white p-5 text-center shadow-sm">
+                        <div class="mx-auto mb-4 w-40 h-40 overflow-hidden rounded-full ring-4 ring-brand/10">
+                            <img src="images/me.jpg" class="w-full h-full object-cover" alt="Advik Reddy Muddasani">
                         </div>
-                        <h3 class="text-xl font-semibold">Technology & Systems Coordinator</h3>
-                        <p class="text-gray-600 text-sm mt-2">Advik Reddy Muddasani</p>
+                        <h3 class="text-base font-semibold leading-snug">Technology & Systems Coordinator</h3>
+                        <p class="text-brand text-xs font-medium mt-2">Advik Reddy Muddasani</p>
+                        <span class="tap-hint">Tap to learn more</span>
                     </div>
-                    <div class="flip-back bg-white p-6 text-center">
-                        <p class="text-sm text-gray-600">
-                        <h3 class="text-lg font-semibold mb-2">About</h3>
-                        <p class="text-sm text-gray-600 leading-relaxed">
-                            Hi, my name is Advik. I’m 14 years old and a sophomore at Clark High School. I enjoy programming and learning how technology works, especially building projects and improving my coding skills. In my free time, I like playing video games, and other sports with my friends. I’m interested in learning and a hope to pursue a future in technology.
-                        </p>
+                    <div class="flip-back bg-gradient-to-br from-brand to-brandDark text-white text-center">
+                        <div class="back-accent" style="background:rgba(255,255,255,0.4);"></div>
+                        <h3 class="text-sm font-semibold mb-2">About Advik</h3>
+                        <p class="text-xs leading-relaxed text-white/90">
+                            Hi, I'm Advik — 14 years old, a sophomore at Clark High School. I enjoy programming, building projects, and improving my coding skills. I hope to pursue a future in technology.
                         </p>
                     </div>
                 </div>
             </div>
 
             <!-- Harjot -->
-            <div class="flip-card card-hover r-scale d9">
-                <div class="flip-inner">
-                    <div class="flip-front bg-white p-6 text-center">
-                        <div class="mx-auto mb-6 w-56 h-56 overflow-hidden rounded-full">
-                            <img src="images/harjit.jpg" class="w-full h-full object-cover">
+            <div class="flip-card card-hover r-scale d5">
+                <div class="flip-inner" data-flip>
+                    <div class="flip-front bg-white p-5 text-center shadow-sm">
+                        <div class="mx-auto mb-4 w-40 h-40 overflow-hidden rounded-full ring-4 ring-brand/10">
+                            <img src="images/harjit.jpg" class="w-full h-full object-cover" alt="Harjot Singh Jaura">
                         </div>
-                        <h3 class="text-xl font-semibold">Logistics & Supplies Manager</h3>
-                        <p class="text-gray-600 text-sm mt-2">Harjot Singh Jaura</p>
+                        <h3 class="text-base font-semibold leading-snug">Logistics & Supplies Manager</h3>
+                        <p class="text-brand text-xs font-medium mt-2">Harjot Singh Jaura</p>
+                        <span class="tap-hint">Tap to learn more</span>
                     </div>
-                    <div class="flip-back bg-white p-6 text-center">
-                        <h3 class="text-lg font-semibold mb-2">About</h3>
-                        <p class="text-sm text-gray-600 leading-relaxed">
-                            Hello I am Harjot Singh Jaura I am in 9th grade at brandies high school I love to play basketball and play video games and spend time with friends                        </p>
+                    <div class="flip-back bg-gradient-to-br from-brand to-brandDark text-white text-center">
+                        <div class="back-accent" style="background:rgba(255,255,255,0.4);"></div>
+                        <h3 class="text-sm font-semibold mb-2">About Harjot</h3>
+                        <p class="text-xs leading-relaxed text-white/90">
+                            I'm Harjot, a 9th grader at Brandeis High School. I love basketball, video games, and spending time with friends. I'm excited to contribute to this meaningful mission.
+                        </p>
                     </div>
                 </div>
             </div>
 
             <!-- Nathan -->
-            <div class="flip-card card-hover r-scale d10">
-                <div class="flip-inner">
-                    <div class="flip-front bg-white p-6 text-center">
-                        <div class="mx-auto mb-6 w-56 h-56 overflow-hidden rounded-full">
-                            <img src="images/nathan.jpg" class="w-full h-full object-cover">
+            <div class="flip-card card-hover r-scale d6">
+                <div class="flip-inner" data-flip>
+                    <div class="flip-front bg-white p-5 text-center shadow-sm">
+                        <div class="mx-auto mb-4 w-40 h-40 overflow-hidden rounded-full ring-4 ring-brand/10">
+                            <img src="images/nathan.jpg" class="w-full h-full object-cover" alt="Nathaniel Martinez">
                         </div>
-                        <h3 class="text-xl font-semibold">Fundraising Director</h3>
-                        <p class="text-gray-600 text-sm mt-2">Nathaniel Martinez</p>
+                        <h3 class="text-base font-semibold leading-snug">Fundraising Director</h3>
+                        <p class="text-brand text-xs font-medium mt-2">Nathaniel Martinez</p>
+                        <span class="tap-hint">Tap to learn more</span>
                     </div>
-                    <div class="flip-back bg-white p-6 text-center">
-                        <h3 class="text-lg font-semibold mb-2">About</h3>
-                        <p class="text-sm text-gray-600 leading-relaxed">
-                            Hi I am Nathaniel Martinez I'm a High school student at Clark High School in Texas I'm interested in a career in engineering and business.I hope to go to UT Austin or MIT. I'm a Multi sport Athlete at Clark and i enjoy working with a team. I  hope to help grow the nonprofit  and make an impact on our communities and create long term solutions for problems in the world.
-                        </p>                    </div>
+                    <div class="flip-back bg-gradient-to-br from-brand to-brandDark text-white text-center">
+                        <div class="back-accent" style="background:rgba(255,255,255,0.4);"></div>
+                        <h3 class="text-sm font-semibold mb-2">About Nathaniel</h3>
+                        <p class="text-xs leading-relaxed text-white/90">
+                            I'm at Clark High School, a multi-sport athlete interested in engineering and business. I hope to attend UT Austin or MIT and build scalable solutions that create long-term community change.
+                        </p>
+                    </div>
                 </div>
             </div>
 
-            <!-- Mayank  -->
-            <div class="flip-card card-hover r-scale d11">
-                <div class="flip-inner">
-                    <div class="flip-front bg-white p-6 text-center">
-                        <div class="mx-auto mb-6 w-56 h-56 overflow-hidden rounded-full bg-gray-100 flex items-center justify-center">
-                            <span class="text-gray-400 text-sm">No Image</span>
+            <!-- Mayank -->
+            <div class="flip-card card-hover r-scale d7">
+                <div class="flip-inner" data-flip>
+                    <div class="flip-front bg-white p-5 text-center shadow-sm">
+                        <div class="mx-auto mb-4 w-40 h-40 overflow-hidden rounded-full ring-4 ring-brand/10">
+                            <div class="avatar-placeholder">MS</div>
                         </div>
-                        <h3 class="text-xl font-semibold">Marketing & Social Media Manager</h3>
-                        <p class="text-gray-600 text-sm mt-2">Mayank Sandra</p>
+                        <h3 class="text-base font-semibold leading-snug">Marketing & Social Media Manager</h3>
+                        <p class="text-brand text-xs font-medium mt-2">Mayank Sandra</p>
                     </div>
-                    <div class="flip-back bg-white p-6 text-center">
-                        <h3 class="text-lg font-semibold mb-2">About</h3>
-                        <p class="text-sm text-gray-600 leading-relaxed">
-                        </p>                    </div>
+                    <div class="flip-back bg-gradient-to-br from-brand to-brandDark text-white text-center">
+                        <div class="back-accent" style="background:rgba(255,255,255,0.4);"></div>
+                        <h3 class="text-sm font-semibold mb-2">About Mayank</h3>
+                        <p class="text-xs leading-relaxed text-white/90">
+                            Mayank brings creativity and digital expertise to grow Streets to Shelters' reach and amplify our mission across social platforms.
+                        </p>
+                    </div>
                 </div>
             </div>
 
             <!-- Tejas -->
-            <div class="flip-card card-hover r-scale d12">
-                <div class="flip-inner">
-                    <div class="flip-front bg-white p-6 text-center">
-                        <div class="mx-auto mb-6 w-56 h-56 overflow-hidden rounded-full">
-                            <img src="images/tejas.jpg" class="w-full h-full object-cover">
+            <div class="flip-card card-hover r-scale d8">
+                <div class="flip-inner" data-flip>
+                    <div class="flip-front bg-white p-5 text-center shadow-sm">
+                        <div class="mx-auto mb-4 w-40 h-40 overflow-hidden rounded-full ring-4 ring-brand/10">
+                            <img src="images/tejas.jpg" class="w-full h-full object-cover" alt="Tejas Pendyala">
                         </div>
-                        <h3 class="text-xl font-semibold">Director of Events & Outreach</h3>
-                        <p class="text-gray-600 text-sm mt-2">Tejas Pendyala</p>
+                        <h3 class="text-base font-semibold leading-snug">Director of Events & Outreach</h3>
+                        <p class="text-brand text-xs font-medium mt-2">Tejas Pendyala</p>
+                        <span class="tap-hint">Tap to learn more</span>
                     </div>
-                    <div class="flip-back bg-white p-6 text-center">
-                        <h3 class="text-lg font-semibold mb-2">About</h3>
-                        <p class="text-sm text-gray-600 leading-relaxed">
-                            Hey, I’m Tejas! I’m a high school student passionate about leadership, service, and building businesses that create real impact. I’m excited to join Streets to Shelter to help serve our community while learning how strong business strategy can strengthen nonprofit work. I hope to attend the University of Pennsylvania in the future and use what I learn to build scalable solutions that improve lives.                        </p>                    </div>
+                    <div class="flip-back bg-gradient-to-br from-brand to-brandDark text-white text-center">
+                        <div class="back-accent" style="background:rgba(255,255,255,0.4);"></div>
+                        <h3 class="text-sm font-semibold mb-2">About Tejas</h3>
+                        <p class="text-xs leading-relaxed text-white/90">
+                            Hey, I'm Tejas! Passionate about leadership, service, and business strategy in the nonprofit world. I hope to attend UPenn and build scalable solutions that improve lives.
+                        </p>
+                    </div>
                 </div>
             </div>
 
             <!-- Deetya -->
-            <div class="flip-card card-hover r-scale d13">
-                <div class="flip-inner">
-                    <div class="flip-front bg-white p-6 text-center">
-                        <div class="mx-auto mb-6 w-56 h-56 overflow-hidden rounded-full">
-                            <span class="text-gray-400 text-sm">No Image</span>
+            <div class="flip-card card-hover r-scale d9">
+                <div class="flip-inner" data-flip>
+                    <div class="flip-front bg-white p-5 text-center shadow-sm">
+                        <div class="mx-auto mb-4 w-40 h-40 overflow-hidden rounded-full ring-4 ring-brand/10">
+                            <div class="avatar-placeholder">DM</div>
                         </div>
-                        <h3 class="text-xl font-semibold">Communications Officer</h3>
-                        <p class="text-gray-600 text-sm mt-2">Deetya Mallikarjun</p>
+                        <h3 class="text-base font-semibold leading-snug">Communications Officer</h3>
+                        <p class="text-brand text-xs font-medium mt-2">Deetya Mallikarjun</p>
                     </div>
-                    <div class="flip-back bg-white p-6 text-center">
-                        <h3 class="text-lg font-semibold mb-2">About</h3>
-                        <p class="text-sm text-gray-600 leading-relaxed">
-                        </p>                    </div>
+                    <div class="flip-back bg-gradient-to-br from-brand to-brandDark text-white text-center">
+                        <div class="back-accent" style="background:rgba(255,255,255,0.4);"></div>
+                        <h3 class="text-sm font-semibold mb-2">About Deetya</h3>
+                        <p class="text-xs leading-relaxed text-white/90">
+                            Deetya is dedicated to clear, compelling communication — helping connect our mission with the communities and partners who can make the biggest difference.
+                        </p>
+                    </div>
                 </div>
             </div>
 
             <!-- Kavin -->
-            <div class="flip-card card-hover r-scale d14">
-                <div class="flip-inner">
-                    <div class="flip-front bg-white p-6 text-center">
-                        <div class="mx-auto mb-6 w-56 h-56 overflow-hidden rounded-full">
-                            <img src="images/kavin.jpg" class="w-full h-full object-cover">
+            <div class="flip-card card-hover r-scale d10">
+                <div class="flip-inner" data-flip>
+                    <div class="flip-front bg-white p-5 text-center shadow-sm">
+                        <div class="mx-auto mb-4 w-40 h-40 overflow-hidden rounded-full ring-4 ring-brand/10">
+                            <img src="images/kavin.jpg" class="w-full h-full object-cover" alt="Kavin Tripathi">
                         </div>
-                        <h3 class="text-xl font-semibold">Community Engagement Lead</h3>
-                        <p class="text-gray-600 text-sm mt-2">Kavin Tripathi</p>
+                        <h3 class="text-base font-semibold leading-snug">Community Engagement Lead</h3>
+                        <p class="text-brand text-xs font-medium mt-2">Kavin Tripathi</p>
+                        <span class="tap-hint">Tap to learn more</span>
                     </div>
-                    <div class="flip-back bg-white p-6 text-center">
-                        <h3 class="text-lg font-semibold mb-2">About</h3>
-                        <p class="text-sm text-gray-600 leading-relaxed">
-                            My name is Kavin, and I am a student at Johnson High School. I enjoy playing music and spending time with my friends, which helps me stay creative and connected. I joined this nonprofit because I am passionate about helping people in my community and supporting others through difficult situations. Through this work, I hope to make a meaningful difference and continue that impact in the future by attending UT.                        </p>                    </div>
+                    <div class="flip-back bg-gradient-to-br from-brand to-brandDark text-white text-center">
+                        <div class="back-accent" style="background:rgba(255,255,255,0.4);"></div>
+                        <h3 class="text-sm font-semibold mb-2">About Kavin</h3>
+                        <p class="text-xs leading-relaxed text-white/90">
+                            I'm Kavin, a student at Johnson High School who loves music and spending time with friends. I'm passionate about helping people through difficult situations and hope to attend UT.
+                        </p>
+                    </div>
                 </div>
             </div>
 
             <!-- David -->
-            <div class="flip-card card-hover r-scale d14">
-                <div class="flip-inner">
-                    <div class="flip-front bg-white p-6 text-center">
-                        <div class="mx-auto mb-6 w-56 h-56 overflow-hidden rounded-full">
-                            <span class="text-gray-400 text-sm">No Image</span>
+            <div class="flip-card card-hover r-scale d11">
+                <div class="flip-inner" data-flip>
+                    <div class="flip-front bg-white p-5 text-center shadow-sm">
+                        <div class="mx-auto mb-4 w-40 h-40 overflow-hidden rounded-full ring-4 ring-brand/10">
+                            <div class="avatar-placeholder">DS</div>
                         </div>
-                        <h3 class="text-xl font-semibold">Volunteer Coordinator</h3>
-                        <p class="text-gray-600 text-sm mt-2">David Streeter</p>
+                        <h3 class="text-base font-semibold leading-snug">Volunteer Coordinator</h3>
+                        <p class="text-brand text-xs font-medium mt-2">David Streeter</p>
                     </div>
-                    <div class="flip-back bg-white p-6 text-center">
-                        <h3 class="text-lg font-semibold mb-2">About</h3>
-                        <p class="text-sm text-gray-600 leading-relaxed">
-                        </p>                    </div>
+                    <div class="flip-back bg-gradient-to-br from-brand to-brandDark text-white text-center">
+                        <div class="back-accent" style="background:rgba(255,255,255,0.4);"></div>
+                        <h3 class="text-sm font-semibold mb-2">About David</h3>
+                        <p class="text-xs leading-relaxed text-white/90">
+                            David coordinates and empowers our growing volunteer network — ensuring every helping hand is matched with where it's needed most.
+                        </p>
+                    </div>
                 </div>
             </div>
 
         </div>
     </section>
 
+    <!-- ═══════════════════════════════════ START A CHAPTER CTA ═══════════════════════════════════ -->
+    <section class="r-up">
+        <div class="chapter-card px-8 md:px-16 py-16 md:py-20">
+            <div class="max-w-4xl mx-auto">
+
+                <!-- Badge -->
+                <div class="flex justify-center mb-6">
+          <span class="inline-flex items-center gap-2 bg-brand/20 border border-brand/30 text-brand text-xs font-semibold tracking-widest uppercase px-4 py-2 rounded-full">
+            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm1 11H9v-2h2v2zm0-4H9V7h2v2z"/></svg>
+            Grow with Us
+          </span>
+                </div>
+
+                <h2 class="font-heading text-4xl md:text-5xl font-bold text-white text-center leading-tight mb-5">
+                    Bring Streets to Shelters<br>to Your Community
+                </h2>
+                <p class="text-white/60 text-center text-lg max-w-2xl mx-auto mb-12">
+                    Our chapters are the backbone of this movement. Each one is led by passionate young people who recruit local members, run events, raise funds, and create real, lasting change in their city.
+                </p>
+
+                <!-- 3-step process -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
+                        <div class="step-badge mb-4">01</div>
+                        <h3 class="text-white font-semibold text-base mb-2">Apply to Lead</h3>
+                        <p class="text-white/50 text-sm leading-relaxed">
+                            Fill out a short application telling us about yourself, your school, and why you want to lead a chapter in your area.
+                        </p>
+                    </div>
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
+                        <div class="step-badge mb-4">02</div>
+                        <h3 class="text-white font-semibold text-base mb-2">Build Your Team</h3>
+                        <p class="text-white/50 text-sm leading-relaxed">
+                            Recruit fellow students as chapter members — each filling roles like Finance, Outreach, Events, and Communications.
+                        </p>
+                    </div>
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
+                        <div class="step-badge mb-4">03</div>
+                        <h3 class="text-white font-semibold text-base mb-2">Launch & Impact</h3>
+                        <p class="text-white/50 text-sm leading-relaxed">
+                            Run drives, host events, and connect with local shelters — with full support from the national Streets to Shelters team.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Stat strip -->
+                <div class="grid grid-cols-3 gap-4 mb-12 border-t border-b border-white/10 py-8">
+                    <div class="text-center">
+                        <p class="text-white font-heading text-3xl font-bold">100%</p>
+                        <p class="text-white/40 text-xs mt-1 uppercase tracking-wide">Student-Led</p>
+                    </div>
+                    <div class="text-center border-x border-white/10">
+                        <p class="text-white font-heading text-3xl font-bold">Free</p>
+                        <p class="text-white/40 text-xs mt-1 uppercase tracking-wide">To Join</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-white font-heading text-3xl font-bold">TX+</p>
+                        <p class="text-white/40 text-xs mt-1 uppercase tracking-wide">Growing Fast</p>
+                    </div>
+                </div>
+
+                <!-- CTA buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <a href="chapter.html"
+                       class="bg-brand text-white px-8 py-4 rounded-full text-sm font-semibold hover:bg-brandDark transition duration-300 hover:scale-105 active:scale-95 text-center min-w-[200px]">
+                        Start a Chapter →
+                    </a>
+                    <a href="contact.html"
+                       class="border border-white/20 text-white/80 px-8 py-4 rounded-full text-sm font-semibold hover:border-white/40 hover:text-white transition duration-300 text-center min-w-[200px]">
+                        Ask a Question
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
 </main>
 
+<!-- ═══════════════════════════════════ FOOTER ═══════════════════════════════════ -->
 <footer class="bg-deep text-white py-12">
     <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-10 text-center sm:text-left">
         <div>
@@ -497,15 +758,18 @@
         <div>
             <h3 class="text-xs uppercase tracking-widest text-white/50 font-semibold mb-5">Support Us</h3>
             <div class="flex flex-col gap-3">
-                <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" rel="noopener">Donate</a>
+                <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
+                   target="_blank" rel="noopener">Donate</a>
             </div>
             <p class="text-white/25 text-xs mt-10">© 2026 Streets To Shelters</p>
         </div>
     </div>
 </footer>
 
+<!-- ═══════════════════════════════════ SCRIPTS ═══════════════════════════════════ -->
 <script>
     document.addEventListener('DOMContentLoaded', () => {
+
       /* ── Mobile Menu ── */
       const mobileBtn = document.getElementById('mobile-menu-btn');
       const closeBtn  = document.getElementById('close-menu-btn');
@@ -513,39 +777,77 @@
       if (mobileBtn && overlay) {
         mobileBtn.addEventListener('click', () => overlay.classList.remove('translate-x-full'));
         closeBtn.addEventListener('click',  () => overlay.classList.add('translate-x-full'));
-        overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => overlay.classList.add('translate-x-full')));
+        overlay.querySelectorAll('a').forEach(a =>
+          a.addEventListener('click', () => overlay.classList.add('translate-x-full'))
+        );
       }
 
       /* ── Scroll Reveal ── */
-      const obs = new IntersectionObserver((entries, o) => {
-        entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); o.unobserve(entry.target); } });
-      }, { threshold: 0.07, rootMargin:'0px 0px -50px 0px' });
-      document.querySelectorAll('.r-up, .r-scale').forEach(el => obs.observe(el));
+      const revealObs = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.07, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.r-up, .r-scale').forEach(el => revealObs.observe(el));
 
- /* ── Magnetic Buttons ── */
-  document.querySelectorAll('.magnetic').forEach(btn => {
-    btn.addEventListener('mousemove', e => {
-      const r = btn.getBoundingClientRect();
-      btn.style.transform = `translate(${(e.clientX - r.left - r.width/2) * 0.28}px, ${(e.clientY - r.top - r.height/2) * 0.28}px)`;
-    });
-    btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
-  });
+      /* ── Magnetic Buttons ── */
+      document.querySelectorAll('.magnetic').forEach(btn => {
+        btn.addEventListener('mousemove', e => {
+          const r = btn.getBoundingClientRect();
+          btn.style.transform = `translate(${(e.clientX - r.left - r.width/2) * 0.28}px, ${(e.clientY - r.top - r.height/2) * 0.28}px)`;
+        });
+        btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+      });
 
-  /* ── Flip Cards ── */
-  document.querySelectorAll('.flip-card').forEach(card => {
-    const inner = card.querySelector('.flip-inner');
+      /* ── Flip Cards (mobile-friendly) ──
+         Strategy:
+         • Desktop with real hover: CSS :hover handles it, JS does nothing extra.
+         • Touch devices (no hover): JS toggles .flipped on tap.
+         • Clicking outside always closes all flipped cards.
+      ── */
+      const hasHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+      let lastFlipped = null;
 
-    card.addEventListener('click', (e) => {
-      e.stopPropagation();
-      inner.classList.toggle('flipped');
-    });
-  });
+      document.querySelectorAll('[data-flip]').forEach(inner => {
+        const card = inner.closest('.flip-card');
 
-  document.addEventListener('click', () => {
-    document.querySelectorAll('.flip-inner.flipped').forEach(inner => {
-      inner.classList.remove('flipped');
-    });
-  });
+        card.addEventListener('click', e => {
+          e.stopPropagation();
+
+          const isFlipped = inner.classList.contains('flipped');
+
+          // Close any previously open card (both desktop & mobile)
+          if (lastFlipped && lastFlipped !== inner) {
+            lastFlipped.classList.remove('flipped');
+          }
+
+          // On hover-capable devices, clicking should still toggle (UX bonus)
+          inner.classList.toggle('flipped', !isFlipped);
+          lastFlipped = isFlipped ? null : inner;
+        });
+      });
+
+      // Tapping outside closes all flipped cards
+      document.addEventListener('click', () => {
+        document.querySelectorAll('[data-flip].flipped').forEach(inner => {
+          inner.classList.remove('flipped');
+        });
+        lastFlipped = null;
+      });
+
+      // Escape key closes all
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') {
+          document.querySelectorAll('[data-flip].flipped').forEach(inner => {
+            inner.classList.remove('flipped');
+          });
+          lastFlipped = null;
+        }
+      });
+
     });
 </script>
 
