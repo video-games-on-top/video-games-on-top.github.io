@@ -63,10 +63,11 @@
 
         @keyframes pageFade { from{opacity:0} to{opacity:1} }
         body { animation:pageFade 0.5s ease both; }
-        /* ===== FLIP CARD ===== */
+       /* ===== FLIP CARD ===== */
 .flip-card {
   perspective: 1000px;
   height: 450px;
+  position: relative;
 }
 
 .flip-inner {
@@ -77,47 +78,35 @@
   transform-style: preserve-3d;
 }
 
-/* Hover flip (desktop) */
 .flip-card:hover .flip-inner {
   transform: rotateY(180deg);
 }
 
-/* Click flip (mobile support) */
 .flip-inner.flipped {
   transform: rotateY(180deg);
 }
 
-/* Front & Back */
 .flip-front,
 .flip-back {
   position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
   border-radius: 1.5rem;
+  overflow: hidden;
 }
 
-/* Back side */
+.flip-front {
+  transform: translateZ(0);
+}
+
 .flip-back {
-  transform: rotateY(180deg);
+  transform: rotateY(180deg) translateZ(0);
   display: flex;
   flex-direction: column;
   justify-content: center;
-}
-        .flip-front,
-.flip-back {
-  transform: translateZ(0);
-}
-        .flip-front,
-.flip-back {
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden; /* Safari fix */
-}
-
-/* Prevent flicker */
-.flip-front img {
-  transform: translateZ(0);
-  backface-visibility: hidden;
 }
     </style>
 </head>
@@ -533,28 +522,31 @@
       }, { threshold: 0.07, rootMargin:'0px 0px -50px 0px' });
       document.querySelectorAll('.r-up, .r-scale').forEach(el => obs.observe(el));
 
-      /* ── Magnetic Buttons ── */
-      document.querySelectorAll('.magnetic').forEach(btn => {
-        btn.addEventListener('mousemove', e => {
-          const r = btn.getBoundingClientRect();
-          btn.style.transform = `translate(${(e.clientX - r.left - r.width/2) * 0.28}px, ${(e.clientY - r.top - r.height/2) * 0.28}px)`;
-        });
-        btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
-      });
+ /* ── Magnetic Buttons ── */
+  document.querySelectorAll('.magnetic').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const r = btn.getBoundingClientRect();
+      btn.style.transform = `translate(${(e.clientX - r.left - r.width/2) * 0.28}px, ${(e.clientY - r.top - r.height/2) * 0.28}px)`;
     });
-document.querySelectorAll('.flip-card').forEach(card => {
-  const inner = card.querySelector('.flip-inner');
-
-  card.addEventListener('click', (e) => {
-    e.stopPropagation();
-    inner.classList.toggle('flipped');
+    btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
   });
 
-  // click anywhere else = flip back
+  /* ── Flip Cards ── */
+  document.querySelectorAll('.flip-card').forEach(card => {
+    const inner = card.querySelector('.flip-inner');
+
+    card.addEventListener('click', (e) => {
+      e.stopPropagation();
+      inner.classList.toggle('flipped');
+    });
+  });
+
   document.addEventListener('click', () => {
-    inner.classList.remove('flipped');
+    document.querySelectorAll('.flip-inner.flipped').forEach(inner => {
+      inner.classList.remove('flipped');
+    });
   });
-});
+</script>
 </script>
 </body>
 </html>
