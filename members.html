@@ -104,6 +104,21 @@
   flex-direction: column;
   justify-content: center;
 }
+        .flip-front,
+.flip-back {
+  transform: translateZ(0);
+}
+        .flip-front,
+.flip-back {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden; /* Safari fix */
+}
+
+/* Prevent flicker */
+.flip-front img {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
     </style>
 </head>
 
@@ -416,7 +431,7 @@
                 <div class="flip-inner">
                     <div class="flip-front bg-white p-6 text-center">
                         <div class="mx-auto mb-6 w-56 h-56 overflow-hidden rounded-full">
-                            <img src="images/vidsdaip.jpg" class="w-full h-full object-cover">
+                            <span class="text-gray-400 text-sm">No Image</span>
                         </div>
                         <h3 class="text-xl font-semibold">Communications Officer</h3>
                         <p class="text-gray-600 text-sm mt-2">Deetya Mallikarjun</p>
@@ -450,7 +465,7 @@
                 <div class="flip-inner">
                     <div class="flip-front bg-white p-6 text-center">
                         <div class="mx-auto mb-6 w-56 h-56 overflow-hidden rounded-full">
-                            <img src="images/trfy.jpg" class="w-full h-full object-cover">
+                            <span class="text-gray-400 text-sm">No Image</span>
                         </div>
                         <h3 class="text-xl font-semibold">Volunteer Coordinator</h3>
                         <p class="text-gray-600 text-sm mt-2">David Streeter</p>
@@ -527,9 +542,17 @@
         btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
       });
     });
-    document.querySelectorAll('.flip-card').forEach(card => {
-  card.addEventListener('click', () => {
-    card.querySelector('.flip-inner').classList.toggle('flipped');
+document.querySelectorAll('.flip-card').forEach(card => {
+  const inner = card.querySelector('.flip-inner');
+
+  card.addEventListener('click', (e) => {
+    e.stopPropagation();
+    inner.classList.toggle('flipped');
+  });
+
+  // click anywhere else = flip back
+  document.addEventListener('click', () => {
+    inner.classList.remove('flipped');
   });
 });
 </script>
