@@ -36,9 +36,7 @@
         .r-scale { transform:scale(0.93) translateY(18px); transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.34,1.4,0.64,1); }
         .is-visible { opacity:1!important; transform:none!important; }
 
-        /* ── Event Cards ── */
-        .event-card { transition:transform 0.45s cubic-bezier(0.34,1.15,0.64,1), box-shadow 0.45s ease; }
-        .event-card:hover { transform:translateY(-8px); box-shadow:0 24px 48px -12px rgba(123,175,158,0.25); }
+
 
         /* ── Magnetic ── */
         .magnetic { transition:transform 0.5s cubic-bezier(0.34,1.26,0.64,1)!important; }
@@ -60,8 +58,41 @@
         footer a { transition:color 0.25s ease, transform 0.3s cubic-bezier(0.34,1.26,0.64,1); display:inline-block; }
         footer a:hover { color:#7BAF9E; transform:translateX(5px); }
 
+
+
         @keyframes pageFade { from{opacity:0} to{opacity:1} }
         body { animation:pageFade 0.5s ease both; }
+
+        .slider {
+  overflow: hidden;
+  width: 100%;
+}
+
+.slide-track {
+  display: flex;
+  width: max-content;
+  animation: scroll 20s linear infinite;
+}
+
+.slide-track img {
+  width: 200px;
+  margin-right: 10px;
+}
+
+/* Animation moves to the RIGHT */
+@keyframes scroll {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Pause on hover */
+.slider:hover .slide-track {
+  animation-play-state: paused;
+}
     </style>
 </head>
 
@@ -221,9 +252,7 @@
                             data-title="Spring Cookie Fundraiser"
                             data-date="April 11 & 12, TBD"
                             data-location="Stage Run, River Rock Ranch, and Two Creeks"
-                            data-desc=":
-
-
+                            data-desc="
 
 Join us April 11 to April 12 for our 2 day bake sale. We are raising money to support our nonprofit and expand our impact in the community.
 
@@ -247,32 +276,35 @@ Come support, enjoy some baked goods, and help us grow.
         <h2 class="text-3xl font-heading font-bold text-center mb-4">Event Photos</h2>
         <p class="text-center text-gray-500 text-sm mb-10">Moments from our community drives and
             events</p>
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-            <div class="rounded-2xl overflow-hidden aspect-[4/3]">
-                <img src="images/sts1.jpg" alt="Event photo"
-                     class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
-            </div>
-            <div class="rounded-2xl overflow-hidden aspect-[4/3]">
-                <img src="images/sts7.jpg" alt="Event photo"
-                     class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
-            </div>
-            <div class="rounded-2xl overflow-hidden aspect-[4/3]">
-                <img src="images/sts4.jpg" alt="Event photo"
-                     class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
-            </div>
-            <div class="rounded-2xl overflow-hidden aspect-[4/3]">
-                <img src="images/sts11.png" alt="Event photo"
-                     class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
-            </div>
-            <div class="rounded-2xl overflow-hidden aspect-[4/3]">
-                <img src="images/sts6.jpg" alt="Event photo"
-                     class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
-            </div>
-            <div class="rounded-2xl overflow-hidden aspect-[4/3]">
-                <img src="images/sts9.jpg" alt="Event photo"
-                     class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+        <div class="slider">
+            <div class="side-track">
+                <div class="rounded-2xl overflow-hidden aspect-[4/3]">
+                    <img src="images/sts1.jpg" alt="Event photo"
+                         class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                </div>
+                <div class="rounded-2xl overflow-hidden aspect-[4/3]">
+                    <img src="images/sts7.jpg" alt="Event photo"
+                         class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                </div>
+                <div class="rounded-2xl overflow-hidden aspect-[4/3]">
+                    <img src="images/sts4.jpg" alt="Event photo"
+                         class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                </div>
+                <div class="rounded-2xl overflow-hidden aspect-[4/3]">
+                    <img src="images/sts11.png" alt="Event photo"
+                         class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                </div>
+                <div class="rounded-2xl overflow-hidden aspect-[4/3]">
+                    <img src="images/sts6.jpg" alt="Event photo"
+                         class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                </div>
+                <div class="rounded-2xl overflow-hidden aspect-[4/3]">
+                    <img src="images/sts9.jpg" alt="Event photo"
+                         class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                </div>
             </div>
         </div>
+
     </section>
 </main>
 
