@@ -18,113 +18,66 @@
     }
   </script>
   <style>
-    /* ── Scroll Progress ── */
-    #progress-bar {
-      position:fixed; top:0; left:0; height:2.5px;
-      background:linear-gradient(90deg,#7BAF9E,#5E8F80);
-      width:0%; z-index:9999; transition:width 0.1s linear;
-    }
-
-    /* ── Nav underline — top-level links only ── */
+    #progress-bar { position:fixed;top:0;left:0;height:2px;background:#7BAF9E;width:0%;z-index:9999;transition:width 0.1s linear; }
     .nav-link { position:relative; }
-    .nav-link::after {
-      content:''; position:absolute; bottom:-3px; left:0;
-      width:0; height:1.5px; background:#7BAF9E;
-      transition:width 0.38s cubic-bezier(0.16,1,0.3,1);
-    }
+    .nav-link::after { content:'';position:absolute;bottom:-3px;left:0;width:0;height:1.5px;background:#7BAF9E;transition:width 0.38s cubic-bezier(0.16,1,0.3,1); }
     .nav-link:hover::after { width:100%; }
-
-    /* ── Scroll Reveal ── */
-    .r-up,.r-left,.r-right,.r-scale,.r-fade { opacity:0; will-change:opacity,transform; }
-    .r-up    { transform:translateY(44px); }
-    .r-left  { transform:translateX(-52px); }
+    .r-up,.r-left,.r-right,.r-scale,.r-fade { opacity:0;will-change:opacity,transform; }
+    .r-up { transform:translateY(44px); }
+    .r-left { transform:translateX(-52px); }
     .r-right { transform:translateX(52px); }
-    .r-scale { transform:scale(0.9) translateY(20px); }
-    .r-up,.r-left,.r-right,.r-fade {
-      transition:opacity 0.85s cubic-bezier(0.16,1,0.3,1), transform 0.85s cubic-bezier(0.16,1,0.3,1);
-    }
-    .r-scale { transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.34,1.4,0.64,1); }
-    .is-visible { opacity:1!important; transform:none!important; }
-
-    /* ── Word Split — hero heading ── */
-    .word-wrap  { display:inline-block; overflow:hidden; vertical-align:bottom; }
-    .word-inner {
-      display:inline-block; transform:translateY(110%); opacity:0;
-      transition:transform 0.9s cubic-bezier(0.16,1,0.3,1), opacity 0.6s cubic-bezier(0.16,1,0.3,1);
-    }
-    .word-inner.is-visible { transform:translateY(0); opacity:1; }
-
-    /* ── Grain ── */
-    body::after {
-      content:''; position:fixed; inset:0; z-index:9997; pointer-events:none; opacity:0.025;
-      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-size:160px 160px;
-    }
-
-    /* ── Nav shadow on scroll ── */
+    .r-scale { transform:scale(0.92) translateY(18px); }
+    .r-up,.r-left,.r-right,.r-fade { transition:opacity 0.85s cubic-bezier(0.16,1,0.3,1),transform 0.85s cubic-bezier(0.16,1,0.3,1); }
+    .r-scale { transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1),transform 0.8s cubic-bezier(0.34,1.4,0.64,1); }
+    .is-visible { opacity:1!important;transform:none!important; }
+    .word-wrap { display:inline-block;overflow:hidden;vertical-align:bottom; }
+    .word-inner { display:inline-block;transform:translateY(110%);opacity:0;transition:transform 0.9s cubic-bezier(0.16,1,0.3,1),opacity 0.6s cubic-bezier(0.16,1,0.3,1); }
+    .word-inner.is-visible { transform:translateY(0);opacity:1; }
+    body::after { content:'';position:fixed;inset:0;z-index:9997;pointer-events:none;opacity:0.02;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:160px 160px; }
     header { transition:box-shadow 0.4s ease; }
-    body.scrolled header { box-shadow:0 1px 28px rgba(43,31,28,0.09); }
-
-
-
-    /* ── Float ── */
+    body.scrolled header { box-shadow:0 1px 24px rgba(43,31,28,0.08); }
+    .tilt-card { transform-style:preserve-3d;transition:transform 0.12s ease-out; }
     .float-anim { animation:floatY 7s ease-in-out infinite; }
-    @keyframes floatY { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-16px)} }
+    @keyframes floatY { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
 
-    /* ── Hero Tilt ── */
-    .tilt-card { transform-style:preserve-3d; transition:transform 0.1s linear; }
-
-    /* ── Impact blob ── */
-    .impact-container {
-      position:relative; background:#7BAF9E;
-      border-radius:30% 70% 70% 30%/30% 30% 70% 70%;
-      animation:morphBlob 20s infinite alternate ease-in-out;
-      padding:80px 40px; overflow:hidden;
+    /* Professional button styles */
+    .btn-primary {
+      position:relative;overflow:hidden;background:#7BAF9E;color:#fff;
+      padding:13px 28px;border-radius:4px;font-size:13px;font-weight:600;
+      letter-spacing:0.07em;text-transform:uppercase;text-decoration:none;
+      display:inline-flex;align-items:center;gap:9px;
+      transition:background 0.28s ease,transform 0.3s cubic-bezier(0.16,1,0.3,1),box-shadow 0.3s ease;
+      box-shadow:0 2px 10px rgba(123,175,158,0.2);
     }
-    @keyframes morphBlob {
-      0%   {border-radius:30% 70% 70% 30%/30% 30% 70% 70%}
-      20%  {border-radius:58% 42% 75% 25%/76% 46% 54% 24%}
-      40%  {border-radius:40% 60% 55% 45%/60% 44% 56% 40%}
-      60%  {border-radius:50% 50% 33% 67%/55% 27% 73% 45%}
-      80%  {border-radius:33% 67% 58% 42%/63% 68% 32% 37%}
-      100% {border-radius:30% 70% 70% 30%/30% 30% 70% 70%}
+    .btn-primary:hover { background:#5E8F80;transform:translateY(-2px);box-shadow:0 10px 28px rgba(94,143,128,0.35); }
+    .btn-primary:active { transform:translateY(0); }
+    .btn-primary svg { transition:transform 0.3s cubic-bezier(0.16,1,0.3,1); }
+    .btn-primary:hover svg { transform:translateX(4px); }
+    .btn-outline {
+      border:1.5px solid #2B1F1C;color:#2B1F1C;padding:12px 28px;border-radius:4px;
+      font-size:13px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;
+      text-decoration:none;display:inline-flex;align-items:center;gap:9px;background:transparent;
+      transition:border-color 0.28s,color 0.28s,background 0.28s,transform 0.3s cubic-bezier(0.16,1,0.3,1);
     }
-    .glass-card {
-      background:rgba(255,255,255,0.12); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
-      border:1px solid rgba(255,255,255,0.22); border-radius:2rem;
-    }
+    .btn-outline:hover { background:#2B1F1C;color:#fff;transform:translateY(-2px); }
+    .btn-outline:active { transform:translateY(0); }
 
-    /* ── Counter land ── */
-    @keyframes numLand { 0%{transform:scale(1.18)} 60%{transform:scale(0.97)} 100%{transform:scale(1)} }
-    .num-landed { animation:numLand 0.45s cubic-bezier(0.34,1.4,0.64,1) forwards; }
-
-    /* ── Mission cards ── */
-    .mission-card { transition:transform 0.55s cubic-bezier(0.34,1.26,0.64,1), box-shadow 0.55s cubic-bezier(0.16,1,0.3,1); }
-    .mission-card:hover { transform:translateY(-8px) scale(1.01); box-shadow:0 24px 48px -12px rgba(123,175,158,0.25); }
-    .mission-card .bar { transition:width 0.6s cubic-bezier(0.16,1,0.3,1); width:0; }
+    .mission-card { transition:transform 0.5s cubic-bezier(0.16,1,0.3,1),box-shadow 0.5s cubic-bezier(0.16,1,0.3,1); }
+    .mission-card:hover { transform:translateY(-6px);box-shadow:0 24px 48px -12px rgba(123,175,158,0.2); }
+    .mission-card .bar { transition:width 0.55s cubic-bezier(0.16,1,0.3,1);width:0; }
     .mission-card:hover .bar { width:100%; }
-
-    /* ── Process step line ── */
-    .step-line {
-      position:absolute; top:28px; left:calc(50% + 40px);
-      width:calc(100% - 80px); height:1px;
-      background:linear-gradient(90deg,#7BAF9E 0%,transparent 100%); opacity:0.3;
-    }
+    .step-line { position:absolute;top:28px;left:calc(50% + 40px);width:calc(100% - 80px);height:1px;background:linear-gradient(90deg,#7BAF9E 0%,transparent 100%);opacity:0.25; }
     @media(max-width:767px){.step-line{display:none}}
 
-    /* ── Carousel ── */
-    .carousel-container { position:relative; height:520px; overflow:hidden; display:flex; justify-content:center; align-items:center; }
-    .carousel-item {
-      position:absolute; width:460px; height:460px; border-radius:1.25rem; object-fit:cover;
-      opacity:0; z-index:0;
-      transition:all 0.72s cubic-bezier(0.34,1.15,0.64,1), opacity 0.55s cubic-bezier(0.16,1,0.3,1);
-    }
-    .carousel-item.active  { opacity:1;  transform:translateX(0) scale(1);       z-index:5; box-shadow:0 24px 60px rgba(0,0,0,0.22); }
-    .carousel-item.prev-1  { opacity:.6; transform:translateX(-44%) scale(0.78); z-index:4; }
-    .carousel-item.next-1  { opacity:.6; transform:translateX(44%) scale(0.78);  z-index:4; }
-    .carousel-item.prev-2  { opacity:.28;transform:translateX(-74%) scale(0.6);  z-index:3; }
-    .carousel-item.next-2  { opacity:.28;transform:translateX(74%) scale(0.6);   z-index:3; }
-    #carousel-dots button { transition:width 0.4s cubic-bezier(0.34,1.26,0.64,1), background 0.3s ease; }
+    /* Carousel */
+    .carousel-container { position:relative;height:520px;overflow:hidden;display:flex;justify-content:center;align-items:center; }
+    .carousel-item { position:absolute;width:460px;height:460px;border-radius:12px;object-fit:cover;opacity:0;z-index:0;transition:all 0.7s cubic-bezier(0.34,1.15,0.64,1),opacity 0.5s cubic-bezier(0.16,1,0.3,1); }
+    .carousel-item.active  { opacity:1;transform:translateX(0) scale(1);z-index:5;box-shadow:0 24px 56px rgba(0,0,0,0.2); }
+    .carousel-item.prev-1  { opacity:.55;transform:translateX(-44%) scale(0.78);z-index:4; }
+    .carousel-item.next-1  { opacity:.55;transform:translateX(44%) scale(0.78);z-index:4; }
+    .carousel-item.prev-2  { opacity:.22;transform:translateX(-74%) scale(0.6);z-index:3; }
+    .carousel-item.next-2  { opacity:.22;transform:translateX(74%) scale(0.6);z-index:3; }
+    #carousel-dots button { transition:width 0.4s cubic-bezier(0.34,1.26,0.64,1),background 0.3s ease; }
     @media(max-width:768px){
       .carousel-container{height:300px}
       .carousel-item{width:240px;height:200px}
@@ -133,31 +86,68 @@
       .carousel-item.prev-2,.carousel-item.next-2{opacity:0}
     }
 
-    /* ── Sponsor slots ── */
-    .sponsor-slot { height:72px; display:flex; align-items:center; justify-content:center; }
+    /* Social icons */
+    .social-icon { transition:transform 0.32s cubic-bezier(0.16,1,0.3,1),background-color 0.25s ease,color 0.25s ease,border-color 0.25s ease; }
+    .social-icon:hover { transform:translateY(-3px);background-color:#7BAF9E;color:white;border-color:#7BAF9E; }
+
+    /* Footer */
+    footer a { transition:color 0.22s ease,padding-left 0.3s cubic-bezier(0.16,1,0.3,1);display:inline-block; }
+    footer a:hover { color:#7BAF9E;padding-left:5px; }
+
+    /* Sponsor slots */
+    .sponsor-slot { height:72px;display:flex;align-items:center;justify-content:center; }
     .sponsor-slot img[src=""] { display:none; }
-    .sponsor-slot:has(img[src=""]){
-      background:repeating-linear-gradient(45deg,rgba(123,175,158,0.05),rgba(123,175,158,0.05) 10px,transparent 10px,transparent 20px);
-      border:1.5px dashed rgba(123,175,158,0.25); border-radius:12px; min-height:72px;
-    }
+    .sponsor-slot:has(img[src=""]){background:repeating-linear-gradient(45deg,rgba(123,175,158,0.04),rgba(123,175,158,0.04) 10px,transparent 10px,transparent 20px);border:1.5px dashed rgba(123,175,158,0.2);border-radius:8px;min-height:72px;}
 
-    /* ── CTA lift ── */
-    .cta-lift { transition:transform 0.55s cubic-bezier(0.34,1.15,0.64,1), box-shadow 0.55s ease; }
-    .cta-lift:hover { transform:translateY(-5px); box-shadow:0 40px 80px -20px rgba(123,175,158,0.5); }
-
-    /* ── Footer links ── */
-    footer a { transition:color 0.25s ease, transform 0.3s cubic-bezier(0.34,1.26,0.64,1); display:inline-block; }
-    footer a:hover { color:#7BAF9E; transform:translateX(5px); }
-
-    /* ── Social icons ── */
-    .social-icon { transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1), background-color 0.28s ease, color 0.28s ease, border-color 0.28s ease; }
-    .social-icon:hover { transform:scale(1.15) rotate(-4deg); background-color:#7BAF9E; color:white; border-color:#7BAF9E; }
-
-    /* ── Page fade-in ── */
     @keyframes pageFade { from{opacity:0} to{opacity:1} }
-    body { animation:pageFade 0.55s ease both; }
+    body { animation:pageFade 0.5s ease both; }
 
-    /* ── Reduced motion ── */
+    /* ── IMPACT SECTION ── */
+    .impact-row { display:grid;grid-template-columns:1fr 1fr;min-height:440px;overflow:hidden; }
+    .impact-photo { position:relative;overflow:hidden; }
+    .impact-photo img { width:100%;height:100%;object-fit:cover;transition:transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+    .impact-photo:hover img { transform:scale(1.03); }
+    .impact-stats-panel { background:#2B1F1C;display:flex;flex-direction:column;justify-content:center;padding:72px 60px; }
+    .impact-eyebrow { font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#7BAF9E;margin-bottom:18px;display:block; }
+    .impact-heading { font-family:'Playfair Display',serif;font-size:clamp(24px,2.6vw,36px);font-weight:700;line-height:1.25;color:#F4EFE6;margin-bottom:48px; }
+    .impact-heading em { font-style:italic;color:#7BAF9E; }
+    .stat-row { display:flex;flex-direction:column;border-top:1px solid rgba(244,239,230,0.07); }
+    .stat-item { display:grid;grid-template-columns:100px 1fr;align-items:center;gap:28px;padding:22px 0;border-bottom:1px solid rgba(244,239,230,0.07);transition:padding-left 0.3s cubic-bezier(0.16,1,0.3,1); }
+    .stat-item:hover { padding-left:6px; }
+    .stat-num { font-family:'Playfair Display',serif;font-size:clamp(34px,3.5vw,48px);font-weight:700;color:#F4EFE6;line-height:1;letter-spacing:-0.02em;display:block; }
+    .stat-info-label { font-size:12px;font-weight:500;color:rgba(244,239,230,0.4);letter-spacing:0.07em;display:block;margin-bottom:8px; }
+    .stat-bar-track { height:1px;background:rgba(244,239,230,0.1);border-radius:1px;overflow:hidden; }
+    .stat-bar-fill { height:1px;background:#7BAF9E;border-radius:1px;width:0;transition:width 1.4s cubic-bezier(0.16,1,0.3,1); }
+    .stat-bar-fill.animated { width:var(--fill); }
+
+    /* ── 3-STEP SUPPORT ── */
+    .support-eyebrow { font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#7BAF9E;margin-bottom:14px;display:block; }
+    .support-h2 { font-family:'Playfair Display',serif;font-size:clamp(30px,3.2vw,46px);font-weight:700;line-height:1.15;color:#2B1F1C;letter-spacing:-0.01em; }
+    .support-h2 em { font-style:italic;color:#7BAF9E; }
+    .support-grid { display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid rgba(43,31,28,0.07); }
+    .support-card { padding:52px 44px 48px;border-right:1px solid rgba(43,31,28,0.07);position:relative;overflow:hidden;transition:background 0.35s cubic-bezier(0.16,1,0.3,1); }
+    .support-card:last-child { border-right:none; }
+    .support-card::before { content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:#7BAF9E;transition:width 0.5s cubic-bezier(0.16,1,0.3,1); }
+    .support-card:hover { background:rgba(123,175,158,0.03); }
+    .support-card:hover::before { width:100%; }
+    .support-step { font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(43,31,28,0.25);margin-bottom:26px;display:block; }
+    .support-icon-ring { width:50px;height:50px;border-radius:50%;border:1.5px solid rgba(123,175,158,0.28);display:flex;align-items:center;justify-content:center;color:#7BAF9E;margin-bottom:26px;transition:border-color 0.3s,background 0.3s,transform 0.4s cubic-bezier(0.16,1,0.3,1); }
+    .support-card:hover .support-icon-ring { border-color:#7BAF9E;background:#7BAF9E;color:#fff;transform:scale(1.06); }
+    .support-title { font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:#2B1F1C;margin-bottom:12px;line-height:1.25; }
+    .support-body { font-size:14px;font-weight:400;line-height:1.8;color:rgba(43,31,28,0.5);margin-bottom:30px; }
+    .support-link { display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#7BAF9E;text-decoration:none;transition:gap 0.3s cubic-bezier(0.16,1,0.3,1),color 0.2s; }
+    .support-link:hover { color:#5E8F80;gap:11px; }
+    .support-link svg { transition:transform 0.3s cubic-bezier(0.16,1,0.3,1); }
+    .support-link:hover svg { transform:translateX(2px); }
+
+    @media(max-width:900px){
+      .support-grid{grid-template-columns:1fr;}
+      .support-card{border-right:none;border-bottom:1px solid rgba(43,31,28,0.07);padding:40px 7vw;}
+      .support-card:last-child{border-bottom:none;}
+      .impact-row{grid-template-columns:1fr;}
+      .impact-photo{min-height:300px;}
+      .impact-stats-panel{padding:52px 7vw;}
+    }
     @media(prefers-reduced-motion:reduce){
       *,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}
       .r-up,.r-left,.r-right,.r-scale,.r-fade{opacity:1!important;transform:none!important}
@@ -165,16 +155,15 @@
     }
   </style>
 </head>
-
 <body class="bg-cream text-deep font-body">
 
 <div id="progress-bar"></div>
 
-<!-- ── HEADER ── -->
-<header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200/60">
+<!-- HEADER -->
+<header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200/50">
   <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
     <a href="index.html" aria-label="Streets to Shelters Home">
-      <img src="images/icon (1).png" class="h-11 transition duration-300 hover:scale-105 active:scale-95" alt="Streets to Shelters">
+      <img src="images/icon (1).png" class="h-11 transition-transform duration-300 hover:scale-105 active:scale-95" alt="Streets to Shelters">
     </a>
     <nav class="hidden md:flex gap-8 text-sm font-medium items-center">
       <a href="index.html" class="nav-link hover:text-brand transition-colors">Home</a>
@@ -183,9 +172,9 @@
           Initiatives
           <svg class="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
         </button>
-        <div class="absolute left-0 top-full w-56 bg-white rounded-2xl shadow-lg border border-gray-100 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-250">
-          <a href="events.html"    class="block px-6 py-3.5 text-sm hover:bg-cream rounded-t-2xl transition-colors">Streets to Shelters Events</a>
-          <a href="volunteer.html" class="block px-6 py-3.5 text-sm hover:bg-cream rounded-b-2xl transition-colors">Volunteer</a>
+        <div class="absolute left-0 top-full w-56 bg-white rounded-xl shadow-lg border border-gray-100/80 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200">
+          <a href="events.html"    class="block px-6 py-3.5 text-sm hover:bg-cream rounded-t-xl transition-colors">Events</a>
+          <a href="volunteer.html" class="block px-6 py-3.5 text-sm hover:bg-cream rounded-b-xl transition-colors">Volunteer</a>
         </div>
       </div>
       <div class="relative group">
@@ -193,23 +182,23 @@
           About Us
           <svg class="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
         </button>
-        <div class="absolute left-0 top-full w-60 bg-white rounded-2xl shadow-lg border border-gray-100 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-250">
-          <a href="news.html"    class="block px-6 py-3.5 text-sm hover:bg-cream rounded-t-2xl transition-colors">Streets to Shelters News</a>
+        <div class="absolute left-0 top-full w-60 bg-white rounded-xl shadow-lg border border-gray-100/80 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200">
+          <a href="news.html"    class="block px-6 py-3.5 text-sm hover:bg-cream rounded-t-xl transition-colors">News</a>
           <a href="members.html" class="block px-6 py-3.5 text-sm hover:bg-cream transition-colors">Members</a>
-          <a href="contact.html" class="block px-6 py-3.5 text-sm hover:bg-cream rounded-b-2xl transition-colors">Contact Us</a>
+          <a href="contact.html" class="block px-6 py-3.5 text-sm hover:bg-cream rounded-b-xl transition-colors">Contact Us</a>
         </div>
       </div>
       <a href="chapter.html" class="nav-link hover:text-brand transition-colors">Start a Chapter</a>
     </nav>
     <div class="flex items-center gap-4">
       <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
-         target="_blank" rel="noopener"
-         class="magnetic hidden md:inline-block bg-brand text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-brandDark transition-colors">
+         target="_blank" rel="noopener" class="btn-primary hidden md:inline-flex">
         Donate
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
       <button id="mobile-menu-btn" class="md:hidden text-deep p-2" aria-label="Open menu">
-        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M4 6h16M4 12h16m-7 6h7"/>
         </svg>
       </button>
     </div>
@@ -221,8 +210,8 @@
   <div class="flex justify-between items-center mb-10">
     <img src="images/icon (1).png" class="h-10" alt="Streets to Shelters">
     <button id="close-menu-btn" class="text-deep p-2" aria-label="Close menu">
-      <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+      <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M6 18L18 6M6 6l12 12"/>
       </svg>
     </button>
   </div>
@@ -237,189 +226,227 @@
     <hr class="border-gray-100 my-2">
     <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
        target="_blank" rel="noopener"
-       class="bg-brand text-white text-center py-4 rounded-full text-lg">Donate Now</a>
+       class="bg-brand text-white text-center py-4 text-sm font-semibold tracking-widest uppercase rounded-sm">Donate Now</a>
   </nav>
 </div>
 
-<!-- ── HERO ── -->
+<!-- HERO -->
 <section class="pt-36 pb-28 bg-cream overflow-hidden">
   <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
     <div>
-      <div class="r-fade mb-3" style="transition-delay:0.05s">
-        <span class="inline-block bg-brand/10 text-brandDark text-xs font-semibold tracking-widest uppercase px-4 py-1.5 rounded-full border border-brand/20">
-          Youth-Led Nonprofit
+      <div class="r-fade mb-4" style="transition-delay:0.05s">
+        <span class="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase px-4 py-1.5 rounded-sm border border-brand/25 text-brandDark" style="background:rgba(123,175,158,0.07);">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand inline-block"></span>
+          Youth-Led Nonprofit · San Antonio, TX
         </span>
       </div>
       <h1 id="hero-heading" class="text-5xl md:text-6xl font-heading font-bold leading-tight mb-6">
         Streets to <span class="text-brand">Shelters</span>
       </h1>
-      <p class="r-up text-lg text-gray-600 mb-8 leading-relaxed" style="transition-delay:0.32s">
-        A <strong class="text-deep font-semibold">youth-led nonprofit</strong> delivering essential hygiene kits
-        and critical resources directly to <strong class="text-deep font-semibold">homeless shelters</strong> in our community.
+      <p class="r-up text-base text-gray-500 mb-10 leading-relaxed max-w-md" style="transition-delay:0.32s">
+        A <strong class="text-deep font-semibold">youth-led nonprofit</strong> delivering essential hygiene kits and critical resources directly to <strong class="text-deep font-semibold">homeless shelters</strong> in our community.
       </p>
       <div class="r-up flex flex-wrap items-center gap-4" style="transition-delay:0.44s">
         <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
-           target="_blank" rel="noopener"
-           class="magnetic bg-brand text-white px-8 py-3.5 rounded-full font-semibold hover:bg-brandDark transition-colors shadow-sm hover:shadow-md">
+           target="_blank" rel="noopener" class="btn-primary">
           Donate
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="#impact"
-           class="magnetic border-2 border-deep px-8 py-3.5 rounded-full font-semibold hover:bg-deep hover:text-white transition-all duration-300">
-          See Our Impact
-        </a>
+        <a href="#impact" class="btn-outline">See Our Impact</a>
         <div class="flex gap-2.5 ml-1">
-          <a href="https://www.instagram.com/streets.to.shelter" target="_blank" rel="noopener" aria-label="Instagram"
-             class="social-icon w-10 h-10 rounded-full border-2 border-brand flex items-center justify-center text-deep">
-            <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor"><path d="M7.75 2h8.5C19.99 2 22 4.01 22 7.75v8.5C22 19.99 19.99 22 16.25 22h-8.5C4.01 22 2 19.99 2 16.25v-8.5C2 4.01 4.01 2 7.75 2zm4.25 5a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm5.5-.75a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5z"/></svg>
+          <a href="https://www.instagram.com/streets.to.shelter" target="_blank" rel="noopener" aria-label="Instagram" class="social-icon w-9 h-9 rounded-full border border-brand/40 flex items-center justify-center text-deep">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M7.75 2h8.5C19.99 2 22 4.01 22 7.75v8.5C22 19.99 19.99 22 16.25 22h-8.5C4.01 22 2 19.99 2 16.25v-8.5C2 4.01 4.01 2 7.75 2zm4.25 5a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm5.5-.75a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5z"/></svg>
           </a>
-          <a href="https://www.facebook.com/profile.php?id=61586361417282" target="_blank" rel="noopener" aria-label="Facebook"
-             class="social-icon w-10 h-10 rounded-full border-2 border-brand flex items-center justify-center text-deep">
-            <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor"><path d="M22 12a10 10 0 10-11.5 9.9v-7h-2.7v-2.9h2.7V9.4c0-2.7 1.6-4.2 4.1-4.2 1.2 0 2.4.2 2.4.2v2.6h-1.4c-1.4 0-1.8.9-1.8 1.7v2h3.1l-.5 2.9h-2.6v7A10 10 0 0022 12z"/></svg>
+          <a href="https://www.facebook.com/profile.php?id=61586361417282" target="_blank" rel="noopener" aria-label="Facebook" class="social-icon w-9 h-9 rounded-full border border-brand/40 flex items-center justify-center text-deep">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M22 12a10 10 0 10-11.5 9.9v-7h-2.7v-2.9h2.7V9.4c0-2.7 1.6-4.2 4.1-4.2 1.2 0 2.4.2 2.4.2v2.6h-1.4c-1.4 0-1.8.9-1.8 1.7v2h3.1l-.5 2.9h-2.6v7A10 10 0 0022 12z"/></svg>
           </a>
-          <a href="https://www.tiktok.com/@streetstoshelters" target="_blank" rel="noopener" aria-label="TikTok"
-             class="social-icon w-10 h-10 rounded-full border-2 border-brand flex items-center justify-center text-deep">
-            <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.17-2.89-.6-4.09-1.47-.88-.64-1.62-1.47-2.16-2.4-.02 2.44.04 4.88-.03 7.33-.13 1.2-.45 2.39-1.01 3.44-1.27 2.41-3.87 3.92-6.55 4.02-2.52.12-5.11-.94-6.68-2.95-1.72-2.15-2.04-5.26-.81-7.65 1.14-2.22 3.52-3.7 5.95-3.83v4.04c-.66.07-1.34.25-1.92.6-.96.59-1.52 1.69-1.43 2.81.05 1.16.74 2.22 1.77 2.73.96.48 2.11.45 3.02-.1.97-.58 1.54-1.68 1.48-2.8-.02-2.93-.01-5.85-.01-8.77z"/></svg>
+          <a href="https://www.tiktok.com/@streetstoshelters" target="_blank" rel="noopener" aria-label="TikTok" class="social-icon w-9 h-9 rounded-full border border-brand/40 flex items-center justify-center text-deep">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.17-2.89-.6-4.09-1.47-.88-.64-1.62-1.47-2.16-2.4-.02 2.44.04 4.88-.03 7.33-.13 1.2-.45 2.39-1.01 3.44-1.27 2.41-3.87 3.92-6.55 4.02-2.52.12-5.11-.94-6.68-2.95-1.72-2.15-2.04-5.26-.81-7.65 1.14-2.22 3.52-3.7 5.95-3.83v4.04c-.66.07-1.34.25-1.92.6-.96.59-1.52 1.69-1.43 2.81.05 1.16.74 2.22 1.77 2.73.96.48 2.11.45 3.02-.1.97-.58 1.54-1.68 1.48-2.8-.02-2.93-.01-5.85-.01-8.77z"/></svg>
           </a>
-          <a href="https://linktr.ee/streets2shelters" target="_blank" rel="noopener" aria-label="Linktree"
-             class="social-icon w-10 h-10 rounded-full border-2 border-brand flex items-center justify-center text-deep">
-            <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor"><path d="M11 2h2v6h4l-5 5-5-5h4zM5 15h14v2H5zM7 19h10v2H7z"/></svg>
+          <a href="https://linktr.ee/streets2shelters" target="_blank" rel="noopener" aria-label="Linktree" class="social-icon w-9 h-9 rounded-full border border-brand/40 flex items-center justify-center text-deep">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M11 2h2v6h4l-5 5-5-5h4zM5 15h14v2H5zM7 19h10v2H7z"/></svg>
           </a>
         </div>
       </div>
     </div>
     <div class="r-scale" style="transition-delay:0.2s">
       <div id="hero-card" class="tilt-card relative float-anim">
-        <div class="bg-brand/15 rounded-3xl overflow-hidden shadow-2xl aspect-square max-w-sm mx-auto">
+        <div class="rounded-2xl overflow-hidden shadow-2xl aspect-square max-w-sm mx-auto" style="background:rgba(123,175,158,0.12);">
           <img src="images/sts1.jpg" alt="Streets to Shelters volunteers" class="w-full h-full object-cover" loading="eager" onerror="this.style.display='none'">
         </div>
-        <div class="absolute -bottom-5 -left-5 bg-white rounded-2xl shadow-xl px-5 py-3.5 border border-gray-100 r-left" style="transition-delay:0.6s">
+        <div class="absolute -bottom-5 -left-5 bg-white rounded-xl shadow-lg px-5 py-3.5 border border-gray-100 r-left" style="transition-delay:0.6s">
           <p class="text-xs text-gray-400 uppercase tracking-widest mb-0.5">Community Events</p>
           <p class="text-2xl font-heading font-bold text-deep">3+</p>
         </div>
-        <div class="absolute -top-4 -right-4 bg-brand rounded-2xl shadow-xl px-4 py-3 r-right" style="transition-delay:0.7s">
-          <p class="text-xs text-white/70 uppercase tracking-widest mb-0.5">Making</p>
-          <p class="text-lg font-heading font-bold text-white">Real Impact</p>
+        <div class="absolute -top-4 -right-4 bg-brand rounded-xl shadow-lg px-4 py-3 r-right" style="transition-delay:0.7s">
+          <p class="text-xs text-white/65 uppercase tracking-widest mb-0.5">Making</p>
+          <p class="text-base font-heading font-bold text-white">Real Impact</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── MISSION ── -->
-<section id="mission" class="py-24 bg-white">
-  <div class="max-w-4xl mx-auto text-center px-6 r-up">
-    <h2 class="text-4xl font-heading font-bold mb-5">Our Mission</h2>
-    <div class="w-16 h-0.5 bg-brand mx-auto mb-8 rounded-full"></div>
-    <p class="text-lg text-gray-600 leading-relaxed">
-      We provide <span class="text-brand font-semibold underline decoration-brand/30 underline-offset-4">essential resources</span>
-      to homeless shelters through organized drives, strategic partnerships, and consistent youth leadership.
-      We focus on measurable, long-term <span class="text-brand font-semibold underline decoration-brand/30 underline-offset-4">impact</span> — not one-time gestures.
+<!-- MISSION -->
+<section id="mission" class="py-20 bg-white">
+  <div class="max-w-3xl mx-auto text-center px-6 r-up">
+    <span class="text-xs font-semibold tracking-widest uppercase text-brand mb-4 block">Our Mission</span>
+    <h2 class="text-4xl font-heading font-bold mb-5 leading-snug">Restoring dignity,<br><em class="text-brand">one kit at a time</em></h2>
+    <div class="w-10 h-px bg-brand mx-auto mb-8"></div>
+    <p class="text-base text-gray-500 leading-relaxed">
+      We provide essential resources to homeless shelters through organized drives, strategic partnerships, and consistent youth leadership. We focus on measurable, long-term impact — not one-time gestures.
     </p>
   </div>
 </section>
 
-<!-- ── IMPACT COUNTERS ── -->
-<section id="impact" class="py-24 px-6 overflow-hidden r-up">
-  <div class="max-w-5xl mx-auto">
-    <div class="impact-container shadow-2xl">
-      <div class="glass-card p-12 md:p-20 text-center relative z-10 text-white">
-        <div class="mb-12">
-          <h2 class="text-5xl md:text-6xl font-heading font-bold mb-4">Our Impact</h2>
-          <div class="w-20 h-0.5 bg-white/40 mx-auto rounded-full"></div>
+<!-- IMPACT — editorial split panel -->
+<section id="impact">
+  <div class="impact-row r-up">
+    <div class="impact-photo">
+      <img src="images/sts3.jpg" alt="Volunteers assembling care kits" loading="lazy">
+    </div>
+    <div class="impact-stats-panel">
+      <span class="impact-eyebrow">Measurable Results</span>
+      <h2 class="impact-heading">Numbers that reflect<br><em>real work, real impact</em></h2>
+      <div class="stat-row">
+        <div class="stat-item">
+          <span class="stat-num" data-target="0" data-suffix="+">0</span>
+          <div>
+            <span class="stat-info-label">Care Kits Distributed</span>
+            <div class="stat-bar-track"><div class="stat-bar-fill" style="--fill:78%"></div></div>
+          </div>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-12">
-          <div class="space-y-3">
-            <div class="text-6xl font-bold font-heading" data-target="0" data-suffix="">0</div>
-            <p class="text-white/75 uppercase tracking-widest text-sm font-medium">Care Kits Distributed</p>
+        <div class="stat-item">
+          <span class="stat-num" data-target="30" data-suffix="+">0</span>
+          <div>
+            <span class="stat-info-label">Active Volunteers</span>
+            <div class="stat-bar-track"><div class="stat-bar-fill" style="--fill:55%"></div></div>
           </div>
-          <div class="space-y-3">
-            <div class="text-6xl font-bold font-heading" data-target="30" data-suffix="+">0+</div>
-            <p class="text-white/75 uppercase tracking-widest text-sm font-medium">Volunteers</p>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num" data-target="3" data-suffix="+">0</span>
+          <div>
+            <span class="stat-info-label">Community Events</span>
+            <div class="stat-bar-track"><div class="stat-bar-fill" style="--fill:30%"></div></div>
           </div>
-          <div class="space-y-3">
-            <div class="text-6xl font-bold font-heading" data-target="3" data-suffix="+">0+</div>
-            <p class="text-white/75 uppercase tracking-widest text-sm font-medium">Community Events</p>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num" data-target="60" data-suffix="+">0</span>
+          <div>
+            <span class="stat-info-label">People Reached</span>
+            <div class="stat-bar-track"><div class="stat-bar-fill" style="--fill:92%"></div></div>
           </div>
         </div>
       </div>
-      <div id="blob-layer" style="position:absolute;inset:0;overflow:hidden;border-radius:inherit;filter:url(#gooey-filter);z-index:0;pointer-events:none;"></div>
     </div>
   </div>
 </section>
 
-<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
-  <defs>
-    <filter id="gooey-filter" x="-40%" y="-40%" width="180%" height="180%">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="16" result="blur"/>
-      <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 26 -9" result="goo"/>
-      <feComposite in="SourceGraphic" in2="goo" operator="atop"/>
-    </filter>
-  </defs>
-</svg>
-
-<!-- ── WHY ── -->
-<section id="mission-details" class="py-24 bg-cream/50 overflow-hidden">
+<!-- WHY -->
+<section id="mission-details" class="py-24 overflow-hidden" style="background:rgba(244,239,230,0.5);">
   <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-10 items-stretch">
-    <div class="mission-card r-left relative bg-white border border-brand/10 p-10 rounded-3xl shadow-sm overflow-hidden" style="transition-delay:0.08s">
-      <div class="mb-6 w-12 h-12 rounded-xl bg-brand/10 flex items-center justify-center text-brand">
-        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+    <div class="mission-card r-left relative bg-white border border-brand/10 p-10 rounded-2xl shadow-sm overflow-hidden" style="transition-delay:0.08s">
+      <div class="mb-6 w-11 h-11 rounded-lg flex items-center justify-center text-brand" style="background:rgba(123,175,158,0.1);">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
       </div>
-      <h2 class="text-3xl font-heading font-bold mb-5 text-deep leading-tight">Why does it <em>matter?</em></h2>
-      <p class="text-gray-600 leading-relaxed">
-        Streets to Shelters provides <span class="text-brand font-semibold underline decoration-brand/30 underline-offset-4">essential supplies</span>
-        and support to those experiencing homelessness. We don't just provide items — we restore
-        <span class="text-brand font-semibold underline decoration-brand/30 underline-offset-4">dignity</span>
-        through care kits that show our community truly cares.
-      </p>
-      <div class="bar absolute bottom-0 left-0 h-[3px] bg-brand rounded-full"></div>
+      <h2 class="text-2xl font-heading font-bold mb-5 text-deep leading-snug">Why does it <em>matter?</em></h2>
+      <p class="text-gray-500 leading-relaxed text-sm">Streets to Shelters provides essential supplies and support to those experiencing homelessness. We don't just provide items, we restore dignity through care kits that show our community truly cares.</p>
+      <div class="bar absolute bottom-0 left-0 h-[2px] bg-brand rounded-full"></div>
     </div>
-    <div class="mission-card r-right relative bg-white border border-brand/10 p-10 rounded-3xl shadow-sm overflow-hidden" style="transition-delay:0.22s">
-      <div class="mb-6 w-12 h-12 rounded-xl bg-brand/10 flex items-center justify-center text-brand">
-        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+    <div class="mission-card r-right relative bg-white border border-brand/10 p-10 rounded-2xl shadow-sm overflow-hidden" style="transition-delay:0.22s">
+      <div class="mb-6 w-11 h-11 rounded-lg flex items-center justify-center text-brand" style="background:rgba(123,175,158,0.1);">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
       </div>
-      <h2 class="text-3xl font-heading font-bold mb-5 text-deep leading-tight">Why we <em>started?</em></h2>
-      <p class="text-gray-600 leading-relaxed">
-        Created by <span class="text-brand font-semibold underline decoration-brand/30 underline-offset-4">students</span>
-        driven by action, we moved past conversation to coordination. By organizing donation drives and building kits,
-        we bridge the gap between student volunteers and local
-        <span class="text-brand font-semibold underline decoration-brand/30 underline-offset-4">outreach programs</span>.
-      </p>
-      <div class="bar absolute bottom-0 left-0 h-[3px] bg-brand rounded-full"></div>
+      <h2 class="text-2xl font-heading font-bold mb-5 text-deep leading-snug">Why we <em>started?</em></h2>
+      <p class="text-gray-500 leading-relaxed text-sm">Created by students driven by action, we moved past conversation to coordination. By organizing donation drives and building kits, we bridge the gap between student volunteers and local outreach programs.</p>
+      <div class="bar absolute bottom-0 left-0 h-[2px] bg-brand rounded-full"></div>
     </div>
   </div>
 </section>
 
-<!-- ── HOW IT WORKS ── -->
+<!-- HOW IT WORKS -->
 <section id="process" class="py-24 bg-white overflow-hidden">
   <div class="max-w-6xl mx-auto px-6">
-    <h2 class="text-4xl font-heading font-bold text-center mb-16 r-up">How It Works</h2>
-    <div class="grid md:grid-cols-3 gap-10 text-center">
-      <div class="r-scale relative p-8 rounded-2xl bg-cream/40 border border-brand/10 hover:border-brand/30 transition-colors" style="transition-delay:0ms">
+    <div class="text-center mb-16 r-up">
+      <span class="text-xs font-semibold tracking-widest uppercase text-brand mb-4 block">The Process</span>
+      <h2 class="text-4xl font-heading font-bold">How It Works</h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-8 text-center">
+      <div class="r-scale relative p-8 rounded-xl bg-cream/40 border border-brand/10 hover:border-brand/30 transition-colors" style="transition-delay:0ms">
         <div class="step-line"></div>
         <div class="text-brand text-5xl font-heading font-bold mb-5 leading-none">01</div>
-        <h3 class="font-semibold text-xl mb-3">Fundraise</h3>
-        <p class="text-gray-500 text-sm leading-relaxed">Partner with businesses and host drives to raise funds and collect supplies.</p>
+        <h3 class="font-semibold text-lg mb-3">Fundraise</h3>
+        <p class="text-gray-400 text-sm leading-relaxed">Partner with businesses and host drives to raise funds and collect supplies.</p>
       </div>
-      <div class="r-scale relative p-8 rounded-2xl bg-cream/40 border border-brand/10 hover:border-brand/30 transition-colors" style="transition-delay:0.15s">
+      <div class="r-scale relative p-8 rounded-xl bg-cream/40 border border-brand/10 hover:border-brand/30 transition-colors" style="transition-delay:0.15s">
         <div class="step-line"></div>
         <div class="text-brand text-5xl font-heading font-bold mb-5 leading-none">02</div>
-        <h3 class="font-semibold text-xl mb-3">Assemble</h3>
-        <p class="text-gray-500 text-sm leading-relaxed">Volunteers organize and assemble hygiene and essential kits.</p>
+        <h3 class="font-semibold text-lg mb-3">Assemble</h3>
+        <p class="text-gray-400 text-sm leading-relaxed">Volunteers organize and assemble hygiene and essential kits together.</p>
       </div>
-      <div class="r-scale relative p-8 rounded-2xl bg-cream/40 border border-brand/10 hover:border-brand/30 transition-colors" style="transition-delay:0.3s">
+      <div class="r-scale relative p-8 rounded-xl bg-cream/40 border border-brand/10 hover:border-brand/30 transition-colors" style="transition-delay:0.3s">
         <div class="text-brand text-5xl font-heading font-bold mb-5 leading-none">03</div>
-        <h3 class="font-semibold text-xl mb-3">Deliver</h3>
-        <p class="text-gray-500 text-sm leading-relaxed">Direct distribution to shelters ensures immediate impact.</p>
+        <h3 class="font-semibold text-lg mb-3">Deliver</h3>
+        <p class="text-gray-400 text-sm leading-relaxed">Direct distribution to shelters ensures immediate, meaningful impact.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── GALLERY ── -->
+<!-- 3 WAYS TO SUPPORT -->
+<section class="bg-white r-up">
+  <div class="max-w-7xl mx-auto px-6 pt-16 pb-12 text-center">
+    <span class="support-eyebrow">Get Involved</span>
+    <h2 class="support-h2">Three ways to make a <em>real difference</em></h2>
+    <div class="w-10 h-px bg-brand mx-auto mt-6"></div>
+  </div>
+  <div class="support-grid border-b border-t border-gray-100">
+    <div class="support-card">
+      <span class="support-step">01 — Volunteer</span>
+      <div class="support-icon-ring">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+      </div>
+      <h3 class="support-title">Give Your Time</h3>
+      <p class="support-body">Join our kit-assembly sessions, community events, and outreach days. No experience required, just a willingness to show up and work alongside a dedicated team of volunteers.</p>
+      <a href="volunteer.html" class="support-link">
+        Sign Up to Volunteer
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <div class="support-card">
+      <span class="support-step">02 — Donate</span>
+      <div class="support-icon-ring">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+      </div>
+      <h3 class="support-title">Fund a Kit</h3>
+      <p class="support-body">Every $25 directly funds one complete care kit: toothbrush, soap, shampoo, and essentials. 100% of donations go to supplies. We run entirely on volunteer power, so every dollar counts.</p>
+      <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" rel="noopener" class="support-link">
+        Donate Now
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <div class="support-card">
+      <span class="support-step">03 — Partner</span>
+      <div class="support-icon-ring">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+      </div>
+      <h3 class="support-title">Build With Us</h3>
+      <p class="support-body">Businesses, schools, and organizations: let's collaborate. We welcome sponsorships, co-hosted drives, in-kind donations, and chapter partnerships that help us reach more shelters across the city.</p>
+      <a href="contact.html" class="support-link">
+        Become a Partner
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
 <section id="gallery" class="py-24 bg-creamdark overflow-hidden r-up">
   <div class="max-w-7xl mx-auto px-6">
-    <h2 class="text-4xl font-heading font-bold text-center mb-3 text-deep">Our Journey</h2>
-    <p class="text-center text-gray-500/80 mb-14 text-sm">A look at the work we do together</p>
+    <div class="text-center mb-14">
+      <span class="text-xs font-semibold tracking-widest uppercase text-deep/40 mb-3 block">Our Journey</span>
+      <h2 class="text-4xl font-heading font-bold text-deep">The Work in Motion</h2>
+    </div>
     <div class="carousel-container mb-10" id="interactive-carousel" role="region" aria-label="Photo gallery">
       <img src="images/sts1.jpg"  class="carousel-item" alt="Streets to Shelters — photo 1"  loading="lazy">
       <img src="images/sts7.jpg"  class="carousel-item" alt="Streets to Shelters — photo 7"  loading="lazy">
@@ -433,77 +460,64 @@
       <img src="images/sts10.png" class="carousel-item" alt="Streets to Shelters — photo 10" loading="lazy">
     </div>
     <div class="flex justify-center items-center gap-5">
-      <button id="carousel-prev" aria-label="Previous photo"
-              class="w-10 h-10 rounded-full border-2 border-deep/30 flex items-center justify-center hover:border-deep hover:bg-deep hover:text-white transition-all duration-300">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+      <button id="carousel-prev" aria-label="Previous photo" class="w-9 h-9 rounded-full border border-deep/25 flex items-center justify-center hover:border-deep hover:bg-deep hover:text-white transition-all duration-300">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
       </button>
-      <div class="flex gap-2.5" id="carousel-dots"></div>
-      <button id="carousel-next" aria-label="Next photo"
-              class="w-10 h-10 rounded-full border-2 border-deep/30 flex items-center justify-center hover:border-deep hover:bg-deep hover:text-white transition-all duration-300">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+      <div class="flex gap-2" id="carousel-dots"></div>
+      <button id="carousel-next" aria-label="Next photo" class="w-9 h-9 rounded-full border border-deep/25 flex items-center justify-center hover:border-deep hover:bg-deep hover:text-white transition-all duration-300">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
       </button>
     </div>
   </div>
 </section>
 
-<!-- ── DONATE CTA ── -->
-<section class="py-24 bg-cream r-scale">
-  <div class="max-w-5xl mx-auto px-6 text-center">
-    <div class="bg-brand rounded-3xl p-12 md:p-16 shadow-xl relative overflow-hidden cta-lift">
-      <div class="absolute top-0 right-0 -mt-12 -mr-12 w-52 h-52 bg-white/20 rounded-full blur-3xl float-anim pointer-events-none"></div>
-      <div class="absolute bottom-0 left-0 -mb-12 -ml-12 w-52 h-52 bg-white/20 rounded-full blur-3xl float-anim pointer-events-none" style="animation-delay:2s"></div>
-      <h2 class="text-4xl md:text-5xl font-heading font-bold text-white mb-5 relative z-10">Help make a kit!</h2>
-      <p class="text-xl text-white/90 mb-10 max-w-2xl mx-auto relative z-10">
-        Every <strong>$25</strong> helps create a care kit for someone in need. Join us in making a direct, immediate impact in our community.
+<!-- DONATE CTA -->
+<section class="py-20 bg-cream r-scale">
+  <div class="max-w-4xl mx-auto px-6 text-center">
+    <div class="bg-deep rounded-2xl p-14 md:p-20 relative overflow-hidden">
+      <div class="absolute top-0 right-0 w-72 h-72 opacity-5" style="background:radial-gradient(circle at top right,#7BAF9E,transparent 70%);"></div>
+      <span class="text-xs font-semibold tracking-widest uppercase text-brand mb-5 block">Make a Difference Today</span>
+      <h2 class="text-4xl md:text-5xl font-heading font-bold text-cream mb-5 relative z-10 leading-snug">Help make a kit.</h2>
+      <p class="text-base mb-10 max-w-xl mx-auto relative z-10 leading-relaxed" style="color:rgba(244,239,230,0.5);">
+        Every <strong class="text-cream font-semibold">$25</strong> creates a complete care kit for someone in need. Join us in making a direct, immediate impact right here in our community.
       </p>
       <div class="relative z-10">
         <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
-           target="_blank" rel="noopener"
-           class="magnetic inline-block bg-white text-brand px-12 py-4 rounded-full text-lg font-bold hover:bg-cream transition-colors shadow-sm hover:shadow-md">
+           target="_blank" rel="noopener" class="btn-primary">
           Donate Now
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── SPONSORS ── -->
-<section id="partners" class="py-24 bg-white r-up">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="text-center mb-16">
-      <h2 class="text-4xl md:text-5xl font-heading font-bold text-deep mb-4">Sponsors & Partners</h2>
-      <div class="w-16 h-0.5 bg-brand mx-auto rounded-full mb-6"></div>
-      <p class="text-gray-500 max-w-xl mx-auto">We are proud to collaborate with local businesses and organizations that share our vision.</p>
+<!-- SPONSORS -->
+<section id="partners" class="py-20 bg-white r-up">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="text-center mb-14">
+      <span class="text-xs font-semibold tracking-widest uppercase text-brand mb-4 block">Collaborators</span>
+      <h2 class="text-3xl font-heading font-bold text-deep mb-3">Sponsors &amp; Partners</h2>
+      <p class="text-gray-400 text-sm max-w-md mx-auto">We partner with local businesses and organizations that share our vision for a stronger community.</p>
     </div>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-10 items-center">
-      <div class="sponsor-slot group transition-all duration-400 hover:-translate-y-1.5">
-        <img src="" alt=" " class="h-16 object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-400">
-      </div>
-      <div class="sponsor-slot group transition-all duration-400 hover:-translate-y-1.5" style="transition-delay:0.08s">
-        <img src="" alt=" " class="h-16 object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-400">
-      </div>
-      <div class="sponsor-slot group transition-all duration-400 hover:-translate-y-1.5" style="transition-delay:0.16s">
-        <img src="" alt=" " class="h-16 object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-400">
-      </div>
-      <div class="sponsor-slot group transition-all duration-400 hover:-translate-y-1.5" style="transition-delay:0.24s">
-        <img src="" alt=" " class="h-16 object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-400">
-      </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 items-center">
+      <div class="sponsor-slot group transition-all duration-300 hover:-translate-y-1"><img src="" alt=" " class="h-14 object-contain filter grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"></div>
+      <div class="sponsor-slot group transition-all duration-300 hover:-translate-y-1"><img src="" alt=" " class="h-14 object-contain filter grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"></div>
+      <div class="sponsor-slot group transition-all duration-300 hover:-translate-y-1"><img src="" alt=" " class="h-14 object-contain filter grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"></div>
+      <div class="sponsor-slot group transition-all duration-300 hover:-translate-y-1"><img src="" alt=" " class="h-14 object-contain filter grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"></div>
     </div>
-    <div class="mt-16 text-center">
-      <p class="text-gray-400 text-sm">
-        Want to partner with Streets to Shelters?
-        <a href="contact.html" class="text-brand font-medium border-b border-brand/40 hover:border-brand transition-colors ml-1">Get in touch →</a>
-      </p>
+    <div class="mt-12 text-center">
+      <p class="text-gray-400 text-sm">Interested in partnering with us? <a href="contact.html" class="text-brand font-medium border-b border-brand/35 hover:border-brand transition-colors ml-1">Reach out →</a></p>
     </div>
   </div>
 </section>
 
-<!-- ── FOOTER ── -->
-<footer class="bg-deep text-white py-14">
-  <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-10 text-center sm:text-left">
+<!-- FOOTER -->
+<footer class="bg-deep text-white py-16">
+  <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-12">
     <div>
-      <h3 class="text-xs uppercase tracking-widest text-white/50 font-semibold mb-5">Follow Us</h3>
-      <div class="flex flex-col gap-3">
+      <h3 class="text-xs uppercase tracking-widest font-semibold mb-6" style="color:rgba(255,255,255,0.3);">Follow Us</h3>
+      <div class="flex flex-col gap-3 text-sm">
         <a href="https://www.instagram.com/streets.to.shelter" target="_blank" rel="noopener">Instagram</a>
         <a href="https://www.facebook.com/profile.php?id=61586361417282" target="_blank" rel="noopener">Facebook</a>
         <a href="https://www.tiktok.com/@streetstoshelters" target="_blank" rel="noopener">TikTok</a>
@@ -511,8 +525,8 @@
       </div>
     </div>
     <div>
-      <h3 class="text-xs uppercase tracking-widest text-white/50 font-semibold mb-5">Quick Links</h3>
-      <div class="flex flex-col gap-3">
+      <h3 class="text-xs uppercase tracking-widest font-semibold mb-6" style="color:rgba(255,255,255,0.3);">Quick Links</h3>
+      <div class="flex flex-col gap-3 text-sm">
         <a href="index.html">Home</a>
         <a href="events.html">Events</a>
         <a href="news.html">News</a>
@@ -523,31 +537,35 @@
       </div>
     </div>
     <div>
-      <h3 class="text-xs uppercase tracking-widest text-white/50 font-semibold mb-5">Support Us</h3>
-      <div class="flex flex-col gap-3">
-        <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" rel="noopener">Donate</a>
+      <h3 class="text-xs uppercase tracking-widest font-semibold mb-6" style="color:rgba(255,255,255,0.3);">Contact</h3>
+      <div class="flex flex-col gap-2 text-sm" style="color:rgba(255,255,255,0.38);">
+        <span>streets2shelters@gmail.com</span>
+        <span>San Antonio, Texas</span>
       </div>
-      <p class="text-white/25 text-xs mt-10">© 2026 Streets To Shelters</p>
+      <a href="contact.html" class="text-brand text-sm mt-3 block" style="padding-left:0;">Contact Form →</a>
+      <div class="mt-10 pt-8" style="border-top:1px solid rgba(255,255,255,0.07);">
+        <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
+           target="_blank" rel="noopener" class="btn-primary" style="font-size:12px;padding:11px 20px;">
+          Donate
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+      <p class="text-xs mt-8" style="color:rgba(255,255,255,0.18);">© 2026 Streets To Shelters. All rights reserved.</p>
     </div>
   </div>
 </footer>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-
-    /* ── Mobile Menu ── */
-    const mobileBtn     = document.getElementById('mobile-menu-btn');
-    const closeBtn      = document.getElementById('close-menu-btn');
-    const mobileOverlay = document.getElementById('mobile-menu-overlay');
-    if (mobileBtn && mobileOverlay) {
-      mobileBtn.addEventListener('click', () => mobileOverlay.classList.remove('translate-x-full'));
-      closeBtn.addEventListener('click',  () => mobileOverlay.classList.add('translate-x-full'));
-      mobileOverlay.querySelectorAll('a').forEach(a =>
-        a.addEventListener('click', () => mobileOverlay.classList.add('translate-x-full'))
-      );
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    const closeBtn  = document.getElementById('close-menu-btn');
+    const overlay   = document.getElementById('mobile-menu-overlay');
+    if (mobileBtn && overlay) {
+      mobileBtn.addEventListener('click', () => overlay.classList.remove('translate-x-full'));
+      closeBtn.addEventListener('click',  () => overlay.classList.add('translate-x-full'));
+      overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => overlay.classList.add('translate-x-full')));
     }
 
-    /* ── Scroll Progress + Nav shadow ── */
     const bar = document.getElementById('progress-bar');
     window.addEventListener('scroll', () => {
       const total = document.documentElement.scrollHeight - window.innerHeight;
@@ -555,81 +573,73 @@
       document.body.classList.toggle('scrolled', window.scrollY > 60);
     }, { passive: true });
 
-    /* ── Hero Heading Word Split ── */
     const h1 = document.getElementById('hero-heading');
     if (h1) {
       const wrap = node => {
         if (node.nodeType === 3) {
           const frag = document.createDocumentFragment();
           node.textContent.split(/(\s+)/).forEach(part => {
-            if (/^\s+$/.test(part) || part === '') {
-              frag.appendChild(document.createTextNode(part));
-            } else {
-              const w = document.createElement('span'); w.className = 'word-wrap';
-              const i = document.createElement('span'); i.className = 'word-inner';
-              i.textContent = part; w.appendChild(i); frag.appendChild(w);
-            }
+            if (/^\s+$/.test(part) || part === '') { frag.appendChild(document.createTextNode(part)); return; }
+            const w = document.createElement('span'); w.className = 'word-wrap';
+            const i = document.createElement('span'); i.className = 'word-inner';
+            i.textContent = part; w.appendChild(i); frag.appendChild(w);
           });
           node.replaceWith(frag);
         } else if (node.nodeType === 1 && node.tagName !== 'SCRIPT') {
           const w = document.createElement('span'); w.className = 'word-wrap';
           const i = document.createElement('span'); i.className = 'word-inner';
-          i.appendChild(node.cloneNode(true)); w.appendChild(i);
-          node.replaceWith(w);
+          i.appendChild(node.cloneNode(true)); w.appendChild(i); node.replaceWith(w);
         }
       };
       Array.from(h1.childNodes).forEach(wrap);
-      h1.querySelectorAll('.word-inner').forEach((w, idx) => {
-        w.style.transitionDelay = (0.005 + idx * 0.025) + 's';
-      });
+      h1.querySelectorAll('.word-inner').forEach((w, idx) => { w.style.transitionDelay = (0.005 + idx * 0.025) + 's'; });
       setTimeout(() => h1.querySelectorAll('.word-inner').forEach(w => w.classList.add('is-visible')), 80);
     }
 
-    /* ── Hero Card 3D Tilt ── */
     const heroCard = document.getElementById('hero-card');
     if (heroCard) {
       heroCard.parentElement.addEventListener('mousemove', e => {
-        const r   = heroCard.getBoundingClientRect();
-        const rx2 = ((e.clientY - r.top  - r.height / 2) / (r.height / 2)) *  6;
-        const ry2 = ((e.clientX - r.left - r.width  / 2) / (r.width  / 2)) * -6;
-        heroCard.style.transform = `perspective(800px) rotateX(${rx2}deg) rotateY(${ry2}deg)`;
+        const r = heroCard.getBoundingClientRect();
+        const rx = ((e.clientY - r.top  - r.height / 2) / (r.height / 2)) *  5;
+        const ry = ((e.clientX - r.left - r.width  / 2) / (r.width  / 2)) * -5;
+        heroCard.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg)`;
       });
       heroCard.parentElement.addEventListener('mouseleave', () => { heroCard.style.transform = ''; });
     }
 
-    /* ── Scroll Reveal ── */
-    const revealObs = new IntersectionObserver((entries, obs) => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('is-visible');
-        obs.unobserve(entry.target);
-      });
+    const revObs = new IntersectionObserver((entries, obs) => {
+      entries.forEach(e => { if (!e.isIntersecting) return; e.target.classList.add('is-visible'); obs.unobserve(e.target); });
     }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
-    document.querySelectorAll('.r-up,.r-left,.r-right,.r-scale,.r-fade').forEach(el => revealObs.observe(el));
+    document.querySelectorAll('.r-up,.r-left,.r-right,.r-scale,.r-fade').forEach(el => revObs.observe(el));
 
-    /* ── Counters ── */
     const easeOut = t => 1 - Math.pow(1 - t, 4);
-    const counterObs = new IntersectionObserver((entries, obs) => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        const el     = entry.target;
-        const target = +el.dataset.target;
-        const suffix = el.dataset.suffix || '';
+    const ctrObs = new IntersectionObserver((entries, obs) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target, target = +el.dataset.target, suffix = el.dataset.suffix || '';
         if (target === 0) { el.textContent = '0' + suffix; obs.unobserve(el); return; }
-        const dur = 1600, t0 = performance.now();
+        const dur = 1800, t0 = performance.now();
         (function tick(now) {
           const p = Math.min((now - t0) / dur, 1);
           el.textContent = Math.round(easeOut(p) * target) + suffix;
-          if (p < 1) requestAnimationFrame(tick);
-          else { el.textContent = target + suffix; el.classList.add('num-landed'); }
+          p < 1 ? requestAnimationFrame(tick) : (el.textContent = target + suffix);
         })(t0);
         obs.unobserve(el);
       });
     }, { threshold: 0.5 });
-    document.querySelectorAll('[data-target]').forEach(el => counterObs.observe(el));
+    document.querySelectorAll('[data-target]').forEach(el => ctrObs.observe(el));
 
-    /* ── Carousel ── */
-    const items   = Array.from(document.querySelectorAll('.carousel-item'));
+    const barObs = new IntersectionObserver((entries, obs) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        e.target.querySelectorAll('.stat-bar-fill').forEach((b, i) => setTimeout(() => b.classList.add('animated'), i * 200));
+        obs.unobserve(e.target);
+      });
+    }, { threshold: 0.3 });
+    const sp = document.querySelector('.impact-stats-panel');
+    if (sp) barObs.observe(sp);
+
+    const items = Array.from(document.querySelectorAll('.carousel-item'));
     const dotsCon = document.getElementById('carousel-dots');
     const prevBtn = document.getElementById('carousel-prev');
     const nextBtn = document.getElementById('carousel-next');
@@ -638,9 +648,9 @@
       const total = items.length;
       items.forEach((_, i) => {
         const d = document.createElement('button');
-        d.setAttribute('aria-label', `Photo ${i + 1}`);
-        d.className = 'h-2.5 rounded-full transition-all duration-400';
-        d.classList.add(i === 0 ? 'bg-deep' : 'bg-deep/30', i === 0 ? 'w-7' : 'w-2.5');
+        d.setAttribute('aria-label', 'Photo ' + (i+1));
+        d.className = 'h-2 rounded-full transition-all duration-400';
+        d.classList.add(i === 0 ? 'bg-deep' : 'bg-deep/25', i === 0 ? 'w-6' : 'w-2');
         d.addEventListener('click', () => { cIdx = i; update(); reset(); });
         dotsCon.appendChild(d);
       });
@@ -649,111 +659,36 @@
         items.forEach((item, i) => {
           item.classList.remove('active','prev-1','next-1','prev-2','next-2');
           const d = ((i - cIdx) % total + total) % total;
-          if      (d === 0)         item.classList.add('active');
-          else if (d === 1)         item.classList.add('next-1');
-          else if (d === total - 1) item.classList.add('prev-1');
-          else if (d === 2)         item.classList.add('next-2');
-          else if (d === total - 2) item.classList.add('prev-2');
+          if (d===0) item.classList.add('active');
+          else if (d===1) item.classList.add('next-1');
+          else if (d===total-1) item.classList.add('prev-1');
+          else if (d===2) item.classList.add('next-2');
+          else if (d===total-2) item.classList.add('prev-2');
         });
-        dots.forEach((d, i) => {
-          d.classList.toggle('bg-deep', i === cIdx);
-          d.classList.toggle('w-7', i === cIdx);
-          d.classList.toggle('bg-deep/30', i !== cIdx);
-          d.classList.toggle('w-2.5', i !== cIdx);
+        dots.forEach((d,i) => {
+          d.classList.toggle('bg-deep',    i===cIdx);
+          d.classList.toggle('w-6',        i===cIdx);
+          d.classList.toggle('bg-deep/25', i!==cIdx);
+          d.classList.toggle('w-2',        i!==cIdx);
         });
       }
       function advance(dir) { cIdx = (cIdx + dir + total) % total; update(); reset(); }
-      function reset() { clearInterval(cTimer); cTimer = setInterval(() => advance(1), 3500); }
+      function reset() { clearInterval(cTimer); cTimer = setInterval(() => advance(1), 3800); }
       prevBtn && prevBtn.addEventListener('click', () => advance(-1));
       nextBtn && nextBtn.addEventListener('click', () => advance(1));
-      document.addEventListener('keydown', e => {
-        if (e.key === 'ArrowLeft')  advance(-1);
-        if (e.key === 'ArrowRight') advance(1);
-      });
+      document.addEventListener('keydown', e => { if(e.key==='ArrowLeft') advance(-1); if(e.key==='ArrowRight') advance(1); });
       const car = document.getElementById('interactive-carousel');
       let tx = null;
       car.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
       car.addEventListener('touchend', e => {
-        if (tx === null) return;
+        if (tx===null) return;
         const dx = e.changedTouches[0].clientX - tx;
         if (Math.abs(dx) > 40) advance(dx < 0 ? 1 : -1);
         tx = null;
       }, { passive: true });
       requestAnimationFrame(() => { update(); reset(); });
     }
-
-    /* ── Magnetic Buttons ── */
-    document.querySelectorAll('.magnetic').forEach(btn => {
-      btn.addEventListener('mousemove', e => {
-        const r = btn.getBoundingClientRect();
-        btn.style.transform = `translate(${(e.clientX - r.left - r.width/2) * 0.28}px, ${(e.clientY - r.top - r.height/2) * 0.28}px)`;
-      });
-      btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
-    });
-
   });
-
-  /* ── Gooey Metaballs ── */
-  (function() {
-    const layer = document.getElementById('blob-layer');
-    if (!layer) return;
-    const C = [
-      {fx:.15,fy:.28,r:100,vx:.20,vy:.13,c:'rgba(91,143,128,.60)'},
-      {fx:.78,fy:.62,r:120,vx:-.15,vy:.17,c:'rgba(123,175,158,.52)'},
-      {fx:.48,fy:.14,r:80,vx:.12,vy:-.20,c:'rgba(155,200,185,.48)'},
-      {fx:.22,fy:.76,r:95,vx:-.18,vy:-.11,c:'rgba(76,126,113,.55)'},
-      {fx:.68,fy:.22,r:75,vx:.22,vy:.15,c:'rgba(123,175,158,.42)'},
-      {fx:.58,fy:.84,r:88,vx:-.13,vy:-.18,c:'rgba(91,143,128,.48)'},
-      {fx:.35,fy:.50,r:65,vx:.16,vy:.09,c:'rgba(155,200,185,.38)'},
-    ];
-    C.forEach((c, i) => {
-      const el = document.createElement('div');
-      el.style.cssText = `position:absolute;top:0;left:0;border-radius:50%;will-change:transform;pointer-events:none;width:${c.r*2}px;height:${c.r*2}px;background:${c.c}`;
-      el.id = '_b' + i;
-      layer.appendChild(el);
-    });
-    let blobs = [], mouse = {x:-9999,y:-9999}, rect = null;
-    function init() {
-      rect = layer.getBoundingClientRect();
-      blobs = C.map((c, i) => ({
-        el: document.getElementById('_b' + i),
-        x: c.fx * rect.width, y: c.fy * rect.height,
-        ox: c.fx * rect.width, oy: c.fy * rect.height,
-        r: c.r, vx: c.vx, vy: c.vy
-      }));
-    }
-    window.addEventListener('mousemove', e => {
-      rect = layer.getBoundingClientRect();
-      mouse.x = e.clientX - rect.left;
-      mouse.y = e.clientY - rect.top;
-    });
-    function tick() {
-      if (!blobs.length) { requestAnimationFrame(tick); return; }
-      const W = rect ? rect.width : layer.offsetWidth;
-      const H = rect ? rect.height : layer.offsetHeight;
-      blobs.forEach(b => {
-        const dx = b.x - mouse.x, dy = b.y - mouse.y;
-        const d  = Math.sqrt(dx*dx + dy*dy);
-        if (d < 190 && d > 1) { const f = Math.pow((190-d)/190, 1.5); b.vx += (dx/d)*f*3.6; b.vy += (dy/d)*f*3.6; }
-        b.vx += (Math.random()-.5)*.03;
-        b.vy += (Math.random()-.5)*.03;
-        b.vx += (b.ox - b.x)*.0007; b.vy += (b.oy - b.y)*.0007;
-        b.vx *= .978; b.vy *= .978;
-        const spd = Math.sqrt(b.vx*b.vx + b.vy*b.vy);
-        if (spd > 4.2) { b.vx = b.vx/spd*4.2; b.vy = b.vy/spd*4.2; }
-        b.x += b.vx; b.y += b.vy;
-        const m = b.r * .3;
-        if (b.x < m)   { b.vx += .7; b.x = m; }
-        if (b.x > W-m) { b.vx -= .7; b.x = W-m; }
-        if (b.y < m)   { b.vy += .7; b.y = m; }
-        if (b.y > H-m) { b.vy -= .7; b.y = H-m; }
-        b.el.style.transform = `translate(${b.x - b.r}px, ${b.y - b.r}px)`;
-      });
-      requestAnimationFrame(tick);
-    }
-    new ResizeObserver(init).observe(layer);
-    init(); tick();
-  })();
 </script>
 </body>
 </html>
