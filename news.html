@@ -19,62 +19,43 @@
     </script>
     <style>
         #progress-bar { position:fixed;top:0;left:0;height:2px;background:#7BAF9E;width:0%;z-index:9999;transition:width 0.1s linear; }
-
         .nav-link { position:relative; }
         .nav-link::after { content:'';position:absolute;bottom:-3px;left:0;width:0;height:1.5px;background:#7BAF9E;transition:width 0.38s cubic-bezier(0.16,1,0.3,1); }
         .nav-link:hover::after { width:100%; }
-
         .r-up,.r-scale,.r-fade { opacity:0;will-change:opacity,transform; }
         .r-up { transform:translateY(44px); transition:opacity 0.85s cubic-bezier(0.16,1,0.3,1),transform 0.85s cubic-bezier(0.16,1,0.3,1); }
         .r-scale { transform:scale(0.92) translateY(18px); transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1),transform 0.8s cubic-bezier(0.34,1.4,0.64,1); }
         .r-fade { transition:opacity 0.85s cubic-bezier(0.16,1,0.3,1); }
         .is-visible { opacity:1!important;transform:none!important; }
-
         body::after { content:'';position:fixed;inset:0;z-index:9997;pointer-events:none;opacity:0.02;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:160px 160px; }
         header { transition:box-shadow 0.4s ease; }
         body.scrolled header { box-shadow:0 1px 24px rgba(43,31,28,0.08); }
-
-        .btn-primary {
-          position:relative;overflow:hidden;background:#7BAF9E;color:#fff;
-          padding:13px 28px;border-radius:4px;font-size:13px;font-weight:600;
-          letter-spacing:0.07em;text-transform:uppercase;text-decoration:none;
-          display:inline-flex;align-items:center;gap:9px;
-          transition:background 0.28s ease,transform 0.3s cubic-bezier(0.16,1,0.3,1),box-shadow 0.3s ease;
-          box-shadow:0 2px 10px rgba(123,175,158,0.2);
-        }
+        .btn-primary { position:relative;overflow:hidden;background:#7BAF9E;color:#fff;padding:13px 28px;border-radius:4px;font-size:13px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:center;gap:9px;transition:background 0.28s ease,transform 0.3s cubic-bezier(0.16,1,0.3,1),box-shadow 0.3s ease;box-shadow:0 2px 10px rgba(123,175,158,0.2); }
         .btn-primary:hover { background:#5E8F80;transform:translateY(-2px);box-shadow:0 10px 28px rgba(94,143,128,0.35); }
         .btn-primary:active { transform:translateY(0); }
         .btn-primary svg { transition:transform 0.3s cubic-bezier(0.16,1,0.3,1); }
         .btn-primary:hover svg { transform:translateX(4px); }
 
-        /* News card */
+        /* News card — bar is on the OUTER card so it's truly flush */
         .news-card { transition:transform 0.5s cubic-bezier(0.16,1,0.3,1),box-shadow 0.5s ease; }
         .news-card:hover { transform:translateY(-6px);box-shadow:0 24px 48px -12px rgba(123,175,158,0.2); }
-        .news-card .bar { transition:width 0.55s cubic-bezier(0.16,1,0.3,1);width:0; }
+        .news-card .bar { position:absolute;bottom:0;left:0;height:2px;background:#7BAF9E;width:0;transition:width 0.55s cubic-bezier(0.16,1,0.3,1); }
         .news-card:hover .bar { width:100%; }
 
-        /* Read more link */
         .read-link { display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#7BAF9E;text-decoration:none;transition:gap 0.3s cubic-bezier(0.16,1,0.3,1),color 0.2s;background:none;border:none;cursor:pointer;padding:0; }
         .read-link:hover { color:#5E8F80;gap:11px; }
         .read-link svg { transition:transform 0.3s cubic-bezier(0.16,1,0.3,1); }
         .read-link:hover svg { transform:translateX(2px); }
 
-        /* Carousel */
-        .carousel-container { position:relative;height:520px;overflow:hidden;display:flex;justify-content:center;align-items:center; }
-        .carousel-item { position:absolute;width:460px;height:460px;border-radius:12px;object-fit:cover;opacity:0;z-index:0;transition:all 0.7s cubic-bezier(0.34,1.15,0.64,1),opacity 0.5s cubic-bezier(0.16,1,0.3,1); }
-        .carousel-item.active  { opacity:1;transform:translateX(0) scale(1);z-index:5;box-shadow:0 24px 56px rgba(0,0,0,0.2); }
-        .carousel-item.prev-1  { opacity:.55;transform:translateX(-44%) scale(0.78);z-index:4; }
-        .carousel-item.next-1  { opacity:.55;transform:translateX(44%) scale(0.78);z-index:4; }
-        .carousel-item.prev-2  { opacity:.22;transform:translateX(-74%) scale(0.6);z-index:3; }
-        .carousel-item.next-2  { opacity:.22;transform:translateX(74%) scale(0.6);z-index:3; }
-        #news-carousel-dots button { transition:width 0.4s cubic-bezier(0.34,1.26,0.64,1),background 0.3s ease; }
-        @media(max-width:768px){
-          .carousel-container{height:300px}
-          .carousel-item{width:240px;height:200px}
-          .carousel-item.prev-1{transform:translateX(-38%) scale(0.84)}
-          .carousel-item.next-1{transform:translateX(38%) scale(0.84)}
-          .carousel-item.prev-2,.carousel-item.next-2{opacity:0}
-        }
+        /* ── MASONRY PHOTO WALL ──
+           CSS columns — browser naturally creates uneven row heights.
+           Items break across 3 columns, each image fills the column width.
+           Hover lifts + slightly zooms. */
+        .masonry { column-count:3; column-gap:12px; }
+        .masonry-item { break-inside:avoid; margin-bottom:12px; overflow:hidden; border-radius:10px; cursor:pointer; }
+        .masonry-item img { width:100%; display:block; transition:transform 0.6s cubic-bezier(0.16,1,0.3,1),filter 0.4s ease; }
+        .masonry-item:hover img { transform:scale(1.04); filter:brightness(0.9); }
+        @media(max-width:640px) { .masonry { column-count:2; } }
 
         /* Modal */
         #modal-content::-webkit-scrollbar { display:none; }
@@ -82,7 +63,6 @@
 
         footer a { transition:color 0.22s ease,padding-left 0.3s cubic-bezier(0.16,1,0.3,1);display:inline-block; }
         footer a:hover { color:#7BAF9E;padding-left:5px; }
-
         @keyframes pageFade { from{opacity:0} to{opacity:1} }
         body { animation:pageFade 0.5s ease both; }
     </style>
@@ -128,9 +108,7 @@
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
             <button id="mobile-menu-btn" class="md:hidden text-deep p-2" aria-label="Open menu">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M4 6h16M4 12h16m-7 6h7"/>
-                </svg>
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M4 6h16M4 12h16m-7 6h7"/></svg>
             </button>
         </div>
     </div>
@@ -140,9 +118,7 @@
     <div class="flex justify-between items-center mb-10">
         <img src="images/icon (1).png" class="h-10" alt="Streets to Shelters">
         <button id="close-menu-btn" class="text-deep p-2" aria-label="Close menu">
-            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M6 18L18 6M6 6l12 12"/>
-            </svg>
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
     </div>
     <nav class="flex flex-col gap-5 text-xl font-heading font-bold">
@@ -174,19 +150,20 @@
     </div>
 </section>
 
-<!-- NEWS CARDS -->
+<!-- NEWS CARDS — bar is on the outer card wrapper, not the inner p-8 div -->
 <main class="pb-0 max-w-7xl mx-auto px-6">
     <section class="r-up py-12" style="transition-delay:0.1s">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-3xl mx-auto">
 
-            <div class="news-card r-scale relative bg-white border border-brand/10 rounded-2xl overflow-hidden" style="transition-delay:0.08s">
-                <div class="w-full h-52 overflow-hidden">
+            <!-- Card 1 — bar is OUTSIDE the inner padding div -->
+            <div class="news-card r-scale relative bg-white border border-brand/10 rounded-2xl overflow-hidden flex flex-col" style="transition-delay:0.08s">
+                <div class="w-full h-52 overflow-hidden flex-shrink-0">
                     <img src="images/sts3.jpg" alt="First Newspaper" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
                 </div>
-                <div class="p-8 relative">
+                <div class="p-8 flex flex-col flex-1">
                     <span class="text-xs font-semibold tracking-widest uppercase text-brand mb-2 block">March 2026</span>
                     <h3 class="font-heading text-xl font-bold mb-3 leading-snug">Our First Newspaper</h3>
-                    <p class="text-gray-500 text-sm mb-6 leading-relaxed">After the launch of Streets to Shelters, we have published our very first official newspaper!</p>
+                    <p class="text-gray-500 text-sm mb-6 leading-relaxed flex-1">After the launch of Streets to Shelters, we have published our very first official newspaper!</p>
                     <button class="open-modal-btn read-link"
                             data-title="First Official Newspaper"
                             data-date="March 2026"
@@ -194,18 +171,20 @@
                         Read More
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </button>
-                    <div class="bar absolute bottom-0 left-0 h-[2px] bg-brand rounded-full"></div>
                 </div>
+                <!-- bar on outer card — truly flush at bottom edge -->
+                <div class="bar"></div>
             </div>
 
-            <div class="news-card r-scale relative bg-white border border-brand/10 rounded-2xl overflow-hidden" style="transition-delay:0.16s">
-                <div class="w-full h-52 overflow-hidden">
+            <!-- Card 2 -->
+            <div class="news-card r-scale relative bg-white border border-brand/10 rounded-2xl overflow-hidden flex flex-col" style="transition-delay:0.16s">
+                <div class="w-full h-52 overflow-hidden flex-shrink-0">
                     <img src="images/newsletter.png" alt="Second Newsletter" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
                 </div>
-                <div class="p-8 relative">
+                <div class="p-8 flex flex-col flex-1">
                     <span class="text-xs font-semibold tracking-widest uppercase text-brand mb-2 block">March 2026</span>
                     <h3 class="font-heading text-xl font-bold mb-3 leading-snug">Second Events Newsletter</h3>
-                    <p class="text-gray-500 text-sm mb-6 leading-relaxed">Our latest updates on events that have occurred since the last newsletter!</p>
+                    <p class="text-gray-500 text-sm mb-6 leading-relaxed flex-1">Our latest updates on events that have occurred since the last newsletter!</p>
                     <button class="open-modal-btn read-link"
                             data-title="Second Events Newsletter"
                             data-date="March 2026"
@@ -213,37 +192,49 @@
                         Read More
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </button>
-                    <div class="bar absolute bottom-0 left-0 h-[2px] bg-brand rounded-full"></div>
                 </div>
+                <div class="bar"></div>
             </div>
 
         </div>
     </section>
 </main>
 
-<!-- PHOTO CAROUSEL -->
-<section class="py-24 bg-creamdark overflow-hidden r-up">
+<!-- MASONRY PHOTO WALL — CSS columns, Pinterest-style varying heights -->
+<section class="py-24 overflow-hidden r-up" style="background:rgba(244,239,230,0.5);">
     <div class="max-w-7xl mx-auto px-6">
         <div class="text-center mb-14">
             <span class="text-xs font-semibold tracking-widest uppercase text-deep/40 mb-3 block">From the Field</span>
             <h2 class="text-4xl font-heading font-bold text-deep">The Work in <em class="text-brandDark not-italic">Motion</em></h2>
         </div>
-        <div class="carousel-container mb-10" id="news-carousel" role="region" aria-label="News photo gallery">
-            <img src="images/sts5.jpg"  class="carousel-item" alt="Volunteer activity" loading="lazy">
-            <img src="images/sts6.jpg"  class="carousel-item" alt="Volunteer activity" loading="lazy">
-            <img src="images/sts8.jpg"  class="carousel-item" alt="Volunteer activity" loading="lazy">
-            <img src="images/sts9.jpg"  class="carousel-item" alt="Volunteer activity" loading="lazy">
-            <img src="images/sts1.jpg"  class="carousel-item" alt="Team photo" loading="lazy">
-            <img src="images/sts3.jpg"  class="carousel-item" alt="Kit assembly" loading="lazy">
-        </div>
-        <div class="flex justify-center items-center gap-5">
-            <button id="news-prev" aria-label="Previous photo" class="w-9 h-9 rounded-full border border-deep/25 flex items-center justify-center hover:border-deep hover:bg-deep hover:text-white transition-all duration-300">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-            </button>
-            <div class="flex gap-2" id="news-carousel-dots"></div>
-            <button id="news-next" aria-label="Next photo" class="w-9 h-9 rounded-full border border-deep/25 flex items-center justify-center hover:border-deep hover:bg-deep hover:text-white transition-all duration-300">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-            </button>
+        <div class="masonry">
+            <div class="masonry-item">
+                <img src="images/sts5.jpg" alt="Volunteer activity" loading="lazy">
+            </div>
+            <div class="masonry-item">
+                <img src="images/sts1.jpg" alt="Team photo" loading="lazy">
+            </div>
+            <div class="masonry-item">
+                <img src="images/sts6.jpg" alt="Volunteer activity" loading="lazy">
+            </div>
+            <div class="masonry-item">
+                <img src="images/sts3.jpg" alt="Kit assembly" loading="lazy">
+            </div>
+            <div class="masonry-item">
+                <img src="images/sts8.jpg" alt="Volunteer activity" loading="lazy">
+            </div>
+            <div class="masonry-item">
+                <img src="images/sts4.jpg" alt="Community" loading="lazy">
+            </div>
+            <div class="masonry-item">
+                <img src="images/sts9.jpg" alt="Volunteer activity" loading="lazy">
+            </div>
+            <div class="masonry-item">
+                <img src="images/sts7.jpg" alt="Events" loading="lazy">
+            </div>
+            <div class="masonry-item">
+                <img src="images/sts11.png" alt="Volunteer drive" loading="lazy">
+            </div>
         </div>
     </div>
 </section>
@@ -349,59 +340,7 @@
             });
         });
         [modalClose, backdrop].forEach(el => el.addEventListener('click', () => modal.classList.add('opacity-0', 'pointer-events-none')));
-
-        /* Carousel */
-        const items = Array.from(document.querySelectorAll('.carousel-item'));
-        const dotsCon = document.getElementById('news-carousel-dots');
-        const prevBtn = document.getElementById('news-prev');
-        const nextBtn = document.getElementById('news-next');
-        let cIdx = 0, cTimer = null;
-        if (items.length) {
-            const total = items.length;
-            items.forEach((_, i) => {
-                const d = document.createElement('button');
-                d.setAttribute('aria-label', 'Photo ' + (i + 1));
-                d.className = 'h-2 rounded-full transition-all duration-400';
-                d.classList.add(i === 0 ? 'bg-deep' : 'bg-deep/25', i === 0 ? 'w-6' : 'w-2');
-                d.addEventListener('click', () => { cIdx = i; update(); reset(); });
-                dotsCon.appendChild(d);
-            });
-            const dots = dotsCon.querySelectorAll('button');
-            function update() {
-                items.forEach((item, i) => {
-                    item.classList.remove('active','prev-1','next-1','prev-2','next-2');
-                    const d = ((i - cIdx) % total + total) % total;
-                    if (d===0) item.classList.add('active');
-                    else if (d===1) item.classList.add('next-1');
-                    else if (d===total-1) item.classList.add('prev-1');
-                    else if (d===2) item.classList.add('next-2');
-                    else if (d===total-2) item.classList.add('prev-2');
-                });
-                dots.forEach((d,i) => {
-                    d.classList.toggle('bg-deep', i===cIdx);
-                    d.classList.toggle('w-6', i===cIdx);
-                    d.classList.toggle('bg-deep/25', i!==cIdx);
-                    d.classList.toggle('w-2', i!==cIdx);
-                });
-            }
-            function advance(dir) { cIdx = (cIdx + dir + total) % total; update(); reset(); }
-            function reset() { clearInterval(cTimer); cTimer = setInterval(() => advance(1), 3800); }
-            prevBtn && prevBtn.addEventListener('click', () => advance(-1));
-            nextBtn && nextBtn.addEventListener('click', () => advance(1));
-            document.addEventListener('keydown', e => { if(e.key==='ArrowLeft') advance(-1); if(e.key==='ArrowRight') advance(1); });
-            const car = document.getElementById('news-carousel');
-            let tx = null;
-            car.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive:true });
-            car.addEventListener('touchend', e => {
-                if (tx===null) return;
-                const dx = e.changedTouches[0].clientX - tx;
-                if (Math.abs(dx) > 40) advance(dx < 0 ? 1 : -1);
-                tx = null;
-            }, { passive:true });
-            car.addEventListener('mouseenter', () => clearInterval(cTimer));
-            car.addEventListener('mouseleave', () => reset());
-            requestAnimationFrame(() => { update(); reset(); });
-        }
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') modal.classList.add('opacity-0', 'pointer-events-none'); });
     });
 </script>
 </body>

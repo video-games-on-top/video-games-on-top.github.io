@@ -4,119 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Events | Streets To Shelters</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="icon" href="images/Logo1.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
           theme: {
             extend: {
-              colors: { brand:'#7BAF9E', brandDark:'#5E8F80', cream:'#F4EFE6', deep:'#2B1F1C' },
+              colors: { brand:'#7BAF9E', brandDark:'#5E8F80', cream:'#F4EFE6', deep:'#2B1F1C', creamdark:'#c3bfb8' },
               fontFamily: { heading:['Playfair Display','serif'], body:['Inter','sans-serif'] }
             }
           }
         }
     </script>
     <style>
-        /* ── Nav underline — top-level links only ── */
-       #progress-bar { position:fixed;top:0;left:0;height:2px;background:#7BAF9E;width:0%;z-index:9999;transition:width 0.1s linear; }
-
+        #progress-bar { position:fixed;top:0;left:0;height:2px;background:#7BAF9E;width:0%;z-index:9999;transition:width 0.1s linear; }
         .nav-link { position:relative; }
         .nav-link::after { content:'';position:absolute;bottom:-3px;left:0;width:0;height:1.5px;background:#7BAF9E;transition:width 0.38s cubic-bezier(0.16,1,0.3,1); }
         .nav-link:hover::after { width:100%; }
-
         .r-up,.r-scale,.r-fade { opacity:0;will-change:opacity,transform; }
         .r-up { transform:translateY(44px); transition:opacity 0.85s cubic-bezier(0.16,1,0.3,1),transform 0.85s cubic-bezier(0.16,1,0.3,1); }
         .r-scale { transform:scale(0.92) translateY(18px); transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1),transform 0.8s cubic-bezier(0.34,1.4,0.64,1); }
         .r-fade { transition:opacity 0.85s cubic-bezier(0.16,1,0.3,1); }
         .is-visible { opacity:1!important;transform:none!important; }
-
         body::after { content:'';position:fixed;inset:0;z-index:9997;pointer-events:none;opacity:0.02;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:160px 160px; }
         header { transition:box-shadow 0.4s ease; }
         body.scrolled header { box-shadow:0 1px 24px rgba(43,31,28,0.08); }
-
-        .btn-primary {
-          position:relative;overflow:hidden;background:#7BAF9E;color:#fff;
-          padding:13px 28px;border-radius:4px;font-size:13px;font-weight:600;
-          letter-spacing:0.07em;text-transform:uppercase;text-decoration:none;
-          display:inline-flex;align-items:center;gap:9px;
-          transition:background 0.28s ease,transform 0.3s cubic-bezier(0.16,1,0.3,1),box-shadow 0.3s ease;
-          box-shadow:0 2px 10px rgba(123,175,158,0.2);
-        }
+        .btn-primary { position:relative;overflow:hidden;background:#7BAF9E;color:#fff;padding:13px 28px;border-radius:4px;font-size:13px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:center;gap:9px;transition:background 0.28s ease,transform 0.3s cubic-bezier(0.16,1,0.3,1),box-shadow 0.3s ease;box-shadow:0 2px 10px rgba(123,175,158,0.2); }
         .btn-primary:hover { background:#5E8F80;transform:translateY(-2px);box-shadow:0 10px 28px rgba(94,143,128,0.35); }
         .btn-primary:active { transform:translateY(0); }
         .btn-primary svg { transition:transform 0.3s cubic-bezier(0.16,1,0.3,1); }
         .btn-primary:hover svg { transform:translateX(4px); }
 
-        /* News card */
-        .news-card { transition:transform 0.5s cubic-bezier(0.16,1,0.3,1),box-shadow 0.5s ease; }
-        .news-card:hover { transform:translateY(-6px);box-shadow:0 24px 48px -12px rgba(123,175,158,0.2); }
-        .news-card .bar { transition:width 0.55s cubic-bezier(0.16,1,0.3,1);width:0; }
-        .news-card:hover .bar { width:100%; }
+        /* Event cards — bar is on the OUTER div so it sits truly flush at card bottom */
+        .event-card { transition:transform 0.5s cubic-bezier(0.16,1,0.3,1),box-shadow 0.5s ease; }
+        .event-card:hover { transform:translateY(-6px);box-shadow:0 24px 48px -12px rgba(123,175,158,0.2); }
+        .event-card .bar { position:absolute;bottom:0;left:0;height:2px;background:#7BAF9E;width:0;transition:width 0.55s cubic-bezier(0.16,1,0.3,1); }
+        .event-card:hover .bar { width:100%; }
 
-        /* Read more link */
         .read-link { display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#7BAF9E;text-decoration:none;transition:gap 0.3s cubic-bezier(0.16,1,0.3,1),color 0.2s;background:none;border:none;cursor:pointer;padding:0; }
         .read-link:hover { color:#5E8F80;gap:11px; }
         .read-link svg { transition:transform 0.3s cubic-bezier(0.16,1,0.3,1); }
         .read-link:hover svg { transform:translateX(2px); }
-               /* ── Placeholder ── */
-        .placeholder {
-          width: 100%;
-          height: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: linear-gradient(135deg, #e8f3ef 0%, #d4e9e2 100%);
-          font-size: 1.5rem;
-          font-weight: 500;
-          color: #7BAF9E;
-          letter-spacing: -1px;
-        }
 
-        /* ── Footer links ── */
-        footer a { transition:color 0.25s ease, transform 0.3s cubic-bezier(0.34,1.26,0.64,1); display:inline-block; }
-        footer a:hover { color:#7BAF9E; transform:translateX(5px); }
+        .placeholder { width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#e8f3ef 0%,#d4e9e2 100%);font-size:1.1rem;font-weight:500;color:#7BAF9E;letter-spacing:0.05em; }
 
+        /* Infinite auto-scroll photo strip */
+        .slider { overflow:hidden;width:100%; }
+        .slide-track { display:flex;width:max-content;animation:scroll 32s linear infinite; }
+        .slide-track img { width:560px;height:380px;object-fit:cover;margin-right:14px;border-radius:8px;flex-shrink:0; }
+        @keyframes scroll { from{transform:translateX(-50%)} to{transform:translateX(0)} }
+        .slider:hover .slide-track { animation-play-state:paused; }
 
-
+        footer a { transition:color 0.22s ease,padding-left 0.3s cubic-bezier(0.16,1,0.3,1);display:inline-block; }
+        footer a:hover { color:#7BAF9E;padding-left:5px; }
         @keyframes pageFade { from{opacity:0} to{opacity:1} }
         body { animation:pageFade 0.5s ease both; }
-
-        .slider {
-  overflow: hidden;
-  width: 100%;
-}
-section.r-up {
-  margin-left: -1.5rem;  /* match parent padding */
-  margin-right: -1.5rem;
-}
-
-.slide-track {
-  display: flex;
-  width: max-content;
-  animation: scroll 30s linear infinite;
-}
-
-.slide-track img {
-  width: 600px;
-  margin-right: 20px;
-}
-
-/* Animation moves to the RIGHT */
-@keyframes scroll {
-  from {
-    transform: translateX(-50%);
-  }
-  to {
-    transform: translateX(0);
-  }
-}
-
-/* Pause on hover */
-.slider:hover .slide-track {
-  animation-play-state: paused;
-}
     </style>
 </head>
 <body class="bg-cream text-deep font-body">
@@ -160,9 +103,7 @@ section.r-up {
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
             <button id="mobile-menu-btn" class="md:hidden text-deep p-2" aria-label="Open menu">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M4 6h16M4 12h16m-7 6h7"/>
-                </svg>
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M4 6h16M4 12h16m-7 6h7"/></svg>
             </button>
         </div>
     </div>
@@ -172,9 +113,7 @@ section.r-up {
     <div class="flex justify-between items-center mb-10">
         <img src="images/icon (1).png" class="h-10" alt="Streets to Shelters">
         <button id="close-menu-btn" class="text-deep p-2" aria-label="Close menu">
-            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M6 18L18 6M6 6l12 12"/>
-            </svg>
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
     </div>
     <nav class="flex flex-col gap-5 text-xl font-heading font-bold">
@@ -192,93 +131,83 @@ section.r-up {
     </nav>
 </div>
 
-<main class="pt-36 pb-24 max-w-7xl mx-auto px-6 space-y-24">
-    <section class="pt-36 pb-16 bg-cream">
-        <div class="max-w-3xl mx-auto text-center px-6">
-            <div class="r-fade mb-4">
+<!-- HERO — single pt-36 only here, no double padding -->
+<section class="pt-36 pb-16 bg-cream">
+    <div class="max-w-3xl mx-auto text-center px-6">
+        <div class="r-fade mb-4">
             <span class="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase px-4 py-1.5 rounded-sm border border-brand/25 text-brandDark" style="background:rgba(123,175,158,0.07);">
                 <span class="w-1.5 h-1.5 rounded-full bg-brand inline-block"></span>
-                What we do
+                What We Do
             </span>
-            </div>
-            <h1 class="r-up text-5xl md:text-6xl font-heading font-bold mb-4">Events</h1>
-            <p class="r-up text-base text-gray-500 leading-relaxed" style="transition-delay:0.1s">Here, there are the events, fundraisers, and other important details to get to know our non-profit better!</p>
         </div>
-    </section>
+        <h1 class="r-up text-5xl md:text-6xl font-heading font-bold mb-4"><em class="text-brand">Events</em></h1>
+        <p class="r-up text-base text-gray-500 leading-relaxed" style="transition-delay:0.1s">Here are the events, fundraisers, and other important details to get to know our non-profit better!</p>
+    </div>
+</section>
 
-    <!-- Events Grid -->
+<!-- MAIN — no extra pt, hero section handles top spacing -->
+<main class="pb-24 max-w-7xl mx-auto px-6 space-y-20">
+
+    <!-- Event Cards -->
     <section class="r-up" style="transition-delay:0.1s">
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center">
-            <div class="news-card r-scale relative bg-white border border-brand/10 rounded-2xl overflow-hidden">
-                <div class="w-full h-44 overflow-hidden">
-                    <img src="images/sts5.jpg" alt="Cookie Fundraiser"
-                         class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-                         onerror="this.parentElement.style.background='#f4efe6'">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            <div class="event-card r-scale relative bg-white border border-brand/10 rounded-2xl overflow-hidden flex flex-col" style="transition-delay:0.04s">
+                <div class="w-full h-52 overflow-hidden flex-shrink-0">
+                    <img src="images/sts5.jpg" alt="Cookie Fundraiser" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700">
                 </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-semibold mb-2">Cookie Fundraiser</h3>
-                    <p class="text-gray-600 text-sm mb-1">San Antonio, TX</p>
-                    <p class="text-gray-500 text-sm mb-4">March 14, 2026</p>
-                    <button
-                            class="open-modal-btn magnetic text-brand font-semibold hover:underline"
+                <div class="p-7 flex flex-col flex-1">
+                    <span class="text-xs font-semibold tracking-widest uppercase text-brand mb-2 block">March 14, 2026</span>
+                    <h3 class="font-heading text-xl font-bold mb-1 leading-snug">Cookie Fundraiser</h3>
+                    <p class="text-gray-500 text-sm mb-1">San Antonio, TX</p>
+                    <p class="text-gray-400 text-sm mb-5 leading-relaxed flex-1">Stage Run, River Rock Ranch &amp; Two Creeks — door-to-door bake sale raising over $300 for our summer hygiene kit initiative.</p>
+                    <button class="open-modal-btn read-link"
                             data-title="Spring Cookie Fundraiser"
                             data-date="March 14, 2026 @ 1pm to 6pm"
                             data-location="Stage Run, River Rock Ranch, and Two Creeks"
                             data-desc="On March 14, 2026, the Streets to Shelters team hit the pavement in Stage Run, River Rock Ranch, and Two Creeks for our most successful bake sale yet! From 1:00 PM to 6:00 PM, our volunteers went door-to-door and manned our community stand, offering a delicious spread of homemade cookies, brownies, and refreshing drinks. Thanks to the overwhelming support and kindness of our neighbors, we raised over $300 in just five hours. Every cent of these proceeds is being funneled directly into our summer hygiene kit initiative, ensuring that those in local shelters have the essential supplies they need to stay healthy and comfortable during the warmer months.">
-                        <button class="read-link open-modal-btn">
-                            Learn More
-                            <svg width="12" height="12" ...></svg>
-                        </button>
+                        Learn More
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </button>
                 </div>
-                <div class="bar absolute bottom-0 left-0 h-[2px] bg-brand rounded-full"></div>
+                <div class="bar"></div>
             </div>
-            <div class="news-card r-scale relative bg-white border border-brand/10 rounded-2xl overflow-hidden">
 
-
-                <div class="w-full h-44 overflow-hidden">
-                    <div class="placeholder">no image</div>
+            <div class="event-card r-scale relative bg-white border border-brand/10 rounded-2xl overflow-hidden flex flex-col" style="transition-delay:0.12s">
+                <div class="w-full h-52 overflow-hidden flex-shrink-0">
+                    <div class="placeholder">Coming Soon</div>
                 </div>
-
-
-                <div class="p-6">
-                    <h3 class="text-xl font-semibold mb-2">Bake Sale</h3>
-                    <p class="text-gray-600 text-sm mb-1">San Antonio, TX</p>
-                    <p class="text-gray-500 text-sm mb-4">March 28 & 29, 2026</p>
-                    <button
-                            class="open-modal-btn magnetic text-brand font-semibold hover:underline"
-                            data-title="Spring Cookie Fundraiser"
+                <div class="p-7 flex flex-col flex-1">
+                    <span class="text-xs font-semibold tracking-widest uppercase text-brand mb-2 block">March 28 &amp; 29, 2026</span>
+                    <h3 class="font-heading text-xl font-bold mb-1 leading-snug">Bake Sale</h3>
+                    <p class="text-gray-500 text-sm mb-1">San Antonio, TX</p>
+                    <p class="text-gray-400 text-sm mb-5 leading-relaxed flex-1">27111 Brook Bend, Boerne, TX — community fundraiser targeting $1,500–$2,000. We've already raised over $800!</p>
+                    <button class="open-modal-btn read-link"
+                            data-title="Spring Bake Sale"
                             data-date="March 28 & 29 @ 11am to 4pm"
-                            data-location=" 27111 Brook Bend, Boerne, TX 78015"
-                            data-desc="On March 28 & 29, 2026, the Streets to Shelters team and volunteers Volunteers will work in small teams to sell cookies, snacks, and drinks, help cover assigned areas, and interact with community members. Our goal is to raise $1,500–$2,000, and your participation plays a key role in making that happen. We have raised over $800 and are on our way to start out first event!">
-                        <button class="read-link open-modal-btn">
-                            Learn More
-                            <svg width="12" height="12" ...></svg>
-                        </button>
+                            data-location="27111 Brook Bend, Boerne, TX 78015"
+                            data-desc="On March 28 & 29, 2026, the Streets to Shelters team and volunteers will work in small teams to sell cookies, snacks, and drinks, help cover assigned areas, and interact with community members. Our goal is to raise $1,500–$2,000, and your participation plays a key role in making that happen. We have raised over $800 and are on our way to start our first event!">
+                        Learn More
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </button>
                 </div>
-                <div class="bar absolute bottom-0 left-0 h-[2px] bg-brand rounded-full"></div>
+                <div class="bar"></div>
             </div>
-            <div class="news-card r-scale relative bg-white border border-brand/10 rounded-2xl overflow-hidden">
 
-
-                <!--=======-->
-                <div class="w-full h-44 overflow-hidden">
+            <div class="event-card r-scale relative bg-white border border-brand/10 rounded-2xl overflow-hidden flex flex-col" style="transition-delay:0.2s">
+                <div class="w-full h-52 overflow-hidden flex-shrink-0">
                     <div class="placeholder">Join Us!</div>
                 </div>
-
-                <div class="p-6">
-                    <h3 class="text-xl font-semibold mb-2">Bake Sale</h3>
-                    <p class="text-gray-600 text-sm mb-1">San Antonio, TX</p>
-                    <p class="text-gray-500 text-sm mb-4">April 11 & 12, 2026</p>
-                    <button
-                            class="open-modal-btn magnetic text-brand font-semibold hover:underline"
-                            data-title="Spring Cookie Fundraiser"
+                <div class="p-7 flex flex-col flex-1">
+                    <span class="text-xs font-semibold tracking-widest uppercase text-brand mb-2 block">April 11 &amp; 12, 2026</span>
+                    <h3 class="font-heading text-xl font-bold mb-1 leading-snug">Bake Sale</h3>
+                    <p class="text-gray-500 text-sm mb-1">San Antonio, TX</p>
+                    <p class="text-gray-400 text-sm mb-5 leading-relaxed flex-1">Stage Run, River Rock Ranch &amp; Two Creeks — fresh brownies and cookies, goal of $300–$500 while spreading awareness.</p>
+                    <button class="open-modal-btn read-link"
+                            data-title="Spring Bake Sale"
                             data-date="April 11 & 12, TBD"
                             data-location="Stage Run, River Rock Ranch, and Two Creeks"
-                            data-desc="
-
-Join us April 11 to April 12 for our 2 day bake sale. We are raising money to support our nonprofit and expand our impact in the community.
+                            data-desc="Join us April 11 to April 12 for our 2 day bake sale. We are raising money to support our nonprofit and expand our impact in the community.
 
 You can expect fresh brownies and cookies made by our team. Every item is prepared with care to ensure quality and taste. Your support helps us fund our mission and reach more people.
 
@@ -286,79 +215,58 @@ Our goal is to raise 300 to 500 dollars while spreading awareness about what we 
 
 We focus on teamwork, strong customer service, and creating a positive experience for everyone who visits. Every purchase makes a difference.
 
-Come support, enjoy some baked goods, and help us grow.
-">
-                        <button class="read-link open-modal-btn">
-                            Learn More
-                            <svg width="12" height="12" ...></svg>
-                        </button>
+Come support, enjoy some baked goods, and help us grow.">
+                        Learn More
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </button>
                 </div>
+                <div class="bar"></div>
             </div>
-            <div class="bar absolute bottom-0 left-0 h-[2px] bg-brand rounded-full"></div>
+
         </div>
     </section>
 
-    <!-- Event Photo Gallery -->
+    <!-- Infinite photo strip -->
     <section class="r-up" style="transition-delay:0.15s">
-        <h2 class="text-3xl font-heading font-bold text-center mb-4">Event Photos</h2>
-        <p class="text-center text-gray-500 text-sm mb-10">Moments from our community drives and
-            events</p>
+        <div class="text-center mb-10">
+            <span class="text-xs font-semibold tracking-widest uppercase text-deep/40 mb-3 block">Moments</span>
+            <h2 class="text-4xl font-heading font-bold text-deep">Event <em class="text-brand not-italic">Photos</em></h2>
+        </div>
         <div class="slider w-screen relative left-1/2 -translate-x-1/2">
             <div class="slide-track">
-                <div class=" overflow-hidden aspect-[4/3]">
-                    <img src="images/sts1.jpg" alt="Event photo"
-                         class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500">
-                </div>
-                <div class=" overflow-hidden aspect-[4/3]">
-                    <img src="images/sts7.jpg" alt="Event photo"
-                         class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500">
-                </div>
-                <div class=" overflow-hidden aspect-[4/3]">
-                    <img src="images/sts4.jpg" alt="Event photo"
-                         class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500">
-                </div>
-                <div class=" overflow-hidden aspect-[4/3]">
-                    <img src="images/sts11.png" alt="Event photo"
-                         class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500">
-                </div>
-                <div class=" overflow-hidden aspect-[4/3]">
-                    <img src="images/sts6.jpg" alt="Event photo"
-                         class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500">
-                </div>
-                <div class=" overflow-hidden aspect-[4/3]">
-                    <img src="images/sts9.jpg" alt="Event photo"
-                         class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500">
-                </div>
-                <div class=" overflow-hidden aspect-[4/3]">
-                    <img src="images/sts1.jpg" alt="Event photo"
-                         class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500">
-                </div>
-                <div class=" overflow-hidden aspect-[4/3]">
-                    <img src="images/sts7.jpg" alt="Event photo"
-                         class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500">
-                </div>
-                <div class=" overflow-hidden aspect-[4/3]">
-                    <img src="images/sts4.jpg" alt="Event photo"
-                         class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500">
-                </div>
-                <div class=" overflow-hidden aspect-[4/3]">
-                    <img src="images/sts11.png" alt="Event photo"
-                         class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500">
-                </div>
-                <div class=" overflow-hidden aspect-[4/3]">
-                    <img src="images/sts6.jpg" alt="Event photo"
-                         class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500">
-                </div>
-                <div class=" overflow-hidden aspect-[4/3]">
-                    <img src="images/sts9.jpg" alt="Event photo"
-                         class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500">
-                </div>
+                <img src="images/sts1.jpg"  alt="Event photo">
+                <img src="images/sts7.jpg"  alt="Event photo">
+                <img src="images/sts4.jpg"  alt="Event photo">
+                <img src="images/sts11.png" alt="Event photo">
+                <img src="images/sts6.jpg"  alt="Event photo">
+                <img src="images/sts9.jpg"  alt="Event photo">
+                <img src="images/sts1.jpg"  alt="Event photo">
+                <img src="images/sts7.jpg"  alt="Event photo">
+                <img src="images/sts4.jpg"  alt="Event photo">
+                <img src="images/sts11.png" alt="Event photo">
+                <img src="images/sts6.jpg"  alt="Event photo">
+                <img src="images/sts9.jpg"  alt="Event photo">
             </div>
         </div>
-
     </section>
+
 </main>
+
+<!-- Modal -->
+<div id="event-modal" class="fixed inset-0 z-[70] flex items-center justify-center p-4 sm:p-6 opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="absolute inset-0 bg-deep/60 backdrop-blur-sm" id="modal-backdrop"></div>
+    <div class="bg-white rounded-2xl w-full max-w-2xl relative z-10 p-8 md:p-12 shadow-2xl transform scale-95 transition-transform duration-300" id="modal-box">
+        <button id="close-modal-btn" class="absolute top-6 right-6 text-gray-400 hover:text-brand transition">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+        <h2 id="modal-title" class="text-3xl font-heading font-bold text-deep mb-4">Event Title</h2>
+        <div class="flex flex-col sm:flex-row gap-3 text-xs font-semibold mb-6">
+            <span id="modal-date" class="bg-brand/10 text-brand px-4 py-2 rounded-sm">📅 Date</span>
+            <span id="modal-location" class="bg-brand/10 text-brand px-4 py-2 rounded-sm">📍 Location</span>
+        </div>
+        <p id="modal-desc" class="text-gray-500 leading-relaxed text-sm whitespace-pre-line"></p>
+    </div>
+</div>
 
 <footer class="bg-deep text-white py-16">
     <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-12">
@@ -402,91 +310,59 @@ Come support, enjoy some baked goods, and help us grow.
     </div>
 </footer>
 
-<div id="event-modal"
-     class="fixed inset-0 z-[70] flex items-center justify-center p-4 sm:p-6 opacity-0 pointer-events-none transition-opacity duration-300">
-    <div class="absolute inset-0 bg-deep/60 backdrop-blur-sm" id="modal-backdrop"></div>
-    <div class="bg-white rounded-3xl w-full max-w-4xl relative z-10 p-8 md:p-12 shadow-2xl transform scale-95 transition-transform duration-300"
-         id="modal-box">
-        <button id="close-modal-btn"
-                class="absolute top-6 right-6 text-gray-400 hover:text-brand transition">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M6 18L18 6M6 6l12 12"/>
-            </svg>
-        </button>
-        <h2 id="modal-title" class="text-3xl md:text-4xl font-heading font-bold text-deep mb-4">
-            Event Title</h2>
-        <div class="flex flex-col sm:flex-row gap-4 text-sm text-brand font-semibold mb-6">
-            <span id="modal-date" class="bg-brand/10 px-4 py-2 rounded-lg">📅 Date</span>
-            <span id="modal-location" class="bg-brand/10 px-4 py-2 rounded-lg">📍 Location</span>
-        </div>
-        <p id="modal-desc" class="text-gray-600 leading-relaxed mb-8 font-body">Event description
-            goes here.</p>
-    </div>
-</div>
-
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-      /* ── Mobile Menu ── */
-      const mobileBtn = document.getElementById('mobile-menu-btn');
-      const closeBtn  = document.getElementById('close-menu-btn');
-      const overlay   = document.getElementById('mobile-menu-overlay');
-      if (mobileBtn && overlay) {
-        mobileBtn.addEventListener('click', () => overlay.classList.remove('translate-x-full'));
-        closeBtn.addEventListener('click',  () => overlay.classList.add('translate-x-full'));
-        overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => overlay.classList.add('translate-x-full')));
-      }
+        const bar = document.getElementById('progress-bar');
+        window.addEventListener('scroll', () => {
+            const total = document.documentElement.scrollHeight - window.innerHeight;
+            bar.style.width = (total > 0 ? (window.scrollY / total) * 100 : 0) + '%';
+            document.body.classList.toggle('scrolled', window.scrollY > 60);
+        }, { passive: true });
 
-      /* ── Scroll Reveal ── */
-      const obs = new IntersectionObserver((entries, o) => {
-        entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); o.unobserve(entry.target); } });
-      }, { threshold: 0.07, rootMargin:'0px 0px -40px 0px' });
-      document.querySelectorAll('.r-up, .r-scale').forEach(el => obs.observe(el));
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const closeBtn  = document.getElementById('close-menu-btn');
+        const overlay   = document.getElementById('mobile-menu-overlay');
+        if (mobileBtn && overlay) {
+            mobileBtn.addEventListener('click', () => overlay.classList.remove('translate-x-full'));
+            closeBtn.addEventListener('click',  () => overlay.classList.add('translate-x-full'));
+            overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => overlay.classList.add('translate-x-full')));
+        }
 
-      /* ── Magnetic Buttons ── */
-      document.querySelectorAll('.magnetic').forEach(btn => {
-        btn.addEventListener('mousemove', e => {
-          const r = btn.getBoundingClientRect();
-          btn.style.transform = `translate(${(e.clientX - r.left - r.width/2) * 0.28}px, ${(e.clientY - r.top - r.height/2) * 0.28}px)`;
+        const revObs = new IntersectionObserver((entries, obs) => {
+            entries.forEach(e => { if (!e.isIntersecting) return; e.target.classList.add('is-visible'); obs.unobserve(e.target); });
+        }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.r-up,.r-scale,.r-fade').forEach(el => revObs.observe(el));
+
+        const modal    = document.getElementById('event-modal');
+        const modalBox = document.getElementById('modal-box');
+        const backdrop = document.getElementById('modal-backdrop');
+        const closeBtn2 = document.getElementById('close-modal-btn');
+        const mTitle   = document.getElementById('modal-title');
+        const mDate    = document.getElementById('modal-date');
+        const mLoc     = document.getElementById('modal-location');
+        const mDesc    = document.getElementById('modal-desc');
+
+        document.querySelectorAll('.open-modal-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                mTitle.textContent = btn.dataset.title;
+                mDate.textContent  = '📅 ' + btn.dataset.date;
+                mLoc.textContent   = '📍 ' + btn.dataset.location;
+                mDesc.textContent  = btn.dataset.desc;
+                modal.classList.remove('opacity-0','pointer-events-none');
+                modalBox.classList.remove('scale-95');
+                modalBox.classList.add('scale-100');
+            });
         });
-        btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
-      });
 
-      /* ── Modal ── */
-      const modal    = document.getElementById('event-modal');
-      const modalBox = document.getElementById('modal-box');
-      const backdrop = document.getElementById('modal-backdrop');
-      const closeBtn2 = document.getElementById('close-modal-btn');
-      const mTitle   = document.getElementById('modal-title');
-      const mDate    = document.getElementById('modal-date');
-      const mLoc     = document.getElementById('modal-location');
-      const mDesc    = document.getElementById('modal-desc');
-
-      document.querySelectorAll('.open-modal-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          mTitle.textContent = btn.dataset.title;
-          mDate.textContent  = '📅 ' + btn.dataset.date;
-          mLoc.textContent   = '📍 ' + btn.dataset.location;
-          mDesc.textContent  = btn.dataset.desc;
-          modal.classList.remove('opacity-0', 'pointer-events-none');
-          modalBox.classList.remove('scale-95');
-          modalBox.classList.add('scale-100');
-        });
-      });
-
-      const closeModal = () => {
-        modal.classList.add('opacity-0', 'pointer-events-none');
-        modalBox.classList.remove('scale-100');
-        modalBox.classList.add('scale-95');
-      };
-      closeBtn2.addEventListener('click', closeModal);
-      backdrop.addEventListener('click',  closeModal);
+        const closeModal = () => {
+            modal.classList.add('opacity-0','pointer-events-none');
+            modalBox.classList.remove('scale-100');
+            modalBox.classList.add('scale-95');
+        };
+        closeBtn2.addEventListener('click', closeModal);
+        backdrop.addEventListener('click', closeModal);
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
     });
-    const bar = document.getElementById('progress-bar');
-window.addEventListener('scroll', () => {
-    const total = document.documentElement.scrollHeight - window.innerHeight;
-    bar.style.width = (window.scrollY / total) * 100 + '%';
-});
 </script>
 </body>
 </html>
