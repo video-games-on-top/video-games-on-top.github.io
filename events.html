@@ -20,25 +20,46 @@
     </script>
     <style>
         /* ── Nav underline — top-level links only ── */
+       #progress-bar { position:fixed;top:0;left:0;height:2px;background:#7BAF9E;width:0%;z-index:9999;transition:width 0.1s linear; }
+
         .nav-link { position:relative; }
-        .nav-link::after {
-          content:''; position:absolute; bottom:-3px; left:0;
-          width:0; height:1.5px; background:#7BAF9E;
-          transition:width 0.38s cubic-bezier(0.16,1,0.3,1);
-        }
+        .nav-link::after { content:'';position:absolute;bottom:-3px;left:0;width:0;height:1.5px;background:#7BAF9E;transition:width 0.38s cubic-bezier(0.16,1,0.3,1); }
         .nav-link:hover::after { width:100%; }
 
-        /* ── Scroll Reveal ── */
-        .r-up, .r-scale {
-          opacity:0; will-change:opacity,transform;
+        .r-up,.r-scale,.r-fade { opacity:0;will-change:opacity,transform; }
+        .r-up { transform:translateY(44px); transition:opacity 0.85s cubic-bezier(0.16,1,0.3,1),transform 0.85s cubic-bezier(0.16,1,0.3,1); }
+        .r-scale { transform:scale(0.92) translateY(18px); transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1),transform 0.8s cubic-bezier(0.34,1.4,0.64,1); }
+        .r-fade { transition:opacity 0.85s cubic-bezier(0.16,1,0.3,1); }
+        .is-visible { opacity:1!important;transform:none!important; }
+
+        body::after { content:'';position:fixed;inset:0;z-index:9997;pointer-events:none;opacity:0.02;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:160px 160px; }
+        header { transition:box-shadow 0.4s ease; }
+        body.scrolled header { box-shadow:0 1px 24px rgba(43,31,28,0.08); }
+
+        .btn-primary {
+          position:relative;overflow:hidden;background:#7BAF9E;color:#fff;
+          padding:13px 28px;border-radius:4px;font-size:13px;font-weight:600;
+          letter-spacing:0.07em;text-transform:uppercase;text-decoration:none;
+          display:inline-flex;align-items:center;gap:9px;
+          transition:background 0.28s ease,transform 0.3s cubic-bezier(0.16,1,0.3,1),box-shadow 0.3s ease;
+          box-shadow:0 2px 10px rgba(123,175,158,0.2);
         }
-        .r-up   { transform:translateY(40px); transition:opacity 0.85s cubic-bezier(0.16,1,0.3,1), transform 0.85s cubic-bezier(0.16,1,0.3,1); }
-        .r-scale { transform:scale(0.93) translateY(18px); transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.34,1.4,0.64,1); }
-        .is-visible { opacity:1!important; transform:none!important; }
+        .btn-primary:hover { background:#5E8F80;transform:translateY(-2px);box-shadow:0 10px 28px rgba(94,143,128,0.35); }
+        .btn-primary:active { transform:translateY(0); }
+        .btn-primary svg { transition:transform 0.3s cubic-bezier(0.16,1,0.3,1); }
+        .btn-primary:hover svg { transform:translateX(4px); }
 
+        /* News card */
+        .news-card { transition:transform 0.5s cubic-bezier(0.16,1,0.3,1),box-shadow 0.5s ease; }
+        .news-card:hover { transform:translateY(-6px);box-shadow:0 24px 48px -12px rgba(123,175,158,0.2); }
+        .news-card .bar { transition:width 0.55s cubic-bezier(0.16,1,0.3,1);width:0; }
+        .news-card:hover .bar { width:100%; }
 
-
-
+        /* Read more link */
+        .read-link { display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#7BAF9E;text-decoration:none;transition:gap 0.3s cubic-bezier(0.16,1,0.3,1),color 0.2s;background:none;border:none;cursor:pointer;padding:0; }
+        .read-link:hover { color:#5E8F80;gap:11px; }
+        .read-link svg { transition:transform 0.3s cubic-bezier(0.16,1,0.3,1); }
+        .read-link:hover svg { transform:translateX(2px); }
                /* ── Placeholder ── */
         .placeholder {
           width: 100%;
@@ -98,105 +119,97 @@ section.r-up {
 }
     </style>
 </head>
+<body class="bg-cream text-deep font-body">
 
-<body class="bg-cream text-deep font-body scroll-smooth">
+<div id="progress-bar"></div>
 
-<header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200">
+<header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200/50">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-        <a href="index.html" class="inline-flex items-center">
-            <img src="images/icon (1).png" class="h-12 transition duration-300 hover:scale-105"
-                 alt="Streets to Shelters Home">
+        <a href="index.html" aria-label="Streets to Shelters Home">
+            <img src="images/icon (1).png" class="h-11 transition-transform duration-300 hover:scale-105 active:scale-95" alt="Streets to Shelters">
         </a>
         <nav class="hidden md:flex gap-8 text-sm font-medium items-center">
-            <a href="index.html" class="nav-link hover:text-brand transition">Home</a>
+            <a href="index.html" class="nav-link hover:text-brand transition-colors">Home</a>
             <div class="relative group">
-                <button class="nav-link hover:text-brand transition py-2 flex items-center gap-1">
+                <button class="nav-link hover:text-brand transition-colors py-2 flex items-center gap-1.5">
                     Initiatives
-                    <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"
-                         fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
-                    </svg>
+                    <svg class="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                 </button>
-                <div class="absolute left-0 top-full w-56 bg-white rounded-2xl shadow-lg border border-gray-100 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300">
-                    <a href="events.html"
-                       class="block px-6 py-3.5 text-sm hover:bg-cream rounded-t-2xl transition-colors">Streets
-                        to Shelters Events</a>
-                    <a href="volunteer.html"
-                       class="block px-6 py-3.5 text-sm hover:bg-cream rounded-b-2xl transition-colors">Volunteer</a>
+                <div class="absolute left-0 top-full w-56 bg-white rounded-xl shadow-lg border border-gray-100/80 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200">
+                    <a href="events.html"    class="block px-6 py-3.5 text-sm hover:bg-cream rounded-t-xl transition-colors">Events</a>
+                    <a href="volunteer.html" class="block px-6 py-3.5 text-sm hover:bg-cream rounded-b-xl transition-colors">Volunteer</a>
                 </div>
             </div>
             <div class="relative group">
-                <button class="nav-link hover:text-brand transition py-2 flex items-center gap-1">
+                <button class="nav-link hover:text-brand transition-colors py-2 flex items-center gap-1.5">
                     About Us
-                    <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"
-                         fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
-                    </svg>
+                    <svg class="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                 </button>
-                <div class="absolute left-0 top-full w-60 bg-white rounded-2xl shadow-lg border border-gray-100 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300">
-                    <a href="news.html"
-                       class="block px-6 py-3.5 text-sm hover:bg-cream rounded-t-2xl transition-colors">Streets
-                        to Shelters News</a>
-                    <a href="members.html"
-                       class="block px-6 py-3.5 text-sm hover:bg-cream transition-colors">Members</a>
-                    <a href="contact.html"
-                       class="block px-6 py-3.5 text-sm hover:bg-cream rounded-b-2xl transition-colors">Contact
-                        Us</a>
+                <div class="absolute left-0 top-full w-60 bg-white rounded-xl shadow-lg border border-gray-100/80 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200">
+                    <a href="news.html"    class="block px-6 py-3.5 text-sm hover:bg-cream rounded-t-xl transition-colors">News</a>
+                    <a href="members.html" class="block px-6 py-3.5 text-sm hover:bg-cream transition-colors">Members</a>
+                    <a href="contact.html" class="block px-6 py-3.5 text-sm hover:bg-cream rounded-b-xl transition-colors">Contact Us</a>
                 </div>
             </div>
-            <a href="chapter.html" class="nav-link hover:text-brand transition">Start a Chapter</a>
+            <a href="chapter.html" class="nav-link hover:text-brand transition-colors">Start a Chapter</a>
         </nav>
         <div class="flex items-center gap-4">
             <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
-               target="_blank" rel="noopener"
-               class="magnetic hidden md:inline-block bg-brand text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-brandDark transition">Donate</a>
-            <button id="mobile-menu-btn" class="md:hidden text-deep p-2">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M4 6h16M4 12h16m-7 6h7"/>
+               target="_blank" rel="noopener" class="btn-primary hidden md:inline-flex">
+                Donate
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <button id="mobile-menu-btn" class="md:hidden text-deep p-2" aria-label="Open menu">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M4 6h16M4 12h16m-7 6h7"/>
                 </svg>
             </button>
         </div>
     </div>
 </header>
 
-<div id="mobile-menu-overlay"
-     class="fixed inset-0 bg-white z-[60] flex flex-col p-10 translate-x-full transition-transform duration-300 ease-in-out md:hidden">
+<div id="mobile-menu-overlay" class="fixed inset-0 bg-white z-[60] flex flex-col p-10 translate-x-full transition-transform duration-300 ease-in-out md:hidden">
     <div class="flex justify-between items-center mb-10">
         <img src="images/icon (1).png" class="h-10" alt="Streets to Shelters">
-        <button id="close-menu-btn" class="text-deep p-2">
-            <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M6 18L18 6M6 6l12 12"/>
+        <button id="close-menu-btn" class="text-deep p-2" aria-label="Close menu">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M6 18L18 6M6 6l12 12"/>
             </svg>
         </button>
     </div>
     <nav class="flex flex-col gap-5 text-xl font-heading font-bold">
-        <a href="index.html" class="hover:text-brand transition">Home</a>
-        <a href="events.html" class="hover:text-brand transition">Events</a>
-        <a href="news.html" class="hover:text-brand transition">News</a>
-        <a href="members.html" class="hover:text-brand transition">Members</a>
-        <a href="volunteer.html" class="hover:text-brand transition">Volunteer</a>
-        <a href="chapter.html" class="hover:text-brand transition">Start a Chapter</a>
-        <a href="contact.html" class="hover:text-brand transition">Contact Us</a>
+        <a href="index.html"     class="hover:text-brand transition-colors">Home</a>
+        <a href="events.html"    class="hover:text-brand transition-colors">Events</a>
+        <a href="news.html"      class="hover:text-brand transition-colors">News</a>
+        <a href="members.html"   class="hover:text-brand transition-colors">Members</a>
+        <a href="volunteer.html" class="hover:text-brand transition-colors">Volunteer</a>
+        <a href="chapter.html"   class="hover:text-brand transition-colors">Start a Chapter</a>
+        <a href="contact.html"   class="hover:text-brand transition-colors">Contact Us</a>
         <hr class="border-gray-100 my-2">
         <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
            target="_blank" rel="noopener"
-           class="bg-brand text-white text-center py-4 rounded-full text-lg">Donate Now</a>
+           class="bg-brand text-white text-center py-4 text-sm font-semibold tracking-widest uppercase rounded-sm">Donate Now</a>
     </nav>
 </div>
 
 <main class="pt-36 pb-24 max-w-7xl mx-auto px-6 space-y-24">
-    <section class="text-center r-up">
-        <h1 class="text-5xl md:text-6xl font-heading font-bold mb-6">Streets To Shelters Events</h1>
-        <p class="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">Check out our upcoming and past
-            community events. Join us to make a direct impact in your city!</p>
+    <section class="pt-36 pb-16 bg-cream">
+        <div class="max-w-3xl mx-auto text-center px-6">
+            <div class="r-fade mb-4">
+            <span class="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase px-4 py-1.5 rounded-sm border border-brand/25 text-brandDark" style="background:rgba(123,175,158,0.07);">
+                <span class="w-1.5 h-1.5 rounded-full bg-brand inline-block"></span>
+                What we do
+            </span>
+            </div>
+            <h1 class="r-up text-5xl md:text-6xl font-heading font-bold mb-4">Events</h1>
+            <p class="r-up text-base text-gray-500 leading-relaxed" style="transition-delay:0.1s">Here, there are the events, fundraisers, and other important details to get to know our non-profit better!</p>
+        </div>
     </section>
 
     <!-- Events Grid -->
     <section class="r-up" style="transition-delay:0.1s">
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center">
-            <div class="bg-white rounded-3xl shadow-sm w-full max-w-[320px] text-center event-card r-scale overflow-hidden border-2 border-brand/20">
+            <div class="news-card r-scale relative bg-white border border-brand/10 rounded-2xl overflow-hidden">
                 <div class="w-full h-44 overflow-hidden">
                     <img src="images/sts5.jpg" alt="Cookie Fundraiser"
                          class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
@@ -212,11 +225,15 @@ section.r-up {
                             data-date="March 14, 2026 @ 1pm to 6pm"
                             data-location="Stage Run, River Rock Ranch, and Two Creeks"
                             data-desc="On March 14, 2026, the Streets to Shelters team hit the pavement in Stage Run, River Rock Ranch, and Two Creeks for our most successful bake sale yet! From 1:00 PM to 6:00 PM, our volunteers went door-to-door and manned our community stand, offering a delicious spread of homemade cookies, brownies, and refreshing drinks. Thanks to the overwhelming support and kindness of our neighbors, we raised over $300 in just five hours. Every cent of these proceeds is being funneled directly into our summer hygiene kit initiative, ensuring that those in local shelters have the essential supplies they need to stay healthy and comfortable during the warmer months.">
-                        Learn More →
+                        <button class="read-link open-modal-btn">
+                            Learn More
+                            <svg width="12" height="12" ...></svg>
+                        </button>
                     </button>
                 </div>
+                <div class="bar absolute bottom-0 left-0 h-[2px] bg-brand rounded-full"></div>
             </div>
-            <div class="bg-white rounded-3xl shadow-sm w-full max-w-[320px] text-center event-card r-scale overflow-hidden border-2 border-brand/20">
+            <div class="news-card r-scale relative bg-white border border-brand/10 rounded-2xl overflow-hidden">
 
 
                 <div class="w-full h-44 overflow-hidden">
@@ -234,11 +251,15 @@ section.r-up {
                             data-date="March 28 & 29 @ 11am to 4pm"
                             data-location=" 27111 Brook Bend, Boerne, TX 78015"
                             data-desc="On March 28 & 29, 2026, the Streets to Shelters team and volunteers Volunteers will work in small teams to sell cookies, snacks, and drinks, help cover assigned areas, and interact with community members. Our goal is to raise $1,500–$2,000, and your participation plays a key role in making that happen. We have raised over $800 and are on our way to start out first event!">
-                        Learn More →
+                        <button class="read-link open-modal-btn">
+                            Learn More
+                            <svg width="12" height="12" ...></svg>
+                        </button>
                     </button>
                 </div>
+                <div class="bar absolute bottom-0 left-0 h-[2px] bg-brand rounded-full"></div>
             </div>
-            <div class="bg-white rounded-3xl shadow-sm w-full max-w-[320px] text-center event-card r-scale overflow-hidden border-2 border-brand/20">
+            <div class="news-card r-scale relative bg-white border border-brand/10 rounded-2xl overflow-hidden">
 
 
                 <!--=======-->
@@ -267,10 +288,14 @@ We focus on teamwork, strong customer service, and creating a positive experienc
 
 Come support, enjoy some baked goods, and help us grow.
 ">
-                        Learn More →
+                        <button class="read-link open-modal-btn">
+                            Learn More
+                            <svg width="12" height="12" ...></svg>
+                        </button>
                     </button>
                 </div>
             </div>
+            <div class="bar absolute bottom-0 left-0 h-[2px] bg-brand rounded-full"></div>
         </div>
     </section>
 
@@ -335,25 +360,20 @@ Come support, enjoy some baked goods, and help us grow.
     </section>
 </main>
 
-<footer class="bg-deep text-white py-12">
-    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-10 text-center sm:text-left">
+<footer class="bg-deep text-white py-16">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-12">
         <div>
-            <h3 class="text-xs uppercase tracking-widest text-white/50 font-semibold mb-5">Follow
-                Us</h3>
-            <div class="flex flex-col gap-3">
-                <a href="https://www.instagram.com/streets.to.shelter" target="_blank"
-                   rel="noopener">Instagram</a>
-                <a href="https://www.facebook.com/profile.php?id=61586361417282" target="_blank"
-                   rel="noopener">Facebook</a>
+            <h3 class="text-xs uppercase tracking-widest font-semibold mb-6" style="color:rgba(255,255,255,0.3);">Follow Us</h3>
+            <div class="flex flex-col gap-3 text-sm">
+                <a href="https://www.instagram.com/streets.to.shelter" target="_blank" rel="noopener">Instagram</a>
+                <a href="https://www.facebook.com/profile.php?id=61586361417282" target="_blank" rel="noopener">Facebook</a>
                 <a href="https://www.tiktok.com/@streetstoshelters" target="_blank" rel="noopener">TikTok</a>
-                <a href="https://linktr.ee/streets2shelters" target="_blank"
-                   rel="noopener">Linktree</a>
+                <a href="https://linktr.ee/streets2shelters" target="_blank" rel="noopener">Linktree</a>
             </div>
         </div>
         <div>
-            <h3 class="text-xs uppercase tracking-widest text-white/50 font-semibold mb-5">Quick
-                Links</h3>
-            <div class="flex flex-col gap-3">
+            <h3 class="text-xs uppercase tracking-widest font-semibold mb-6" style="color:rgba(255,255,255,0.3);">Quick Links</h3>
+            <div class="flex flex-col gap-3 text-sm">
                 <a href="index.html">Home</a>
                 <a href="events.html">Events</a>
                 <a href="news.html">News</a>
@@ -364,13 +384,20 @@ Come support, enjoy some baked goods, and help us grow.
             </div>
         </div>
         <div>
-            <h3 class="text-xs uppercase tracking-widest text-white/50 font-semibold mb-5">Support
-                Us</h3>
-            <div class="flex flex-col gap-3">
-                <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
-                   target="_blank" rel="noopener">Donate</a>
+            <h3 class="text-xs uppercase tracking-widest font-semibold mb-6" style="color:rgba(255,255,255,0.3);">Contact</h3>
+            <div class="flex flex-col gap-2 text-sm" style="color:rgba(255,255,255,0.38);">
+                <span>streetstoshelters.tx@gmail.com</span>
+                <span>San Antonio, Texas</span>
             </div>
-            <p class="text-white/25 text-xs mt-10">© 2026 Streets To Shelters</p>
+            <a href="contact.html" class="text-brand text-sm mt-3 block" style="padding-left:0;">Contact Form →</a>
+            <div class="mt-10 pt-8" style="border-top:1px solid rgba(255,255,255,0.07);">
+                <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
+                   target="_blank" rel="noopener" class="btn-primary" style="font-size:12px;padding:11px 20px;">
+                    Donate
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+            </div>
+            <p class="text-xs mt-8" style="color:rgba(255,255,255,0.18);">© 2026 Streets To Shelters. All rights reserved.</p>
         </div>
     </div>
 </footer>
@@ -455,6 +482,11 @@ Come support, enjoy some baked goods, and help us grow.
       closeBtn2.addEventListener('click', closeModal);
       backdrop.addEventListener('click',  closeModal);
     });
+    const bar = document.getElementById('progress-bar');
+window.addEventListener('scroll', () => {
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = (window.scrollY / total) * 100 + '%';
+});
 </script>
 </body>
 </html>

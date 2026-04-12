@@ -4,92 +4,133 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>News | Streets to Shelters</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="icon" href="images/Logo1.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
           theme: {
             extend: {
-              colors: { brand:'#7BAF9E', brandDark:'#5E8F80', cream:'#F4EFE6', deep:'#2B1F1C' },
+              colors: { brand:'#7BAF9E', brandDark:'#5E8F80', cream:'#F4EFE6', deep:'#2B1F1C', creamdark:'#c3bfb8' },
               fontFamily: { heading:['Playfair Display','serif'], body:['Inter','sans-serif'] }
             }
           }
         }
     </script>
     <style>
-        /* ── Nav underline — top-level links only ── */
+        #progress-bar { position:fixed;top:0;left:0;height:2px;background:#7BAF9E;width:0%;z-index:9999;transition:width 0.1s linear; }
+
         .nav-link { position:relative; }
-        .nav-link::after {
-          content:''; position:absolute; bottom:-3px; left:0;
-          width:0; height:1.5px; background:#7BAF9E;
-          transition:width 0.38s cubic-bezier(0.16,1,0.3,1);
-        }
+        .nav-link::after { content:'';position:absolute;bottom:-3px;left:0;width:0;height:1.5px;background:#7BAF9E;transition:width 0.38s cubic-bezier(0.16,1,0.3,1); }
         .nav-link:hover::after { width:100%; }
 
-        /* ── Scroll Reveal ── */
-        .r-up, .r-scale {
-          opacity:0; will-change:opacity,transform;
-          transition:opacity 0.85s cubic-bezier(0.16,1,0.3,1), transform 0.85s cubic-bezier(0.16,1,0.3,1);
+        .r-up,.r-scale,.r-fade { opacity:0;will-change:opacity,transform; }
+        .r-up { transform:translateY(44px); transition:opacity 0.85s cubic-bezier(0.16,1,0.3,1),transform 0.85s cubic-bezier(0.16,1,0.3,1); }
+        .r-scale { transform:scale(0.92) translateY(18px); transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1),transform 0.8s cubic-bezier(0.34,1.4,0.64,1); }
+        .r-fade { transition:opacity 0.85s cubic-bezier(0.16,1,0.3,1); }
+        .is-visible { opacity:1!important;transform:none!important; }
+
+        body::after { content:'';position:fixed;inset:0;z-index:9997;pointer-events:none;opacity:0.02;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:160px 160px; }
+        header { transition:box-shadow 0.4s ease; }
+        body.scrolled header { box-shadow:0 1px 24px rgba(43,31,28,0.08); }
+
+        .btn-primary {
+          position:relative;overflow:hidden;background:#7BAF9E;color:#fff;
+          padding:13px 28px;border-radius:4px;font-size:13px;font-weight:600;
+          letter-spacing:0.07em;text-transform:uppercase;text-decoration:none;
+          display:inline-flex;align-items:center;gap:9px;
+          transition:background 0.28s ease,transform 0.3s cubic-bezier(0.16,1,0.3,1),box-shadow 0.3s ease;
+          box-shadow:0 2px 10px rgba(123,175,158,0.2);
         }
-        .r-up   { transform:translateY(40px); }
-        .r-scale { transform:scale(0.94) translateY(18px); transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.34,1.4,0.64,1); }
-        .is-visible { opacity:1!important; transform:none!important; }
+        .btn-primary:hover { background:#5E8F80;transform:translateY(-2px);box-shadow:0 10px 28px rgba(94,143,128,0.35); }
+        .btn-primary:active { transform:translateY(0); }
+        .btn-primary svg { transition:transform 0.3s cubic-bezier(0.16,1,0.3,1); }
+        .btn-primary:hover svg { transform:translateX(4px); }
 
-        /* ── Card hover ── */
-        .card-hover { transition:transform 0.45s cubic-bezier(0.34,1.15,0.64,1), box-shadow 0.45s ease; }
-        .card-hover:hover { transform:translateY(-8px); box-shadow:0 24px 48px -12px rgba(123,175,158,0.25); }
+        /* News card */
+        .news-card { transition:transform 0.5s cubic-bezier(0.16,1,0.3,1),box-shadow 0.5s ease; }
+        .news-card:hover { transform:translateY(-6px);box-shadow:0 24px 48px -12px rgba(123,175,158,0.2); }
+        .news-card .bar { transition:width 0.55s cubic-bezier(0.16,1,0.3,1);width:0; }
+        .news-card:hover .bar { width:100%; }
 
+        /* Read more link */
+        .read-link { display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#7BAF9E;text-decoration:none;transition:gap 0.3s cubic-bezier(0.16,1,0.3,1),color 0.2s;background:none;border:none;cursor:pointer;padding:0; }
+        .read-link:hover { color:#5E8F80;gap:11px; }
+        .read-link svg { transition:transform 0.3s cubic-bezier(0.16,1,0.3,1); }
+        .read-link:hover svg { transform:translateX(2px); }
 
+        /* Carousel */
+        .carousel-container { position:relative;height:520px;overflow:hidden;display:flex;justify-content:center;align-items:center; }
+        .carousel-item { position:absolute;width:460px;height:460px;border-radius:12px;object-fit:cover;opacity:0;z-index:0;transition:all 0.7s cubic-bezier(0.34,1.15,0.64,1),opacity 0.5s cubic-bezier(0.16,1,0.3,1); }
+        .carousel-item.active  { opacity:1;transform:translateX(0) scale(1);z-index:5;box-shadow:0 24px 56px rgba(0,0,0,0.2); }
+        .carousel-item.prev-1  { opacity:.55;transform:translateX(-44%) scale(0.78);z-index:4; }
+        .carousel-item.next-1  { opacity:.55;transform:translateX(44%) scale(0.78);z-index:4; }
+        .carousel-item.prev-2  { opacity:.22;transform:translateX(-74%) scale(0.6);z-index:3; }
+        .carousel-item.next-2  { opacity:.22;transform:translateX(74%) scale(0.6);z-index:3; }
+        #news-carousel-dots button { transition:width 0.4s cubic-bezier(0.34,1.26,0.64,1),background 0.3s ease; }
+        @media(max-width:768px){
+          .carousel-container{height:300px}
+          .carousel-item{width:240px;height:200px}
+          .carousel-item.prev-1{transform:translateX(-38%) scale(0.84)}
+          .carousel-item.next-1{transform:translateX(38%) scale(0.84)}
+          .carousel-item.prev-2,.carousel-item.next-2{opacity:0}
+        }
 
-        /* ── Footer links ── */
-        footer a { transition:color 0.25s ease, transform 0.3s cubic-bezier(0.34,1.26,0.64,1); display:inline-block; }
-        footer a:hover { color:#7BAF9E; transform:translateX(5px); }
-
+        /* Modal */
         #modal-content::-webkit-scrollbar { display:none; }
         #modal-content { -ms-overflow-style:none; scrollbar-width:none; }
+
+        footer a { transition:color 0.22s ease,padding-left 0.3s cubic-bezier(0.16,1,0.3,1);display:inline-block; }
+        footer a:hover { color:#7BAF9E;padding-left:5px; }
 
         @keyframes pageFade { from{opacity:0} to{opacity:1} }
         body { animation:pageFade 0.5s ease both; }
     </style>
 </head>
-<body class="bg-cream text-deep font-body scroll-smooth">
+<body class="bg-cream text-deep font-body">
 
-<header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200">
+<div id="progress-bar"></div>
+
+<header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200/50">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-        <a href="index.html" aria-label="Go to Home" class="inline-flex items-center">
-            <img src="images/icon (1).png" class="h-12 transition duration-300 hover:scale-105 active:scale-95" alt="Streets to Shelters Home">
+        <a href="index.html" aria-label="Streets to Shelters Home">
+            <img src="images/icon (1).png" class="h-11 transition-transform duration-300 hover:scale-105 active:scale-95" alt="Streets to Shelters">
         </a>
         <nav class="hidden md:flex gap-8 text-sm font-medium items-center">
-            <a href="index.html" class="nav-link hover:text-brand transition">Home</a>
+            <a href="index.html" class="nav-link hover:text-brand transition-colors">Home</a>
             <div class="relative group">
-                <button class="nav-link hover:text-brand transition py-2 flex items-center gap-1">
+                <button class="nav-link hover:text-brand transition-colors py-2 flex items-center gap-1.5">
                     Initiatives
-                    <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                    <svg class="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                 </button>
-                <div class="absolute left-0 top-full w-56 bg-white rounded-2xl shadow-lg border border-gray-100 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300">
-                    <a href="events.html"    class="block px-6 py-3.5 text-sm hover:bg-cream rounded-t-2xl transition-colors">Streets to Shelters Events</a>
-                    <a href="volunteer.html" class="block px-6 py-3.5 text-sm hover:bg-cream rounded-b-2xl transition-colors">Volunteer</a>
+                <div class="absolute left-0 top-full w-56 bg-white rounded-xl shadow-lg border border-gray-100/80 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200">
+                    <a href="events.html"    class="block px-6 py-3.5 text-sm hover:bg-cream rounded-t-xl transition-colors">Events</a>
+                    <a href="volunteer.html" class="block px-6 py-3.5 text-sm hover:bg-cream rounded-b-xl transition-colors">Volunteer</a>
                 </div>
             </div>
             <div class="relative group">
-                <button class="nav-link hover:text-brand transition py-2 flex items-center gap-1">
+                <button class="nav-link hover:text-brand transition-colors py-2 flex items-center gap-1.5">
                     About Us
-                    <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                    <svg class="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                 </button>
-                <div class="absolute left-0 top-full w-60 bg-white rounded-2xl shadow-lg border border-gray-100 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300">
-                    <a href="news.html"    class="block px-6 py-3.5 text-sm hover:bg-cream rounded-t-2xl transition-colors">Streets to Shelters News</a>
+                <div class="absolute left-0 top-full w-60 bg-white rounded-xl shadow-lg border border-gray-100/80 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200">
+                    <a href="news.html"    class="block px-6 py-3.5 text-sm hover:bg-cream rounded-t-xl transition-colors">News</a>
                     <a href="members.html" class="block px-6 py-3.5 text-sm hover:bg-cream transition-colors">Members</a>
-                    <a href="contact.html" class="block px-6 py-3.5 text-sm hover:bg-cream rounded-b-2xl transition-colors">Contact Us</a>
+                    <a href="contact.html" class="block px-6 py-3.5 text-sm hover:bg-cream rounded-b-xl transition-colors">Contact Us</a>
                 </div>
             </div>
-            <a href="chapter.html" class="nav-link hover:text-brand transition">Start a Chapter</a>
+            <a href="chapter.html" class="nav-link hover:text-brand transition-colors">Start a Chapter</a>
         </nav>
         <div class="flex items-center gap-4">
-            <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" rel="noopener"
-               class="magnetic hidden md:inline-block bg-brand text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-brandDark transition">Donate</a>
-            <button id="mobile-menu-btn" class="md:hidden text-deep p-2">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/></svg>
+            <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
+               target="_blank" rel="noopener" class="btn-primary hidden md:inline-flex">
+                Donate
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <button id="mobile-menu-btn" class="md:hidden text-deep p-2" aria-label="Open menu">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M4 6h16M4 12h16m-7 6h7"/>
+                </svg>
             </button>
         </div>
     </div>
@@ -98,94 +139,126 @@
 <div id="mobile-menu-overlay" class="fixed inset-0 bg-white z-[60] flex flex-col p-10 translate-x-full transition-transform duration-300 ease-in-out md:hidden">
     <div class="flex justify-between items-center mb-10">
         <img src="images/icon (1).png" class="h-10" alt="Streets to Shelters">
-        <button id="close-menu-btn" class="text-deep p-2">
-            <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        <button id="close-menu-btn" class="text-deep p-2" aria-label="Close menu">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
         </button>
     </div>
     <nav class="flex flex-col gap-5 text-xl font-heading font-bold">
-        <a href="index.html"     class="hover:text-brand transition">Home</a>
-        <a href="events.html"    class="hover:text-brand transition">Events</a>
-        <a href="news.html"      class="hover:text-brand transition">News</a>
-        <a href="members.html"   class="hover:text-brand transition">Members</a>
-        <a href="volunteer.html" class="hover:text-brand transition">Volunteer</a>
-        <a href="chapter.html"   class="hover:text-brand transition">Start a Chapter</a>
-        <a href="contact.html"   class="hover:text-brand transition">Contact Us</a>
+        <a href="index.html"     class="hover:text-brand transition-colors">Home</a>
+        <a href="events.html"    class="hover:text-brand transition-colors">Events</a>
+        <a href="news.html"      class="hover:text-brand transition-colors">News</a>
+        <a href="members.html"   class="hover:text-brand transition-colors">Members</a>
+        <a href="volunteer.html" class="hover:text-brand transition-colors">Volunteer</a>
+        <a href="chapter.html"   class="hover:text-brand transition-colors">Start a Chapter</a>
+        <a href="contact.html"   class="hover:text-brand transition-colors">Contact Us</a>
         <hr class="border-gray-100 my-2">
-        <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" rel="noopener"
-           class="bg-brand text-white text-center py-4 rounded-full text-lg">Donate Now</a>
+        <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
+           target="_blank" rel="noopener"
+           class="bg-brand text-white text-center py-4 text-sm font-semibold tracking-widest uppercase rounded-sm">Donate Now</a>
     </nav>
 </div>
 
-<main class="pt-36 max-w-7xl mx-auto px-6 space-y-16 pb-40 md:pb-56">
-    <section class="text-center r-up">
-        <h1 class="text-5xl font-heading font-bold mb-4">News & Updates</h1>
-        <p class="text-gray-700 max-w-2xl mx-auto">Stay up to date with Streets to Shelters. Here you'll find updates, events, and announcements from our youth-led organization.</p>
-    </section>
-
-    <section class="r-up" style="transition-delay:0.1s">
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center">
-
-            <div class="bg-white p-8 rounded-3xl shadow-sm w-full max-w-[350px] text-center card-hover r-scale relative overflow-hidden border-2 border-brand/20" style="transition-delay:0.08s">
-                <div class="w-full h-40 rounded-xl overflow-hidden mb-5 bg-brand/10 flex items-center justify-center">
-                    <img src="images/sts3.jpg" alt="First Newspaper" class="w-full h-full object-cover" onerror="this.parentElement.classList.add('bg-brand/10')">
-                </div>
-                <h3 class="text-xl font-semibold mb-2">Our First Newspaper</h3>
-                <p class="text-gray-600 text-sm mb-4">After launch of streets to shelters, we have published our very first official newspaper!</p>
-                <button class="open-modal-btn magnetic text-brand font-semibold hover:underline"
-                        data-title="First Official Newspaper"
-                        data-date="March 2026"
-                        data-iframe="https://docs.google.com/document/d/e/2PACX-1vRjNsGp2xVx1EaUoSQ5dTQnG_ZAeLfDrKVJyaxfPhZYhTV8f4UP2qlBvnYE2FhJLdIGY5zQ0yNnUwng/pub?embedded=true">
-                    Learn More →
-                </button>
-            </div>
-
-            <div class="bg-white p-8 rounded-3xl shadow-sm w-full max-w-[350px] text-center card-hover r-scale relative overflow-hidden border-2 border-brand/20" style="transition-delay:0.16s">
-                <div class="w-full h-40 rounded-xl overflow-hidden mb-5 bg-brand/10 flex items-center justify-center">
-                    <img src="images/newsletter.png" alt="Second Newsletter" class="w-full h-full object-cover" onerror="this.parentElement.classList.add('bg-brand/10')">
-                </div>
-                <h3 class="text-xl font-semibold mb-2">Second Events Newsletter</h3>
-                <p class="text-gray-600 text-sm mb-4">Our latest updates on events that have occurred since the last newsletter!</p>
-                <button class="open-modal-btn magnetic text-brand font-semibold hover:underline"
-                        data-title="Second Events Newsletter"
-                        data-date="March 2026"
-                        data-iframe="images/newsletter.png">
-                    Learn More →
-                </button>
-            </div>
-
+<!-- HERO -->
+<section class="pt-36 pb-16 bg-cream">
+    <div class="max-w-3xl mx-auto text-center px-6">
+        <div class="r-fade mb-4">
+            <span class="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase px-4 py-1.5 rounded-sm border border-brand/25 text-brandDark" style="background:rgba(123,175,158,0.07);">
+                <span class="w-1.5 h-1.5 rounded-full bg-brand inline-block"></span>
+                Stay Informed
+            </span>
         </div>
-    </section>
+        <h1 class="r-up text-5xl md:text-6xl font-heading font-bold mb-4">News &amp; <em class="text-brand">Updates</em></h1>
+        <p class="r-up text-base text-gray-500 leading-relaxed" style="transition-delay:0.1s">Stay up to date with Streets to Shelters. Here you'll find updates, events, and announcements from our youth-led organization.</p>
+    </div>
+</section>
 
-    <!-- Photo Strip -->
-    <section class="r-up" style="transition-delay:0.2s">
-        <h2 class="text-3xl font-heading font-bold text-center mb-8">From the Field</h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div class="rounded-2xl overflow-hidden aspect-square">
-                <img src="images/sts5.jpg" alt="Volunteer activity" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+<!-- NEWS CARDS -->
+<main class="pb-0 max-w-7xl mx-auto px-6">
+    <section class="r-up py-12" style="transition-delay:0.1s">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-3xl mx-auto">
+
+            <div class="news-card r-scale relative bg-white border border-brand/10 rounded-2xl overflow-hidden" style="transition-delay:0.08s">
+                <div class="w-full h-52 overflow-hidden">
+                    <img src="images/sts3.jpg" alt="First Newspaper" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                </div>
+                <div class="p-8 relative">
+                    <span class="text-xs font-semibold tracking-widest uppercase text-brand mb-2 block">March 2026</span>
+                    <h3 class="font-heading text-xl font-bold mb-3 leading-snug">Our First Newspaper</h3>
+                    <p class="text-gray-500 text-sm mb-6 leading-relaxed">After the launch of Streets to Shelters, we have published our very first official newspaper!</p>
+                    <button class="open-modal-btn read-link"
+                            data-title="First Official Newspaper"
+                            data-date="March 2026"
+                            data-iframe="https://docs.google.com/document/d/e/2PACX-1vRjNsGp2xVx1EaUoSQ5dTQnG_ZAeLfDrKVJyaxfPhZYhTV8f4UP2qlBvnYE2FhJLdIGY5zQ0yNnUwng/pub?embedded=true">
+                        Read More
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </button>
+                    <div class="bar absolute bottom-0 left-0 h-[2px] bg-brand rounded-full"></div>
+                </div>
             </div>
-            <div class="rounded-2xl overflow-hidden aspect-square">
-                <img src="images/sts6.jpg" alt="Volunteer activity" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+
+            <div class="news-card r-scale relative bg-white border border-brand/10 rounded-2xl overflow-hidden" style="transition-delay:0.16s">
+                <div class="w-full h-52 overflow-hidden">
+                    <img src="images/newsletter.png" alt="Second Newsletter" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                </div>
+                <div class="p-8 relative">
+                    <span class="text-xs font-semibold tracking-widest uppercase text-brand mb-2 block">March 2026</span>
+                    <h3 class="font-heading text-xl font-bold mb-3 leading-snug">Second Events Newsletter</h3>
+                    <p class="text-gray-500 text-sm mb-6 leading-relaxed">Our latest updates on events that have occurred since the last newsletter!</p>
+                    <button class="open-modal-btn read-link"
+                            data-title="Second Events Newsletter"
+                            data-date="March 2026"
+                            data-iframe="images/newsletter.png">
+                        Read More
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </button>
+                    <div class="bar absolute bottom-0 left-0 h-[2px] bg-brand rounded-full"></div>
+                </div>
             </div>
-            <div class="rounded-2xl overflow-hidden aspect-square">
-                <img src="images/sts8.jpg" alt="Volunteer activity" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
-            </div>
-            <div class="rounded-2xl overflow-hidden aspect-square">
-                <img src="images/sts9.jpg" alt="Volunteer activity" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
-            </div>
+
         </div>
     </section>
 </main>
 
+<!-- PHOTO CAROUSEL -->
+<section class="py-24 bg-creamdark overflow-hidden r-up">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-14">
+            <span class="text-xs font-semibold tracking-widest uppercase text-deep/40 mb-3 block">From the Field</span>
+            <h2 class="text-4xl font-heading font-bold text-deep">The Work in <em class="text-brandDark not-italic">Motion</em></h2>
+        </div>
+        <div class="carousel-container mb-10" id="news-carousel" role="region" aria-label="News photo gallery">
+            <img src="images/sts5.jpg"  class="carousel-item" alt="Volunteer activity" loading="lazy">
+            <img src="images/sts6.jpg"  class="carousel-item" alt="Volunteer activity" loading="lazy">
+            <img src="images/sts8.jpg"  class="carousel-item" alt="Volunteer activity" loading="lazy">
+            <img src="images/sts9.jpg"  class="carousel-item" alt="Volunteer activity" loading="lazy">
+            <img src="images/sts1.jpg"  class="carousel-item" alt="Team photo" loading="lazy">
+            <img src="images/sts3.jpg"  class="carousel-item" alt="Kit assembly" loading="lazy">
+        </div>
+        <div class="flex justify-center items-center gap-5">
+            <button id="news-prev" aria-label="Previous photo" class="w-9 h-9 rounded-full border border-deep/25 flex items-center justify-center hover:border-deep hover:bg-deep hover:text-white transition-all duration-300">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <div class="flex gap-2" id="news-carousel-dots"></div>
+            <button id="news-next" aria-label="Next photo" class="w-9 h-9 rounded-full border border-deep/25 flex items-center justify-center hover:border-deep hover:bg-deep hover:text-white transition-all duration-300">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- Modal -->
 <div id="event-modal" class="fixed inset-0 z-[70] flex items-center justify-center p-4 sm:p-6 opacity-0 pointer-events-none transition-opacity duration-300">
     <div class="absolute inset-0 bg-deep/60 backdrop-blur-sm" id="modal-backdrop"></div>
-    <div class="bg-white rounded-3xl w-full max-w-5xl relative z-10 p-6 md:p-10 shadow-2xl transform scale-95 transition-transform duration-300 flex flex-col max-h-[95vh]">
+    <div class="bg-white rounded-2xl w-full max-w-5xl relative z-10 p-6 md:p-10 shadow-2xl transform scale-95 transition-transform duration-300 flex flex-col max-h-[95vh]">
         <button id="close-modal-btn" class="absolute top-6 right-6 text-gray-400 hover:text-brand transition z-20">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
         <h2 id="modal-title" class="text-3xl md:text-4xl font-heading font-bold text-deep mb-4">Event Title</h2>
         <div class="flex flex-col sm:flex-row gap-4 text-sm text-brand font-semibold mb-6">
-            <span id="modal-date" class="bg-brand/10 px-4 py-2 rounded-lg inline-block w-max">📅 Date</span>
-            <a id="modal-link" href="#" target="_blank" class="bg-brand/10 text-brand px-4 py-2 rounded-lg inline-block w-max transition-all duration-300 hover:bg-brand hover:text-white hover:-translate-y-1 active:scale-95 shadow-sm">🔗 Open in New Tab</a>
+            <span id="modal-date" class="bg-brand/10 px-4 py-2 rounded-sm inline-block w-max">📅 Date</span>
+            <a id="modal-link" href="#" target="_blank" class="bg-brand/10 text-brand px-4 py-2 rounded-sm inline-block w-max transition-all duration-300 hover:bg-brand hover:text-white">🔗 Open in New Tab</a>
         </div>
         <div id="modal-content" class="w-full flex-1 overflow-auto rounded-xl">
             <iframe id="modal-iframe" src="" style="width:100%;height:1500px;" class="border-0"></iframe>
@@ -193,11 +266,11 @@
     </div>
 </div>
 
-<footer class="bg-deep text-white py-12">
-    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-10 text-center sm:text-left">
+<footer class="bg-deep text-white py-16">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-12">
         <div>
-            <h3 class="text-xs uppercase tracking-widest text-white/50 font-semibold mb-5">Follow Us</h3>
-            <div class="flex flex-col gap-3">
+            <h3 class="text-xs uppercase tracking-widest font-semibold mb-6" style="color:rgba(255,255,255,0.3);">Follow Us</h3>
+            <div class="flex flex-col gap-3 text-sm">
                 <a href="https://www.instagram.com/streets.to.shelter" target="_blank" rel="noopener">Instagram</a>
                 <a href="https://www.facebook.com/profile.php?id=61586361417282" target="_blank" rel="noopener">Facebook</a>
                 <a href="https://www.tiktok.com/@streetstoshelters" target="_blank" rel="noopener">TikTok</a>
@@ -205,8 +278,8 @@
             </div>
         </div>
         <div>
-            <h3 class="text-xs uppercase tracking-widest text-white/50 font-semibold mb-5">Quick Links</h3>
-            <div class="flex flex-col gap-3">
+            <h3 class="text-xs uppercase tracking-widest font-semibold mb-6" style="color:rgba(255,255,255,0.3);">Quick Links</h3>
+            <div class="flex flex-col gap-3 text-sm">
                 <a href="index.html">Home</a>
                 <a href="events.html">Events</a>
                 <a href="news.html">News</a>
@@ -217,60 +290,118 @@
             </div>
         </div>
         <div>
-            <h3 class="text-xs uppercase tracking-widest text-white/50 font-semibold mb-5">Support Us</h3>
-            <div class="flex flex-col gap-3">
-                <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" rel="noopener">Donate</a>
+            <h3 class="text-xs uppercase tracking-widest font-semibold mb-6" style="color:rgba(255,255,255,0.3);">Contact</h3>
+            <div class="flex flex-col gap-2 text-sm" style="color:rgba(255,255,255,0.38);">
+                <span>streetstoshelters.tx@gmail.com</span>
+                <span>San Antonio, Texas</span>
             </div>
-            <p class="text-white/25 text-xs mt-10">© 2026 Streets To Shelters</p>
+            <a href="contact.html" class="text-brand text-sm mt-3 block" style="padding-left:0;">Contact Form →</a>
+            <div class="mt-10 pt-8" style="border-top:1px solid rgba(255,255,255,0.07);">
+                <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
+                   target="_blank" rel="noopener" class="btn-primary" style="font-size:12px;padding:11px 20px;">
+                    Donate
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+            </div>
+            <p class="text-xs mt-8" style="color:rgba(255,255,255,0.18);">© 2026 Streets To Shelters. All rights reserved.</p>
         </div>
     </div>
 </footer>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-      /* ── Mobile Menu ── */
-      const mobileBtn = document.getElementById('mobile-menu-btn');
-      const closeBtn  = document.getElementById('close-menu-btn');
-      const overlay   = document.getElementById('mobile-menu-overlay');
-      if (mobileBtn && overlay) {
-        mobileBtn.addEventListener('click', () => overlay.classList.remove('translate-x-full'));
-        closeBtn.addEventListener('click',  () => overlay.classList.add('translate-x-full'));
-        overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => overlay.classList.add('translate-x-full')));
-      }
+        const bar = document.getElementById('progress-bar');
+        window.addEventListener('scroll', () => {
+            const total = document.documentElement.scrollHeight - window.innerHeight;
+            bar.style.width = (total > 0 ? (window.scrollY / total) * 100 : 0) + '%';
+            document.body.classList.toggle('scrolled', window.scrollY > 60);
+        }, { passive: true });
 
-      /* ── Scroll Reveal ── */
-      const obs = new IntersectionObserver((entries, o) => {
-        entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); o.unobserve(entry.target); } });
-      }, { threshold: 0.07, rootMargin:'0px 0px -40px 0px' });
-      document.querySelectorAll('.r-up, .r-scale').forEach(el => obs.observe(el));
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const closeBtn  = document.getElementById('close-menu-btn');
+        const overlay   = document.getElementById('mobile-menu-overlay');
+        if (mobileBtn && overlay) {
+            mobileBtn.addEventListener('click', () => overlay.classList.remove('translate-x-full'));
+            closeBtn.addEventListener('click',  () => overlay.classList.add('translate-x-full'));
+            overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => overlay.classList.add('translate-x-full')));
+        }
 
-      /* ── Magnetic Buttons ── */
-      document.querySelectorAll('.magnetic').forEach(btn => {
-        btn.addEventListener('mousemove', e => {
-          const r = btn.getBoundingClientRect();
-          btn.style.transform = `translate(${(e.clientX - r.left - r.width/2) * 0.28}px, ${(e.clientY - r.top - r.height/2) * 0.28}px)`;
+        const revObs = new IntersectionObserver((entries, obs) => {
+            entries.forEach(e => { if (!e.isIntersecting) return; e.target.classList.add('is-visible'); obs.unobserve(e.target); });
+        }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.r-up,.r-scale,.r-fade').forEach(el => revObs.observe(el));
+
+        /* Modal */
+        const modal      = document.getElementById('event-modal');
+        const modalIframe= document.getElementById('modal-iframe');
+        const modalTitle = document.getElementById('modal-title');
+        const modalDate  = document.getElementById('modal-date');
+        const modalLink  = document.getElementById('modal-link');
+        const modalClose = document.getElementById('close-modal-btn');
+        const backdrop   = document.getElementById('modal-backdrop');
+        document.querySelectorAll('.open-modal-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                modalTitle.textContent = btn.dataset.title;
+                modalDate.textContent  = '📅 ' + btn.dataset.date;
+                modalIframe.src        = btn.dataset.iframe;
+                modalLink.href         = btn.dataset.iframe;
+            });
         });
-        btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
-      });
+        [modalClose, backdrop].forEach(el => el.addEventListener('click', () => modal.classList.add('opacity-0', 'pointer-events-none')));
 
-      /* ── Modal ── */
-      const modal      = document.getElementById('event-modal');
-      const modalIframe= document.getElementById('modal-iframe');
-      const modalTitle = document.getElementById('modal-title');
-      const modalDate  = document.getElementById('modal-date');
-      const modalLink  = document.getElementById('modal-link');
-      const modalClose = document.getElementById('close-modal-btn');
-      const backdrop   = document.getElementById('modal-backdrop');
-      document.querySelectorAll('.open-modal-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          modal.classList.remove('opacity-0', 'pointer-events-none');
-          modalTitle.textContent = btn.dataset.title;
-          modalDate.textContent  = '📅 ' + btn.dataset.date;
-          modalIframe.src        = btn.dataset.iframe;
-          modalLink.href         = btn.dataset.iframe;
-        });
-      });
-      [modalClose, backdrop].forEach(el => el.addEventListener('click', () => modal.classList.add('opacity-0', 'pointer-events-none')));
+        /* Carousel */
+        const items = Array.from(document.querySelectorAll('.carousel-item'));
+        const dotsCon = document.getElementById('news-carousel-dots');
+        const prevBtn = document.getElementById('news-prev');
+        const nextBtn = document.getElementById('news-next');
+        let cIdx = 0, cTimer = null;
+        if (items.length) {
+            const total = items.length;
+            items.forEach((_, i) => {
+                const d = document.createElement('button');
+                d.setAttribute('aria-label', 'Photo ' + (i + 1));
+                d.className = 'h-2 rounded-full transition-all duration-400';
+                d.classList.add(i === 0 ? 'bg-deep' : 'bg-deep/25', i === 0 ? 'w-6' : 'w-2');
+                d.addEventListener('click', () => { cIdx = i; update(); reset(); });
+                dotsCon.appendChild(d);
+            });
+            const dots = dotsCon.querySelectorAll('button');
+            function update() {
+                items.forEach((item, i) => {
+                    item.classList.remove('active','prev-1','next-1','prev-2','next-2');
+                    const d = ((i - cIdx) % total + total) % total;
+                    if (d===0) item.classList.add('active');
+                    else if (d===1) item.classList.add('next-1');
+                    else if (d===total-1) item.classList.add('prev-1');
+                    else if (d===2) item.classList.add('next-2');
+                    else if (d===total-2) item.classList.add('prev-2');
+                });
+                dots.forEach((d,i) => {
+                    d.classList.toggle('bg-deep', i===cIdx);
+                    d.classList.toggle('w-6', i===cIdx);
+                    d.classList.toggle('bg-deep/25', i!==cIdx);
+                    d.classList.toggle('w-2', i!==cIdx);
+                });
+            }
+            function advance(dir) { cIdx = (cIdx + dir + total) % total; update(); reset(); }
+            function reset() { clearInterval(cTimer); cTimer = setInterval(() => advance(1), 3800); }
+            prevBtn && prevBtn.addEventListener('click', () => advance(-1));
+            nextBtn && nextBtn.addEventListener('click', () => advance(1));
+            document.addEventListener('keydown', e => { if(e.key==='ArrowLeft') advance(-1); if(e.key==='ArrowRight') advance(1); });
+            const car = document.getElementById('news-carousel');
+            let tx = null;
+            car.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive:true });
+            car.addEventListener('touchend', e => {
+                if (tx===null) return;
+                const dx = e.changedTouches[0].clientX - tx;
+                if (Math.abs(dx) > 40) advance(dx < 0 ? 1 : -1);
+                tx = null;
+            }, { passive:true });
+            car.addEventListener('mouseenter', () => clearInterval(cTimer));
+            car.addEventListener('mouseleave', () => reset());
+            requestAnimationFrame(() => { update(); reset(); });
+        }
     });
 </script>
 </body>

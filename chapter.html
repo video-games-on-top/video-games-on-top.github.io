@@ -5,96 +5,142 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Start a Chapter | Streets To Shelters</title>
     <link rel="icon" href="images/Logo1.png">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
           theme: {
             extend: {
-              colors: { brand:'#7BAF9E', brandDark:'#5E8F80', cream:'#F4EFE6', deep:'#2B1F1C' },
+              colors: { brand:'#7BAF9E', brandDark:'#5E8F80', cream:'#F4EFE6', deep:'#2B1F1C', creamdark:'#c3bfb8' },
               fontFamily: { heading:['Playfair Display','serif'], body:['Inter','sans-serif'] }
             }
           }
         }
     </script>
     <style>
-        /* ── Nav underline — top-level links only ── */
+        #progress-bar { position:fixed;top:0;left:0;height:2px;background:#7BAF9E;width:0%;z-index:9999;transition:width 0.1s linear; }
+
         .nav-link { position:relative; }
-        .nav-link::after {
-          content:''; position:absolute; bottom:-3px; left:0;
-          width:0; height:1.5px; background:#7BAF9E;
-          transition:width 0.38s cubic-bezier(0.16,1,0.3,1);
-        }
+        .nav-link::after { content:'';position:absolute;bottom:-3px;left:0;width:0;height:1.5px;background:#7BAF9E;transition:width 0.38s cubic-bezier(0.16,1,0.3,1); }
         .nav-link:hover::after { width:100%; }
 
-        /* ── Scroll Reveal ── */
-        .r-up, .r-scale, .r-left, .r-right {
-          opacity:0; will-change:opacity,transform;
+        .r-up,.r-left,.r-right,.r-scale,.r-fade { opacity:0;will-change:opacity,transform; }
+        .r-up { transform:translateY(44px); }
+        .r-left { transform:translateX(-52px); }
+        .r-right { transform:translateX(52px); }
+        .r-scale { transform:scale(0.92) translateY(18px); }
+        .r-up,.r-left,.r-right,.r-fade { transition:opacity 0.85s cubic-bezier(0.16,1,0.3,1),transform 0.85s cubic-bezier(0.16,1,0.3,1); }
+        .r-scale { transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1),transform 0.8s cubic-bezier(0.34,1.4,0.64,1); }
+        .is-visible { opacity:1!important;transform:none!important; }
+
+        body::after { content:'';position:fixed;inset:0;z-index:9997;pointer-events:none;opacity:0.02;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:160px 160px; }
+        header { transition:box-shadow 0.4s ease; }
+        body.scrolled header { box-shadow:0 1px 24px rgba(43,31,28,0.08); }
+
+        .btn-primary {
+          position:relative;overflow:hidden;background:#7BAF9E;color:#fff;
+          padding:13px 28px;border-radius:4px;font-size:13px;font-weight:600;
+          letter-spacing:0.07em;text-transform:uppercase;text-decoration:none;
+          display:inline-flex;align-items:center;gap:9px;
+          transition:background 0.28s ease,transform 0.3s cubic-bezier(0.16,1,0.3,1),box-shadow 0.3s ease;
+          box-shadow:0 2px 10px rgba(123,175,158,0.2);
         }
-        .r-up    { transform:translateY(40px); transition:opacity 0.85s cubic-bezier(0.16,1,0.3,1), transform 0.85s cubic-bezier(0.16,1,0.3,1); }
-        .r-left  { transform:translateX(-40px); transition:opacity 0.85s cubic-bezier(0.16,1,0.3,1), transform 0.85s cubic-bezier(0.16,1,0.3,1); }
-        .r-right { transform:translateX(40px);  transition:opacity 0.85s cubic-bezier(0.16,1,0.3,1), transform 0.85s cubic-bezier(0.16,1,0.3,1); }
-        .r-scale { transform:scale(0.93) translateY(18px); transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.34,1.4,0.64,1); }
-        .is-visible { opacity:1!important; transform:none!important; }
+        .btn-primary:hover { background:#5E8F80;transform:translateY(-2px);box-shadow:0 10px 28px rgba(94,143,128,0.35); }
+        .btn-primary:active { transform:translateY(0); }
+        .btn-primary svg { transition:transform 0.3s cubic-bezier(0.16,1,0.3,1); }
+        .btn-primary:hover svg { transform:translateX(4px); }
 
-        /* ── Card hover ── */
-        .hover-lift { transition:transform 0.45s cubic-bezier(0.34,1.15,0.64,1), box-shadow 0.45s ease; }
-        .hover-lift:hover { transform:translateY(-8px); box-shadow:0 24px 48px -12px rgba(123,175,158,0.25); }
+        .btn-outline {
+          border:1.5px solid #2B1F1C;color:#2B1F1C;padding:12px 28px;border-radius:4px;
+          font-size:13px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;
+          text-decoration:none;display:inline-flex;align-items:center;gap:9px;background:transparent;
+          transition:border-color 0.28s,color 0.28s,background 0.28s,transform 0.3s cubic-bezier(0.16,1,0.3,1);
+        }
+        .btn-outline:hover { background:#2B1F1C;color:#fff;transform:translateY(-2px); }
 
-        /* ── Magnetic ── */
-        .magnetic { transition:transform 0.5s cubic-bezier(0.34,1.26,0.64,1)!important; }
+        /* Step cards */
+        .step-card { transition:transform 0.5s cubic-bezier(0.16,1,0.3,1),box-shadow 0.5s ease; }
+        .step-card:hover { transform:translateY(-6px);box-shadow:0 24px 48px -12px rgba(123,175,158,0.2); }
+        .step-card .bar { transition:width 0.55s cubic-bezier(0.16,1,0.3,1);width:0; }
+        .step-card:hover .bar { width:100%; }
 
-        /* ── Footer links ── */
-        footer a { transition:color 0.25s ease, transform 0.3s cubic-bezier(0.34,1.26,0.64,1); display:inline-block; }
-        footer a:hover { color:#7BAF9E; transform:translateX(5px); }
+        /* Carousel */
+        .carousel-container { position:relative;height:520px;overflow:hidden;display:flex;justify-content:center;align-items:center; }
+        .carousel-item { position:absolute;width:460px;height:460px;border-radius:12px;object-fit:cover;opacity:0;z-index:0;transition:all 0.7s cubic-bezier(0.34,1.15,0.64,1),opacity 0.5s cubic-bezier(0.16,1,0.3,1); }
+        .carousel-item.active  { opacity:1;transform:translateX(0) scale(1);z-index:5;box-shadow:0 24px 56px rgba(0,0,0,0.2); }
+        .carousel-item.prev-1  { opacity:.55;transform:translateX(-44%) scale(0.78);z-index:4; }
+        .carousel-item.next-1  { opacity:.55;transform:translateX(44%) scale(0.78);z-index:4; }
+        .carousel-item.prev-2  { opacity:.22;transform:translateX(-74%) scale(0.6);z-index:3; }
+        .carousel-item.next-2  { opacity:.22;transform:translateX(74%) scale(0.6);z-index:3; }
+        #carousel-dots button { transition:width 0.4s cubic-bezier(0.34,1.26,0.64,1),background 0.3s ease; }
+        @media(max-width:768px){
+          .carousel-container{height:300px}
+          .carousel-item{width:240px;height:200px}
+          .carousel-item.prev-1{transform:translateX(-38%) scale(0.84)}
+          .carousel-item.next-1{transform:translateX(38%) scale(0.84)}
+          .carousel-item.prev-2,.carousel-item.next-2{opacity:0}
+        }
 
-        /* ── Float ── */
-        .float-anim { animation:floatY 7s ease-in-out infinite; }
-        @keyframes floatY { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+        /* Chapter CTA block */
+        .chapter-card { background:#2B1F1C;border-radius:16px;overflow:hidden;position:relative; }
+        .chapter-card::before { content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(123,175,158,0.18) 0%,transparent 65%);pointer-events:none; }
+        .step-badge { width:36px;height:36px;border-radius:50%;background:rgba(123,175,158,0.18);border:1.5px solid rgba(123,175,158,0.4);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#7BAF9E;flex-shrink:0; }
+
+        /* Social icons */
+        .social-icon { transition:transform 0.32s cubic-bezier(0.16,1,0.3,1),background-color 0.25s ease,color 0.25s ease,border-color 0.25s ease; }
+        .social-icon:hover { transform:translateY(-3px);background-color:#7BAF9E;color:white;border-color:#7BAF9E; }
+
+        footer a { transition:color 0.22s ease,padding-left 0.3s cubic-bezier(0.16,1,0.3,1);display:inline-block; }
+        footer a:hover { color:#7BAF9E;padding-left:5px; }
 
         @keyframes pageFade { from{opacity:0} to{opacity:1} }
         body { animation:pageFade 0.5s ease both; }
     </style>
 </head>
 
-<body class="bg-cream text-deep font-body scroll-smooth">
+<body class="bg-cream text-deep font-body">
 
-<header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200">
+<div id="progress-bar"></div>
+
+<header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200/50">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-        <a href="index.html" aria-label="Go to Home" class="inline-flex items-center">
-            <img src="images/icon (1).png" class="h-12 transition duration-300 hover:scale-105 active:scale-95" alt="Streets to Shelters Home">
+        <a href="index.html" aria-label="Streets to Shelters Home">
+            <img src="images/icon (1).png" class="h-11 transition-transform duration-300 hover:scale-105 active:scale-95" alt="Streets to Shelters">
         </a>
         <nav class="hidden md:flex gap-8 text-sm font-medium items-center">
-            <a href="index.html" class="nav-link hover:text-brand transition">Home</a>
+            <a href="index.html" class="nav-link hover:text-brand transition-colors">Home</a>
             <div class="relative group">
-                <button class="nav-link hover:text-brand transition py-2 flex items-center gap-1">
+                <button class="nav-link hover:text-brand transition-colors py-2 flex items-center gap-1.5">
                     Initiatives
-                    <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                    <svg class="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                 </button>
-                <div class="absolute left-0 top-full w-56 bg-white rounded-2xl shadow-lg border border-gray-100 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300">
-                    <a href="events.html"    class="block px-6 py-3.5 text-sm hover:bg-cream rounded-t-2xl transition-colors">Streets to Shelters Events</a>
-                    <a href="volunteer.html" class="block px-6 py-3.5 text-sm hover:bg-cream rounded-b-2xl transition-colors">Volunteer</a>
+                <div class="absolute left-0 top-full w-56 bg-white rounded-xl shadow-lg border border-gray-100/80 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200">
+                    <a href="events.html"    class="block px-6 py-3.5 text-sm hover:bg-cream rounded-t-xl transition-colors">Events</a>
+                    <a href="volunteer.html" class="block px-6 py-3.5 text-sm hover:bg-cream rounded-b-xl transition-colors">Volunteer</a>
                 </div>
             </div>
             <div class="relative group">
-                <button class="nav-link hover:text-brand transition py-2 flex items-center gap-1">
+                <button class="nav-link hover:text-brand transition-colors py-2 flex items-center gap-1.5">
                     About Us
-                    <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                    <svg class="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                 </button>
-                <div class="absolute left-0 top-full w-60 bg-white rounded-2xl shadow-lg border border-gray-100 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300">
-                    <a href="news.html"    class="block px-6 py-3.5 text-sm hover:bg-cream rounded-t-2xl transition-colors">Streets to Shelters News</a>
+                <div class="absolute left-0 top-full w-60 bg-white rounded-xl shadow-lg border border-gray-100/80 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200">
+                    <a href="news.html"    class="block px-6 py-3.5 text-sm hover:bg-cream rounded-t-xl transition-colors">News</a>
                     <a href="members.html" class="block px-6 py-3.5 text-sm hover:bg-cream transition-colors">Members</a>
-                    <a href="contact.html" class="block px-6 py-3.5 text-sm hover:bg-cream rounded-b-2xl transition-colors">Contact Us</a>
+                    <a href="contact.html" class="block px-6 py-3.5 text-sm hover:bg-cream rounded-b-xl transition-colors">Contact Us</a>
                 </div>
             </div>
-            <a href="chapter.html" class="nav-link hover:text-brand transition">Start a Chapter</a>
+            <a href="chapter.html" class="nav-link hover:text-brand transition-colors">Start a Chapter</a>
         </nav>
         <div class="flex items-center gap-4">
-            <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" rel="noopener"
-               class="magnetic hidden md:inline-block bg-brand text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-brandDark transition">Donate</a>
-            <button id="mobile-menu-btn" class="md:hidden text-deep p-2">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+            <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
+               target="_blank" rel="noopener" class="btn-primary hidden md:inline-flex">
+                Donate
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <button id="mobile-menu-btn" class="md:hidden text-deep p-2" aria-label="Open menu">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M4 6h16M4 12h16m-7 6h7"/>
                 </svg>
             </button>
         </div>
@@ -104,101 +150,220 @@
 <div id="mobile-menu-overlay" class="fixed inset-0 bg-white z-[60] flex flex-col p-10 translate-x-full transition-transform duration-300 ease-in-out md:hidden">
     <div class="flex justify-between items-center mb-10">
         <img src="images/icon (1).png" class="h-10" alt="Streets to Shelters">
-        <button id="close-menu-btn" class="text-deep p-2">
-            <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        <button id="close-menu-btn" class="text-deep p-2" aria-label="Close menu">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M6 18L18 6M6 6l12 12"/>
             </svg>
         </button>
     </div>
     <nav class="flex flex-col gap-5 text-xl font-heading font-bold">
-        <a href="index.html"     class="hover:text-brand transition">Home</a>
-        <a href="events.html"    class="hover:text-brand transition">Events</a>
-        <a href="news.html"      class="hover:text-brand transition">News</a>
-        <a href="members.html"   class="hover:text-brand transition">Members</a>
-        <a href="volunteer.html" class="hover:text-brand transition">Volunteer</a>
-        <a href="chapter.html"   class="hover:text-brand transition">Start a Chapter</a>
-        <a href="contact.html"   class="hover:text-brand transition">Contact Us</a>
+        <a href="index.html"     class="hover:text-brand transition-colors">Home</a>
+        <a href="events.html"    class="hover:text-brand transition-colors">Events</a>
+        <a href="news.html"      class="hover:text-brand transition-colors">News</a>
+        <a href="members.html"   class="hover:text-brand transition-colors">Members</a>
+        <a href="volunteer.html" class="hover:text-brand transition-colors">Volunteer</a>
+        <a href="chapter.html"   class="hover:text-brand transition-colors">Start a Chapter</a>
+        <a href="contact.html"   class="hover:text-brand transition-colors">Contact Us</a>
         <hr class="border-gray-100 my-2">
-        <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" rel="noopener"
-           class="bg-brand text-white text-center py-4 rounded-full text-lg">Donate Now</a>
+        <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
+           target="_blank" rel="noopener"
+           class="bg-brand text-white text-center py-4 text-sm font-semibold tracking-widest uppercase rounded-sm">Donate Now</a>
     </nav>
 </div>
 
-<main class="pt-36 pb-24 max-w-7xl mx-auto px-6 space-y-24">
-
-    <!-- Hero Banner -->
-    <section class="text-center r-up relative bg-cover bg-center overflow-hidden rounded-3xl min-h-[500px] flex items-center justify-center"
-             style="background-image:url('images/world-map.png');">
-        <div class="absolute inset-0 bg-white/80"></div>
-        <div class="relative z-10 py-12 px-6">
-            <h1 class="text-5xl md:text-6xl font-heading font-bold mb-6">Start a Chapter</h1>
-            <p class="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">Bring structured impact to your community by launching a youth-led chapter of Streets To Shelters.</p>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfCpZuTW-6sPjbQLBSCpPMr75BQ4sCxHH_WluLateNQyB4rjw/viewform"
-               target="_blank" rel="noopener"
-               class="magnetic bg-brand text-white px-8 py-4 rounded-full font-semibold hover:bg-brandDark transition inline-block shadow-sm hover:shadow-md">Apply Now</a>
+<!-- HERO -->
+<section class="pt-36 pb-24 bg-cream overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="r-fade mb-4">
+            <span class="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase px-4 py-1.5 rounded-sm border border-brand/25 text-brandDark" style="background:rgba(123,175,158,0.07);">
+                <span class="w-1.5 h-1.5 rounded-full bg-brand inline-block"></span>
+                Youth-Led · San Antonio, TX
+            </span>
         </div>
-    </section>
+        <div class="grid md:grid-cols-2 gap-16 items-center">
+            <div>
+                <h1 class="r-up text-5xl md:text-6xl font-heading font-bold leading-tight mb-6">
+                    Start a<br><em class="text-brand not-italic">Chapter</em>
+                </h1>
+                <p class="r-up text-base text-gray-500 mb-10 leading-relaxed max-w-md" style="transition-delay:0.12s">
+                    Bring structured, lasting impact to your city by launching a <strong class="text-deep font-semibold">youth-led chapter</strong> of Streets To Shelters.
+                </p>
+                <div class="r-up flex flex-wrap gap-4" style="transition-delay:0.22s">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfCpZuTW-6sPjbQLBSCpPMr75BQ4sCxHH_WluLateNQyB4rjw/viewform"
+                       target="_blank" rel="noopener" class="btn-primary">
+                        Apply Now
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                    <a href="contact.html" class="btn-outline">Ask a Question</a>
+                </div>
+            </div>
+            <div class="r-scale" style="transition-delay:0.2s">
+                <div class="relative">
+                    <div class="rounded-2xl overflow-hidden shadow-2xl aspect-[4/3]">
+                        <img src="images/world-map.png" alt="Streets to Shelters chapters" class="w-full h-full object-cover">
+                    </div>
+                    <div class="absolute -bottom-5 -left-5 bg-white rounded-xl shadow-lg px-5 py-3.5 border border-gray-100 r-left" style="transition-delay:0.5s">
+                        <p class="text-xs text-gray-400 uppercase tracking-widest mb-0.5">Chapters Growing</p>
+                        <p class="text-2xl font-heading font-bold text-deep">TX+</p>
+                    </div>
+                    <div class="absolute -top-4 -right-4 bg-brand rounded-xl shadow-lg px-4 py-3 r-right" style="transition-delay:0.6s">
+                        <p class="text-xs text-white/65 uppercase tracking-widest mb-0.5">100%</p>
+                        <p class="text-base font-heading font-bold text-white">Student-Led</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-    <!-- How it works steps -->
-    <section class="r-up" style="transition-delay:0.05s">
-        <h2 class="text-3xl font-heading font-bold text-center mb-12">How to Start a Chapter</h2>
-        <div class="grid md:grid-cols-3 gap-8 text-center">
-            <div class="r-scale bg-white p-8 rounded-3xl shadow-sm border border-brand/10 hover-lift" style="transition-delay:0ms">
-                <div class="text-brand text-4xl font-heading font-bold mb-4">01</div>
+<!-- HOW IT WORKS -->
+<section class="py-24 bg-white overflow-hidden">
+    <div class="max-w-6xl mx-auto px-6">
+        <div class="text-center mb-16 r-up">
+            <span class="text-xs font-semibold tracking-widest uppercase text-brand mb-4 block">The Process</span>
+            <h2 class="text-4xl font-heading font-bold">How to Start a <em class="text-brand">Chapter</em></h2>
+            <div class="w-10 h-px bg-brand mx-auto mt-6"></div>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="step-card r-scale relative bg-cream/50 border border-brand/10 p-10 rounded-2xl overflow-hidden" style="transition-delay:0ms">
+                <div class="text-brand text-5xl font-heading font-bold mb-5 leading-none">01</div>
                 <h3 class="font-semibold text-lg mb-3">Apply</h3>
-                <p class="text-gray-600 text-sm leading-relaxed">Submit your chapter application via our Google Form. Tell us about your city and your vision.</p>
+                <p class="text-gray-400 text-sm leading-relaxed">Submit your chapter application via our Google Form. Tell us about your city and your vision for impact.</p>
+                <div class="bar absolute bottom-0 left-0 h-[2px] bg-brand rounded-full"></div>
             </div>
-            <div class="r-scale bg-white p-8 rounded-3xl shadow-sm border border-brand/10 hover-lift" style="transition-delay:0.1s">
-                <div class="text-brand text-4xl font-heading font-bold mb-4">02</div>
+            <div class="step-card r-scale relative bg-cream/50 border border-brand/10 p-10 rounded-2xl overflow-hidden" style="transition-delay:0.15s">
+                <div class="text-brand text-5xl font-heading font-bold mb-5 leading-none">02</div>
                 <h3 class="font-semibold text-lg mb-3">Connect</h3>
-                <p class="text-gray-600 text-sm leading-relaxed">Our team will reach out to onboard you with resources, templates, and guidance.</p>
+                <p class="text-gray-400 text-sm leading-relaxed">Our team will reach out to onboard you with resources, templates, and guidance from the founding chapter.</p>
+                <div class="bar absolute bottom-0 left-0 h-[2px] bg-brand rounded-full"></div>
             </div>
-            <div class="r-scale bg-white p-8 rounded-3xl shadow-sm border border-brand/10 hover-lift" style="transition-delay:0.2s">
-                <div class="text-brand text-4xl font-heading font-bold mb-4">03</div>
+            <div class="step-card r-scale relative bg-cream/50 border border-brand/10 p-10 rounded-2xl overflow-hidden" style="transition-delay:0.3s">
+                <div class="text-brand text-5xl font-heading font-bold mb-5 leading-none">03</div>
                 <h3 class="font-semibold text-lg mb-3">Launch</h3>
-                <p class="text-gray-600 text-sm leading-relaxed">Host your first drive, build your team, and start making an impact in your city.</p>
+                <p class="text-gray-400 text-sm leading-relaxed">Host your first drive, build your team, and start making measurable impact in your city.</p>
+                <div class="bar absolute bottom-0 left-0 h-[2px] bg-brand rounded-full"></div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Existing Chapters -->
-    <section class="r-up" style="transition-delay:0.08s">
-        <h2 class="text-4xl font-heading font-bold text-center mb-12">Existing Chapters</h2>
-        <div class="grid md:grid-cols-3 gap-10 text-center">
-            <div class="bg-white p-8 rounded-3xl shadow-sm hover-lift r-scale" style="transition-delay:0ms">
-                <div class="w-full h-40 rounded-2xl overflow-hidden mb-6">
-                    <img src="images/sts8.jpg" alt="San Antonio Chapter" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
-                </div>
-                <h3 class="text-xl font-semibold mb-2">San Antonio, TX</h3>
-                <p class="text-sm text-gray-500 mb-4">Founding Chapter</p>
-                <p class="text-gray-600 text-sm">Leading monthly drives and direct shelter partnerships across the city.</p>
+<!-- EXISTING CHAPTERS -->
+<section class="py-24 overflow-hidden" style="background:rgba(244,239,230,0.5);">
+    <div class="max-w-6xl mx-auto px-6">
+        <div class="text-center mb-16 r-up">
+            <span class="text-xs font-semibold tracking-widest uppercase text-brand mb-4 block">On the Ground</span>
+            <h2 class="text-4xl font-heading font-bold">Existing <em class="text-brand">Chapters</em></h2>
+            <div class="w-10 h-px bg-brand mx-auto mt-6"></div>
+        </div>
+
+        <!-- editorial split panel for San Antonio chapter -->
+        <div class="grid md:grid-cols-2 gap-10 items-stretch mb-12 r-up">
+            <div class="rounded-2xl overflow-hidden shadow-xl" style="min-height:340px;">
+                <img src="images/sts8.jpg" alt="San Antonio Chapter" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
             </div>
-            <div class="bg-white p-8 rounded-3xl shadow-sm hover-lift r-scale" style="transition-delay:0.14s">
-                <div class="w-full h-40 rounded-2xl overflow-hidden mb-6 bg-brand/10 flex items-center justify-center">
-                    <svg class="w-12 h-12 text-brand/40" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            <div class="bg-deep rounded-2xl p-10 flex flex-col justify-center relative overflow-hidden">
+                <div class="absolute inset-0" style="background:radial-gradient(ellipse at 80% 20%,rgba(123,175,158,0.15) 0%,transparent 60%);pointer-events:none;"></div>
+                <div class="relative z-10">
+                    <span class="text-xs font-semibold tracking-widest uppercase text-brand mb-4 block">Founding Chapter</span>
+                    <h3 class="font-heading text-3xl font-bold text-cream mb-4">San Antonio, TX</h3>
+                    <p class="text-cream/60 text-sm leading-relaxed mb-8">Leading monthly drives, direct shelter partnerships, and kit-assembly events across the city. The blueprint for every chapter that follows.</p>
+                    <div class="grid grid-cols-2 gap-6 border-t border-white/10 pt-8">
+                        <div>
+                            <p class="font-heading text-2xl font-bold text-cream">3+</p>
+                            <p class="text-cream/40 text-xs uppercase tracking-wide mt-1">Events Hosted</p>
+                        </div>
+                        <div>
+                            <p class="font-heading text-2xl font-bold text-cream">30+</p>
+                            <p class="text-cream/40 text-xs uppercase tracking-wide mt-1">Active Volunteers</p>
+                        </div>
+                    </div>
                 </div>
-                <h3 class="text-xl font-semibold mb-2">Coming Soon</h3>
-                <p class="text-sm text-gray-500 mb-4">New Chapter</p>
-                <p class="text-gray-600 text-sm">We are onboarding motivated student leaders ready to launch in their cities.</p>
-            </div>
-            <div class="bg-white p-8 rounded-3xl shadow-sm hover-lift r-scale" style="transition-delay:0.28s">
-                <div class="w-full h-40 rounded-2xl overflow-hidden mb-6 bg-brand/10 flex items-center justify-center">
-                    <svg class="w-12 h-12 text-brand/40" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v16m8-8H4"/></svg>
-                </div>
-                <h3 class="text-xl font-semibold mb-2">Apply Today</h3>
-                <p class="text-sm text-gray-500 mb-4">Youth Leadership Opportunity</p>
-                <p class="text-gray-600 text-sm">Submit your application via the Google Form above to start a chapter.</p>
             </div>
         </div>
-    </section>
 
-</main>
+        <!-- Coming soon cards -->
+        <div class="grid md:grid-cols-2 gap-8 r-up" style="transition-delay:0.1s">
+            <div class="bg-white border border-brand/10 rounded-2xl p-10 flex flex-col justify-between" style="min-height:200px;">
+                <div>
+                    <span class="text-xs font-semibold tracking-widest uppercase text-brand mb-3 block">New Chapter</span>
+                    <h3 class="font-heading text-2xl font-bold mb-3">Coming Soon</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">We are onboarding motivated student leaders ready to launch in their cities.</p>
+                </div>
+            </div>
+            <div class="bg-white border border-brand/10 rounded-2xl p-10 flex flex-col justify-between" style="min-height:200px;">
+                <div>
+                    <span class="text-xs font-semibold tracking-widest uppercase text-brand mb-3 block">Your City?</span>
+                    <h3 class="font-heading text-2xl font-bold mb-3">Apply Today</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Submit your application and become the next chapter leader in your community.</p>
+                </div>
+                <div class="mt-6">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfCpZuTW-6sPjbQLBSCpPMr75BQ4sCxHH_WluLateNQyB4rjw/viewform"
+                       target="_blank" rel="noopener" class="btn-primary">
+                        Start a Chapter
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-<footer class="bg-deep text-white py-12">
-    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-10 text-center sm:text-left">
+<!-- PHOTO CAROUSEL -->
+<section class="py-24 bg-creamdark overflow-hidden r-up">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-14">
+            <span class="text-xs font-semibold tracking-widest uppercase text-deep/40 mb-3 block">Chapter Life</span>
+            <h2 class="text-4xl font-heading font-bold text-deep">The Work in Motion</h2>
+        </div>
+        <div class="carousel-container mb-10" id="chapter-carousel" role="region" aria-label="Chapter photo gallery">
+            <img src="images/sts8.jpg"  class="carousel-item" alt="San Antonio Chapter" loading="lazy">
+            <img src="images/sts1.jpg"  class="carousel-item" alt="Volunteers" loading="lazy">
+            <img src="images/sts7.jpg"  class="carousel-item" alt="Community" loading="lazy">
+            <img src="images/sts3.jpg"  class="carousel-item" alt="Kit assembly" loading="lazy">
+            <img src="images/sts4.jpg"  class="carousel-item" alt="Team" loading="lazy">
+            <img src="images/sts9.jpg"  class="carousel-item" alt="Events" loading="lazy">
+        </div>
+        <div class="flex justify-center items-center gap-5">
+            <button id="carousel-prev" aria-label="Previous photo" class="w-9 h-9 rounded-full border border-deep/25 flex items-center justify-center hover:border-deep hover:bg-deep hover:text-white transition-all duration-300">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <div class="flex gap-2" id="carousel-dots"></div>
+            <button id="carousel-next" aria-label="Next photo" class="w-9 h-9 rounded-full border border-deep/25 flex items-center justify-center hover:border-deep hover:bg-deep hover:text-white transition-all duration-300">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="py-20 bg-cream r-scale">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+        <div class="bg-deep rounded-2xl p-14 md:p-20 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-72 h-72 opacity-5" style="background:radial-gradient(circle at top right,#7BAF9E,transparent 70%);"></div>
+            <span class="text-xs font-semibold tracking-widest uppercase text-brand mb-5 block">Join the Movement</span>
+            <h2 class="text-4xl md:text-5xl font-heading font-bold text-cream mb-5 relative z-10 leading-snug">
+                Ready to lead <em class="text-brand">change?</em>
+            </h2>
+            <p class="text-base mb-10 max-w-xl mx-auto relative z-10 leading-relaxed" style="color:rgba(244,239,230,0.5);">
+                Every chapter starts with one student who decides to act. Fill out the form and our founding team will be in touch within 48 hours.
+            </p>
+            <div class="relative z-10 flex flex-wrap justify-center gap-4">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfCpZuTW-6sPjbQLBSCpPMr75BQ4sCxHH_WluLateNQyB4rjw/viewform"
+                   target="_blank" rel="noopener" class="btn-primary">
+                    Apply Now
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <a href="contact.html" style="border:1.5px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.8);padding:12px 28px;border-radius:4px;font-size:13px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:center;gap:9px;transition:border-color 0.28s,color 0.28s;">Ask a Question</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="bg-deep text-white py-16">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-12">
         <div>
-            <h3 class="text-xs uppercase tracking-widest text-white/50 font-semibold mb-5">Follow Us</h3>
-            <div class="flex flex-col gap-3">
+            <h3 class="text-xs uppercase tracking-widest font-semibold mb-6" style="color:rgba(255,255,255,0.3);">Follow Us</h3>
+            <div class="flex flex-col gap-3 text-sm">
                 <a href="https://www.instagram.com/streets.to.shelter" target="_blank" rel="noopener">Instagram</a>
                 <a href="https://www.facebook.com/profile.php?id=61586361417282" target="_blank" rel="noopener">Facebook</a>
                 <a href="https://www.tiktok.com/@streetstoshelters" target="_blank" rel="noopener">TikTok</a>
@@ -206,8 +371,8 @@
             </div>
         </div>
         <div>
-            <h3 class="text-xs uppercase tracking-widest text-white/50 font-semibold mb-5">Quick Links</h3>
-            <div class="flex flex-col gap-3">
+            <h3 class="text-xs uppercase tracking-widest font-semibold mb-6" style="color:rgba(255,255,255,0.3);">Quick Links</h3>
+            <div class="flex flex-col gap-3 text-sm">
                 <a href="index.html">Home</a>
                 <a href="events.html">Events</a>
                 <a href="news.html">News</a>
@@ -218,41 +383,103 @@
             </div>
         </div>
         <div>
-            <h3 class="text-xs uppercase tracking-widest text-white/50 font-semibold mb-5">Support Us</h3>
-            <div class="flex flex-col gap-3">
-                <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters" target="_blank" rel="noopener">Donate</a>
+            <h3 class="text-xs uppercase tracking-widest font-semibold mb-6" style="color:rgba(255,255,255,0.3);">Contact</h3>
+            <div class="flex flex-col gap-2 text-sm" style="color:rgba(255,255,255,0.38);">
+                <span>streetstoshelters.tx@gmail.com</span>
+                <span>San Antonio, Texas</span>
             </div>
-            <p class="text-white/25 text-xs mt-10">© 2026 Streets To Shelters</p>
+            <a href="contact.html" class="text-brand text-sm mt-3 block" style="padding-left:0;">Contact Form →</a>
+            <div class="mt-10 pt-8" style="border-top:1px solid rgba(255,255,255,0.07);">
+                <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
+                   target="_blank" rel="noopener" class="btn-primary" style="font-size:12px;padding:11px 20px;">
+                    Donate
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+            </div>
+            <p class="text-xs mt-8" style="color:rgba(255,255,255,0.18);">© 2026 Streets To Shelters. All rights reserved.</p>
         </div>
     </div>
 </footer>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-      /* ── Mobile Menu ── */
-      const mobileBtn = document.getElementById('mobile-menu-btn');
-      const closeBtn  = document.getElementById('close-menu-btn');
-      const overlay   = document.getElementById('mobile-menu-overlay');
-      if (mobileBtn && overlay) {
-        mobileBtn.addEventListener('click', () => overlay.classList.remove('translate-x-full'));
-        closeBtn.addEventListener('click',  () => overlay.classList.add('translate-x-full'));
-        overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => overlay.classList.add('translate-x-full')));
-      }
+        /* Progress bar */
+        const bar = document.getElementById('progress-bar');
+        window.addEventListener('scroll', () => {
+            const total = document.documentElement.scrollHeight - window.innerHeight;
+            bar.style.width = (total > 0 ? (window.scrollY / total) * 100 : 0) + '%';
+            document.body.classList.toggle('scrolled', window.scrollY > 60);
+        }, { passive: true });
 
-      /* ── Scroll Reveal ── */
-      const obs = new IntersectionObserver((entries, o) => {
-        entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); o.unobserve(entry.target); } });
-      }, { threshold: 0.07, rootMargin:'0px 0px -40px 0px' });
-      document.querySelectorAll('.r-up, .r-scale, .r-left, .r-right').forEach(el => obs.observe(el));
+        /* Mobile menu */
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const closeBtn  = document.getElementById('close-menu-btn');
+        const overlay   = document.getElementById('mobile-menu-overlay');
+        if (mobileBtn && overlay) {
+            mobileBtn.addEventListener('click', () => overlay.classList.remove('translate-x-full'));
+            closeBtn.addEventListener('click',  () => overlay.classList.add('translate-x-full'));
+            overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => overlay.classList.add('translate-x-full')));
+        }
 
-      /* ── Magnetic Buttons ── */
-      document.querySelectorAll('.magnetic').forEach(btn => {
-        btn.addEventListener('mousemove', e => {
-          const r = btn.getBoundingClientRect();
-          btn.style.transform = `translate(${(e.clientX - r.left - r.width/2) * 0.28}px, ${(e.clientY - r.top - r.height/2) * 0.28}px)`;
-        });
-        btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
-      });
+        /* Scroll reveal */
+        const revObs = new IntersectionObserver((entries, obs) => {
+            entries.forEach(e => { if (!e.isIntersecting) return; e.target.classList.add('is-visible'); obs.unobserve(e.target); });
+        }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.r-up,.r-left,.r-right,.r-scale,.r-fade').forEach(el => revObs.observe(el));
+
+        /* Carousel */
+        const items = Array.from(document.querySelectorAll('.carousel-item'));
+        const dotsCon = document.getElementById('carousel-dots');
+        const prevBtn = document.getElementById('carousel-prev');
+        const nextBtn = document.getElementById('carousel-next');
+        let cIdx = 0, cTimer = null;
+        if (items.length) {
+            const total = items.length;
+            items.forEach((_, i) => {
+                const d = document.createElement('button');
+                d.setAttribute('aria-label', 'Photo ' + (i + 1));
+                d.className = 'h-2 rounded-full transition-all duration-400';
+                d.classList.add(i === 0 ? 'bg-deep' : 'bg-deep/25', i === 0 ? 'w-6' : 'w-2');
+                d.addEventListener('click', () => { cIdx = i; update(); reset(); });
+                dotsCon.appendChild(d);
+            });
+            const dots = dotsCon.querySelectorAll('button');
+            function update() {
+                items.forEach((item, i) => {
+                    item.classList.remove('active','prev-1','next-1','prev-2','next-2');
+                    const d = ((i - cIdx) % total + total) % total;
+                    if (d===0) item.classList.add('active');
+                    else if (d===1) item.classList.add('next-1');
+                    else if (d===total-1) item.classList.add('prev-1');
+                    else if (d===2) item.classList.add('next-2');
+                    else if (d===total-2) item.classList.add('prev-2');
+                });
+                dots.forEach((d,i) => {
+                    d.classList.toggle('bg-deep', i===cIdx);
+                    d.classList.toggle('w-6', i===cIdx);
+                    d.classList.toggle('bg-deep/25', i!==cIdx);
+                    d.classList.toggle('w-2', i!==cIdx);
+                });
+            }
+            function advance(dir) { cIdx = (cIdx + dir + total) % total; update(); reset(); }
+            function reset() { clearInterval(cTimer); cTimer = setInterval(() => advance(1), 3800); }
+            prevBtn && prevBtn.addEventListener('click', () => advance(-1));
+            nextBtn && nextBtn.addEventListener('click', () => advance(1));
+            document.addEventListener('keydown', e => { if(e.key==='ArrowLeft') advance(-1); if(e.key==='ArrowRight') advance(1); });
+            const car = document.getElementById('chapter-carousel');
+            let tx = null;
+            car.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive:true });
+            car.addEventListener('touchend', e => {
+                if (tx===null) return;
+                const dx = e.changedTouches[0].clientX - tx;
+                if (Math.abs(dx) > 40) advance(dx < 0 ? 1 : -1);
+                tx = null;
+            }, { passive:true });
+            /* Pause on hover */
+            car.addEventListener('mouseenter', () => clearInterval(cTimer));
+            car.addEventListener('mouseleave', () => reset());
+            requestAnimationFrame(() => { update(); reset(); });
+        }
     });
 </script>
 </body>
