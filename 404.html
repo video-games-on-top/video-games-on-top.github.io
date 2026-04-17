@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | Streets to Shelters</title>
+    <link rel="icon" href="images/Logo1.png">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: { brand:'#7BAF9E', brandDark:'#5E8F80', cream:'#F4EFE6', deep:'#2B1F1C', creamdark:'#c3bfb8' },
+              fontFamily: { heading:['Playfair Display','serif'], body:['Inter','sans-serif'] }
+            }
+          }
+        }
+    </script>
+    <style>
+        #progress-bar { position:fixed;top:0;left:0;height:2px;background:#7BAF9E;width:0%;z-index:9999;transition:width 0.1s linear; }
+        .nav-link { position:relative; }
+        .nav-link::after { content:'';position:absolute;bottom:-3px;left:0;width:0;height:1.5px;background:#7BAF9E;transition:width 0.38s cubic-bezier(0.16,1,0.3,1); }
+        .nav-link:hover::after { width:100%; }
+        .r-up,.r-left,.r-right,.r-scale,.r-fade { opacity:0;will-change:opacity,transform; }
+        .r-up { transform:translateY(44px); }
+        .r-left { transform:translateX(-52px); }
+        .r-right { transform:translateX(52px); }
+        .r-scale { transform:scale(0.92) translateY(18px); }
+        .r-up,.r-left,.r-right,.r-fade { transition:opacity 0.85s cubic-bezier(0.16,1,0.3,1),transform 0.85s cubic-bezier(0.16,1,0.3,1); }
+        .r-scale { transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1),transform 0.8s cubic-bezier(0.34,1.4,0.64,1); }
+        .is-visible { opacity:1!important;transform:none!important; }
+        .word-wrap { display:inline-block;overflow:hidden;vertical-align:bottom; }
+        .word-inner { display:inline-block;transform:translateY(110%);opacity:0;transition:transform 0.9s cubic-bezier(0.16,1,0.3,1),opacity 0.6s cubic-bezier(0.16,1,0.3,1); }
+        .word-inner.is-visible { transform:translateY(0);opacity:1; }
+        body::after { content:'';position:fixed;inset:0;z-index:9997;pointer-events:none;opacity:0.02;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:160px 160px; }
+        header { transition:box-shadow 0.4s ease; }
+        body.scrolled header { box-shadow:0 1px 24px rgba(43,31,28,0.08); }
+        .tilt-card { transform-style:preserve-3d;transition:transform 0.12s ease-out; }
+        .float-anim { animation:floatY 7s ease-in-out infinite; }
+        @keyframes floatY { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
+
+        /* Professional button styles */
+        .btn-primary {
+          position:relative;overflow:hidden;background:#7BAF9E;color:#fff;
+          padding:13px 28px;border-radius:4px;font-size:13px;font-weight:600;
+          letter-spacing:0.07em;text-transform:uppercase;text-decoration:none;
+          display:inline-flex;align-items:center;gap:9px;
+          transition:background 0.28s ease,transform 0.3s cubic-bezier(0.16,1,0.3,1),box-shadow 0.3s ease;
+          box-shadow:0 2px 10px rgba(123,175,158,0.2);
+        }
+        .btn-primary:hover { background:#5E8F80;transform:translateY(-2px);box-shadow:0 10px 28px rgba(94,143,128,0.35); }
+        .btn-primary:active { transform:translateY(0); }
+        .btn-primary svg { transition:transform 0.3s cubic-bezier(0.16,1,0.3,1); }
+        .btn-primary:hover svg { transform:translateX(4px); }
+        .btn-outline {
+          border:1.5px solid #2B1F1C;color:#2B1F1C;padding:12px 28px;border-radius:4px;
+          font-size:13px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;
+          text-decoration:none;display:inline-flex;align-items:center;gap:9px;background:transparent;
+          transition:border-color 0.28s,color 0.28s,background 0.28s,transform 0.3s cubic-bezier(0.16,1,0.3,1);
+        }
+        .btn-outline:hover { background:#2B1F1C;color:#fff;transform:translateY(-2px); }
+        .btn-outline:active { transform:translateY(0); }
+
+        .mission-card { transition:transform 0.5s cubic-bezier(0.16,1,0.3,1),box-shadow 0.5s cubic-bezier(0.16,1,0.3,1); }
+        .mission-card:hover { transform:translateY(-6px);box-shadow:0 24px 48px -12px rgba(123,175,158,0.2); }
+        .mission-card .bar { transition:width 0.55s cubic-bezier(0.16,1,0.3,1);width:0; }
+        .mission-card:hover .bar { width:100%; }
+        .step-line { position:absolute;top:28px;left:calc(50% + 40px);width:calc(100% - 80px);height:1px;background:linear-gradient(90deg,#7BAF9E 0%,transparent 100%);opacity:0.25; }
+        @media(max-width:767px){.step-line{display:none}}
+
+        /* Social icons */
+        .social-icon { transition:transform 0.32s cubic-bezier(0.16,1,0.3,1),background-color 0.25s ease,color 0.25s ease,border-color 0.25s ease; }
+        .social-icon:hover { transform:translateY(-3px);background-color:#7BAF9E;color:white;border-color:#7BAF9E; }
+
+        /* Footer */
+        footer a { transition:color 0.22s ease,padding-left 0.3s cubic-bezier(0.16,1,0.3,1);display:inline-block; }
+        footer a:hover { color:#7BAF9E;padding-left:5px; }
+
+        /* Sponsor slots */
+        .sponsor-slot { height:72px;display:flex;align-items:center;justify-content:center; }
+        .sponsor-slot img[src=""] { display:none; }
+        .sponsor-slot:has(img[src=""]){background:repeating-linear-gradient(45deg,rgba(123,175,158,0.04),rgba(123,175,158,0.04) 10px,transparent 10px,transparent 20px);border:1.5px dashed rgba(123,175,158,0.2);border-radius:8px;min-height:72px;}
+
+        @keyframes pageFade { from{opacity:0} to{opacity:1} }
+        body { animation:pageFade 0.5s ease both; }
+
+        /* ── IMPACT SECTION ── */
+        .impact-row { display:grid;grid-template-columns:1fr 1fr;min-height:440px;overflow:hidden; }
+        .impact-photo { position:relative;overflow:hidden; }
+        .impact-photo img { width:100%;height:100%;object-fit:cover;transition:transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+        .impact-photo:hover img { transform:scale(1.03); }
+        .impact-stats-panel { background:#2B1F1C;display:flex;flex-direction:column;justify-content:center;padding:72px 60px; }
+        .impact-eyebrow { font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#7BAF9E;margin-bottom:18px;display:block; }
+        .impact-heading { font-family:'Playfair Display',serif;font-size:clamp(24px,2.6vw,36px);font-weight:700;line-height:1.25;color:#F4EFE6;margin-bottom:48px; }
+        .impact-heading em { font-style:italic;color:#7BAF9E; }
+        .stat-row { display:flex;flex-direction:column;border-top:1px solid rgba(244,239,230,0.07); }
+        .stat-item { display:grid;grid-template-columns:100px 1fr;align-items:center;gap:28px;padding:22px 0;border-bottom:1px solid rgba(244,239,230,0.07);transition:padding-left 0.3s cubic-bezier(0.16,1,0.3,1); }
+        .stat-item:hover { padding-left:6px; }
+        .stat-num { font-family:'Playfair Display',serif;font-size:clamp(34px,3.5vw,48px);font-weight:700;color:#F4EFE6;line-height:1;letter-spacing:-0.02em;display:block; }
+        .stat-info-label { font-size:12px;font-weight:500;color:rgba(244,239,230,0.4);letter-spacing:0.07em;display:block;margin-bottom:8px; }
+        .stat-bar-track { height:1px;background:rgba(244,239,230,0.1);border-radius:1px;overflow:hidden; }
+        .stat-bar-fill { height:1px;background:#7BAF9E;border-radius:1px;width:0;transition:width 1.4s cubic-bezier(0.16,1,0.3,1); }
+        .stat-bar-fill.animated { width:var(--fill); }
+
+        /* ── 3-STEP SUPPORT ── */
+        .support-eyebrow { font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#7BAF9E;margin-bottom:14px;display:block; }
+        .support-h2 { font-family:'Playfair Display',serif;font-size:clamp(30px,3.2vw,46px);font-weight:700;line-height:1.15;color:#2B1F1C;letter-spacing:-0.01em; }
+        .support-h2 em { font-style:italic;color:#7BAF9E; }
+        .support-grid { display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid rgba(43,31,28,0.07); }
+        .support-card { padding:52px 44px 48px;border-right:1px solid rgba(43,31,28,0.07);position:relative;overflow:hidden;transition:background 0.35s cubic-bezier(0.16,1,0.3,1); }
+        .support-card:last-child { border-right:none; }
+        .support-card::before { content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:#7BAF9E;transition:width 0.5s cubic-bezier(0.16,1,0.3,1); }
+        .support-card:hover { background:rgba(123,175,158,0.03); }
+        .support-card:hover::before { width:100%; }
+        .support-step { font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(43,31,28,0.25);margin-bottom:26px;display:block; }
+        .support-icon-ring { width:50px;height:50px;border-radius:50%;border:1.5px solid rgba(123,175,158,0.28);display:flex;align-items:center;justify-content:center;color:#7BAF9E;margin-bottom:26px;transition:border-color 0.3s,background 0.3s,transform 0.4s cubic-bezier(0.16,1,0.3,1); }
+        .support-card:hover .support-icon-ring { border-color:#7BAF9E;background:#7BAF9E;color:#fff;transform:scale(1.06); }
+        .support-title { font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:#2B1F1C;margin-bottom:12px;line-height:1.25; }
+        .support-body { font-size:14px;font-weight:400;line-height:1.8;color:rgba(43,31,28,0.5);margin-bottom:30px; }
+        .support-link { display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#7BAF9E;text-decoration:none;transition:gap 0.3s cubic-bezier(0.16,1,0.3,1),color 0.2s; }
+        .support-link:hover { color:#5E8F80;gap:11px; }
+        .support-link svg { transition:transform 0.3s cubic-bezier(0.16,1,0.3,1); }
+        .support-link:hover svg { transform:translateX(2px); }
+
+        @media(max-width:900px){
+          .support-grid{grid-template-columns:1fr;}
+          .support-card{border-right:none;border-bottom:1px solid rgba(43,31,28,0.07);padding:40px 7vw;}
+          .support-card:last-child{border-bottom:none;}
+          .impact-row{grid-template-columns:1fr;}
+          .impact-photo{min-height:300px;}
+          .impact-stats-panel{padding:52px 7vw;}
+        }
+        @media(prefers-reduced-motion:reduce){
+          *,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}
+          .r-up,.r-left,.r-right,.r-scale,.r-fade{opacity:1!important;transform:none!important}
+          .word-inner{transform:none!important;opacity:1!important}
+        }
+    </style>
+</head>
+<body class="bg-cream text-deep font-body">
+
+<div id="progress-bar"></div>
+
+<!-- HEADER -->
+<header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200/50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <a href="index.html" aria-label="Streets to Shelters Home">
+            <img src="images/icon (1).png" class="h-11 transition-transform duration-300 hover:scale-105 active:scale-95" alt="Streets to Shelters">
+        </a>
+        <nav class="hidden md:flex gap-8 text-sm font-medium items-center">
+            <a href="index.html" class="nav-link hover:text-brand transition-colors">Home</a>
+            <div class="relative group">
+                <button class="nav-link hover:text-brand transition-colors py-2 flex items-center gap-1.5">
+                    Initiatives
+                    <svg class="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                </button>
+                <div class="absolute left-0 top-full w-56 bg-white rounded-xl shadow-lg border border-gray-100/80 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200">
+                    <a href="events.html"    class="block px-6 py-3.5 text-sm hover:bg-cream rounded-t-xl transition-colors">Events</a>
+                    <a href="volunteer.html" class="block px-6 py-3.5 text-sm hover:bg-cream rounded-b-xl transition-colors">Volunteer</a>
+                </div>
+            </div>
+            <div class="relative group">
+                <button class="nav-link hover:text-brand transition-colors py-2 flex items-center gap-1.5">
+                    About Us
+                    <svg class="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                </button>
+                <div class="absolute left-0 top-full w-60 bg-white rounded-xl shadow-lg border border-gray-100/80 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200">
+                    <a href="news.html"    class="block px-6 py-3.5 text-sm hover:bg-cream rounded-t-xl transition-colors">News</a>
+                    <a href="members.html" class="block px-6 py-3.5 text-sm hover:bg-cream transition-colors">Members</a>
+                    <a href="contact.html" class="block px-6 py-3.5 text-sm hover:bg-cream rounded-b-xl transition-colors">Contact Us</a>
+                </div>
+            </div>
+            <a href="chapter.html" class="nav-link hover:text-brand transition-colors">Start a Chapter</a>
+        </nav>
+        <div class="flex items-center gap-4">
+            <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
+               target="_blank" rel="noopener" class="btn-primary hidden md:inline-flex">
+                Donate
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <button id="mobile-menu-btn" class="md:hidden text-deep p-2" aria-label="Open menu">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M4 6h16M4 12h16m-7 6h7"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- Mobile menu -->
+<div id="mobile-menu-overlay" class="fixed inset-0 bg-white z-[60] flex flex-col p-10 translate-x-full transition-transform duration-300 ease-in-out md:hidden">
+    <div class="flex justify-between items-center mb-10">
+        <img src="images/icon (1).png" class="h-10" alt="Streets to Shelters">
+        <button id="close-menu-btn" class="text-deep p-2" aria-label="Close menu">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+    </div>
+    <nav class="flex flex-col gap-5 text-xl font-heading font-bold">
+        <a href="index.html"     class="hover:text-brand transition-colors">Home</a>
+        <a href="events.html"    class="hover:text-brand transition-colors">Events</a>
+        <a href="news.html"      class="hover:text-brand transition-colors">News</a>
+        <a href="members.html"   class="hover:text-brand transition-colors">Members</a>
+        <a href="volunteer.html" class="hover:text-brand transition-colors">Volunteer</a>
+        <a href="chapter.html"   class="hover:text-brand transition-colors">Start a Chapter</a>
+        <a href="contact.html"   class="hover:text-brand transition-colors">Contact Us</a>
+        <hr class="border-gray-100 my-2">
+        <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
+           target="_blank" rel="noopener"
+           class="bg-brand text-white text-center py-4 text-sm font-semibold tracking-widest uppercase rounded-sm">Donate Now</a>
+    </nav>
+</div>
+
+
+<section id="mission" class="py-20 bg-white">
+    <div class="max-w-3xl mx-auto text-center px-6 r-up">
+        <span class="text-xs font-semibold tracking-widest uppercase text-brand mb-4 block">Page Not Found</span>
+        <h2 class="text-4xl font-heading font-bold mb-5 leading-snug">This page seems to have lost its way... <br><em class="text-brand">but our mission hasn't.</em></h2>
+        <div class="w-10 h-px bg-brand mx-auto mb-8"></div>
+        <p class="text-base text-gray-500 leading-relaxed">
+            We couldn't find the link you were looking for, but you can still help us get hygiene kits to those who need them most.
+        </p>
+    </div>
+</section>
+<div class="r-up flex flex-wrap items-center gap-4" style="transition-delay:0.44s">
+    <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
+       target="_blank" rel="noopener" class="btn-primary">
+        Donate
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    <a href="index.html" class="btn-outline">Back To Home</a>
+    </div>
+
+
+<!-- FOOTER -->
+<footer class="bg-deep text-white py-16">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-12">
+        <div>
+            <h3 class="text-xs uppercase tracking-widest font-semibold mb-6" style="color:rgba(255,255,255,0.3);">Follow Us</h3>
+            <div class="flex flex-col gap-3 text-sm">
+                <a href="https://www.instagram.com/streets.to.shelter" target="_blank" rel="noopener">Instagram</a>
+                <a href="https://www.facebook.com/profile.php?id=61586361417282" target="_blank" rel="noopener">Facebook</a>
+                <a href="https://www.tiktok.com/@streetstoshelters" target="_blank" rel="noopener">TikTok</a>
+                <a href="https://linktr.ee/streets2shelters" target="_blank" rel="noopener">Linktree</a>
+            </div>
+        </div>
+        <div>
+            <h3 class="text-xs uppercase tracking-widest font-semibold mb-6" style="color:rgba(255,255,255,0.3);">Quick Links</h3>
+            <div class="flex flex-col gap-3 text-sm">
+                <a href="index.html">Home</a>
+                <a href="events.html">Events</a>
+                <a href="news.html">News</a>
+                <a href="members.html">Members</a>
+                <a href="volunteer.html">Volunteer</a>
+                <a href="chapter.html">Start a Chapter</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </div>
+        <div>
+            <h3 class="text-xs uppercase tracking-widest font-semibold mb-6" style="color:rgba(255,255,255,0.3);">Contact</h3>
+            <div class="flex flex-col gap-2 text-sm" style="color:rgba(255,255,255,0.38);">
+                <span>streets2shelters.tx@gmail.com</span>
+                <span>San Antonio, Texas</span>
+            </div>
+            <a href="contact.html" class="text-brand text-sm mt-3 block" style="padding-left:0;">Contact Form →</a>
+            <div class="mt-10 pt-8" style="border-top:1px solid rgba(255,255,255,0.07);">
+                <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
+                   target="_blank" rel="noopener" class="btn-primary" style="font-size:12px;padding:11px 20px;">
+                    Donate
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+            </div>
+            <p class="text-xs mt-8" style="color:rgba(255,255,255,0.18);">© 2026 Streets To Shelters. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const mobileBtn = document.getElementById('mobile-menu-btn');
+      const closeBtn  = document.getElementById('close-menu-btn');
+      const overlay   = document.getElementById('mobile-menu-overlay');
+      if (mobileBtn && overlay) {
+        mobileBtn.addEventListener('click', () => overlay.classList.remove('translate-x-full'));
+        closeBtn.addEventListener('click',  () => overlay.classList.add('translate-x-full'));
+        overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => overlay.classList.add('translate-x-full')));
+      }
+
+      const bar = document.getElementById('progress-bar');
+      window.addEventListener('scroll', () => {
+        const total = document.documentElement.scrollHeight - window.innerHeight;
+        bar.style.width = (total > 0 ? (window.scrollY / total) * 100 : 0) + '%';
+        document.body.classList.toggle('scrolled', window.scrollY > 60);
+      }, { passive: true });
+
+      const h1 = document.getElementById('hero-heading');
+      if (h1) {
+        const wrap = node => {
+          if (node.nodeType === 3) {
+            const frag = document.createDocumentFragment();
+            node.textContent.split(/(\s+)/).forEach(part => {
+              if (/^\s+$/.test(part) || part === '') { frag.appendChild(document.createTextNode(part)); return; }
+              const w = document.createElement('span'); w.className = 'word-wrap';
+              const i = document.createElement('span'); i.className = 'word-inner';
+              i.textContent = part; w.appendChild(i); frag.appendChild(w);
+            });
+            node.replaceWith(frag);
+          } else if (node.nodeType === 1 && node.tagName !== 'SCRIPT') {
+            const w = document.createElement('span'); w.className = 'word-wrap';
+            const i = document.createElement('span'); i.className = 'word-inner';
+            i.appendChild(node.cloneNode(true)); w.appendChild(i); node.replaceWith(w);
+          }
+        };
+        Array.from(h1.childNodes).forEach(wrap);
+        h1.querySelectorAll('.word-inner').forEach((w, idx) => { w.style.transitionDelay = (0.005 + idx * 0.025) + 's'; });
+        setTimeout(() => h1.querySelectorAll('.word-inner').forEach(w => w.classList.add('is-visible')), 80);
+      }
+
+      const heroCard = document.getElementById('hero-card');
+      if (heroCard) {
+        heroCard.parentElement.addEventListener('mousemove', e => {
+          const r = heroCard.getBoundingClientRect();
+          const rx = ((e.clientY - r.top  - r.height / 2) / (r.height / 2)) *  5;
+          const ry = ((e.clientX - r.left - r.width  / 2) / (r.width  / 2)) * -5;
+          heroCard.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+        });
+        heroCard.parentElement.addEventListener('mouseleave', () => { heroCard.style.transform = ''; });
+      }
+
+      const revObs = new IntersectionObserver((entries, obs) => {
+        entries.forEach(e => { if (!e.isIntersecting) return; e.target.classList.add('is-visible'); obs.unobserve(e.target); });
+      }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.r-up,.r-left,.r-right,.r-scale,.r-fade').forEach(el => revObs.observe(el));
+
+      const easeOut = t => 1 - Math.pow(1 - t, 4);
+      const ctrObs = new IntersectionObserver((entries, obs) => {
+        entries.forEach(e => {
+          if (!e.isIntersecting) return;
+          const el = e.target, target = +el.dataset.target, suffix = el.dataset.suffix || '';
+          if (target === 0) { el.textContent = '0' + suffix; obs.unobserve(el); return; }
+          const dur = 1800, t0 = performance.now();
+          (function tick(now) {
+            const p = Math.min((now - t0) / dur, 1);
+            el.textContent = Math.round(easeOut(p) * target) + suffix;
+            p < 1 ? requestAnimationFrame(tick) : (el.textContent = target + suffix);
+          })(t0);
+          obs.unobserve(el);
+        });
+      }, { threshold: 0.5 });
+      document.querySelectorAll('[data-target]').forEach(el => ctrObs.observe(el));
+
+      const barObs = new IntersectionObserver((entries, obs) => {
+        entries.forEach(e => {
+          if (!e.isIntersecting) return;
+          e.target.querySelectorAll('.stat-bar-fill').forEach((b, i) => setTimeout(() => b.classList.add('animated'), i * 200));
+          obs.unobserve(e.target);
+        });
+      }, { threshold: 0.3 });
+      const sp = document.querySelector('.impact-stats-panel');
+      if (sp) barObs.observe(sp);
+
+    });
+</script>
+</body>
+</html>
