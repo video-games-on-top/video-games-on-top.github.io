@@ -171,7 +171,7 @@ Come support, enjoy some baked goods, and help us grow.">
     <section class="r-up" style="transition-delay:0.1s" id = "upcoming">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
-            <
+
 
             <div class="event-card r-scale relative bg-white border border-brand/10 rounded-2xl overflow-hidden flex flex-col" style="transition-delay:0.2s">
                 <div class="w-full h-52 overflow-hidden flex-shrink-0">
@@ -188,7 +188,8 @@ Come support, enjoy some baked goods, and help us grow.">
                             data-date="May 16"
                             data-location="Clark High School, 5150 De Zavala Rd, San Antonio,
 TX 78249"
-                            data-desc="">
+                            data-desc=""
+                        data-iframe="images/basketball.jpg">
                         Learn More
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </button>
@@ -239,8 +240,12 @@ TX 78249"
         <div class="flex flex-col sm:flex-row gap-3 text-xs font-semibold mb-6">
             <span id="modal-date" class="bg-brand/10 text-brand px-4 py-2 rounded-sm">📅 Date</span>
             <span id="modal-location" class="bg-brand/10 text-brand px-4 py-2 rounded-sm">📍 Location</span>
+            <a id="modal-link" href="#" target="_blank" class="bg-brand/10 text-brand px-4 py-2 rounded-sm inline-block w-max transition-all duration-300 hover:bg-brand hover:text-white">🔗 Open in New Tab</a>
         </div>
         <p id="modal-desc" class="text-gray-500 leading-relaxed text-sm whitespace-pre-line"></p>
+        <div id="modal-content" class="w-full flex-1 overflow-auto rounded-xl">
+            <iframe id="modal-iframe" src="" style="width:100%;height:1500px;" class="border-0"></iframe>
+        </div>
     </div>
 </div>
 
@@ -264,12 +269,7 @@ TX 78249"
             overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => overlay.classList.add('translate-x-full')));
         }
 
-        const revObs = new IntersectionObserver((entries, obs) => {
-            entries.forEach(e => { if (!e.isIntersecting) return; e.target.classList.add('is-visible'); obs.unobserve(e.target); });
-        }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
-        document.querySelectorAll('.r-up,.r-scale,.r-fade').forEach(el => revObs.observe(el));
-
-        const modal    = document.getElementById('event-modal');
+  const modal    = document.getElementById('event-modal');
         const modalBox = document.getElementById('modal-box');
         const backdrop = document.getElementById('modal-backdrop');
         const closeBtn2 = document.getElementById('close-modal-btn');
@@ -278,12 +278,34 @@ TX 78249"
         const mLoc     = document.getElementById('modal-location');
         const mDesc    = document.getElementById('modal-desc');
 
+        // NEW: Grab the iframe, link, and content wrapper
+        const mLink    = document.getElementById('modal-link');
+        const mIframe  = document.getElementById('modal-iframe');
+        const mContent = document.getElementById('modal-content');
+
         document.querySelectorAll('.open-modal-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 mTitle.textContent = btn.dataset.title;
                 mDate.textContent  = '📅 ' + btn.dataset.date;
                 mLoc.textContent   = '📍 ' + btn.dataset.location;
                 mDesc.textContent  = btn.dataset.desc;
+
+                // NEW LOGIC: Handle the iframe and link
+                const iframeSrc = btn.dataset.iframe;
+                if (iframeSrc) {
+                    // If there is an iframe URL, set the sources and show them
+                    mIframe.src = iframeSrc;
+                    mLink.href = iframeSrc;
+                    mLink.style.display = 'inline-block';
+                    mContent.style.display = 'block';
+                } else {
+                    // If there is NO iframe URL (like the bake sales), hide them
+                    mIframe.src = '';
+                    mLink.href = '#';
+                    mLink.style.display = 'none';
+                    mContent.style.display = 'none';
+                }
+
                 modal.classList.remove('opacity-0','pointer-events-none');
                 modalBox.classList.remove('scale-95');
                 modalBox.classList.add('scale-100');
@@ -294,10 +316,9 @@ TX 78249"
             modal.classList.add('opacity-0','pointer-events-none');
             modalBox.classList.remove('scale-100');
             modalBox.classList.add('scale-95');
+            // Clear the iframe source on close so audio/video stops playing
+            setTimeout(() => { mIframe.src = ''; }, 300);
         };
-        closeBtn2.addEventListener('click', closeModal);
-        backdrop.addEventListener('click', closeModal);
-        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
          fetch('header.html')
     .then(response => response.text())
     .then(data => {
