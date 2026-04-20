@@ -318,6 +318,10 @@ TX 78249"
             modalBox.classList.remove('scale-100');
             modalBox.classList.add('scale-95');
             setTimeout(() => { mImage.src = ''; }, 300);
+
+            closeBtn2.addEventListener('click', closeModal);
+    backdrop.addEventListener('click', closeModal);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
         };
 
         // 4. Header & Footer Injection
