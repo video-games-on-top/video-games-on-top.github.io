@@ -232,10 +232,13 @@ TX 78249"
 <!-- Modal -->
 <div id="event-modal" class="fixed inset-0 z-[70] flex items-center justify-center p-4 sm:p-6 opacity-0 pointer-events-none transition-opacity duration-300">
     <div class="absolute inset-0 bg-deep/60 backdrop-blur-sm" id="modal-backdrop"></div>
-    <div class="bg-white rounded-2xl w-full max-w-2xl relative z-10 p-8 md:p-12 shadow-2xl transform scale-95 transition-transform duration-300" id="modal-box">
-        <button id="close-modal-btn" class="absolute top-6 right-6 text-gray-400 hover:text-brand transition">
+
+    <div class="bg-white rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto relative z-10 p-8 md:p-12 shadow-2xl transform scale-95 transition-transform duration-300" id="modal-box">
+
+        <button id="close-modal-btn" class="absolute top-6 right-6 text-gray-400 hover:text-brand transition z-20 bg-white rounded-full p-1">
             <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
+
         <h2 id="modal-title" class="text-3xl font-heading font-bold text-deep mb-4">Event Title</h2>
         <div class="flex flex-col sm:flex-row gap-3 text-xs font-semibold mb-6">
             <span id="modal-date" class="bg-brand/10 text-brand px-4 py-2 rounded-sm">📅 Date</span>
@@ -243,8 +246,9 @@ TX 78249"
             <a id="modal-link" href="#" target="_blank" class="bg-brand/10 text-brand px-4 py-2 rounded-sm inline-block w-max transition-all duration-300 hover:bg-brand hover:text-white">🔗 Open in New Tab</a>
         </div>
         <p id="modal-desc" class="text-gray-500 leading-relaxed text-sm whitespace-pre-line"></p>
-        <div id="modal-content" class="w-full flex-1 overflow-hidden rounded-xl mt-4">
-            <img id="modal-image" src="" class="w-full max-h-[60vh] object-contain rounded-lg border border-brand/20">
+
+        <div id="modal-content" class="w-full flex-1 rounded-xl mt-6">
+            <img id="modal-image" src="" class="w-full h-auto rounded-lg border border-brand/10 shadow-sm">
         </div>
     </div>
 </div>
@@ -313,16 +317,17 @@ TX 78249"
             });
         });
 
-        const closeModal = () => {
+const closeModal = () => {
             modal.classList.add('opacity-0','pointer-events-none');
             modalBox.classList.remove('scale-100');
             modalBox.classList.add('scale-95');
             setTimeout(() => { mImage.src = ''; }, 300);
+        }; // <-- The function ends here now
 
-            closeBtn2.addEventListener('click', closeModal);
-    backdrop.addEventListener('click', closeModal);
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-        };
+        // These are now properly OUTSIDE the function so they actually work
+        closeBtn2.addEventListener('click', closeModal);
+        backdrop.addEventListener('click', closeModal);
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
         // 4. Header & Footer Injection
         fetch('header.html')
