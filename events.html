@@ -243,8 +243,8 @@ TX 78249"
             <a id="modal-link" href="#" target="_blank" class="bg-brand/10 text-brand px-4 py-2 rounded-sm inline-block w-max transition-all duration-300 hover:bg-brand hover:text-white">🔗 Open in New Tab</a>
         </div>
         <p id="modal-desc" class="text-gray-500 leading-relaxed text-sm whitespace-pre-line"></p>
-        <div id="modal-content" class="w-full flex-1 overflow-auto rounded-xl">
-            <iframe id="modal-iframe" src="" style="width:100%;height:1500px;" class="border-0"></iframe>
+        <div id="modal-content" class="w-full flex-1 overflow-hidden rounded-xl mt-4">
+            <img id="modal-image" src="" class="w-full max-h-[60vh] object-contain rounded-lg border border-brand/20">
         </div>
     </div>
 </div>
@@ -282,7 +282,9 @@ TX 78249"
         const mLoc     = document.getElementById('modal-location');
         const mDesc    = document.getElementById('modal-desc');
         const mLink    = document.getElementById('modal-link');
-        const mIframe  = document.getElementById('modal-iframe');
+
+        // Changed to target the new image tag
+        const mImage   = document.getElementById('modal-image');
         const mContent = document.getElementById('modal-content');
 
         document.querySelectorAll('.open-modal-btn').forEach(btn => {
@@ -294,12 +296,12 @@ TX 78249"
 
                 const iframeSrc = btn.dataset.iframe;
                 if (iframeSrc) {
-                    mIframe.src = iframeSrc;
+                    mImage.src = iframeSrc; // Inject into the img tag
                     mLink.href = iframeSrc;
                     mLink.style.display = 'inline-block';
                     mContent.style.display = 'block';
                 } else {
-                    mIframe.src = '';
+                    mImage.src = '';
                     mLink.href = '#';
                     mLink.style.display = 'none';
                     mContent.style.display = 'none';
@@ -315,12 +317,8 @@ TX 78249"
             modal.classList.add('opacity-0','pointer-events-none');
             modalBox.classList.remove('scale-100');
             modalBox.classList.add('scale-95');
-            setTimeout(() => { mIframe.src = ''; }, 300);
+            setTimeout(() => { mImage.src = ''; }, 300);
         };
-
-        closeBtn2.addEventListener('click', closeModal);
-        backdrop.addEventListener('click', closeModal);
-        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
         // 4. Header & Footer Injection
         fetch('header.html')
@@ -343,7 +341,7 @@ TX 78249"
                 document.getElementById('footer-placeholder').innerHTML = data;
             });
     });
-        
+
 </script>
 </body>
 </html>
