@@ -214,10 +214,18 @@
             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
         <h2 id="modal-title" class="text-3xl md:text-4xl font-heading font-bold text-deep mb-4">Event Title</h2>
-        <div class="flex flex-col sm:flex-row gap-4 text-sm text-brand font-semibold mb-6">
-            <span id="modal-date" class="bg-brand/10 px-4 py-2 rounded-sm inline-block w-max">📅 Date</span>
+        <div class="flex flex-col sm:flex-row gap-3 text-xs font-semibold mb-6">
+            <span id="modal-date" class="bg-brand/10 text-brand px-4 py-2 rounded-sm">📅 Date</span>
+            <span id="modal-location" class="bg-brand/10 text-brand px-4 py-2 rounded-sm">📍 Location</span>
+
             <a id="modal-link" href="#" target="_blank" class="bg-brand/10 text-brand px-4 py-2 rounded-sm inline-block w-max transition-all duration-300 hover:bg-brand hover:text-white">🔗 Open in New Tab</a>
+
+            <button id="share-btn" class="bg-brand/10 text-brand px-4 py-2 rounded-sm inline-flex items-center gap-2 w-max transition-all duration-300 hover:bg-brand hover:text-white">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+                Share Event
+            </button>
         </div>
+
         <div id="modal-content" class="w-full flex-1 overflow-auto rounded-xl">
             <iframe id="modal-iframe" src="" style="width:100%;height:1500px;" class="border-0"></iframe>
         </div>
@@ -268,6 +276,28 @@
         });
         [modalClose, backdrop].forEach(el => el.addEventListener('click', () => modal.classList.add('opacity-0', 'pointer-events-none')));
         document.addEventListener('keydown', e => { if (e.key === 'Escape') modal.classList.add('opacity-0', 'pointer-events-none'); });
+        const shareBtn = document.getElementById('share-btn');
+
+shareBtn.addEventListener('click', async () => {
+    const shareData = {
+        title: document.getElementById('modal-title').textContent,
+        text: `Check out this event from Streets To Shelters: ${document.getElementById('modal-title').textContent}`,
+        url: window.location.href // Or a specific link to the image/event
+    };
+
+    try {
+        if (navigator.share) {
+            // This opens the native phone share menu
+            await navigator.share(shareData);
+        } else {
+            // Fallback: Copy to clipboard if native share isn't supported
+            await navigator.clipboard.writeText(window.location.href);
+            alert('Link copied to clipboard!');
+        }
+    } catch (err) {
+        console.log('Error sharing:', err);
+    }
+});
          fetch('header.html')
     .then(response => response.text())
     .then(data => {

@@ -256,8 +256,14 @@ TX 78249"
         <div class="flex flex-col sm:flex-row gap-3 text-xs font-semibold mb-6">
             <span id="modal-date" class="bg-brand/10 text-brand px-4 py-2 rounded-sm">📅 Date</span>
             <span id="modal-location" class="bg-brand/10 text-brand px-4 py-2 rounded-sm">📍 Location</span>
-            <a id="modal-link" href="#" target="_blank" class="bg-brand/10 text-brand px-4 py-2 rounded-sm inline-block w-max transition-all duration-300 hover:bg-brand hover:text-white">🔗 Open in New Tab</a>
+            <a id="modal-link" href="#" target="_blank" class="bg-brand/10 text-brand px-4 py-2 rounded-sm inline-block w-max transition-all duration-300 hover:bg-brand hover:text-white">🔗 Open in New Tab</a
+                <button id="share-btn" class="bg-brand/10 text-brand px-4 py-2 rounded-sm inline-flex items-center gap-2 w-max transition-all duration-300 hover:bg-brand hover:text-white">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+                    Share Event
+                </button>
+
         </div>
+
         <p id="modal-desc" class="text-gray-500 leading-relaxed text-sm whitespace-pre-line"></p>
 
         <div id="modal-content" class="w-full flex-1 rounded-xl mt-6">
@@ -341,6 +347,28 @@ const closeModal = () => {
         closeBtn2.addEventListener('click', closeModal);
         backdrop.addEventListener('click', closeModal);
         document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+        const shareBtn = document.getElementById('share-btn');
+
+shareBtn.addEventListener('click', async () => {
+    const shareData = {
+        title: document.getElementById('modal-title').textContent,
+        text: `Check out this event from Streets To Shelters: ${document.getElementById('modal-title').textContent}`,
+        url: window.location.href // Or a specific link to the image/event
+    };
+
+    try {
+        if (navigator.share) {
+            // This opens the native phone share menu
+            await navigator.share(shareData);
+        } else {
+            // Fallback: Copy to clipboard if native share isn't supported
+            await navigator.clipboard.writeText(window.location.href);
+            alert('Link copied to clipboard!');
+        }
+    } catch (err) {
+        console.log('Error sharing:', err);
+    }
+});
 
         // 4. Header & Footer Injection
         fetch('header.html')
