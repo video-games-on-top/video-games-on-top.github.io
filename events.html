@@ -253,6 +253,7 @@ TX 78249"
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
+        // 1. Progress Bar & Header Scroll Effect
         const bar = document.getElementById('progress-bar');
         window.addEventListener('scroll', () => {
             const total = document.documentElement.scrollHeight - window.innerHeight;
@@ -260,16 +261,19 @@ TX 78249"
             document.body.classList.toggle('scrolled', window.scrollY > 60);
         }, { passive: true });
 
-        const mobileBtn = document.getElementById('mobile-menu-btn');
-        const closeBtn  = document.getElementById('close-menu-btn');
-        const overlay   = document.getElementById('mobile-menu-overlay');
-        if (mobileBtn && overlay) {
-            mobileBtn.addEventListener('click', () => overlay.classList.remove('translate-x-full'));
-            closeBtn.addEventListener('click',  () => overlay.classList.add('translate-x-full'));
-            overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => overlay.classList.add('translate-x-full')));
-        }
+        // 2. Reveal Animation Observer (FIX: This makes the page not blank)
+        const revObs = new IntersectionObserver((entries, obs) => {
+            entries.forEach(e => {
+                if (!e.isIntersecting) return;
+                e.target.classList.add('is-visible');
+                obs.unobserve(e.target);
+            });
+        }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
 
-  const modal    = document.getElementById('event-modal');
+        document.querySelectorAll('.r-up, .r-scale, .r-fade').forEach(el => revObs.observe(el));
+
+        // 3. Modal Logic
+        const modal    = document.getElementById('event-modal');
         const modalBox = document.getElementById('modal-box');
         const backdrop = document.getElementById('modal-backdrop');
         const closeBtn2 = document.getElementById('close-modal-btn');
@@ -277,8 +281,6 @@ TX 78249"
         const mDate    = document.getElementById('modal-date');
         const mLoc     = document.getElementById('modal-location');
         const mDesc    = document.getElementById('modal-desc');
-
-        // NEW: Grab the iframe, link, and content wrapper
         const mLink    = document.getElementById('modal-link');
         const mIframe  = document.getElementById('modal-iframe');
         const mContent = document.getElementById('modal-content');
@@ -290,16 +292,13 @@ TX 78249"
                 mLoc.textContent   = '📍 ' + btn.dataset.location;
                 mDesc.textContent  = btn.dataset.desc;
 
-                // NEW LOGIC: Handle the iframe and link
                 const iframeSrc = btn.dataset.iframe;
                 if (iframeSrc) {
-                    // If there is an iframe URL, set the sources and show them
                     mIframe.src = iframeSrc;
                     mLink.href = iframeSrc;
                     mLink.style.display = 'inline-block';
                     mContent.style.display = 'block';
                 } else {
-                    // If there is NO iframe URL (like the bake sales), hide them
                     mIframe.src = '';
                     mLink.href = '#';
                     mLink.style.display = 'none';
@@ -316,21 +315,35 @@ TX 78249"
             modal.classList.add('opacity-0','pointer-events-none');
             modalBox.classList.remove('scale-100');
             modalBox.classList.add('scale-95');
-            // Clear the iframe source on close so audio/video stops playing
             setTimeout(() => { mIframe.src = ''; }, 300);
         };
-         fetch('header.html')
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById('header-placeholder').innerHTML = data;
-    });
 
-  fetch('footer.html')
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById('footer-placeholder').innerHTML = data;
+        closeBtn2.addEventListener('click', closeModal);
+        backdrop.addEventListener('click', closeModal);
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+        // 4. Header & Footer Injection
+        fetch('header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+                // Re-bind mobile menu if it exists in the injected header
+                const mobileBtn = document.getElementById('mobile-menu-btn');
+                const overlay   = document.getElementById('mobile-menu-overlay');
+                const closeMenu = document.getElementById('close-menu-btn');
+                if (mobileBtn && overlay) {
+                    mobileBtn.onclick = () => overlay.classList.remove('translate-x-full');
+                    if(closeMenu) closeMenu.onclick = () => overlay.classList.add('translate-x-full');
+                }
+            });
+
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
     });
-    });
+        });
 </script>
 </body>
 </html>
