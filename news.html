@@ -212,22 +212,28 @@
 <!-- Modal -->
 <div id="event-modal" class="fixed inset-0 z-[70] flex items-center justify-center p-4 sm:p-6 opacity-0 pointer-events-none transition-opacity duration-300">
     <div class="absolute inset-0 bg-deep/60 backdrop-blur-sm" id="modal-backdrop"></div>
-    <div class="bg-white rounded-2xl w-full max-w-5xl relative z-10 p-6 md:p-10 shadow-2xl transform scale-95 transition-transform duration-300 flex flex-col max-h-[95vh]">
-        <button id="close-modal-btn" class="absolute top-6 right-6 text-gray-400 hover:text-brand transition z-20">
+
+    <div class="bg-white rounded-2xl w-full max-w-5xl relative z-10 p-6 md:p-10 shadow-2xl transform scale-95 transition-transform duration-300 flex flex-col max-h-[95vh]" id="modal-box">
+
+        <button id="close-modal-btn" class="absolute top-6 right-6 text-gray-400 hover:text-brand transition z-20 bg-white rounded-full p-1">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
-        <h2 id="modal-title" class="text-3xl md:text-4xl font-heading font-bold text-deep mb-4">Event Title</h2>
+
+        <h2 id="modal-title" class="text-3xl md:text-4xl font-heading font-bold text-deep mb-4">Title</h2>
+
         <div class="flex flex-col sm:flex-row gap-3 text-xs font-semibold mb-6">
             <span id="modal-date" class="bg-brand/10 text-brand px-4 py-2 rounded-sm">📅 Date</span>
-            <span id="modal-location" class="bg-brand/10 text-brand px-4 py-2 rounded-sm">📍 Location</span>
+            <span id="modal-location" class="bg-brand/10 text-brand px-4 py-2 rounded-sm" style="display:none;">📍 Location</span>
 
             <a id="modal-link" href="#" target="_blank" class="bg-brand/10 text-brand px-4 py-2 rounded-sm inline-block w-max transition-all duration-300 hover:bg-brand hover:text-white">🔗 Open in New Tab</a>
 
             <button id="share-btn" class="bg-brand/10 text-brand px-4 py-2 rounded-sm inline-flex items-center gap-2 w-max transition-all duration-300 hover:bg-brand hover:text-white">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
-                Share Event
+                Share
             </button>
         </div>
+
+        <p id="modal-desc" class="text-gray-500 leading-relaxed text-sm whitespace-pre-line mb-6" style="display:none;"></p>
 
         <div id="modal-content" class="w-full flex-1 overflow-auto rounded-xl">
             <iframe id="modal-iframe" src="" style="width:100%;height:1500px;" class="border-0"></iframe>
@@ -268,24 +274,34 @@
         const mTitle   = document.getElementById('modal-title');
         const mDate    = document.getElementById('modal-date');
         const mLoc     = document.getElementById('modal-location');
+        const mDesc    = document.getElementById('modal-desc');
         const mLink    = document.getElementById('modal-link');
         const mIframe  = document.getElementById('modal-iframe');
         const mContent = document.getElementById('modal-content');
         const shareBtn = document.getElementById('share-btn');
 
-        // Function to handle opening the modal
         const openModal = (btn) => {
             mTitle.textContent = btn.dataset.title;
             mDate.textContent  = '📅 ' + btn.dataset.date;
 
-            // Hide the Location badge if the news card doesn't have one
+            // Handle Location
             if (btn.dataset.location) {
-                mLoc.textContent   = '📍 ' + btn.dataset.location;
+                mLoc.textContent = '📍 ' + btn.dataset.location;
                 mLoc.style.display = 'inline-block';
             } else {
                 mLoc.style.display = 'none';
             }
 
+            // Handle Text Description
+            if (btn.dataset.desc) {
+                mDesc.textContent = btn.dataset.desc;
+                mDesc.style.display = 'block';
+            } else {
+                mDesc.textContent = '';
+                mDesc.style.display = 'none';
+            }
+
+            // Handle Iframe Media
             const iframeSrc = btn.dataset.iframe;
             if (iframeSrc) {
                 mIframe.src = iframeSrc;
@@ -299,12 +315,12 @@
                 mContent.style.display = 'none';
             }
 
-            // Store the slug for the share button
+            // Share Slug Setup
             if (shareBtn && btn.dataset.slug) {
                 shareBtn.dataset.currentSlug = btn.dataset.slug;
             }
 
-            // Lock body scrolling while modal is open
+            // Lock body scrolling
             document.body.style.overflow = 'hidden';
 
             modal.classList.remove('opacity-0', 'pointer-events-none');
@@ -312,18 +328,18 @@
             modalBox.classList.add('scale-100');
         };
 
-        // Handle Clicks on "Learn More" buttons
+        // Click listeners
         document.querySelectorAll('.open-modal-btn').forEach(btn => {
             btn.addEventListener('click', () => openModal(btn));
         });
 
-        // Close Modal Logic
+        // Close Modal
         const closeModal = () => {
             modal.classList.add('opacity-0', 'pointer-events-none');
             modalBox.classList.remove('scale-100');
             modalBox.classList.add('scale-95');
 
-            // FIX: Forcefully remove the scroll lock so the page scrolls normally again
+            // Forcefully unlock scroll
             document.body.style.removeProperty('overflow');
             setTimeout(() => { mIframe.src = ''; }, 300);
         };
@@ -332,23 +348,17 @@
         backdrop.addEventListener('click', closeModal);
         document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-        // Share Button Logic (With Desktop Fallback)
+        // Share Link Logic
         if (shareBtn) {
             shareBtn.addEventListener('click', async () => {
                 const slug = shareBtn.dataset.currentSlug;
-
-                // FIX: Build the URL safely, ensuring it works on both Local Files and Live Servers
                 const url = new URL(window.location.href);
-                if (slug) {
-                    url.searchParams.set('event', slug);
-                }
+                if (slug) url.searchParams.set('event', slug);
+
                 const shareUrl = url.toString();
 
-                const shareData = {
-                    title: mTitle.textContent,
-                    text: `Check out this update from Streets To Shelters: ${mTitle.textContent}`,
-                    url: shareUrl
-                };
+                // Only send the URL to prevent Apple/Android from cluttering the clipboard text
+                const shareData = { title: mTitle.textContent, url: shareUrl };
 
                 try {
                     if (navigator.share) {
@@ -359,21 +369,16 @@
                         shareBtn.innerHTML = `✅ Link Copied!`;
                         setTimeout(() => { shareBtn.innerHTML = originalHTML; }, 2000);
                     }
-                } catch (err) {
-                    if (err.name !== 'AbortError') console.error('Error sharing:', err);
-                }
+                } catch (err) { if (err.name !== 'AbortError') console.error(err); }
             });
         }
 
-        // Deep Linking: Open specific modal on page load if ?event=slug is in the URL
+        // Deep linking on load
         const urlParams = new URLSearchParams(window.location.search);
         const eventSlug = urlParams.get('event');
-
         if (eventSlug) {
             const targetBtn = document.querySelector(`[data-slug="${eventSlug}"]`);
-            if (targetBtn) {
-                setTimeout(() => openModal(targetBtn), 300);
-            }
+            if (targetBtn) setTimeout(() => openModal(targetBtn), 300);
         }
          fetch('header.html')
     .then(response => response.text())
