@@ -63,22 +63,47 @@
                 <span>Mail: streets2shelters.tx@gmail.com</span>
                 <span>Founding Location: San Antonio, Texas</span>
                 <span>EIN: 41-4335864</span>
-                <div class="mt-8 pt-8 border-t border-white/10">
-                    <p class="text-xs font-semibold tracking-widest uppercase text-brand mb-3">Select Language</p>
-                    <div id="google_translate_element" class="rounded-sm overflow-hidden"></div>
-                </div>
+                <footer class="bg-white pt-20 pb-10 border-t border-gray-100">
+                    <div class="max-w-7xl mx-auto px-6">
+                        <div class="mt-12 pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-start gap-8">
+                            <div>
+                                <p class="text-xs font-semibold tracking-widest uppercase text-brand mb-4">Language / Idioma</p>
+                                <div id="google_translate_element" class="custom-translate-container"></div>
+                            </div>
 
-                <script type="text/javascript">
-                    function googleTranslateElementInit() {
-                      new google.translate.TranslateElement({
-                        pageLanguage: 'en',
-                        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-                        autoDisplay: false
-                      }, 'google_translate_element');
-                    }
-                </script>
-                <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-            </div>
+                            <p class="text-gray-400 text-xs">© 2026 Streets to Shelters. 501(c)(3) Nonprofit.</p>
+                        </div>
+                    </div>
+
+                    <script type="text/javascript">
+                        function googleTranslateElementInit() {
+                            new google.translate.TranslateElement({
+                                pageLanguage: 'en',
+                                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                                autoDisplay: false
+                            }, 'google_translate_element');
+                        }
+                    </script>
+                    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+                    <style>
+                        /* Styling the Google Dropdown to match your brand */
+                        .goog-te-gadget-simple {
+                            background-color: transparent !important;
+                            border: 1px solid rgba(123, 175, 158, 0.3) !important;
+                            padding: 8px 12px !important;
+                            border-radius: 4px !important;
+                            font-family: 'Inter', sans-serif !important;
+                        }
+                        .goog-te-gadget-simple a, .goog-te-menu-value span {
+                            color: #7BAF9E !important;
+                            font-size: 13px !important;
+                            text-decoration: none !important;
+                        }
+                        .goog-te-banner-frame.skiptranslate { display: none !important; }
+                        body { top: 0px !important; }
+                    </style>
+                </footer>
             <a href="contact.html" class="text-brand text-sm mt-3 block" style="padding-left:0;">Contact Form →</a>
             <div class="mt-10 pt-8" style="border-top:1px solid rgba(255,255,255,0.07);">
                 <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
@@ -92,19 +117,3 @@
     </div>
 
 </footer>
-<style>
-/* Hide the Google Translate attribution/banner */
-.goog-te-banner-frame.skiptranslate { display: none !important; }
-body { top: 0px !important; }
-
-/* Style the dropdown to look more like your site */
-#google_translate_element select {
-background: rgba(123, 175, 158, 0.1);
-color: #7BAF9E;
-border: 1px solid rgba(123, 175, 158, 0.2);
-padding: 6px 12px;
-border-radius: 4px;
-font-size: 13px;
-outline: none;
-}
-</style>
