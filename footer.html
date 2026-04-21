@@ -1,39 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2GY0P5SRNX"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-2GY0P5SRNX');
-    </script>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Streets To Shelters</title>
-    <link rel="icon" href="images/Logo1.png">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-          theme: {
-            extend: {
-              colors: { brand:'#7BAF9E', brandDark:'#5E8F80', cream:'#F4EFE6', deep:'#2B1F1C', creamdark:'#c3bfb8' },
-              fontFamily: { heading:['Playfair Display','serif'], body:['Inter','sans-serif'] }
-            }
-          }
-        }
-    </script>
-</head>
-
-<<footer class="bg-deep text-white pt-16 pb-8">
+<footer class="bg-deep text-white pt-16 pb-8 overflow-hidden">
     <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-12 mb-16">
 
-        <div>
+        <div class="r-up">
             <h3 class="text-xs uppercase tracking-widest font-semibold mb-6" style="color:rgba(255,255,255,0.3);">Follow Us</h3>
             <div class="flex flex-col gap-3 text-sm">
                 <a href="https://www.instagram.com/streets.to.shelter" target="_blank" rel="noopener" class="hover:text-brand transition-colors">Instagram</a>
@@ -44,7 +12,7 @@
             </div>
         </div>
 
-        <div>
+        <div class="r-up" style="transition-delay: 100ms;">
             <h3 class="text-xs uppercase tracking-widest font-semibold mb-6" style="color:rgba(255,255,255,0.3);">Quick Links</h3>
             <div class="flex flex-col gap-3 text-sm">
                 <a href="index.html" class="hover:text-brand transition-colors">Home</a>
@@ -57,7 +25,7 @@
             </div>
         </div>
 
-        <div>
+        <div class="r-up" style="transition-delay: 200ms;">
             <h3 class="text-xs uppercase tracking-widest font-semibold mb-6" style="color:rgba(255,255,255,0.3);">Identity</h3>
             <div class="flex flex-col gap-2 text-sm mb-4" style="color:rgba(255,255,255,0.38);">
                 <span>Mail: streets2shelters.tx@gmail.com</span>
@@ -68,7 +36,7 @@
 
             <div>
                 <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
-                   target="_blank" rel="noopener" class="btn-primary" style="font-size:12px;padding:11px 20px;">
+                   target="_blank" rel="noopener" class="bg-brand text-white hover:bg-brandDark transition-colors rounded" style="font-size:12px;padding:11px 20px; display: inline-flex; align-items: center; gap: 8px;">
                     Donate
                     <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </a>
@@ -76,8 +44,7 @@
         </div>
     </div>
 
-    <div class="max-w-7xl mx-auto px-6 border-t pt-8 flex flex-col md:flex-row justify-between items-center gap-6" style="border-color:rgba(255,255,255,0.07);">
-
+    <div class="max-w-7xl mx-auto px-6 border-t pt-8 flex flex-col md:flex-row justify-between items-center gap-6 r-up" style="border-color:rgba(255,255,255,0.07); transition-delay: 300ms;">
         <div class="flex items-center gap-4">
             <span class="text-xs font-semibold tracking-widest uppercase text-brand">Language</span>
             <div id="google_translate_element" class="custom-translate-container"></div>
@@ -88,42 +55,76 @@
         </p>
     </div>
 
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-          // Set up the rules for when the animation should trigger
           const observerOptions = {
             root: null,
-            rootMargin: '0px 0px -10% 0px', // Triggers when the element is 10% from the bottom of the screen
+            rootMargin: '0px 0px -5% 0px',
             threshold: 0.1
           };
 
-          // Create the observer
           const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
               if (entry.isIntersecting) {
-                // Add the class that fires your CSS transition
                 entry.target.classList.add('is-visible');
-
-                // Stop watching it once it's visible so it doesn't glitch if you scroll up and down
                 observer.unobserve(entry.target);
               }
             });
           }, observerOptions);
 
-          // Grab all elements with your animation classes and tell the observer to watch them
           const animatedElements = document.querySelectorAll('.r-up, .r-left, .r-right, .r-scale, .r-fade');
           animatedElements.forEach(el => observer.observe(el));
         });
     </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <style>
-        /* 1. Force the dropdown menu to sit above everything else */
+        /* --- MISSING CSS ANIMATION RULES ADDED BACK --- */
+        .r-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .r-left {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .r-right {
+            opacity: 0;
+            transform: translateX(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .r-scale {
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .r-fade {
+            opacity: 0;
+            transition: opacity 0.8s ease-out;
+        }
+        /* When the JS adds this class, the elements move into place */
+        .is-visible {
+            opacity: 1 !important;
+            transform: translate(0, 0) scale(1) !important;
+        }
+
+        /* --- GOOGLE TRANSLATE STYLES --- */
         iframe.goog-te-menu-frame {
             z-index: 999999 !important;
         }
 
-        /* 2. Switched from flex to inline-block so we don't break Google's click events */
         .goog-te-gadget-simple {
             background-color: rgba(255,255,255,0.05) !important;
             border: 1px solid rgba(255,255,255,0.1) !important;
@@ -140,7 +141,6 @@
             background-color: rgba(255,255,255,0.08) !important;
         }
 
-        /* Style the text inside */
         .goog-te-gadget-simple a, .goog-te-menu-value span {
             color: #F4EFE6 !important;
             font-size: 13px !important;
@@ -148,12 +148,10 @@
             text-decoration: none !important;
         }
 
-        /* Hide the ugly Google logo and divider */
         .goog-te-gadget-simple img { display: none !important; }
         .goog-te-menu-value span:nth-child(3) { border: none !important; color: transparent !important; }
         .goog-te-menu-value span:nth-child(5) { margin-left: -10px !important; font-size: 10px !important; opacity: 0.6; }
 
-        /* General Google iframe hiding */
         .goog-te-banner-frame.skiptranslate { display: none !important; }
         body { top: 0px !important; }
         .goog-tooltip { display: none !important; }
@@ -161,3 +159,6 @@
         .goog-text-highlight { background-color: transparent !important; border: none !important; box-shadow: none !important; }
     </style>
 </footer>
+
+</body>
+</html>
