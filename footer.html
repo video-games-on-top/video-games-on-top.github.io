@@ -30,81 +30,10 @@
     </script>
 </head>
 
-<style>
-    /* --- MISSING CSS ANIMATION RULES ADDED BACK --- */
-    .r-up {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-    }
-    .r-left {
-        opacity: 0;
-        transform: translateX(-30px);
-        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-    }
-    .r-right {
-        opacity: 0;
-        transform: translateX(30px);
-        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-    }
-    .r-scale {
-        opacity: 0;
-        transform: scale(0.95);
-        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-    }
-    .r-fade {
-        opacity: 0;
-        transition: opacity 0.8s ease-out;
-    }
-    /* When the JS adds this class, the elements move into place */
-    .is-visible {
-        opacity: 1 !important;
-        transform: translate(0, 0) scale(1) !important;
-    }
-
-    /* --- GOOGLE TRANSLATE STYLES --- */
-    iframe.goog-te-menu-frame {
-        z-index: 999999 !important;
-    }
-
-    .goog-te-gadget-simple {
-        background-color: rgba(255,255,255,0.05) !important;
-        border: 1px solid rgba(255,255,255,0.1) !important;
-        padding: 8px 14px !important;
-        border-radius: 6px !important;
-        font-family: 'Inter', sans-serif !important;
-        display: inline-block !important;
-        transition: border-color 0.2s ease, background-color 0.2s ease;
-        cursor: pointer;
-    }
-
-    .goog-te-gadget-simple:hover {
-        border-color: #7BAF9E !important;
-        background-color: rgba(255,255,255,0.08) !important;
-    }
-
-    .goog-te-gadget-simple a, .goog-te-menu-value span {
-        color: #F4EFE6 !important;
-        font-size: 13px !important;
-        font-weight: 500 !important;
-        text-decoration: none !important;
-    }
-
-    .goog-te-gadget-simple img { display: none !important; }
-    .goog-te-menu-value span:nth-child(3) { border: none !important; color: transparent !important; }
-    .goog-te-menu-value span:nth-child(5) { margin-left: -10px !important; font-size: 10px !important; opacity: 0.6; }
-
-    .goog-te-banner-frame.skiptranslate { display: none !important; }
-    body { top: 0px !important; }
-    .goog-tooltip { display: none !important; }
-    .goog-tooltip:hover { display: none !important; }
-    .goog-text-highlight { background-color: transparent !important; border: none !important; box-shadow: none !important; }
-</style>
-
-<footer class="bg-deep text-white pt-16 pb-8 overflow-hidden">
+<<footer class="bg-deep text-white pt-16 pb-8 overflow-hidden">
     <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-12 mb-16">
 
-        <div class="r-up">
+        <div class="reveal-on-scroll">
             <h3 class="text-xs uppercase tracking-widest font-semibold mb-6" style="color:rgba(255,255,255,0.3);">Follow Us</h3>
             <div class="flex flex-col gap-3 text-sm">
                 <a href="https://www.instagram.com/streets.to.shelter" target="_blank" rel="noopener" class="hover:text-brand transition-colors">Instagram</a>
@@ -115,7 +44,7 @@
             </div>
         </div>
 
-        <div class="r-up" style="transition-delay: 100ms;">
+        <div class="reveal-on-scroll" style="transition-delay: 150ms;">
             <h3 class="text-xs uppercase tracking-widest font-semibold mb-6" style="color:rgba(255,255,255,0.3);">Quick Links</h3>
             <div class="flex flex-col gap-3 text-sm">
                 <a href="index.html" class="hover:text-brand transition-colors">Home</a>
@@ -128,7 +57,7 @@
             </div>
         </div>
 
-        <div class="r-up" style="transition-delay: 200ms;">
+        <div class="reveal-on-scroll" style="transition-delay: 300ms;">
             <h3 class="text-xs uppercase tracking-widest font-semibold mb-6" style="color:rgba(255,255,255,0.3);">Identity</h3>
             <div class="flex flex-col gap-2 text-sm mb-4" style="color:rgba(255,255,255,0.38);">
                 <span>Mail: streets2shelters.tx@gmail.com</span>
@@ -139,7 +68,8 @@
 
             <div>
                 <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
-                   target="_blank" rel="noopener" class="bg-brand text-white hover:bg-brandDark transition-colors rounded" style="font-size:12px;padding:11px 20px; display: inline-flex; align-items: center; gap: 8px;">
+                   target="_blank" rel="noopener"
+                   style="background-color:#7BAF9E; color:white; font-size:12px; padding:11px 20px; border-radius:4px; display:inline-flex; align-items:center; gap:8px; text-decoration:none; font-weight:600;">
                     Donate
                     <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </a>
@@ -147,18 +77,46 @@
         </div>
     </div>
 
-    <div class="max-w-7xl mx-auto px-6 border-t pt-8 flex flex-col md:flex-row justify-between items-center gap-6 r-up" style="border-color:rgba(255,255,255,0.07); transition-delay: 300ms;">
+    <div class="max-w-7xl mx-auto px-6 border-t pt-8 flex flex-col md:flex-row justify-between items-center gap-6" style="border-color:rgba(255,255,255,0.07);">
         <div class="flex items-center gap-4">
             <span class="text-xs font-semibold tracking-widest uppercase text-brand">Language</span>
-            <div id="google_translate_element" class="custom-translate-container"></div>
+            <div id="google_translate_element"></div>
         </div>
-
         <p class="text-xs text-center md:text-right" style="color:rgba(255,255,255,0.18);">
-            © 2026 Streets To Shelters. 501(c)(3) Nonprofit.<br class="block sm:hidden"> All rights reserved.
+            © 2026 Streets To Shelters. 501(c)(3) Nonprofit. All rights reserved.
         </p>
     </div>
 
+    <style>
+        /* Base hidden state */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        /* Shown state */
+        .reveal-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Google Translate Professional Look */
+        .goog-te-gadget-simple {
+            background-color: rgba(255,255,255,0.05) !important;
+            border: 1px solid rgba(255,255,255,0.1) !important;
+            padding: 6px 12px !important;
+            border-radius: 4px !important;
+            cursor: pointer !important;
+        }
+        .goog-te-gadget-simple span { color: #F4EFE6 !important; font-size: 13px !important; }
+        .goog-te-gadget-simple img { display: none !important; }
+        iframe.goog-te-menu-frame { z-index: 9999999 !important; }
+        .goog-te-banner-frame { display: none !important; }
+        body { top: 0px !important; }
+    </style>
+
     <script type="text/javascript">
+        // 1. Google Translate Init
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
                 pageLanguage: 'en',
@@ -166,32 +124,24 @@
                 autoDisplay: false
             }, 'google_translate_element');
         }
+
+        // 2. Animation Observer
+        function initAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+        }
+
+        // Run everything when page loads
+        window.addEventListener('load', initAnimations);
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-          const observerOptions = {
-            root: null,
-            rootMargin: '0px 0px -5% 0px',
-            threshold: 0.1
-          };
-
-          const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-              if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible');
-                observer.unobserve(entry.target);
-              }
-            });
-          }, observerOptions);
-
-          const animatedElements = document.querySelectorAll('.r-up, .r-left, .r-right, .r-scale, .r-fade');
-          animatedElements.forEach(el => observer.observe(el));
-        });
-    </script>
-
-
 </footer>
 
 
