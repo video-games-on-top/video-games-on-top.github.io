@@ -115,6 +115,7 @@
                             data-title="Spring Cookie Fundraiser"
                             data-date="March 14, 2026 @ 1pm to 6pm"
                             data-location="Stage Run, River Rock Ranch, and Two Creeks"
+                            data-slug="cookies1"
                             data-desc="On March 14, 2026, the Streets to Shelters team hit the pavement in Stage Run, River Rock Ranch, and Two Creeks for our most successful bake sale yet! From 1:00 PM to 6:00 PM, our volunteers went door-to-door and manned our community stand, offering a delicious spread of homemade cookies, brownies, and refreshing drinks. Thanks to the overwhelming support and kindness of our neighbors, we raised over $300 in just five hours. Every cent of these proceeds is being funneled directly into our summer hygiene kit initiative, ensuring that those in local shelters have the essential supplies they need to stay healthy and comfortable during the warmer months.">
                         Learn More
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -136,6 +137,7 @@
                             data-title="Spring Bake Sale"
                             data-date="March 28 & 29 @ 11am to 4pm"
                             data-location="27111 Brook Bend, Boerne, TX 78015"
+                            data-slug="cookies2"
                             data-desc="On March 28 & 29, 2026, the Streets to Shelters team and volunteers will work in small teams to sell cookies, snacks, and drinks, help cover assigned areas, and interact with community members. Our goal is to raise $1,500–$2,000, and your participation plays a key role in making that happen. We have raised over $800 and are on our way to start our first event!">
                         Learn More
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -156,6 +158,7 @@
                     <button class="open-modal-btn read-link"
                             data-title="Spring Bake Sale"
                             data-date="April 11 & 12, 12pm to 5pm"
+                            data-slug="cookies3"
                             data-location="Stage Run, River Rock Ranch, and Two Creeks"
                             data-desc="Join us April 11 to April 12 for our 2 day bake sale. We are raising money to support our nonprofit and expand our impact in the community.
 
@@ -201,6 +204,7 @@ Come support, enjoy some baked goods, and help us grow.">
                             data-date="May 16"
                             data-location="Clark High School, 5150 De Zavala Rd, San Antonio,
 TX 78249"
+                            data-slug="basketball"
                             data-desc=""
                         data-iframe="images/basketball.jpg">
                         Learn More
@@ -296,78 +300,118 @@ TX 78249"
 
           document.querySelectorAll('.r-up, .r-scale, .r-fade').forEach(el => revObs.observe(el));
 
-          // 3. Modal Logic
-          const modal    = document.getElementById('event-modal');
-          const modalBox = document.getElementById('modal-box');
-          const backdrop = document.getElementById('modal-backdrop');
-          const closeBtn2 = document.getElementById('close-modal-btn');
-          const mTitle   = document.getElementById('modal-title');
-          const mDate    = document.getElementById('modal-date');
-          const mLoc     = document.getElementById('modal-location');
-          const mDesc    = document.getElementById('modal-desc');
-          const mLink    = document.getElementById('modal-link');
-          const mImage   = document.getElementById('modal-image');
-          const mContent = document.getElementById('modal-content');
-          const shareBtn = document.getElementById('share-btn');
+// 3. Modal & Share Logic
+        const modal    = document.getElementById('event-modal');
+        const modalBox = document.getElementById('modal-box');
+        const backdrop = document.getElementById('modal-backdrop');
+        const closeBtn2 = document.getElementById('close-modal-btn');
+        const mTitle   = document.getElementById('modal-title');
+        const mDate    = document.getElementById('modal-date');
+        const mLoc     = document.getElementById('modal-location');
+        const mDesc    = document.getElementById('modal-desc');
+        const mLink    = document.getElementById('modal-link');
+        const mImage   = document.getElementById('modal-image');
+        const mContent = document.getElementById('modal-content');
+        const shareBtn = document.getElementById('share-btn');
 
-          document.querySelectorAll('.open-modal-btn').forEach(btn => {
-              btn.addEventListener('click', () => {
-                  mTitle.textContent = btn.dataset.title;
-                  mDate.textContent  = '📅 ' + btn.dataset.date;
-                  mLoc.textContent   = '📍 ' + btn.dataset.location;
-                  mDesc.textContent  = btn.dataset.desc;
+        // Function to handle opening the modal
+        const openModal = (btn) => {
+            mTitle.textContent = btn.dataset.title;
+            mDate.textContent  = '📅 ' + btn.dataset.date;
+            mLoc.textContent   = '📍 ' + btn.dataset.location;
+            mDesc.textContent  = btn.dataset.desc;
 
-                  const iframeSrc = btn.dataset.iframe;
-                  if (iframeSrc) {
-                      mImage.src = iframeSrc;
-                      mLink.href = iframeSrc;
-                      mLink.style.display = 'inline-block';
-                      mContent.style.display = 'block';
-                  } else {
-                      mImage.src = '';
-                      mLink.href = '#';
-                      mLink.style.display = 'none';
-                      mContent.style.display = 'none';
-                  }
+            const iframeSrc = btn.dataset.iframe;
+            if (iframeSrc) {
+                mImage.src = iframeSrc;
+                mLink.href = iframeSrc;
+                mLink.style.display = 'inline-block';
+                mContent.style.display = 'block';
+            } else {
+                mImage.src = '';
+                mLink.href = '#';
+                mLink.style.display = 'none';
+                mContent.style.display = 'none';
+            }
 
-                  modal.classList.remove('opacity-0','pointer-events-none');
-                  modalBox.classList.remove('scale-95');
-                  modalBox.classList.add('scale-100');
-              });
-          });
+            // Store the slug for the share button
+            if (shareBtn && btn.dataset.slug) {
+                shareBtn.dataset.currentSlug = btn.dataset.slug;
+            }
 
-          const closeModal = () => {
-              modal.classList.add('opacity-0','pointer-events-none');
-              modalBox.classList.remove('scale-100');
-              modalBox.classList.add('scale-95');
-              setTimeout(() => { mImage.src = ''; }, 300);
-          };
+            // Professional touch: Lock body scrolling while modal is open
+            document.body.style.overflow = 'hidden';
 
-          closeBtn2.addEventListener('click', closeModal);
-          backdrop.addEventListener('click', closeModal);
-          document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modalBox.classList.remove('scale-95');
+            modalBox.classList.add('scale-100');
+        };
 
-          // Share Logic
-          if (shareBtn) {
-              shareBtn.addEventListener('click', async () => {
-                  const shareData = {
-                      title: mTitle.textContent,
-                      text: `Check out this event from Streets To Shelters: ${mTitle.textContent}`,
-                      url: window.location.href
-                  };
+        // Handle Clicks on "Learn More" buttons
+        document.querySelectorAll('.open-modal-btn').forEach(btn => {
+            btn.addEventListener('click', () => openModal(btn));
+        });
 
-                  try {
-                      if (navigator.share) {
-                          await navigator.share(shareData);
-                      } else {
-                          await navigator.clipboard.writeText(window.location.href);
-                          alert('Link copied to clipboard!');
-                      }
-                  } catch (err) {
-                      console.error('Error sharing:', err);
-                  }
-              });
-          }
+        // Close Modal Logic
+        const closeModal = () => {
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modalBox.classList.remove('scale-100');
+            modalBox.classList.add('scale-95');
+
+            // Restore background scrolling
+            document.body.style.overflow = '';
+            setTimeout(() => { mImage.src = ''; }, 300);
+        };
+
+        closeBtn2.addEventListener('click', closeModal);
+        backdrop.addEventListener('click', closeModal);
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+        // Share Button Logic (With Desktop Fallback)
+        if (shareBtn) {
+            shareBtn.addEventListener('click', async () => {
+                const slug = shareBtn.dataset.currentSlug;
+
+                // Build the URL (if no slug, it just shares the main events page)
+                const shareUrl = slug
+                    ? `${window.location.origin}${window.location.pathname}?event=${slug}`
+                    : window.location.href;
+
+                const shareData = {
+                    title: mTitle.textContent,
+                    text: `Check out this event from Streets To Shelters: ${mTitle.textContent}`,
+                    url: shareUrl
+                };
+
+                try {
+                    if (navigator.share) {
+                        await navigator.share(shareData);
+                    } else {
+                        // Desktop Fallback: Copy to clipboard
+                        await navigator.clipboard.writeText(shareUrl);
+
+                        // Temporarily change button text
+                        const originalHTML = shareBtn.innerHTML;
+                        shareBtn.innerHTML = `✅ Link Copied!`;
+                        setTimeout(() => { shareBtn.innerHTML = originalHTML; }, 2000);
+                    }
+                } catch (err) {
+                    if (err.name !== 'AbortError') console.error('Error sharing:', err);
+                }
+            });
+        }
+
+        // Deep Linking: Open specific modal on page load if ?event=slug is in the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const eventSlug = urlParams.get('event');
+
+        if (eventSlug) {
+            const targetBtn = document.querySelector(`[data-slug="${eventSlug}"]`);
+            if (targetBtn) {
+                // Short delay ensures page structure is ready before triggering animations
+                setTimeout(() => openModal(targetBtn), 300);
+            }
+        }
 
           // 4. Header & Footer Injection
           fetch('header.html').then(r => r.text()).then(data => {
