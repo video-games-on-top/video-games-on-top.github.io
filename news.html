@@ -269,7 +269,7 @@
         const mDate    = document.getElementById('modal-date');
         const mLoc     = document.getElementById('modal-location');
         const mLink    = document.getElementById('modal-link');
-        const mIframe  = document.getElementById('modal-iframe'); // Fixed to match News HTML
+        const mIframe  = document.getElementById('modal-iframe');
         const mContent = document.getElementById('modal-content');
         const shareBtn = document.getElementById('share-btn');
 
@@ -288,7 +288,7 @@
 
             const iframeSrc = btn.dataset.iframe;
             if (iframeSrc) {
-                mIframe.src = iframeSrc; // Inject into the iframe instead of image
+                mIframe.src = iframeSrc;
                 mLink.href = iframeSrc;
                 mLink.style.display = 'inline-block';
                 mContent.style.display = 'block';
@@ -304,7 +304,7 @@
                 shareBtn.dataset.currentSlug = btn.dataset.slug;
             }
 
-            // Professional touch: Lock body scrolling while modal is open
+            // Lock body scrolling while modal is open
             document.body.style.overflow = 'hidden';
 
             modal.classList.remove('opacity-0', 'pointer-events-none');
@@ -323,9 +323,9 @@
             modalBox.classList.remove('scale-100');
             modalBox.classList.add('scale-95');
 
-            // Restore background scrolling
-            document.body.style.overflow = '';
-            setTimeout(() => { mIframe.src = ''; }, 300); // Clear iframe to stop audio/video if playing
+            // FIX: Forcefully remove the scroll lock so the page scrolls normally again
+            document.body.style.removeProperty('overflow');
+            setTimeout(() => { mIframe.src = ''; }, 300);
         };
 
         closeBtn2.addEventListener('click', closeModal);
@@ -337,10 +337,12 @@
             shareBtn.addEventListener('click', async () => {
                 const slug = shareBtn.dataset.currentSlug;
 
-                // Build the URL (if no slug, it just shares the main events page)
-                const shareUrl = slug
-                    ? `${window.location.origin}${window.location.pathname}?event=${slug}`
-                    : window.location.href;
+                // FIX: Build the URL safely, ensuring it works on both Local Files and Live Servers
+                const url = new URL(window.location.href);
+                if (slug) {
+                    url.searchParams.set('event', slug);
+                }
+                const shareUrl = url.toString();
 
                 const shareData = {
                     title: mTitle.textContent,
