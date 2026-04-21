@@ -268,9 +268,8 @@
         const mTitle   = document.getElementById('modal-title');
         const mDate    = document.getElementById('modal-date');
         const mLoc     = document.getElementById('modal-location');
-        const mDesc    = document.getElementById('modal-desc');
         const mLink    = document.getElementById('modal-link');
-        const mImage   = document.getElementById('modal-image');
+        const mIframe  = document.getElementById('modal-iframe'); // Fixed to match News HTML
         const mContent = document.getElementById('modal-content');
         const shareBtn = document.getElementById('share-btn');
 
@@ -278,17 +277,23 @@
         const openModal = (btn) => {
             mTitle.textContent = btn.dataset.title;
             mDate.textContent  = '📅 ' + btn.dataset.date;
-            mLoc.textContent   = '📍 ' + btn.dataset.location;
-            mDesc.textContent  = btn.dataset.desc;
+
+            // Hide the Location badge if the news card doesn't have one
+            if (btn.dataset.location) {
+                mLoc.textContent   = '📍 ' + btn.dataset.location;
+                mLoc.style.display = 'inline-block';
+            } else {
+                mLoc.style.display = 'none';
+            }
 
             const iframeSrc = btn.dataset.iframe;
             if (iframeSrc) {
-                mImage.src = iframeSrc;
+                mIframe.src = iframeSrc; // Inject into the iframe instead of image
                 mLink.href = iframeSrc;
                 mLink.style.display = 'inline-block';
                 mContent.style.display = 'block';
             } else {
-                mImage.src = '';
+                mIframe.src = '';
                 mLink.href = '#';
                 mLink.style.display = 'none';
                 mContent.style.display = 'none';
@@ -320,7 +325,7 @@
 
             // Restore background scrolling
             document.body.style.overflow = '';
-            setTimeout(() => { mImage.src = ''; }, 300);
+            setTimeout(() => { mIframe.src = ''; }, 300); // Clear iframe to stop audio/video if playing
         };
 
         closeBtn2.addEventListener('click', closeModal);
@@ -339,7 +344,7 @@
 
                 const shareData = {
                     title: mTitle.textContent,
-                    text: `Check out this event from Streets To Shelters: ${mTitle.textContent}`,
+                    text: `Check out this update from Streets To Shelters: ${mTitle.textContent}`,
                     url: shareUrl
                 };
 
@@ -347,10 +352,7 @@
                     if (navigator.share) {
                         await navigator.share(shareData);
                     } else {
-                        // Desktop Fallback: Copy to clipboard
                         await navigator.clipboard.writeText(shareUrl);
-
-                        // Temporarily change button text
                         const originalHTML = shareBtn.innerHTML;
                         shareBtn.innerHTML = `✅ Link Copied!`;
                         setTimeout(() => { shareBtn.innerHTML = originalHTML; }, 2000);
@@ -368,7 +370,6 @@
         if (eventSlug) {
             const targetBtn = document.querySelector(`[data-slug="${eventSlug}"]`);
             if (targetBtn) {
-                // Short delay ensures page structure is ready before triggering animations
                 setTimeout(() => openModal(targetBtn), 300);
             }
         }
