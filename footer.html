@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-2GY0P5SRNX"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-
         gtag('config', 'G-2GY0P5SRNX');
     </script>
 
@@ -29,62 +27,34 @@
     </script>
 
     <style>
-        /* 1. Hide the annoying Google top banner */
-        .goog-te-banner-frame.skiptranslate {
-            display: none !important;
-        }
-        body {
-            top: 0px !important;
+        /* 1. Hide Google Banner */
+        .goog-te-banner-frame.skiptranslate, .goog-te-banner-frame { display: none !important; }
+        body { top: 0px !important; }
+
+        /* 2. Style the Dropdown Container */
+        #google_translate_element {
+            display: block !important;
+            min-height: 40px;
         }
 
-        /* 2. Hide the "Powered by Google" text and logo */
-        .goog-te-gadget {
-            font-size: 0 !important;
-            color: transparent !important;
-        }
-
-        /* 3. Style the actual dropdown menu */
+        /* 3. Style the actual Dropdown */
         .goog-te-combo {
-            background-color: rgba(255, 255, 255, 0.05) !important;
-            color: #F4EFE6 !important;
-            border: 1px solid rgba(123, 175, 158, 0.4) !important; /* Brand color border */
+            background-color: #2B1F1C !important; /* Matches your 'deep' color */
+            color: #F4EFE6 !important; /* Matches your 'cream' color */
+            border: 1px solid rgba(123, 175, 158, 0.5) !important;
             padding: 8px 12px !important;
             border-radius: 6px !important;
-            font-size: 13px !important;
             font-family: 'Inter', sans-serif !important;
-            outline: none !important;
+            font-size: 14px !important;
             cursor: pointer;
-            transition: border-color 0.2s ease;
+            outline: none;
         }
 
-        /* 4. Dropdown hover effect */
-        .goog-te-combo:hover {
-            border-color: #7BAF9E !important;
-        }
-
-        /* 5. Style the dropdown options (works on some browsers) */
-        .goog-te-combo option {
-            background-color: #2B1F1C;
-            color: #F4EFE6;
-        }
-
-        /* 6. Hide Google hover tooltips */
-        .goog-tooltip { display: none !important; }
-        .goog-tooltip:hover { display: none !important; }
-        .goog-text-highlight { background-color: transparent !important; border: none !important; box-shadow: none !important; }
+        /* Hide "Powered by" clutter */
+        .goog-te-gadget { font-size: 0 !important; }
+        .goog-te-gadget span { display: none !important; }
+        .goog-te-gadget div { display: inline-block !important; }
     </style>
-
-    <script>
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'en',
-                includedLanguages: 'en,es,fr',
-                // We removed the SIMPLE layout here so it generates a real <select> tag!
-            }, 'google_translate_element');
-        }
-    </script>
-    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
 </head>
 <body>
 
@@ -93,53 +63,66 @@
         <div>
             <h3 class="text-xs uppercase tracking-widest font-semibold mb-6" style="color:rgba(255,255,255,0.3);">Follow Us</h3>
             <div class="flex flex-col gap-3 text-sm">
-                <a href="https://www.instagram.com/streets.to.shelter" target="_blank" rel="noopener" class="hover:text-brand transition-colors">Instagram</a>
-                <a href="https://www.facebook.com/profile.php?id=61586361417282" target="_blank" rel="noopener" class="hover:text-brand transition-colors">Facebook</a>
-                <a href="https://www.tiktok.com/@streetstoshelters" target="_blank" rel="noopener" class="hover:text-brand transition-colors">TikTok</a>
-                <a href="https://linktr.ee/streets2shelters" target="_blank" rel="noopener" class="hover:text-brand transition-colors">Linktree</a>
-                <a href="https://www.threads.net/@streets.to.shelter" target="_blank" rel="noopener" class="hover:text-brand transition-colors">Threads</a>
+                <a href="https://www.instagram.com/streets.to.shelter" target="_blank" rel="noopener">Instagram</a>
+                <a href="https://www.facebook.com/profile.php?id=61586361417282" target="_blank" rel="noopener">Facebook</a>
+                <a href="https://www.tiktok.com/@streetstoshelters" target="_blank" rel="noopener">TikTok</a>
+                <a href="https://linktr.ee/streets2shelters" target="_blank" rel="noopener">Linktree</a>
+                <a href="https://www.threads.com/@streets.to.shelter" target="_blank" rel="noopener">Threads</a>
             </div>
         </div>
 
         <div>
             <h3 class="text-xs uppercase tracking-widest font-semibold mb-6" style="color:rgba(255,255,255,0.3);">Quick Links</h3>
             <div class="flex flex-col gap-3 text-sm">
-                <a href="index.html" class="hover:text-brand transition-colors">Home</a>
-                <a href="events.html" class="hover:text-brand transition-colors">Events</a>
-                <a href="news.html" class="hover:text-brand transition-colors">News</a>
-                <a href="members.html" class="hover:text-brand transition-colors">Members</a>
-                <a href="volunteer.html" class="hover:text-brand transition-colors">Volunteer</a>
-                <a href="chapter.html" class="hover:text-brand transition-colors">Start a Chapter</a>
-                <a href="contact.html" class="hover:text-brand transition-colors">Contact</a>
+                <a href="index.html">Home</a>
+                <a href="events.html">Events</a>
+                <a href="news.html">News</a>
+                <a href="members.html">Members</a>
+                <a href="volunteer.html">Volunteer</a>
+                <a href="chapter.html">Start a Chapter</a>
+                <a href="contact.html">Contact</a>
             </div>
         </div>
 
         <div>
             <h3 class="text-xs uppercase tracking-widest font-semibold mb-6" style="color:rgba(255,255,255,0.3);">Identity</h3>
-            <div class="flex flex-col gap-2 text-sm" style="color:rgba(255,255,255,0.38);">
+            <div class="flex flex-col gap-2 text-sm mb-6" style="color:rgba(255,255,255,0.38);">
                 <span>Mail: streets2shelters.tx@gmail.com</span>
                 <span>Founding Location: San Antonio, Texas</span>
                 <span>EIN: 41-4335864</span>
-
-                <div class="mt-6">
-                    <div id="google_translate_element"></div>
-                </div>
             </div>
 
-            <a href="contact.html" class="text-brand hover:text-brandDark transition-colors text-sm mt-5 block" style="padding-left:0;">Contact Form →</a>
+            <div class="mb-6">
+                <p class="text-xs mb-3 font-semibold uppercase tracking-widest" style="color:rgba(255,255,255,0.3);">Language</p>
+                <div id="google_translate_element"></div>
+            </div>
 
-            <div class="mt-8 pt-8" style="border-top:1px solid rgba(255,255,255,0.07);">
+            <a href="contact.html" class="text-brand text-sm block mb-8">Contact Form →</a>
+
+            <div class="pt-8 border-t border-white/10">
                 <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
-                   target="_blank" rel="noopener" class="bg-brand text-white hover:bg-brandDark transition-colors rounded" style="font-size:12px;padding:11px 20px; display:inline-flex; align-items:center; gap:8px;">
+                   target="_blank" rel="noopener"
+                   class="inline-flex items-center gap-2 bg-brand hover:bg-brandDark text-white px-5 py-3 rounded text-xs font-bold transition-all">
                     Donate
                     <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </a>
             </div>
 
-            <p class="text-xs mt-8" style="color:rgba(255,255,255,0.18);">© 2026 Streets To Shelters. All rights reserved.</p>
+            <p class="text-[10px] mt-8" style="color:rgba(255,255,255,0.18);">© 2026 Streets To Shelters. All rights reserved.</p>
         </div>
     </div>
 </footer>
+
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            includedLanguages: 'en,es,fr',
+            autoDisplay: false
+        }, 'google_translate_element');
+    }
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 </body>
 </html>
