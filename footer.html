@@ -30,6 +30,77 @@
     </script>
 </head>
 
+<style>
+    /* --- MISSING CSS ANIMATION RULES ADDED BACK --- */
+    .r-up {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .r-left {
+        opacity: 0;
+        transform: translateX(-30px);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .r-right {
+        opacity: 0;
+        transform: translateX(30px);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .r-scale {
+        opacity: 0;
+        transform: scale(0.95);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .r-fade {
+        opacity: 0;
+        transition: opacity 0.8s ease-out;
+    }
+    /* When the JS adds this class, the elements move into place */
+    .is-visible {
+        opacity: 1 !important;
+        transform: translate(0, 0) scale(1) !important;
+    }
+
+    /* --- GOOGLE TRANSLATE STYLES --- */
+    iframe.goog-te-menu-frame {
+        z-index: 999999 !important;
+    }
+
+    .goog-te-gadget-simple {
+        background-color: rgba(255,255,255,0.05) !important;
+        border: 1px solid rgba(255,255,255,0.1) !important;
+        padding: 8px 14px !important;
+        border-radius: 6px !important;
+        font-family: 'Inter', sans-serif !important;
+        display: inline-block !important;
+        transition: border-color 0.2s ease, background-color 0.2s ease;
+        cursor: pointer;
+    }
+
+    .goog-te-gadget-simple:hover {
+        border-color: #7BAF9E !important;
+        background-color: rgba(255,255,255,0.08) !important;
+    }
+
+    .goog-te-gadget-simple a, .goog-te-menu-value span {
+        color: #F4EFE6 !important;
+        font-size: 13px !important;
+        font-weight: 500 !important;
+        text-decoration: none !important;
+    }
+
+    .goog-te-gadget-simple img { display: none !important; }
+    .goog-te-menu-value span:nth-child(3) { border: none !important; color: transparent !important; }
+    .goog-te-menu-value span:nth-child(5) { margin-left: -10px !important; font-size: 10px !important; opacity: 0.6; }
+
+    .goog-te-banner-frame.skiptranslate { display: none !important; }
+    body { top: 0px !important; }
+    .goog-tooltip { display: none !important; }
+    .goog-tooltip:hover { display: none !important; }
+    .goog-text-highlight { background-color: transparent !important; border: none !important; box-shadow: none !important; }
+</style>
+
 <footer class="bg-deep text-white pt-16 pb-8 overflow-hidden">
     <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-12 mb-16">
 
@@ -120,76 +191,7 @@
         });
     </script>
 
-    <style>
-        /* --- MISSING CSS ANIMATION RULES ADDED BACK --- */
-        .r-up {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        .r-left {
-            opacity: 0;
-            transform: translateX(-30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        .r-right {
-            opacity: 0;
-            transform: translateX(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        .r-scale {
-            opacity: 0;
-            transform: scale(0.95);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        .r-fade {
-            opacity: 0;
-            transition: opacity 0.8s ease-out;
-        }
-        /* When the JS adds this class, the elements move into place */
-        .is-visible {
-            opacity: 1 !important;
-            transform: translate(0, 0) scale(1) !important;
-        }
 
-        /* --- GOOGLE TRANSLATE STYLES --- */
-        iframe.goog-te-menu-frame {
-            z-index: 999999 !important;
-        }
-
-        .goog-te-gadget-simple {
-            background-color: rgba(255,255,255,0.05) !important;
-            border: 1px solid rgba(255,255,255,0.1) !important;
-            padding: 8px 14px !important;
-            border-radius: 6px !important;
-            font-family: 'Inter', sans-serif !important;
-            display: inline-block !important;
-            transition: border-color 0.2s ease, background-color 0.2s ease;
-            cursor: pointer;
-        }
-
-        .goog-te-gadget-simple:hover {
-            border-color: #7BAF9E !important;
-            background-color: rgba(255,255,255,0.08) !important;
-        }
-
-        .goog-te-gadget-simple a, .goog-te-menu-value span {
-            color: #F4EFE6 !important;
-            font-size: 13px !important;
-            font-weight: 500 !important;
-            text-decoration: none !important;
-        }
-
-        .goog-te-gadget-simple img { display: none !important; }
-        .goog-te-menu-value span:nth-child(3) { border: none !important; color: transparent !important; }
-        .goog-te-menu-value span:nth-child(5) { margin-left: -10px !important; font-size: 10px !important; opacity: 0.6; }
-
-        .goog-te-banner-frame.skiptranslate { display: none !important; }
-        body { top: 0px !important; }
-        .goog-tooltip { display: none !important; }
-        .goog-tooltip:hover { display: none !important; }
-        .goog-text-highlight { background-color: transparent !important; border: none !important; box-shadow: none !important; }
-    </style>
 </footer>
 
 
