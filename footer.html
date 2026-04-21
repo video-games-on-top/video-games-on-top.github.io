@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-2GY0P5SRNX"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-
         gtag('config', 'G-2GY0P5SRNX');
     </script>
 
@@ -28,12 +25,16 @@
           }
         }
     </script>
+
+    <style>
+        /* The ONLY style we are keeping is to prevent Google's top bar from pushing your whole website down */
+        .goog-te-banner-frame.skiptranslate { display: none !important; }
+        body { top: 0px !important; }
+    </style>
 </head>
+<body>
 
 <footer class="bg-deep text-white py-16">
-
-
-
     <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-12">
         <div>
             <h3 class="text-xs uppercase tracking-widest font-semibold mb-6" style="color:rgba(255,255,255,0.3);">Follow Us</h3>
@@ -42,9 +43,10 @@
                 <a href="https://www.facebook.com/profile.php?id=61586361417282" target="_blank" rel="noopener">Facebook</a>
                 <a href="https://www.tiktok.com/@streetstoshelters" target="_blank" rel="noopener">TikTok</a>
                 <a href="https://linktr.ee/streets2shelters" target="_blank" rel="noopener">Linktree</a>
-                <a href="https://www.threads.com/@streets.to.shelter?xmt=AQF05lAuKcgOAVhUaI-ttxJQc_cZd0La8eVZAM9tlS73Qs8" target="_blank" rel="noopener">Threads</a>
+                <a href="https://www.threads.com/@streets.to.shelter" target="_blank" rel="noopener">Threads</a>
             </div>
         </div>
+
         <div>
             <h3 class="text-xs uppercase tracking-widest font-semibold mb-6" style="color:rgba(255,255,255,0.3);">Quick Links</h3>
             <div class="flex flex-col gap-3 text-sm">
@@ -57,23 +59,43 @@
                 <a href="contact.html">Contact</a>
             </div>
         </div>
+
         <div>
             <h3 class="text-xs uppercase tracking-widest font-semibold mb-6" style="color:rgba(255,255,255,0.3);">Identity</h3>
-            <div class="flex flex-col gap-2 text-sm" style="color:rgba(255,255,255,0.38);">
+            <div class="flex flex-col gap-2 text-sm mb-6" style="color:rgba(255,255,255,0.38);">
                 <span>Mail: streets2shelters.tx@gmail.com</span>
                 <span>Founding Location: San Antonio, Texas</span>
                 <span>EIN: 41-4335864</span>
-                
             </div>
-            <a href="contact.html" class="text-brand text-sm mt-3 block" style="padding-left:0;">Contact Form →</a>
-            <div class="mt-10 pt-8" style="border-top:1px solid rgba(255,255,255,0.07);">
+
+            <div class="mb-6">
+                <div id="google_translate_element"></div>
+            </div>
+
+            <a href="contact.html" class="text-brand text-sm block mb-8">Contact Form →</a>
+
+            <div class="pt-8 border-t border-white/10">
                 <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
-                   target="_blank" rel="noopener" class="btn-primary" style="font-size:12px;padding:11px 20px;">
+                   target="_blank" rel="noopener"
+                   class="inline-flex items-center gap-2 bg-brand hover:bg-brandDark text-white px-5 py-3 rounded text-xs font-bold transition-all">
                     Donate
                     <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </a>
             </div>
-            <p class="text-xs mt-8" style="color:rgba(255,255,255,0.18);">© 2026 Streets To Shelters. All rights reserved.</p>
+
+            <p class="text-[10px] mt-8" style="color:rgba(255,255,255,0.18);">© 2026 Streets To Shelters. All rights reserved.</p>
         </div>
     </div>
 </footer>
+
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en'
+        }, 'google_translate_element');
+    }
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+</body>
+</html>
