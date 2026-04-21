@@ -256,7 +256,7 @@ TX 78249"
         <div class="flex flex-col sm:flex-row gap-3 text-xs font-semibold mb-6">
             <span id="modal-date" class="bg-brand/10 text-brand px-4 py-2 rounded-sm">📅 Date</span>
             <span id="modal-location" class="bg-brand/10 text-brand px-4 py-2 rounded-sm">📍 Location</span>
-            <a id="modal-link" href="#" target="_blank" class="bg-brand/10 text-brand px-4 py-2 rounded-sm inline-block w-max transition-all duration-300 hover:bg-brand hover:text-white">🔗 Open in New Tab</a
+            <a id="modal-link" href="#" target="_blank" class="bg-brand/10 text-brand px-4 py-2 rounded-sm inline-block w-max transition-all duration-300 hover:bg-brand hover:text-white">🔗 Open in New Tab</a>
                 <button id="share-btn" class="bg-brand/10 text-brand px-4 py-2 rounded-sm inline-flex items-center gap-2 w-max transition-all duration-300 hover:bg-brand hover:text-white">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
                     Share Event
@@ -275,122 +275,109 @@ TX 78249"
 <div id="footer-placeholder"></div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // 1. Progress Bar & Header Scroll Effect
-        const bar = document.getElementById('progress-bar');
-        window.addEventListener('scroll', () => {
-            const total = document.documentElement.scrollHeight - window.innerHeight;
-            bar.style.width = (total > 0 ? (window.scrollY / total) * 100 : 0) + '%';
-            document.body.classList.toggle('scrolled', window.scrollY > 60);
-        }, { passive: true });
 
-        // 2. Reveal Animation Observer (FIX: This makes the page not blank)
-        const revObs = new IntersectionObserver((entries, obs) => {
-            entries.forEach(e => {
-                if (!e.isIntersecting) return;
-                e.target.classList.add('is-visible');
-                obs.unobserve(e.target);
-            });
-        }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
+      document.addEventListener('DOMContentLoaded', () => {
+          // 1. Progress Bar & Header Scroll Effect
+          const bar = document.getElementById('progress-bar');
+          window.addEventListener('scroll', () => {
+              const total = document.documentElement.scrollHeight - window.innerHeight;
+              bar.style.width = (total > 0 ? (window.scrollY / total) * 100 : 0) + '%';
+              document.body.classList.toggle('scrolled', window.scrollY > 60);
+          }, { passive: true });
 
-        document.querySelectorAll('.r-up, .r-scale, .r-fade').forEach(el => revObs.observe(el));
+          // 2. Reveal Animation Observer
+          const revObs = new IntersectionObserver((entries, obs) => {
+              entries.forEach(e => {
+                  if (!e.isIntersecting) return;
+                  e.target.classList.add('is-visible');
+                  obs.unobserve(e.target);
+              });
+          }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-        // 3. Modal Logic
-        const modal    = document.getElementById('event-modal');
-        const modalBox = document.getElementById('modal-box');
-        const backdrop = document.getElementById('modal-backdrop');
-        const closeBtn2 = document.getElementById('close-modal-btn');
-        const mTitle   = document.getElementById('modal-title');
-        const mDate    = document.getElementById('modal-date');
-        const mLoc     = document.getElementById('modal-location');
-        const mDesc    = document.getElementById('modal-desc');
-        const mLink    = document.getElementById('modal-link');
+          document.querySelectorAll('.r-up, .r-scale, .r-fade').forEach(el => revObs.observe(el));
 
-        // Changed to target the new image tag
-        const mImage   = document.getElementById('modal-image');
-        const mContent = document.getElementById('modal-content');
+          // 3. Modal Logic
+          const modal    = document.getElementById('event-modal');
+          const modalBox = document.getElementById('modal-box');
+          const backdrop = document.getElementById('modal-backdrop');
+          const closeBtn2 = document.getElementById('close-modal-btn');
+          const mTitle   = document.getElementById('modal-title');
+          const mDate    = document.getElementById('modal-date');
+          const mLoc     = document.getElementById('modal-location');
+          const mDesc    = document.getElementById('modal-desc');
+          const mLink    = document.getElementById('modal-link');
+          const mImage   = document.getElementById('modal-image');
+          const mContent = document.getElementById('modal-content');
+          const shareBtn = document.getElementById('share-btn');
 
-        document.querySelectorAll('.open-modal-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                mTitle.textContent = btn.dataset.title;
-                mDate.textContent  = '📅 ' + btn.dataset.date;
-                mLoc.textContent   = '📍 ' + btn.dataset.location;
-                mDesc.textContent  = btn.dataset.desc;
+          document.querySelectorAll('.open-modal-btn').forEach(btn => {
+              btn.addEventListener('click', () => {
+                  mTitle.textContent = btn.dataset.title;
+                  mDate.textContent  = '📅 ' + btn.dataset.date;
+                  mLoc.textContent   = '📍 ' + btn.dataset.location;
+                  mDesc.textContent  = btn.dataset.desc;
 
-                const iframeSrc = btn.dataset.iframe;
-                if (iframeSrc) {
-                    mImage.src = iframeSrc; // Inject into the img tag
-                    mLink.href = iframeSrc;
-                    mLink.style.display = 'inline-block';
-                    mContent.style.display = 'block';
-                } else {
-                    mImage.src = '';
-                    mLink.href = '#';
-                    mLink.style.display = 'none';
-                    mContent.style.display = 'none';
-                }
+                  const iframeSrc = btn.dataset.iframe;
+                  if (iframeSrc) {
+                      mImage.src = iframeSrc;
+                      mLink.href = iframeSrc;
+                      mLink.style.display = 'inline-block';
+                      mContent.style.display = 'block';
+                  } else {
+                      mImage.src = '';
+                      mLink.href = '#';
+                      mLink.style.display = 'none';
+                      mContent.style.display = 'none';
+                  }
 
-                modal.classList.remove('opacity-0','pointer-events-none');
-                modalBox.classList.remove('scale-95');
-                modalBox.classList.add('scale-100');
-            });
-        });
+                  modal.classList.remove('opacity-0','pointer-events-none');
+                  modalBox.classList.remove('scale-95');
+                  modalBox.classList.add('scale-100');
+              });
+          });
 
-const closeModal = () => {
-            modal.classList.add('opacity-0','pointer-events-none');
-            modalBox.classList.remove('scale-100');
-            modalBox.classList.add('scale-95');
-            setTimeout(() => { mImage.src = ''; }, 300);
-        }; // <-- The function ends here now
+          const closeModal = () => {
+              modal.classList.add('opacity-0','pointer-events-none');
+              modalBox.classList.remove('scale-100');
+              modalBox.classList.add('scale-95');
+              setTimeout(() => { mImage.src = ''; }, 300);
+          };
 
-        // These are now properly OUTSIDE the function so they actually work
-        closeBtn2.addEventListener('click', closeModal);
-        backdrop.addEventListener('click', closeModal);
-        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-        const shareBtn = document.getElementById('share-btn');
+          closeBtn2.addEventListener('click', closeModal);
+          backdrop.addEventListener('click', closeModal);
+          document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-shareBtn.addEventListener('click', async () => {
-    const shareData = {
-        title: document.getElementById('modal-title').textContent,
-        text: `Check out this event from Streets To Shelters: ${document.getElementById('modal-title').textContent}`,
-        url: window.location.href // Or a specific link to the image/event
-    };
+          // Share Logic
+          if (shareBtn) {
+              shareBtn.addEventListener('click', async () => {
+                  const shareData = {
+                      title: mTitle.textContent,
+                      text: `Check out this event from Streets To Shelters: ${mTitle.textContent}`,
+                      url: window.location.href
+                  };
 
-    try {
-        if (navigator.share) {
-            // This opens the native phone share menu
-            await navigator.share(shareData);
-        } else {
-            // Fallback: Copy to clipboard if native share isn't supported
-            await navigator.clipboard.writeText(window.location.href);
-            alert('Link copied to clipboard!');
-        }
-    } catch (err) {
-        console.log('Error sharing:', err);
-    }
-});
+                  try {
+                      if (navigator.share) {
+                          await navigator.share(shareData);
+                      } else {
+                          await navigator.clipboard.writeText(window.location.href);
+                          alert('Link copied to clipboard!');
+                      }
+                  } catch (err) {
+                      console.error('Error sharing:', err);
+                  }
+              });
+          }
 
-        // 4. Header & Footer Injection
-        fetch('header.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('header-placeholder').innerHTML = data;
-                // Re-bind mobile menu if it exists in the injected header
-                const mobileBtn = document.getElementById('mobile-menu-btn');
-                const overlay   = document.getElementById('mobile-menu-overlay');
-                const closeMenu = document.getElementById('close-menu-btn');
-                if (mobileBtn && overlay) {
-                    mobileBtn.onclick = () => overlay.classList.remove('translate-x-full');
-                    if(closeMenu) closeMenu.onclick = () => overlay.classList.add('translate-x-full');
-                }
-            });
+          // 4. Header & Footer Injection
+          fetch('header.html').then(r => r.text()).then(data => {
+              document.getElementById('header-placeholder').innerHTML = data;
+          });
 
-        fetch('footer.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('footer-placeholder').innerHTML = data;
-            });
-    });
+          fetch('footer.html').then(r => r.text()).then(data => {
+              document.getElementById('footer-placeholder').innerHTML = data;
+          });
+      });
 
 </script>
 </body>
