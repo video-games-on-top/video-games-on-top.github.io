@@ -301,8 +301,7 @@ TX 78249"
 </div>
 
 <div id="footer-placeholder"></div>
-<script>window.gtranslateSettings = {"default_language":"en","native_language_names":true,"wrapper_selector":".gtranslate_wrapper","switcher_horizontal_position":"inline"}</script>
-<script src="https://cdn.gtranslate.net/widgets/latest/float.js" defer></script>
+
 <script>
 
       document.addEventListener('DOMContentLoaded', () => {
@@ -450,6 +449,29 @@ TX 78249"
           });
       });
 
+</script>
+<script>
+    const waitForFooter = setInterval(function() {
+        // Wait for the footer to load
+        if (document.querySelector('.gtranslate_wrapper')) {
+            clearInterval(waitForFooter);
+
+            // Your exact settings + the missing languages array
+            window.gtranslateSettings = {
+                "default_language": "en",
+
+                "native_language_names": true,
+                "wrapper_selector": ".gtranslate_wrapper",
+                "switcher_horizontal_position": "inline"
+            };
+
+            // Inject the float.js script
+            const gtScript = document.createElement('script');
+            gtScript.src = "https://cdn.gtranslate.net/widgets/latest/float.js";
+            gtScript.defer = true;
+            document.body.appendChild(gtScript);
+        }
+    }, 100);
 </script>
 </body>
 </html>
