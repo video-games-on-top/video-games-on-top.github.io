@@ -30,7 +30,12 @@
     </script>
 </head>
 
-
+<script>
+    // If the window location is footer.html, send them to the home page
+    if (window.location.pathname.includes('header.html')) {
+        window.location.href = 'index.html';
+    }
+</script>
 <!-- HEADER -->
 <header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200/50">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">

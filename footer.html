@@ -28,7 +28,12 @@
 
 </head>
 <body>
-
+<script>
+    // If the window location is footer.html, send them to the home page
+    if (window.location.pathname.includes('footer.html')) {
+        window.location.href = 'index.html';
+    }
+</script>
 <footer class="bg-deep text-white py-16">
     <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-12">
 
