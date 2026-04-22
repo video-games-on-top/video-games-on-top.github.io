@@ -76,6 +76,53 @@
         @keyframes pageFade { from{opacity:0} to{opacity:1} }
         body { animation:pageFade 0.5s ease both; }
     </style>
+    <style>
+        /* 1. Main Widget Button - Matches Deep Brand Color */
+        #gt_float_wrapper .gt_float_switcher {
+            background-color: #2B1F1C !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            box-shadow: none !important;
+            border-radius: 6px !important;
+        }
+
+        /* 2. Language Text (e.g., 'EN', 'HI') */
+        #gt_float_wrapper .gt-link,
+        #gt_float_wrapper span {
+            color: #ffffff !important;
+            font-family: 'Inter', sans-serif !important;
+            font-size: 14px !important;
+        }
+
+        /* 3. The Dropdown Arrow */
+        #gt_float_wrapper .gt_float_switcher-arrow {
+            border-top-color: #ffffff !important;
+        }
+
+        /* 4. The Popup Dropdown Menu Container */
+        #gt_float_wrapper .gt_white_content {
+            background-color: #2B1F1C !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            border-radius: 6px !important;
+        }
+
+        /* 5. Individual Languages inside the Dropdown */
+        #gt_float_wrapper .gt_white_content a {
+            color: #ffffff !important;
+            font-family: 'Inter', sans-serif !important;
+            transition: background-color 0.2s ease !important;
+        }
+
+        /* 6. Hover State for Languages */
+        #gt_float_wrapper .gt_white_content a:hover {
+            background-color: #7BAF9E !important; /* Brand green hover */
+            color: #ffffff !important;
+        }
+
+        /* 7. Hide Google Branding if it tries to show up */
+        #gt_float_wrapper .gt_copyright {
+            display: none !important;
+        }
+    </style>
 </head>
 <body class="bg-cream text-deep font-body">
 
