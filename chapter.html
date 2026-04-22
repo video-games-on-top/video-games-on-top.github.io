@@ -108,48 +108,56 @@
         body { animation:pageFade 0.5s ease both; }
     </style>
     <style>
-        /* 1. Main Widget Button - Matches Deep Brand Color */
-        #gt_float_wrapper .gt_float_switcher {
+        /* 1. The Main Button (Kills the white box) */
+        #gt_float_wrapper .gt-selected {
             background-color: #2B1F1C !important;
             border: 1px solid rgba(255, 255, 255, 0.2) !important;
-            box-shadow: none !important;
             border-radius: 6px !important;
         }
 
-        /* 2. Language Text (e.g., 'EN', 'HI') */
-        #gt_float_wrapper .gt-link,
-        #gt_float_wrapper span {
+        /* 2. The Text Inside the Main Button (Forces white instead of #333) */
+        #gt_float_wrapper .gt-selected .gt-current-lang,
+        #gt_float_wrapper .gt-selected .gt-current-lang span {
             color: #ffffff !important;
             font-family: 'Inter', sans-serif !important;
-            font-size: 14px !important;
         }
 
-        /* 3. The Dropdown Arrow */
-        #gt_float_wrapper .gt_float_switcher-arrow {
+        /* 3. The Dropdown Arrow (Forces white) */
+        #gt_float_wrapper .gt-selected .gt-current-lang .gt_float_switcher-arrow {
             border-top-color: #ffffff !important;
         }
 
-        /* 4. The Popup Dropdown Menu Container */
-        #gt_float_wrapper .gt_white_content {
+        /* 4. The Dropdown List Background */
+        #gt_float_wrapper .gt_options {
             background-color: #2B1F1C !important;
             border: 1px solid rgba(255, 255, 255, 0.2) !important;
             border-radius: 6px !important;
         }
 
-        /* 5. Individual Languages inside the Dropdown */
-        #gt_float_wrapper .gt_white_content a {
+        /* 5. Custom Green Scrollbar */
+        #gt_float_wrapper .gt_options::-webkit-scrollbar {
+            width: 8px !important;
+        }
+        #gt_float_wrapper .gt_options::-webkit-scrollbar-track {
+            background: #2B1F1C !important;
+            border-radius: 4px !important;
+        }
+        #gt_float_wrapper .gt_options::-webkit-scrollbar-thumb {
+            background: #7BAF9E !important; /* Your Brand Green */
+            border-radius: 4px !important;
+        }
+
+        /* 6. Language Links Text & Hover Effect */
+        #gt_float_wrapper .gt_options a {
             color: #ffffff !important;
             font-family: 'Inter', sans-serif !important;
-            transition: background-color 0.2s ease !important;
         }
-
-        /* 6. Hover State for Languages */
-        #gt_float_wrapper .gt_white_content a:hover {
-            background-color: #7BAF9E !important; /* Brand green hover */
+        #gt_float_wrapper .gt_options a:hover {
+            background-color: #7BAF9E !important;
             color: #ffffff !important;
         }
 
-        /* 7. Hide Google Branding if it tries to show up */
+        /* 7. Hide Google Branding */
         #gt_float_wrapper .gt_copyright {
             display: none !important;
         }
