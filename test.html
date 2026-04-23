@@ -3,94 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Card Stack Scroll</title>
+    <title>Messy Polaroid Scroll Stack</title>
     <style>
-        /* Basic page setup to give us room to scroll */
         body {
           margin: 0;
           padding: 0;
-          background-color: #f0f0f0;
+          background-color: #e5e5e5; /* A slightly darker gray to make the white polaroids pop */
           font-family: sans-serif;
+          overflow-x: hidden; /* Prevents horizontal scrollbar during fly-in animations */
         }
 
         .spacer {
-          height: 50vh;
+          height: 60vh;
           display: flex;
           align-items: center;
           justify-content: center;
+          color: #555;
         }
 
-        /* The container holding all the cards */
         .card-deck {
-          max-width: 800px;
+          max-width: 100vw;
           margin: 0 auto;
-          padding: 40px 20px;
-        }
-
-        /* The actual cards */
-        .card {
-          height: 60vh; /* Make the card take up a good chunk of the screen */
-          background-color: #ffffff;
-          border-radius: 20px;
-          box-shadow: 0 -15px 30px rgba(0,0,0,0.1);
-
-          /* THE MAGIC: This makes the card stick to the top when it hits a certain point */
-          position: sticky;
-
-          /* We use CSS variables (--index) to stagger the cards so they peek out over each other */
-          top: calc(40px + (20px * var(--index)));
-
-          /* Space between cards before they stack */
-          margin-bottom: 60vh;
-
-          /* Flexbox to center the content inside the card */
+          padding: 40px 0;
           display: flex;
+          flex-direction: column;
           align-items: center;
-          justify-content: center;
-          overflow: hidden;
         }
 
-        /* Styling for the images inside the cards */
-        .card img {
+        /* The Sticky Container for each card */
+        .card-wrapper {
+          position: sticky;
+          top: 15vh; /* Where the pile forms on the screen */
+          height: 60vh; /* Spacing between cards as you scroll */
+          display: flex;
+          justify-content: center;
+        }
+
+        /* The actual Polaroid Card */
+        .card {
+          width: 280px; /* Portrait width */
+          height: 350px; /* Portrait height */
+          background-color: #ffffff;
+          padding: 15px 15px 50px 15px; /* Thick bottom padding for Polaroid look */
+          box-shadow: 0 15px 35px rgba(0,0,0,0.15), 0 3px 10px rgba(0,0,0,0.05);
+
+          /* Animation Setup */
+          opacity: 0;
+          /* Initial hidden state using variables we set in the HTML */
+          transform: translate(var(--start-x), var(--start-y)) rotate(var(--start-rot));
+          transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.8s ease-out;
+        }
+
+        /* When the JS adds this class, the card flies into its final messy position */
+        .card.visible {
+          opacity: 1;
+          transform: translate(var(--final-x), var(--final-y)) rotate(var(--final-rot));
+        }
+
+        /* The image inside the polaroid */
+        .card .photo {
           width: 100%;
           height: 100%;
           object-fit: cover;
+          background-color: #ddd; /* Placeholder color */
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #999;
+          font-weight: bold;
         }
 
-        /* Just coloring the placeholders so you can see them without images */
-        .card:nth-child(1) { background-color: #FFB3BA; }
-        .card:nth-child(2) { background-color: #FFDFBA; }
-        .card:nth-child(3) { background-color: #FFFFBA; }
-        .card:nth-child(4) { background-color: #BAFFC9; }
+        /* Coloring placeholders for visibility */
+        .card-wrapper:nth-child(1) .photo { background-color: #a8d5e2; }
+        .card-wrapper:nth-child(2) .photo { background-color: #f9a03f; }
+        .card-wrapper:nth-child(3) .photo { background-color: #f7d08a; }
+        .card-wrapper:nth-child(4) .photo { background-color: #ed8a63; }
+        .card-wrapper:nth-child(5) .photo { background-color: #84b59f; }
     </style>
 </head>
 <body>
 
 <div class="spacer">
-    <h2>Scroll Down 👇</h2>
+    <h2>Scroll Down Slowly 👇</h2>
 </div>
 
 <div class="card-deck">
-    <div class="card" style="--index: 1;">
-        <h2>Image 1</h2>
+
+    <div class="card-wrapper">
+        <div class="card" style="--start-x: -150vw; --start-y: 20vh; --start-rot: -45deg; --final-x: -10px; --final-y: 0px; --final-rot: -6deg;">
+            <div class="photo">Photo 1</div>
+        </div>
     </div>
 
-    <div class="card" style="--index: 2;">
-        <h2>Image 2</h2>
+    <div class="card-wrapper">
+        <div class="card" style="--start-x: 150vw; --start-y: 10vh; --start-rot: 60deg; --final-x: 15px; --final-y: 10px; --final-rot: 4deg;">
+            <div class="photo">Photo 2</div>
+        </div>
     </div>
 
-    <div class="card" style="--index: 3;">
-        <h2>Image 3</h2>
+    <div class="card-wrapper">
+        <div class="card" style="--start-x: -50vw; --start-y: 100vh; --start-rot: -30deg; --final-x: -25px; --final-y: -5px; --final-rot: -3deg;">
+            <div class="photo">Photo 3</div>
+        </div>
     </div>
 
-    <div class="card" style="--index: 4;">
-        <h2>Image 4</h2>
+    <div class="card-wrapper">
+        <div class="card" style="--start-x: 80vw; --start-y: 50vh; --start-rot: 90deg; --final-x: 20px; --final-y: 15px; --final-rot: 8deg;">
+            <div class="photo">Photo 4</div>
+        </div>
     </div>
+
+    <div class="card-wrapper">
+        <div class="card" style="--start-x: 0vw; --start-y: -100vh; --start-rot: -10deg; --final-x: 5px; --final-y: 5px; --final-rot: -1deg;">
+            <div class="photo">Photo 5</div>
+        </div>
+    </div>
+
 </div>
 
 <div class="spacer">
-    <h2>End of Deck</h2>
+    <h2>End of Stack</h2>
 </div>
+
+<script>
+    // This script watches the cards. When 10% of a card is visible on screen,
+    // it adds the "visible" class to trigger the fly-in animation.
+    document.addEventListener('DOMContentLoaded', () => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          } else {
+            // Optional: Remove the class when scrolling back up so the animation resets
+            entry.target.classList.remove('visible');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      const cards = document.querySelectorAll('.card');
+      cards.forEach(card => observer.observe(card));
+    });
+</script>
 
 </body>
 </html>
