@@ -222,147 +222,76 @@
     /* 6. Clean up any leftover Google junk */
     #gt_float_wrapper .gt_copyright { display: none !important; }
 
-     /* Reset and Base */
-        body {
-          margin: 0;
-          padding: 0;
-          background-color: #111;
-          color: #f0f0f0;
-          font-family: 'Segoe UI', sans-serif;
-          overflow-x: hidden; /* Critical: Stops horizontal scrollbars from flying cards */
-        }
 
-        .spacer {
-          height: 80vh;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 1.2rem;
-          color: #666;
-        }
+  /* Custom Animation Engine for the Flying Cards */
+ /* Custom Animation Engine for the Flying Cards */
+ /* This creates the 'track' the page stays on while the cards fly */
+  .custom-scroll-track {
+    position: relative;
+    /* Ensure no parent has 'overflow: hidden' or this won't stick! */
+  }
 
-        /* THE SCROLL TRACK: This creates the scrolling distance */
-        .scroll-track {
-          position: relative;
-        }
+  .custom-sticky-view {
+    position: sticky;
+    top: 0;
+    height: 100vh; /* Keeps the section locked to the screen */
+    display: flex;
+    align-items: center;
+    overflow: hidden; /* This keeps the 'flying' cards from creating side-scrollbars */
+    z-index: 10;
+  }
 
-        /* THE LOCKED VIEW: This sticks to the screen and never moves */
-        .sticky-view {
-          position: sticky;
-          top: 0;
-          height: 100vh; /* Takes up exactly the screen height */
-          width: 100vw;
-          overflow: hidden; /* Hides cards when they fly off screen */
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
+  /* IMPORTANT: This gives the page 'length' so you can actually scroll */
+  .scroll-trigger {
+    height: 60vh; /* Each card now takes 60% of a screen-scroll to appear */
+    width: 100%;
+    pointer-events: none; /* Make sure you can still click things 'through' these */
+  }
 
-        /* Inner container for alignment */
-        .content-grid {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          width: 100%;
-          max-width: 1200px;
-          padding: 0 40px;
-          gap: 5%;
-        }
+  .flying-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* Adjusted Size */
+    width: 380px;
+    height: 480px;
+    background-color: #fff;
+    padding: 12px; /* Uniform thin border around the image */
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.05);
 
-        /* LEFT COLUMN: Pinned Text */
-        .text-column {
-          width: 45%;
-          background: rgba(255, 255, 255, 0.03);
-          padding: 40px;
-          border-radius: 20px;
-          border: 1px solid rgba(255, 255, 255, 0.05);
-          backdrop-filter: blur(10px);
-        }
+    /* Starting state */
+    opacity: 0;
+    transform: translate(calc(-50% + var(--start-x)), calc(-50% + var(--start-y))) rotate(var(--start-rot));
+    transition: transform 1s cubic-bezier(0.32, 0, 0.67, 0), opacity 0.8s ease-in;
+  }
 
-        .text-column h2 {
-          margin-top: 0;
-          font-size: 3rem;
-          background: linear-gradient(90deg, #fff, #888);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-        }
+  .flying-card.visible {
+    /* Final state */
+    opacity: 1;
+    transform: translate(calc(-50% + var(--final-x)), calc(-50% + var(--final-y))) rotate(var(--final-rot));
+    transition: transform 1.2s cubic-bezier(0.17, 0.84, 0.44, 1), opacity 0.6s ease-out;
+  }
 
-        .text-column p {
-          font-size: 1.2rem;
-          line-height: 1.6;
-          color: #aaa;
-        }
+  .flying-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 6px;
+  }
 
-        /* RIGHT COLUMN: The Fixed Pile Container */
-        .cards-column {
-          width: 45%;
-          height: 500px; /* Gives the absolute cards a bounding box */
-          position: relative; /* CRITICAL: Locks the absolute cards inside this box */
-        }
+  /* Completely hidden the caption section */
+  .card-caption {
+    display: none;
+  }
 
-        /* The actual Cards */
-        .card {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          width: 320px;
-          height: 420px;
-          background-color: #fff;
-          padding: 15px 15px 60px 15px; /* Polaroid frame */
-          border-radius: 6px;
-          box-shadow: 0 25px 50px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,0,0,0.1);
-
-          /* Base State (Hidden, off-screen) */
-          opacity: 0;
-          /* Notice the 'translate(-50%, -50%)' ensures they perfectly center in the column before applying the random offsets */
-          transform: translate(calc(-50% + var(--start-x)), calc(-50% + var(--start-y))) rotate(var(--start-rot));
-
-          /* SCROLL UP ANIMATION: Slower, floaty easing curve when class is removed */
-          transition: transform 1s cubic-bezier(0.32, 0, 0.67, 0), opacity 0.8s ease-in;
-        }
-
-        /* Active State (Scrolled into view) */
-        .card.visible {
-          opacity: 1;
-          transform: translate(calc(-50% + var(--final-x)), calc(-50% + var(--final-y))) rotate(var(--final-rot));
-
-          /* SCROLL DOWN ANIMATION: Snappy, energetic easing curve when class is added */
-          transition: transform 1.2s cubic-bezier(0.17, 0.84, 0.44, 1), opacity 0.6s ease-out;
-        }
-
-        .card .photo {
-          width: 100%;
-          height: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 2rem;
-          font-weight: bold;
-          color: #fff;
-          border-radius: 4px;
-        }
-
-        /* Colors */
-        #card-1 .photo { background: #E63946; }
-        #card-2 .photo { background: #F4A261; }
-        #card-3 .photo { background: #2A9D8F; }
-        #card-4 .photo { background: #457B9D; }
-        #card-5 .photo { background: #1D3557; }
-
-        /* Invisible triggers that control the scroll depth */
-        .trigger {
-          height: 100vh;
-          width: 100%;
-          pointer-events: none;
-        }
-
-        /* Responsive */
-        @media (max-width: 900px) {
-          .content-grid { flex-direction: column; text-align: center; }
-          .text-column, .cards-column { width: 100%; }
-          .cards-column { height: 400px; margin-top: 40px; }
-          .card { width: 250px; height: 330px; }
-        }
+  /* Mobile adjustment */
+  @media (max-width: 768px) {
+    .flying-card {
+      width: 240px;
+      height: 300px;
+    }
+  }
   </style>
 </head>
 <body class="bg-cream text-deep font-body">
@@ -500,22 +429,22 @@
 
       <div class="w-full md:w-1/2 flex flex-col gap-8">
 
-        <div class="mission-card relative bg-white border border-brand/10 p-8 rounded-2xl shadow-sm overflow-hidden">
+        <div class="group relative bg-white border border-brand/10 p-8 rounded-2xl shadow-sm overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_24px_48px_-12px_rgba(123,175,158,0.2)]">
           <div class="mb-5 w-11 h-11 rounded-lg flex items-center justify-center text-brand" style="background:rgba(123,175,158,0.1);">
             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
           </div>
           <h2 class="text-2xl font-heading font-bold mb-4 text-deep leading-snug">Why does it <em>matter?</em></h2>
           <p class="text-gray-500 leading-relaxed text-sm">Streets to Shelters provides essential supplies and support to those experiencing homelessness. We don't just provide items, we restore dignity through care kits that show our community truly cares.</p>
-          <div class="absolute bottom-0 left-0 h-[3px] w-1/4 bg-brand rounded-full"></div>
+          <div class="absolute bottom-0 left-0 h-[3px] w-0 bg-brand transition-all duration-500 group-hover:w-full"></div>
         </div>
 
-        <div class="mission-card relative bg-white border border-brand/10 p-8 rounded-2xl shadow-sm overflow-hidden">
+        <div class="group relative bg-white border border-brand/10 p-8 rounded-2xl shadow-sm overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_24px_48px_-12px_rgba(123,175,158,0.2)]">
           <div class="mb-5 w-11 h-11 rounded-lg flex items-center justify-center text-brand" style="background:rgba(123,175,158,0.1);">
             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
           </div>
           <h2 class="text-2xl font-heading font-bold mb-4 text-deep leading-snug">Why we <em>started?</em></h2>
           <p class="text-gray-500 leading-relaxed text-sm">Created by students driven by action, we moved past conversation to coordination. By organizing donation drives and building kits, we bridge the gap between student volunteers and local outreach programs.</p>
-          <div class="absolute bottom-0 left-0 h-[3px] w-1/4 bg-brand rounded-full"></div>
+          <div class="absolute bottom-0 left-0 h-[3px] w-0 bg-brand transition-all duration-500 group-hover:w-full"></div>
         </div>
 
       </div>
@@ -524,65 +453,74 @@
 
         <div class="flying-card" id="mission-card-1" style="z-index: 1; --start-x: -80vw; --start-y: -80vh; --start-rot: -540deg; --final-x: -15px; --final-y: -10px; --final-rot: -6deg;">
           <img src="images/sts1.jpg" alt="Care Kits">
-          <div class="card-caption">#RestoringDignity</div>
+
         </div>
 
         <div class="flying-card" id="mission-card-2" style="z-index: 2; --start-x: 80vw; --start-y: 80vh; --start-rot: 1440deg; --final-x: 15px; --final-y: 10px; --final-rot: 8deg;">
           <img src="images/sts2.jpg" alt="Student Volunteers">
-          <div class="card-caption">#YouthLed</div>
+
         </div>
 
         <div class="flying-card" id="mission-card-3" style="z-index: 3; --start-x: 100vw; --start-y: 100vh; --start-rot: -1440deg; --final-x: 12px; --final-y: -12px; --final-rot: -8deg;">
           <img src="images/sts3.jpg" alt="Student Volunteers">
-          <div class="card-caption">#YouthLed</div>
+
         </div>
 
         <div class="flying-card" id="mission-card-4" style="z-index: 4; --start-x: -100vw; --start-y: -100vh; --start-rot: 100deg; --final-x: -8px; --final-y: 12px; --final-rot: 6deg;">
-          <img src="images/sts6" alt="Student Volunteers">
-          <div class="card-caption">#YouthLed</div>
+          <img src="images/sts6.jpg" alt="Student Volunteers">
+
         </div>
 
         <div class="flying-card" id="mission-card-5" style="z-index: 5; --start-x: 50vw; --start-y: 50vh; --start-rot: 1000deg; --final-x: 10px; --final-y: 7px; --final-rot: 4deg;">
           <img src="images/sts4.jpg" alt="Student Volunteers">
-          <div class="card-caption">#YouthLed</div>
+
         </div>
 
         <div class="flying-card" id="mission-card-6" style="z-index: 6; --start-x: 70vw; --start-y: 70vh; --start-rot: 600deg; --final-x: 8px; --final-y: -7px; --final-rot: 2deg;">
           <img src="images/sts5.jpg" alt="Student Volunteers">
-          <div class="card-caption">#YouthLed</div>
+
         </div>
 
         <div class="flying-card" id="mission-card-7" style="z-index: 7; --start-x: -50vw; --start-y: -50vh; --start-rot: -100deg; --final-x: -15px; --final-y: 3px; --final-rot: -4deg;">
           <img src="images/sts7.jpg" alt="Student Volunteers">
-          <div class="card-caption">#YouthLed</div>
+
         </div>
 
         <div class="flying-card" id="mission-card-8" style="z-index: 8; --start-x: -70vw; --start-y: -70vh; --start-rot: -600deg; --final-x: -10px; --final-y: 5px; --final-rot: -2deg;">
           <img src="images/sts9.jpg" alt="Student Volunteers">
-          <div class="card-caption">#YouthLed</div>
+
         </div>
 
         <div class="flying-card" id="mission-card-9" style="z-index: 9; --start-x: 110vw; --start-y: 110vh; --start-rot: -1000deg; --final-x: -12px; --final-y: 7px; --final-rot: 0deg;">
           <img src="images/sts8.jpg" alt="Student Volunteers">
-          <div class="card-caption">#YouthLed</div>
+
         </div>
 
         <div class="flying-card" id="mission-card-10" style="z-index: 10; --start-x: -110vw; --start-y: -110vh; --start-rot: 300deg; --final-x: 7px; --final-y: -3px; --final-rot: -10deg;">
           <img src="images/sts10.png" alt="Student Volunteers">
-          <div class="card-caption">#YouthLed</div>
+
         </div>
 
         <div class="flying-card" id="mission-card-11" style="z-index: 11; --start-x: 50vw; --start-y: 50vh; --start-rot: -350deg; --final-x: 13px; --final-y: 1px; --final-rot: 10deg;">
           <img src="images/sts11.png" alt="Student Volunteers">
-          <div class="card-caption">#YouthLed</div>
+
         </div>
 
       </div>
     </div>
   </div>
 
-  <div class="scroll-trigger" data-target="mission-card-1"></div>
-  <div class="scroll-trigger" data-target="mission-card-2"></div>
+  <div class="scroll-trigger" data-card="mission-card-1"></div>
+  <div class="scroll-trigger" data-card="mission-card-2"></div>
+  <div class="scroll-trigger" data-card="mission-card-3"></div>
+  <div class="scroll-trigger" data-card="mission-card-4"></div>
+  <div class="scroll-trigger" data-card="mission-card-5"></div>
+  <div class="scroll-trigger" data-card="mission-card-6"></div>
+  <div class="scroll-trigger" data-card="mission-card-7"></div>
+  <div class="scroll-trigger" data-card="mission-card-8"></div>
+  <div class="scroll-trigger" data-card="mission-card-9"></div>
+  <div class="scroll-trigger" data-card="mission-card-10"></div>
+  <div class="scroll-trigger" data-card="mission-card-11"></div>
 </section>
 
 <!-- HOW IT WORKS -->
@@ -877,37 +815,35 @@
       }
   }, 100);
 </script>
-<script> // Upgraded JS Logic: Checks exact screen position so it never drops frames on fast scrolls
-    const triggers = document.querySelectorAll('.trigger');
+<script>
+   document.addEventListener('DOMContentLoaded', () => {
+     const triggers = document.querySelectorAll('.scroll-trigger');
+     let isTicking = false;
 
-    // We use a small requestAnimationFrame throttle so scroll events don't lag the browser
-    let isTicking = false;
+     window.addEventListener('scroll', () => {
+       if (!isTicking) {
+         window.requestAnimationFrame(() => {
+           triggers.forEach(trigger => {
+             // Updated to getAttribute('data-card')
+             const cardId = trigger.getAttribute('data-card');
+             const card = document.getElementById(cardId);
 
-    window.addEventListener('scroll', () => {
-      if (!isTicking) {
-        window.requestAnimationFrame(() => {
-
-          // Check where each trigger is on the screen
-          triggers.forEach(trigger => {
-            const cardId = trigger.getAttribute('data-target');
-            const card = document.getElementById(cardId);
-
-            // Get the top coordinate of the invisible trigger
-            const rect = trigger.getBoundingClientRect();
-
-            // If the top of the trigger crosses 60% of the screen height, throw the card
-            if (rect.top < window.innerHeight * 0.6) {
-              card.classList.add('visible');
-            } else {
-              card.classList.remove('visible');
-            }
-          });
-
-          isTicking = false;
-        });
-        isTicking = true;
-      }
-    });</script>
+             if (card) {
+               const rect = trigger.getBoundingClientRect();
+               if (rect.top < window.innerHeight * 0.65) {
+                 card.classList.add('visible');
+               } else {
+                 card.classList.remove('visible');
+               }
+             }
+           });
+           isTicking = false;
+         });
+         isTicking = true;
+       }
+     });
+   });
+</script>
 
 </body>
 </html>
