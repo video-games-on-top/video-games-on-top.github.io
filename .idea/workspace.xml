@@ -5,37 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c5e2120c-4b45-48a8-b5a7-cec9cee5a1f3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/images/Anish.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/Logo1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/Nish.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/Ronith.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/Ru1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/dude.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/ethan.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/harjit.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/icon (1).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/kavin.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/me.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/nathan.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/newsletter.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/photos.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/revanth.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/sahil.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/sts1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/sts10.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/sts11.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/sts2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/sts3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/sts4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/sts5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/sts6.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/sts7.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/sts8.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/sts9.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/tejas.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/timline.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/vidip.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,6 +41,7 @@
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
+    <option name="foldersAlwaysOnTop" value="false" />
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
