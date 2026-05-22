@@ -233,8 +233,32 @@ Come support, enjoy some baked goods, and help us grow.">
                 </div>
                 <div class="bar"></div>
             </div>
-
+            <div class="event-card r-scale relative bg-white border border-brand/10 rounded-2xl overflow-hidden flex flex-col" style="transition-delay:0.2s">
+                <div class="w-full h-52 overflow-hidden flex-shrink-0">
+                    <img src="images/basketball.png" alt="Basketball fundraiser" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700">
+                </div>
+                <div class="p-7 flex flex-col flex-1">
+                    <span class="text-xs font-semibold tracking-widest uppercase text-brand mb-2 block">May 16</span>
+                    <h3 class="font-heading text-xl font-bold mb-1 leading-snug">Basketball tournament fundraiser</h3>
+                    <p class="text-gray-500 text-sm mb-1">San Antonio, TX</p>
+                    <p class="text-gray-400 text-sm mb-5 leading-relaxed flex-1">Court of Legends
+                        13330 Western Oak Dr,
+                        Helotes, TX 78023</p>
+                    <button class="open-modal-btn read-link"
+                            data-title="Basketball Tournament"
+                            data-date="May 16"
+                            data-location="Clark High School, 5150 De Zavala Rd, San Antonio, TX 78249"
+                            data-slug="basketball"
+                            data-desc=""
+                            data-images="images/basketball.png,images/basketball1.jpg"> Learn More
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
+                <div class="bar"></div>
+            </div>
         </div>
+
+
     </section>
 
 
@@ -247,31 +271,7 @@ Come support, enjoy some baked goods, and help us grow.">
 
 
 
-            <div class="event-card r-scale relative bg-white border border-brand/10 rounded-2xl overflow-hidden flex flex-col" style="transition-delay:0.2s">
-                <div class="w-full h-52 overflow-hidden flex-shrink-0">
-                    <img src="images/basketball.png" alt="Basketball fundraiser" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700">
-                </div>
-                <div class="p-7 flex flex-col flex-1">
-                    <span class="text-xs font-semibold tracking-widest uppercase text-brand mb-2 block">May 16</span>
-                    <h3 class="font-heading text-xl font-bold mb-1 leading-snug">Basketball tournament</h3>
-                    <p class="text-gray-500 text-sm mb-1">San Antonio, TX</p>
-                    <p class="text-gray-400 text-sm mb-5 leading-relaxed flex-1">Court of Legends
-13330 Western Oak Dr,
-Helotes, TX 78023</p>
-                    <button class="open-modal-btn read-link"
-                            data-title="Basketball Tournament"
-                            data-date="May 16"
-                            data-location="Clark High School, 5150 De Zavala Rd, San Antonio,
-TX 78249"
-                            data-slug="basketball"
-                            data-desc=""
-                        data-iframe="images/basketball.png">
-                        Learn More
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
-                    </button>
-                </div>
-                <div class="bar"></div>
-            </div>
+
 
             <div class="event-card r-scale relative bg-white border border-brand/10 rounded-2xl overflow-hidden flex flex-col" style="transition-delay:0.2s">
                 <div class="w-full h-52 overflow-hidden flex-shrink-0">
@@ -418,12 +418,30 @@ TX 78249"
                 mDesc.style.display = 'none';
             }
 
-            // Handle Iframe Media
+            // Handle Iframe Media VS Multiple Images
             const iframeSrc = btn.dataset.iframe;
+            const imagesSrc = btn.dataset.images;
+
             if (iframeSrc) {
                 mIframe.src = iframeSrc;
                 mLink.href = iframeSrc;
-                mLink.style.display = 'inline-block';
+                mLink.style.display = 'inline-block'; // Show link for normal iframe cards
+                mIframe.style.display = 'block';
+                mContent.style.display = 'block';
+            } else if (imagesSrc) {
+                mIframe.src = '';
+                mIframe.style.display = 'none';
+                mLink.style.display = 'none'; // REMOVE "Open in New Tab" just for this card
+
+                // Parse images and build a clean scrollable gallery wrapper
+                const imgArray = imagesSrc.split(',');
+                let galleryHtml = `<div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-2 max-h-[60vh] overflow-y-auto">`;
+                imgArray.forEach(src => {
+                    galleryHtml += `<img src="${src.trim()}" class="w-full h-auto object-contain rounded-lg max-h-[450px] mx-auto shadow-sm" alt="Event Media">`;
+                });
+                galleryHtml += `</div>`;
+
+                mContent.innerHTML = galleryHtml;
                 mContent.style.display = 'block';
             } else {
                 mIframe.src = '';
@@ -445,11 +463,6 @@ TX 78249"
             modalBox.classList.add('scale-100');
         };
 
-        // Click listeners
-        document.querySelectorAll('.open-modal-btn').forEach(btn => {
-            btn.addEventListener('click', () => openModal(btn));
-        });
-
         // Close Modal
         const closeModal = () => {
             modal.classList.add('opacity-0', 'pointer-events-none');
@@ -458,14 +471,31 @@ TX 78249"
 
             // Forcefully unlock scroll
             document.body.style.removeProperty('overflow');
-            setTimeout(() => { mIframe.src = ''; }, 300);
+            setTimeout(() => {
+                mIframe.src = '';
+                // Reset content back to containing just the iframe structure
+                mContent.innerHTML = '<iframe id="modal-iframe" src="" style="width:100%;height:1500px;" class="border-0"></iframe>';
+                // Re-assign the global mIframe reference variable
+                window.mIframe = document.getElementById('modal-iframe');
+            }, 300);
         };
 
+        // --- ADD THIS MISSING BLOCK ---
+        // Click listeners to trigger the modal opening
+        document.querySelectorAll('.open-modal-btn').forEach(btn => {
+            btn.addEventListener('click', () => openModal(btn));
+        });
+
+        // Click listener for the close button
         closeBtn2.addEventListener('click', closeModal);
+
+        // Click listener for the background backdrop to close
         backdrop.addEventListener('click', closeModal);
+
+        // Keyboard listener to close on Escape key press
         document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-        // Share Link Logic
+        // Click listener for the share button logic
         if (shareBtn) {
             shareBtn.addEventListener('click', async () => {
                 const slug = shareBtn.dataset.currentSlug;
@@ -473,8 +503,6 @@ TX 78249"
                 if (slug) url.searchParams.set('event', slug);
 
                 const shareUrl = url.toString();
-
-                // Only send the URL to prevent Apple/Android from cluttering the clipboard text
                 const shareData = { title: mTitle.textContent, url: shareUrl };
 
                 try {
@@ -489,6 +517,7 @@ TX 78249"
                 } catch (err) { if (err.name !== 'AbortError') console.error(err); }
             });
         }
+
 
         // Deep linking on load
         const urlParams = new URLSearchParams(window.location.search);
