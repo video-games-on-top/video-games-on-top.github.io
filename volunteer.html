@@ -419,5 +419,28 @@
         }
     }, 100);
 </script>
+<script>
+    // Listen to clicks across the entire document dynamically
+    document.addEventListener('click', (event) => {
+        // Find the elements exactly when a click happens
+        const hamburgerBtn = document.getElementById('mobile-menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu-overlay');
+
+        if (!mobileMenu) return; // If the menu doesn't exist yet, do nothing
+
+        // Check if the clicked item is the hamburger button or inside it
+        if (hamburgerBtn && (event.target === hamburgerBtn || hamburgerBtn.contains(event.target))) {
+            mobileMenu.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Check if the clicked item is the close button or inside it
+        if (closeMenuBtn && (event.target === closeMenuBtn || closeMenuBtn.contains(event.target))) {
+            mobileMenu.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+    });
+</script>
 </body>
 </html>
