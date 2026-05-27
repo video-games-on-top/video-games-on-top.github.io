@@ -37,7 +37,15 @@
     }
 </script>
 <!-- HEADER -->
-<header class="bg-cream/90 backdrop-blur fixed w-full z-50 border-b border-gray-200/50">
+<header class="bg-cream/90 backdrop-blur sticky top-0 w-full z-50 border-b border-gray-200/50">
+    <div id="ein-banner" class="bg-brandDark text-cream px-4 py-2.5 text-center text-sm font-medium flex items-center justify-center relative z-[70]">
+        <span>We are currently in the process of obtaining our EIN (Employer Identification Number). Stay tuned!</span>
+        <button id="close-banner-btn" class="absolute right-4 p-1 hover:bg-black/10 rounded-full transition-colors" aria-label="Close announcement">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+    </div>
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         <a href="index.html" aria-label="Streets to Shelters Home">
             <img src="images/icon (1).png" class="h-11 transition-transform duration-300 hover:scale-105 active:scale-95" alt="Streets to Shelters">
