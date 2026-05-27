@@ -474,5 +474,26 @@
         }
     }, 100);
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const hamburgerBtn = document.getElementById('mobile-menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu-overlay');
+
+        if (hamburgerBtn && mobileMenu) {
+            // Open Menu
+            hamburgerBtn.addEventListener('click', () => {
+                mobileMenu.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            });
+
+            // Close Menu
+            closeMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                document.body.style.overflow = '';
+            });
+        }
+    });
+</script>
 </body>
 </html>
