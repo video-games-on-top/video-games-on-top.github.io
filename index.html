@@ -27,51 +27,19 @@
       }
     }
   </script>
-  <style>
-    #progress-bar { position:fixed;top:0;left:0;height:2px;background:#7BAF9E;width:0%;z-index:9999;transition:width 0.1s linear; }
-    .nav-link { position:relative; }
-    .nav-link::after { content:'';position:absolute;bottom:-3px;left:0;width:0;height:1.5px;background:#7BAF9E;transition:width 0.38s cubic-bezier(0.16,1,0.3,1); }
-    .nav-link:hover::after { width:100%; }
-    .r-up,.r-left,.r-right,.r-scale,.r-fade { opacity:0;will-change:opacity,transform; }
-    .r-up { transform:translateY(44px); }
-    .r-left { transform:translateX(-52px); }
-    .r-right { transform:translateX(52px); }
-    .r-scale { transform:scale(0.92) translateY(18px); }
-    .r-up,.r-left,.r-right,.r-fade { transition:opacity 0.85s cubic-bezier(0.16,1,0.3,1),transform 0.85s cubic-bezier(0.16,1,0.3,1); }
-    .r-scale { transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1),transform 0.8s cubic-bezier(0.34,1.4,0.64,1); }
-    .is-visible { opacity:1!important;transform:none!important; }
-    .word-wrap { display:inline-block;overflow:hidden;vertical-align:bottom; }
-    .word-inner { display:inline-block;transform:translateY(110%);opacity:0;transition:transform 0.9s cubic-bezier(0.16,1,0.3,1),opacity 0.6s cubic-bezier(0.16,1,0.3,1); }
-    .word-inner.is-visible { transform:translateY(0);opacity:1; }
-    body::after { content:'';position:fixed;inset:0;z-index:9997;pointer-events:none;opacity:0.02;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:160px 160px; }
-    header { transition:box-shadow 0.4s ease; }
-    body.scrolled header { box-shadow:0 1px 24px rgba(43,31,28,0.08); }
-    .tilt-card { transform-style:preserve-3d;transition:transform 0.12s ease-out; }
-    .float-anim { animation:floatY 7s ease-in-out infinite; }
-    @keyframes floatY { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
 
-    /* Professional button styles */
-    .btn-primary {
-      position:relative;overflow:hidden;background:#7BAF9E;color:#fff;
-      padding:13px 28px;border-radius:4px;font-size:13px;font-weight:600;
-      letter-spacing:0.07em;text-transform:uppercase;text-decoration:none;
-      display:inline-flex;align-items:center;gap:9px;
-      transition:background 0.28s ease,transform 0.3s cubic-bezier(0.16,1,0.3,1),box-shadow 0.3s ease;
-      box-shadow:0 2px 10px rgba(123,175,158,0.2);
-    }
-    .btn-primary:hover { background:#5E8F80;transform:translateY(-2px);box-shadow:0 10px 28px rgba(94,143,128,0.35); }
-    .btn-primary:active { transform:translateY(0); }
-    .btn-primary svg { transition:transform 0.3s cubic-bezier(0.16,1,0.3,1); }
-    .btn-primary:hover svg { transform:translateX(4px); }
-    .btn-outline {
-      border:1.5px solid #2B1F1C;color:#2B1F1C;padding:12px 28px;border-radius:4px;
-      font-size:13px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;
-      text-decoration:none;display:inline-flex;align-items:center;gap:9px;background:transparent;
-      transition:border-color 0.28s,color 0.28s,background 0.28s,transform 0.3s cubic-bezier(0.16,1,0.3,1);
-    }
-    .btn-outline:hover { background:#2B1F1C;color:#fff;transform:translateY(-2px); }
-    .btn-outline:active { transform:translateY(0); }
+<style>
+  @import url('main.css');
+    /* ==========================================================================
+       1. SPONSORS SECTION LAYOUT
+       ========================================================================== */
+    .sponsor-slot { height:72px;display:flex;align-items:center;justify-content:center; }
+    .sponsor-slot img[src=""] { display:none; }
+    .sponsor-slot:has(img[src=""]){background:repeating-linear-gradient(45deg,rgba(123,175,158,0.04),rgba(123,175,158,0.04) 10px,transparent 10px,transparent 20px);border:1.5px dashed rgba(123,175,158,0.2);border-radius:8px;min-height:72px;}
 
+    /* ==========================================================================
+       2. MISSION CARDS MODULE
+       ========================================================================== */
     .mission-card { transition:transform 0.5s cubic-bezier(0.16,1,0.3,1),box-shadow 0.5s cubic-bezier(0.16,1,0.3,1); }
     .mission-card:hover { transform:translateY(-6px);box-shadow:0 24px 48px -12px rgba(123,175,158,0.2); }
     .mission-card .bar { transition:width 0.55s cubic-bezier(0.16,1,0.3,1);width:0; }
@@ -79,7 +47,9 @@
     .step-line { position:absolute;top:28px;left:calc(50% + 40px);width:calc(100% - 80px);height:1px;background:linear-gradient(90deg,#7BAF9E 0%,transparent 100%);opacity:0.25; }
     @media(max-width:767px){.step-line{display:none}}
 
-    /* Carousel */
+    /* ==========================================================================
+       3. 3D COVER CAROUSEL SYSTEM
+       ========================================================================== */
     .carousel-container { position:relative;height:520px;overflow:hidden;display:flex;justify-content:center;align-items:center; }
     .carousel-item { position:absolute;width:460px;height:460px;border-radius:12px;object-fit:cover;opacity:0;z-index:0;transition:all 0.7s cubic-bezier(0.34,1.15,0.64,1),opacity 0.5s cubic-bezier(0.16,1,0.3,1); }
     .carousel-item.active  { opacity:1;transform:translateX(0) scale(1);z-index:5;box-shadow:0 24px 56px rgba(0,0,0,0.2); }
@@ -88,31 +58,10 @@
     .carousel-item.prev-2  { opacity:.22;transform:translateX(-74%) scale(0.6);z-index:3; }
     .carousel-item.next-2  { opacity:.22;transform:translateX(74%) scale(0.6);z-index:3; }
     #carousel-dots button { transition:width 0.4s cubic-bezier(0.34,1.26,0.64,1),background 0.3s ease; }
-    @media(max-width:768px){
-      .carousel-container{height:300px}
-      .carousel-item{width:240px;height:200px}
-      .carousel-item.prev-1{transform:translateX(-38%) scale(0.84)}
-      .carousel-item.next-1{transform:translateX(38%) scale(0.84)}
-      .carousel-item.prev-2,.carousel-item.next-2{opacity:0}
-    }
 
-    /* Social icons */
-    .social-icon { transition:transform 0.32s cubic-bezier(0.16,1,0.3,1),background-color 0.25s ease,color 0.25s ease,border-color 0.25s ease; }
-    .social-icon:hover { transform:translateY(-3px);background-color:#7BAF9E;color:white;border-color:#7BAF9E; }
-
-    /* Footer */
-    footer a { transition:color 0.22s ease,padding-left 0.3s cubic-bezier(0.16,1,0.3,1);display:inline-block; }
-    footer a:hover { color:#7BAF9E;padding-left:5px; }
-
-    /* Sponsor slots */
-    .sponsor-slot { height:72px;display:flex;align-items:center;justify-content:center; }
-    .sponsor-slot img[src=""] { display:none; }
-    .sponsor-slot:has(img[src=""]){background:repeating-linear-gradient(45deg,rgba(123,175,158,0.04),rgba(123,175,158,0.04) 10px,transparent 10px,transparent 20px);border:1.5px dashed rgba(123,175,158,0.2);border-radius:8px;min-height:72px;}
-
-    @keyframes pageFade { from{opacity:0} to{opacity:1} }
-    body { animation:pageFade 0.5s ease both; }
-
-    /* ── IMPACT SECTION ── */
+    /* ==========================================================================
+       4. DYNAMIC IMPACT METRICS LAYOUT
+       ========================================================================== */
     .impact-row { display:grid;grid-template-columns:1fr 1fr;min-height:440px;overflow:hidden; }
     .impact-photo { position:relative;overflow:hidden; }
     .impact-photo img { width:100%;height:100%;object-fit:cover;transition:transform 0.9s cubic-bezier(0.16,1,0.3,1); }
@@ -130,7 +79,9 @@
     .stat-bar-fill { height:1px;background:#7BAF9E;border-radius:1px;width:0;transition:width 1.4s cubic-bezier(0.16,1,0.3,1); }
     .stat-bar-fill.animated { width:var(--fill); }
 
-    /* ── 3-STEP SUPPORT ── */
+    /* ==========================================================================
+       5. 3-STEP SUPPORT GRID SYSTEM
+       ========================================================================== */
     .support-eyebrow { font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#7BAF9E;margin-bottom:14px;display:block; }
     .support-h2 { font-family:'Playfair Display',serif;font-size:clamp(30px,3.2vw,46px);font-weight:700;line-height:1.15;color:#2B1F1C;letter-spacing:-0.01em; }
     .support-h2 em { font-style:italic;color:#7BAF9E; }
@@ -145,11 +96,52 @@
     .support-card:hover .support-icon-ring { border-color:#7BAF9E;background:#7BAF9E;color:#fff;transform:scale(1.06); }
     .support-title { font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:#2B1F1C;margin-bottom:12px;line-height:1.25; }
     .support-body { font-size:14px;font-weight:400;line-height:1.8;color:rgba(43,31,28,0.5);margin-bottom:30px; }
+
     .support-link { display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#7BAF9E;text-decoration:none;transition:gap 0.3s cubic-bezier(0.16,1,0.3,1),color 0.2s; }
     .support-link:hover { color:#5E8F80;gap:11px; }
     .support-link svg { transition:transform 0.3s cubic-bezier(0.16,1,0.3,1); }
     .support-link:hover svg { transform:translateX(2px); }
 
+    /* ==========================================================================
+       6. INTERACTIVE FLYING CARDS SCROLL TRACK
+       ========================================================================== */
+    .custom-scroll-track { position: relative; }
+    .flying-card { background-color: #fff;padding: 12px;border-radius: 12px;box-shadow: 0 20px 40px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.05); }
+    .flying-card img { width: 100%;height: 100%;object-fit: cover;border-radius: 6px; }
+    .card-caption { display: none; }
+
+    /* Desktop Only Sticky View Engine */
+    @media (min-width: 768px) {
+      .custom-sticky-view {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        overflow: clip;
+        z-index: 10;
+      }
+      .scroll-trigger { height: 60vh;width: 100%;pointer-events: none; }
+      .flying-card {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 380px;
+        height: 480px;
+        opacity: 0;
+        transform: translate(calc(-50% + var(--start-x)), calc(-50% + var(--start-y))) rotate(var(--start-rot));
+        transition: transform 1s cubic-bezier(0.32, 0, 0.67, 0), opacity 0.8s ease-in;
+      }
+      .flying-card.visible {
+        opacity: 1;
+        transform: translate(calc(-50% + var(--final-x)), calc(-50% + var(--final-y))) rotate(var(--final-rot));
+        transition: transform 1.2s cubic-bezier(0.17, 0.84, 0.44, 1), opacity 0.6s ease-out;
+      }
+    }
+
+    /* ==========================================================================
+       7. RESPONSIVE BREAKPOINTS & LAYOUT ADAPTATIONS
+       ========================================================================== */
     @media(max-width:900px){
       .support-grid{grid-template-columns:1fr;}
       .support-card{border-right:none;border-bottom:1px solid rgba(43,31,28,0.07);padding:40px 7vw;}
@@ -158,156 +150,30 @@
       .impact-photo{min-height:300px;}
       .impact-stats-panel{padding:52px 7vw;}
     }
-    @media(prefers-reduced-motion:reduce){
-      *,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}
-      .r-up,.r-left,.r-right,.r-scale,.r-fade{opacity:1!important;transform:none!important}
-      .word-inner{transform:none!important;opacity:1!important}
-    }
-  </style>
-  <style>
-    /* 1. Nuke the white background on EVERY possible container */
-    #gt_float_wrapper,
-    .gt_float_switcher,
-    .gt_float_switcher.notranslate,
-    #gt_float_wrapper .gt-selected {
-        background-color: #2B1F1C !important; /* Your brand deep color */
-        background: #2B1F1C !important;
-        border: none !important;
-        box-shadow: none !important;
-        border-radius: 6px !important;
+
+    @media(max-width:768px){
+      .carousel-container{height:300px}
+      .carousel-item{width:240px;height:200px}
+      .carousel-item.prev-1{transform:translateX(-38%) scale(0.84)}
+      .carousel-item.next-1{transform:translateX(38%) scale(0.84)}
+      .carousel-item.prev-2,.carousel-item.next-2{opacity:0}
     }
 
-    /* 2. Fix the "White Bar" - Ensure the link inside is also dark */
-    #gt_float_wrapper .gt-selected .gt-current-lang {
-        background-color: #2B1F1C !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        padding: 8px 12px !important;
-        gap: 8px !important;
-        border-radius: 6px !important;
+    /* Mobile Layout Override for Flying Cards Stack Grid */
+    @media (max-width: 767px) {
+      .custom-sticky-view { position: relative;height: auto;overflow: visible; }
+      .flying-card { position: relative;top: auto;left: auto;width: 100%;height: 220px;opacity: 1 !important;transform: none !important; }
     }
-
-    /* 3. Force Text & Arrow to White */
-    #gt_float_wrapper .gt-selected .gt-current-lang span,
-    #gt_float_wrapper .gt-selected .gt-current-lang i,
-    #gt_float_wrapper .gt_float_switcher-arrow {
-        color: #ffffff !important;
-        border-top-color: #ffffff !important;
-    }
-
-    /* 4. The Dropdown List */
-    #gt_float_wrapper .gt_options {
-        background-color: #2B1F1C !important;
-        border: 1px solid rgba(255, 255, 255, 0.1) !important;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.5) !important;
-    }
-
-    #gt_float_wrapper .gt_options a {
-        color: #ffffff !important;
-        background-color: #2B1F1C !important;
-    }
-
-    #gt_float_wrapper .gt_options a:hover {
-        background-color: #7BAF9E !important;
-    }
-
-    /* 5. Custom Green Scrollbar */
-    #gt_float_wrapper .gt_options::-webkit-scrollbar { width: 6px !important; }
-    #gt_float_wrapper .gt_options::-webkit-scrollbar-thumb {
-        background: #7BAF9E !important;
-        border-radius: 10px !important;
-    }
-
-    /* 6. Clean up any leftover Google junk */
-    #gt_float_wrapper .gt_copyright { display: none !important; }
+</style>
 
 
-  .custom-scroll-track {
-  position: relative;
-}
-
-/* Desktop Only Sticky View */
-@media (min-width: 768px) {
-  .custom-sticky-view {
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    z-index: 10;
-  }
-
-  .scroll-trigger {
-    height: 60vh;
-    width: 100%;
-    pointer-events: none;
-  }
-
-  .flying-card {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 380px;
-    height: 480px;
-    opacity: 0;
-    transform: translate(calc(-50% + var(--start-x)), calc(-50% + var(--start-y))) rotate(var(--start-rot));
-    transition: transform 1s cubic-bezier(0.32, 0, 0.67, 0), opacity 0.8s ease-in;
-  }
-
-  .flying-card.visible {
-    opacity: 1;
-    transform: translate(calc(-50% + var(--final-x)), calc(-50% + var(--final-y))) rotate(var(--final-rot));
-    transition: transform 1.2s cubic-bezier(0.17, 0.84, 0.44, 1), opacity 0.6s ease-out;
-  }
-}
-
-/* Shared Mobile & Desktop Styles */
-.flying-card {
-  background-color: #fff;
-  padding: 12px;
-  border-radius: 12px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.05);
-}
-
-.flying-card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 6px;
-}
-
-.card-caption {
-  display: none;
-}
-
-/* Mobile Layout Override (No flying animation, beautiful stack grid) */
-@media (max-width: 767px) {
-  .custom-sticky-view {
-    position: relative;
-    height: auto;
-    overflow: visible;
-  }
-
-  .flying-card {
-    position: relative;
-    top: auto;
-    left: auto;
-    width: 100%;
-    height: 220px; /* Uniform height for mobile grid items */
-    opacity: 1 !important;
-    transform: none !important;
-  }
-}
-  </style>
 </head>
 
 <body class="bg-cream text-deep font-body">
 
 <div id="progress-bar"></div>
 
-<div id="header-placeholder"></div>
+<div id="header-placeholder" class="sticky top-0 z-50 w-full"></div>
 
 <!-- HERO -->
 <section class="pt-36 pb-28 bg-cream overflow-hidden">

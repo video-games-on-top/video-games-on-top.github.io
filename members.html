@@ -28,137 +28,45 @@
         }
     </script>
     <style>
-        #progress-bar { position:fixed;top:0;left:0;height:2px;background:#7BAF9E;width:0%;z-index:9999;transition:width 0.1s linear; }
-
-        .nav-link { position:relative; }
-        .nav-link::after { content:'';position:absolute;bottom:-3px;left:0;width:0;height:1.5px;background:#7BAF9E;transition:width 0.38s cubic-bezier(0.16,1,0.3,1); }
-        .nav-link:hover::after { width:100%; }
-
-        .r-up,.r-scale,.r-fade { opacity:0;will-change:opacity,transform; }
-        .r-up { transform:translateY(44px); transition:opacity 0.85s cubic-bezier(0.16,1,0.3,1),transform 0.85s cubic-bezier(0.16,1,0.3,1); }
-        .r-scale { transform:scale(0.93) translateY(20px); transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1),transform 0.8s cubic-bezier(0.34,1.4,0.64,1); }
-        .r-fade { transition:opacity 0.85s cubic-bezier(0.16,1,0.3,1); }
-        .is-visible { opacity:1!important;transform:none!important; }
-
-        .d1  { transition-delay: 0.04s; } .d2  { transition-delay: 0.08s; }
-        .d3  { transition-delay: 0.12s; } .d4  { transition-delay: 0.16s; }
-        .d5  { transition-delay: 0.20s; } .d6  { transition-delay: 0.24s; }
-        .d7  { transition-delay: 0.28s; } .d8  { transition-delay: 0.32s; }
-        .d9  { transition-delay: 0.36s; } .d10 { transition-delay: 0.40s; }
-        .d11 { transition-delay: 0.44s; }
-
-        body::after { content:'';position:fixed;inset:0;z-index:9997;pointer-events:none;opacity:0.02;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:160px 160px; }
-        header { transition:box-shadow 0.4s ease; }
-        body.scrolled header { box-shadow:0 1px 24px rgba(43,31,28,0.08); }
-
-        .btn-primary {
-          position:relative;overflow:hidden;background:#7BAF9E;color:#fff;
-          padding:13px 28px;border-radius:4px;font-size:13px;font-weight:600;
-          letter-spacing:0.07em;text-transform:uppercase;text-decoration:none;
-          display:inline-flex;align-items:center;gap:9px;
-          transition:background 0.28s ease,transform 0.3s cubic-bezier(0.16,1,0.3,1),box-shadow 0.3s ease;
-          box-shadow:0 2px 10px rgba(123,175,158,0.2);
-        }
-        .btn-primary:hover { background:#5E8F80;transform:translateY(-2px);box-shadow:0 10px 28px rgba(94,143,128,0.35); }
-        .btn-primary:active { transform:translateY(0); }
-        .btn-primary svg { transition:transform 0.3s cubic-bezier(0.16,1,0.3,1); }
-        .btn-primary:hover svg { transform:translateX(4px); }
-
-        /* FLIP CARD */
+        @import url('main.css');
+        /* ==========================================================================
+           1. 3D FLIP CARD & TEAM CARD ARCHITECTURE
+           ========================================================================== */
         .flip-card { perspective:1000px; height:420px; }
         .flip-inner { position:relative;width:100%;height:100%;transition:transform 0.7s cubic-bezier(0.16,1,0.3,1);transform-style:preserve-3d; }
-        @media (hover: hover) and (pointer: fine) {
-          .flip-card:hover .flip-inner { transform:rotateY(180deg); }
-        }
-        .flip-inner.flipped { transform:rotateY(180deg) !important; }
-        .flip-front,.flip-back { position:absolute;inset:0;width:100%;height:100%;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:1rem;overflow:hidden; }
-        .flip-front { transform:translateZ(0.1px); }
-        .flip-back { transform:rotateY(180deg) translateZ(0.1px);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:2rem; }
 
         @media (hover: hover) and (pointer: fine) {
+          .flip-card:hover .flip-inner { transform:rotateY(180deg); }
           .card-hover { transition:transform 0.5s cubic-bezier(0.175,0.885,0.32,1.275),box-shadow 0.5s ease;will-change:transform,box-shadow; }
           .card-hover:hover { transform:translateY(-10px);box-shadow:0 25px 50px -12px rgba(123,175,158,0.25); }
         }
 
+        .flip-inner.flipped { transform:rotateY(180deg) !important; }
+        .flip-front, .flip-back { position:absolute;inset:0;width:100%;height:100%;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:1rem;overflow:hidden; }
+        .flip-front { transform:translateZ(0.1px); }
+        .flip-back { transform:rotateY(180deg) translateZ(0.1px);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:2rem; }
+
+        /* ==========================================================================
+           2. TOUCH AND ACCESSIBILITY COMPONENT UTILITIES
+           ========================================================================== */
         .tap-hint { display:none; }
         @media (hover: none) {
           .tap-hint { display:inline-flex;align-items:center;gap:4px;font-size:11px;color:#7BAF9E;background:rgba(123,175,158,0.1);border:1px solid rgba(123,175,158,0.3);border-radius:999px;padding:3px 10px;margin-top:8px;letter-spacing:0.02em;pointer-events:none; }
         }
 
+        /* ==========================================================================
+           3. BRAND LAYOUT SEGMENTS & MEDIA PLACEHOLDERS
+           ========================================================================== */
         .section-divider { width:40px;height:3px;background:#7BAF9E;border-radius:999px;margin:16px auto 0; }
-
         .avatar-placeholder { width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#e8f3ef 0%,#d4e9e2 100%);font-size:2.5rem;font-weight:700;color:#7BAF9E;letter-spacing:-1px; }
-
         .back-accent { width:32px;height:3px;background:rgba(255,255,255,0.4);border-radius:999px;margin:0 auto 1rem; }
 
-        /* Chapter CTA block */
+        /* ==========================================================================
+           4. LOCAL MODULE OVERRIDES
+           ========================================================================== */
         .chapter-card { background:#2B1F1C;border-radius:16px;overflow:hidden;position:relative; }
         .chapter-card::before { content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(123,175,158,0.18) 0%,transparent 65%);pointer-events:none; }
         .step-badge { width:36px;height:36px;border-radius:50%;background:rgba(123,175,158,0.18);border:1.5px solid rgba(123,175,158,0.4);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#7BAF9E;flex-shrink:0; }
-
-        footer a { transition:color 0.22s ease,padding-left 0.3s cubic-bezier(0.16,1,0.3,1);display:inline-block; }
-        footer a:hover { color:#7BAF9E;padding-left:5px; }
-
-        @keyframes pageFade { from{opacity:0} to{opacity:1} }
-        body { animation:pageFade 0.5s ease both; }
-    </style>
-    <style>
-        /* 1. Nuke the white background on EVERY possible container */
-        #gt_float_wrapper,
-        .gt_float_switcher,
-        .gt_float_switcher.notranslate,
-        #gt_float_wrapper .gt-selected {
-            background-color: #2B1F1C !important; /* Your brand deep color */
-            background: #2B1F1C !important;
-            border: none !important;
-            box-shadow: none !important;
-            border-radius: 6px !important;
-        }
-
-        /* 2. Fix the "White Bar" - Ensure the link inside is also dark */
-        #gt_float_wrapper .gt-selected .gt-current-lang {
-            background-color: #2B1F1C !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            padding: 8px 12px !important;
-            gap: 8px !important;
-            border-radius: 6px !important;
-        }
-
-        /* 3. Force Text & Arrow to White */
-        #gt_float_wrapper .gt-selected .gt-current-lang span,
-        #gt_float_wrapper .gt-selected .gt-current-lang i,
-        #gt_float_wrapper .gt_float_switcher-arrow {
-            color: #ffffff !important;
-            border-top-color: #ffffff !important;
-        }
-
-        /* 4. The Dropdown List */
-        #gt_float_wrapper .gt_options {
-            background-color: #2B1F1C !important;
-            border: 1px solid rgba(255, 255, 255, 0.1) !important;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.5) !important;
-        }
-
-        #gt_float_wrapper .gt_options a {
-            color: #ffffff !important;
-            background-color: #2B1F1C !important;
-        }
-
-        #gt_float_wrapper .gt_options a:hover {
-            background-color: #7BAF9E !important;
-        }
-
-        /* 5. Custom Green Scrollbar */
-        #gt_float_wrapper .gt_options::-webkit-scrollbar { width: 6px !important; }
-        #gt_float_wrapper .gt_options::-webkit-scrollbar-thumb {
-            background: #7BAF9E !important;
-            border-radius: 10px !important;
-        }
-
-        /* 6. Clean up any leftover Google junk */
-        #gt_float_wrapper .gt_copyright { display: none !important; }
     </style>
 </head>
 
@@ -166,7 +74,7 @@
 
 <div id="progress-bar"></div>
 
-<div id="header-placeholder"></div>
+<div id="header-placeholder" class="sticky top-0 z-50 w-full"></div>
 <!-- HERO -->
 <section class="pt-40 pb-16 text-center px-6">
     <div class="r-fade mb-4">

@@ -28,24 +28,10 @@
         }
     </script>
     <style>
-        #progress-bar { position:fixed;top:0;left:0;height:2px;background:#7BAF9E;width:0%;z-index:9999;transition:width 0.1s linear; }
-        .nav-link { position:relative; }
-        .nav-link::after { content:'';position:absolute;bottom:-3px;left:0;width:0;height:1.5px;background:#7BAF9E;transition:width 0.38s cubic-bezier(0.16,1,0.3,1); }
-        .nav-link:hover::after { width:100%; }
-        .r-up,.r-scale,.r-fade { opacity:0;will-change:opacity,transform; }
-        .r-up { transform:translateY(44px); transition:opacity 0.85s cubic-bezier(0.16,1,0.3,1),transform 0.85s cubic-bezier(0.16,1,0.3,1); }
-        .r-scale { transform:scale(0.92) translateY(18px); transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1),transform 0.8s cubic-bezier(0.34,1.4,0.64,1); }
-        .r-fade { transition:opacity 0.85s cubic-bezier(0.16,1,0.3,1); }
-        .is-visible { opacity:1!important;transform:none!important; }
-        body::after { content:'';position:fixed;inset:0;z-index:9997;pointer-events:none;opacity:0.02;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:160px 160px; }
-        header { transition:box-shadow 0.4s ease; }
-        body.scrolled header { box-shadow:0 1px 24px rgba(43,31,28,0.08); }
-        .btn-primary { position:relative;overflow:hidden;background:#7BAF9E;color:#fff;padding:13px 28px;border-radius:4px;font-size:13px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:center;gap:9px;transition:background 0.28s ease,transform 0.3s cubic-bezier(0.16,1,0.3,1),box-shadow 0.3s ease;box-shadow:0 2px 10px rgba(123,175,158,0.2); }
-        .btn-primary:hover { background:#5E8F80;transform:translateY(-2px);box-shadow:0 10px 28px rgba(94,143,128,0.35); }
-        .btn-primary:active { transform:translateY(0); }
-        .btn-primary svg { transition:transform 0.3s cubic-bezier(0.16,1,0.3,1); }
-        .btn-primary:hover svg { transform:translateX(4px); }
-
+        @import url('main.css');
+        /* ==========================================================================
+           1. NEWS & BLOG CARD MODULES
+           ========================================================================== */
         /* News card — bar is on the OUTER card so it's truly flush */
         .news-card { transition:transform 0.5s cubic-bezier(0.16,1,0.3,1),box-shadow 0.5s ease; }
         .news-card:hover { transform:translateY(-6px);box-shadow:0 24px 48px -12px rgba(123,175,158,0.2); }
@@ -57,89 +43,33 @@
         .read-link svg { transition:transform 0.3s cubic-bezier(0.16,1,0.3,1); }
         .read-link:hover svg { transform:translateX(2px); }
 
-        /* ── MASONRY PHOTO WALL ──
-           CSS columns — browser naturally creates uneven row heights.
+        /* ==========================================================================
+           2. MASONRY PHOTO WALL ENGINE
+           ========================================================================== */
+        /* CSS columns — browser naturally creates uneven row heights.
            Items break across 3 columns, each image fills the column width.
            Hover lifts + slightly zooms. */
         .masonry { column-count:3; column-gap:12px; }
         .masonry-item { break-inside:avoid; margin-bottom:12px; overflow:hidden; border-radius:10px; cursor:pointer; }
         .masonry-item img { width:100%; display:block; transition:transform 0.6s cubic-bezier(0.16,1,0.3,1),filter 0.4s ease; }
         .masonry-item:hover img { transform:scale(1.04); filter:brightness(0.9); }
-        @media(max-width:640px) { .masonry { column-count:2; } }
 
-        /* Modal */
-        #modal-content::-webkit-scrollbar { display:none; }
+        /* ==========================================================================
+           3. MODAL UTILITIES & RESPONSIVE BREAKPOINTS
+           ========================================================================== */
         #modal-content { -ms-overflow-style:none; scrollbar-width:none; }
+        #modal-content::-webkit-scrollbar { display:none; }
 
-        footer a { transition:color 0.22s ease,padding-left 0.3s cubic-bezier(0.16,1,0.3,1);display:inline-block; }
-        footer a:hover { color:#7BAF9E;padding-left:5px; }
-        @keyframes pageFade { from{opacity:0} to{opacity:1} }
-        body { animation:pageFade 0.5s ease both; }
-    </style>
-    <style>
-        /* 1. Nuke the white background on EVERY possible container */
-        #gt_float_wrapper,
-        .gt_float_switcher,
-        .gt_float_switcher.notranslate,
-        #gt_float_wrapper .gt-selected {
-            background-color: #2B1F1C !important; /* Your brand deep color */
-            background: #2B1F1C !important;
-            border: none !important;
-            box-shadow: none !important;
-            border-radius: 6px !important;
+        @media(max-width:640px) {
+          .masonry { column-count:2; }
         }
-
-        /* 2. Fix the "White Bar" - Ensure the link inside is also dark */
-        #gt_float_wrapper .gt-selected .gt-current-lang {
-            background-color: #2B1F1C !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            padding: 8px 12px !important;
-            gap: 8px !important;
-            border-radius: 6px !important;
-        }
-
-        /* 3. Force Text & Arrow to White */
-        #gt_float_wrapper .gt-selected .gt-current-lang span,
-        #gt_float_wrapper .gt-selected .gt-current-lang i,
-        #gt_float_wrapper .gt_float_switcher-arrow {
-            color: #ffffff !important;
-            border-top-color: #ffffff !important;
-        }
-
-        /* 4. The Dropdown List */
-        #gt_float_wrapper .gt_options {
-            background-color: #2B1F1C !important;
-            border: 1px solid rgba(255, 255, 255, 0.1) !important;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.5) !important;
-        }
-
-        #gt_float_wrapper .gt_options a {
-            color: #ffffff !important;
-            background-color: #2B1F1C !important;
-        }
-
-        #gt_float_wrapper .gt_options a:hover {
-            background-color: #7BAF9E !important;
-        }
-
-        /* 5. Custom Green Scrollbar */
-        #gt_float_wrapper .gt_options::-webkit-scrollbar { width: 6px !important; }
-        #gt_float_wrapper .gt_options::-webkit-scrollbar-thumb {
-            background: #7BAF9E !important;
-            border-radius: 10px !important;
-        }
-
-        /* 6. Clean up any leftover Google junk */
-        #gt_float_wrapper .gt_copyright { display: none !important; }
     </style>
 </head>
 <body class="bg-cream text-deep font-body">
 
 <div id="progress-bar"></div>
 
-<div id="header-placeholder"></div>
+<div id="header-placeholder" class="sticky top-0 z-50 w-full"></div>
 
 <!-- HERO -->
 <section class="pt-36 pb-16 bg-cream">

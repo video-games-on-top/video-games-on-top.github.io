@@ -30,33 +30,14 @@
         }
     </script>
     <style>
-        #progress-bar { position:fixed;top:0;left:0;height:2px;background:#7BAF9E;width:0%;z-index:9999;transition:width 0.1s linear; }
+        @import url('main.css');
+        /* ==========================================================================
+           1. FORM ELEMENT MICRO-INTERACTIONS
+           ========================================================================== */
+        .form-input { transition:all 0.3s ease;border-radius:4px; }
+        .form-input:focus { transform:scale(1.005);outline:none; }
 
-        .nav-link { position:relative; }
-        .nav-link::after { content:'';position:absolute;bottom:-3px;left:0;width:0;height:1.5px;background:#7BAF9E;transition:width 0.38s cubic-bezier(0.16,1,0.3,1); }
-        .nav-link:hover::after { width:100%; }
-
-        .r-up,.r-left,.r-scale,.r-fade { opacity:0;will-change:opacity,transform; }
-        .r-up { transform:translateY(44px); transition:opacity 0.85s cubic-bezier(0.16,1,0.3,1),transform 0.85s cubic-bezier(0.16,1,0.3,1); }
-        .r-left { transform:translateX(-52px); transition:opacity 0.85s cubic-bezier(0.16,1,0.3,1),transform 0.85s cubic-bezier(0.16,1,0.3,1); }
-        .r-scale { transform:scale(0.92) translateY(18px); transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1),transform 0.8s cubic-bezier(0.34,1.4,0.64,1); }
-        .r-fade { transition:opacity 0.85s cubic-bezier(0.16,1,0.3,1),transform 0.85s cubic-bezier(0.16,1,0.3,1); }
-        .is-visible { opacity:1!important;transform:none!important; }
-
-        body::after { content:'';position:fixed;inset:0;z-index:9997;pointer-events:none;opacity:0.02;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:160px 160px; }
-        header { transition:box-shadow 0.4s ease; }
-        body.scrolled header { box-shadow:0 1px 24px rgba(43,31,28,0.08); }
-
-        .btn-primary {
-          position:relative;overflow:hidden;background:#7BAF9E;color:#fff;
-          padding:13px 28px;border-radius:4px;font-size:13px;font-weight:600;
-          letter-spacing:0.07em;text-transform:uppercase;text-decoration:none;
-          display:inline-flex;align-items:center;gap:9px;
-          transition:background 0.28s ease,transform 0.3s cubic-bezier(0.16,1,0.3,1),box-shadow 0.3s ease;
-          box-shadow:0 2px 10px rgba(123,175,158,0.2);
-        }
-        .btn-primary:hover { background:#5E8F80;transform:translateY(-2px);box-shadow:0 10px 28px rgba(94,143,128,0.35); }
-        .btn-primary:active { transform:translateY(0); }
+        /* Full-Width Form Submission Button Mod */
         .btn-submit {
           width:100%;background:#7BAF9E;color:#fff;
           padding:15px 28px;border-radius:4px;font-size:13px;font-weight:600;
@@ -67,10 +48,9 @@
         .btn-submit:hover { background:#5E8F80;transform:translateY(-2px);box-shadow:0 10px 28px rgba(94,143,128,0.35); }
         .btn-submit:active { transform:translateY(0); }
 
-        .form-input { transition:all 0.3s ease;border-radius:4px; }
-        .form-input:focus { transform:scale(1.005);outline:none; }
-
-        /* Carousel */
+        /* ==========================================================================
+           2. CONTACT PAGE CAROUSEL VARIANT
+           ========================================================================== */
         .carousel-container { position:relative;height:420px;overflow:hidden;display:flex;justify-content:center;align-items:center; }
         .carousel-item { position:absolute;width:380px;height:380px;border-radius:12px;object-fit:cover;opacity:0;z-index:0;transition:all 0.7s cubic-bezier(0.34,1.15,0.64,1),opacity 0.5s cubic-bezier(0.16,1,0.3,1); }
         .carousel-item.active  { opacity:1;transform:translateX(0) scale(1);z-index:5;box-shadow:0 24px 56px rgba(0,0,0,0.2); }
@@ -79,6 +59,10 @@
         .carousel-item.prev-2  { opacity:.15;transform:translateX(-72%) scale(0.62);z-index:3; }
         .carousel-item.next-2  { opacity:.15;transform:translateX(72%) scale(0.62);z-index:3; }
         #contact-carousel-dots button { transition:width 0.4s cubic-bezier(0.34,1.26,0.64,1),background 0.3s ease; }
+
+        /* ==========================================================================
+           3. RESPONSIVE BREAKPOINTS
+           ========================================================================== */
         @media(max-width:768px){
           .carousel-container{height:260px}
           .carousel-item{width:200px;height:180px}
@@ -86,70 +70,6 @@
           .carousel-item.next-1{transform:translateX(36%) scale(0.86)}
           .carousel-item.prev-2,.carousel-item.next-2{opacity:0}
         }
-
-        footer a { transition:color 0.22s ease,padding-left 0.3s cubic-bezier(0.16,1,0.3,1);display:inline-block; }
-        footer a:hover { color:#7BAF9E;padding-left:5px; }
-
-        @keyframes pageFade { from{opacity:0} to{opacity:1} }
-        body { animation:pageFade 0.5s ease both; }
-    </style>
-    <style>
-        /* 1. Nuke the white background on EVERY possible container */
-        #gt_float_wrapper,
-        .gt_float_switcher,
-        .gt_float_switcher.notranslate,
-        #gt_float_wrapper .gt-selected {
-            background-color: #2B1F1C !important; /* Your brand deep color */
-            background: #2B1F1C !important;
-            border: none !important;
-            box-shadow: none !important;
-            border-radius: 6px !important;
-        }
-
-        /* 2. Fix the "White Bar" - Ensure the link inside is also dark */
-        #gt_float_wrapper .gt-selected .gt-current-lang {
-            background-color: #2B1F1C !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            padding: 8px 12px !important;
-            gap: 8px !important;
-            border-radius: 6px !important;
-        }
-
-        /* 3. Force Text & Arrow to White */
-        #gt_float_wrapper .gt-selected .gt-current-lang span,
-        #gt_float_wrapper .gt-selected .gt-current-lang i,
-        #gt_float_wrapper .gt_float_switcher-arrow {
-            color: #ffffff !important;
-            border-top-color: #ffffff !important;
-        }
-
-        /* 4. The Dropdown List */
-        #gt_float_wrapper .gt_options {
-            background-color: #2B1F1C !important;
-            border: 1px solid rgba(255, 255, 255, 0.1) !important;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.5) !important;
-        }
-
-        #gt_float_wrapper .gt_options a {
-            color: #ffffff !important;
-            background-color: #2B1F1C !important;
-        }
-
-        #gt_float_wrapper .gt_options a:hover {
-            background-color: #7BAF9E !important;
-        }
-
-        /* 5. Custom Green Scrollbar */
-        #gt_float_wrapper .gt_options::-webkit-scrollbar { width: 6px !important; }
-        #gt_float_wrapper .gt_options::-webkit-scrollbar-thumb {
-            background: #7BAF9E !important;
-            border-radius: 10px !important;
-        }
-
-        /* 6. Clean up any leftover Google junk */
-        #gt_float_wrapper .gt_copyright { display: none !important; }
     </style>
 </head>
 
@@ -157,7 +77,7 @@
 
 <div id="progress-bar"></div>
 
-<div id="header-placeholder"></div>
+<div id="header-placeholder" class="sticky top-0 z-50 w-full"></div>
 <!-- HERO / FORM SECTION -->
 <main class="pt-40 pb-16 max-w-7xl mx-auto px-6">
     <div class="grid md:grid-cols-2 gap-16 items-start">
