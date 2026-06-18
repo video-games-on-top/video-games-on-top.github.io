@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Listen for clicks across the entire page
     document.addEventListener('click', (event) => {
 
-        
+
 
 
         // MOBILE MENU LOGIC

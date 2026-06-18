@@ -14,7 +14,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 | Streets to Shelters</title>
+    <title>Thanks | Streets to Shelters</title>
     <link rel="icon" href="images/Logo1.png">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -112,14 +112,15 @@
 
 <div id="header-placeholder" class="sticky top-0 z-50 w-full"></div>
 
-
 <section id="mission" class="py-20 bg-white">
     <div class="max-w-3xl mx-auto text-center px-6 r-up pt-36 pb-28">
-        <span class="text-xs font-semibold tracking-widest uppercase text-brand mb-4 block">Page Not Found</span>
-        <h2 class="text-4xl font-heading font-bold mb-5 leading-snug">This page seems to have lost its way... <br><em class="text-brand">but our mission hasn't.</em></h2>
+        <img src="images/checkmark.png" alt="Success Checkmark" class="w-16 h-16 mx-auto mb-4">
+
+        <span class="text-xs font-semibold tracking-widest uppercase text-brand mb-4 block">Message Sent</span>
+        <h2 class="text-4xl font-heading font-bold mb-5 leading-snug">Thank you for helping us build streets to shelters better! </h2>
         <div class="w-10 h-px bg-brand mx-auto mb-8"></div>
         <p class="text-base text-gray-500 leading-relaxed mb-10">
-            We couldn't find the link you were looking for, but you can still help us get hygiene kits to those who need them most.
+            Want to support us further? Click the buttons below!
         </p>
 
         <a href="index.html" class="btn-outline">Go Back Home</a>
@@ -134,9 +135,36 @@
 
 
 
+
+
 <div id="footer-placeholder"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const duration = 2 * 1000;
+      const animationEnd = Date.now() + duration;
+      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+      function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      const interval = setInterval(function() {
+        const timeLeft = animationEnd - Date.now();
+
+        if (timeLeft <= 0) {
+          return clearInterval(interval);
+        }
+
+        const particleCount = 50 * (timeLeft / duration);
+        // confetti shoots from left and right edges
+        confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+        confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+      }, 250);
+    });
+</script>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
       const mobileBtn = document.getElementById('mobile-menu-btn');
