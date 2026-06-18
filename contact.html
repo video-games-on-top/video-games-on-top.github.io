@@ -262,8 +262,11 @@
         }
       }).then(response => {
         if (response.ok) {
-          // Change this URL to your own custom thank you page!
-          window.location.href = "/thanks.html";
+// 1. Grant the temporary pass
+sessionStorage.setItem("formSubmitted", "true");
+
+// 2. Redirect to the thanks page
+window.location.href = "/thanks.html";
 
           // OR if you just want to show a message without redirecting, uncomment below:
           // status.style.color = "green";

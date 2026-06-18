@@ -11,6 +11,16 @@
 
         gtag('config', 'G-2GY0P5SRNX');
     </script>
+    <script>
+        // Check if the temporary pass exists in the browser session
+        if (sessionStorage.getItem("formSubmitted") !== "true") {
+          // If it doesn't exist, redirect them away immediately
+          window.location.href = "index.html";
+        } else {
+          // If it does exist, delete it so they can't just refresh the page to see it again later
+          sessionStorage.removeItem("formSubmitted");
+        }
+    </script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
