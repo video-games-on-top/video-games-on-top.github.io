@@ -28,7 +28,7 @@
        .btn-primary { display: inline-flex; align-items: center; gap: 8px; background-color: #7BAF9E; color: white; padding: 12px 24px; border-radius: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 13px; transition: background-color 0.3s ease; }
        .btn-primary:hover { background-color: #5E8F80; }
 
-       /* Chapter Grid Specific Styling (Adapted from your 3-step grid) */
+       /* Chapter Grid Specific Styling */
        .chapter-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; border-top: 1px solid rgba(43,31,28,0.07); padding-top: 3rem; }
        .chapter-card { padding: 40px; background: white; border: 1px solid rgba(43,31,28,0.07); border-radius: 12px; position: relative; overflow: hidden; transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s; }
        .chapter-card::before { content:''; position:absolute; bottom:0; left:0; width:0; height:3px; background:#7BAF9E; transition:width 0.5s cubic-bezier(0.16,1,0.3,1); }
@@ -41,7 +41,6 @@
        .status-active { background: rgba(123,175,158,0.15); color: #5E8F80; }
        .status-forming { background: rgba(43,31,28,0.05); color: rgba(43,31,28,0.6); }
        .chapter-body { font-size: 14px; font-weight: 400; line-height: 1.7; color: rgba(43,31,28,0.6); }
-       <style>
 
        /* ==========================================================================
           1. 3D FLIP CARD & TEAM CARD ARCHITECTURE
@@ -74,9 +73,6 @@
        .section-divider { width:40px;height:3px;background:#7BAF9E;border-radius:999px;margin:16px auto 0; }
        .avatar-placeholder { width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#e8f3ef 0%,#d4e9e2 100%);font-size:2.5rem;font-weight:700;color:#7BAF9E;letter-spacing:-1px; }
        .back-accent { width:32px;height:3px;background:rgba(255,255,255,0.4);border-radius:999px;margin:0 auto 1rem; }
-
-
-
     </style>
 </head>
 <body>
@@ -101,7 +97,6 @@
 
 <section class="pb-32 bg-cream">
     <div class="max-w-6xl mx-auto px-6">
-
         <div class="chapter-grid r-up" style="transition-delay: 0.2s;">
 
             <div class="chapter-card">
@@ -111,8 +106,6 @@
                 <p class="chapter-body mb-6">
                     The original chapter of Streets to Shelters. We actively assemble hygiene kits and run local donation drives to support shelters across the greater San Antonio area.
                 </p>
-
-
             </div>
 
             <div class="chapter-card">
@@ -122,19 +115,13 @@
                 <p class="chapter-body mb-6">
                     Organizing local supply drives and expanding resource distribution networks throughout the greater Houston area.
                 </p>
-
-
-
-
             </div>
-
 
             <div class="chapter-card bg-brand/5 border-brand/20 flex flex-col justify-between">
                 <div>
-
                     <h3 class="chapter-title">Comments/Questions?</h3>
                     <p class="chapter-body">
-                       We'd love to hear any thoughts or questions you might have! We'll be happy to answer them!
+                        We'd love to hear any thoughts or questions you might have! We'll be happy to answer them!
                     </p>
                 </div>
                 <div class="mt-8">
@@ -146,18 +133,71 @@
     </div>
 </section>
 
+<section class="pb-32 bg-cream">
+    <div class="max-w-6xl mx-auto px-6">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-heading font-bold r-up">Regional Chapters</h2>
+            <div class="section-divider r-up d1"></div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  gap-8">
+
+            <div class="flip-card card-hover r-scale d2">
+                <div class="flip-inner" data-flip>
+                    <div class="flip-front bg-white p-5 text-center shadow-sm border border-brand/10">
+                        <div class="mx-auto mb-4 w-40 h-40 overflow-hidden rounded-full ring-4 ring-brand/10">
+                            <img src="images/ekaksh.jpg" class="w-full h-full object-cover scale-150 object-[center_-40%]" alt="Ekaksh Mehta">
+                        </div>
+                        <h3 class="text-base font-semibold leading-snug text-deep">Regional Manager</h3>
+                        <p class="text-brand text-xs font-medium mt-2">Ekaksh Mehta</p>
+                        <span class="tap-hint">Tap to learn more</span>
+                    </div>
+                    <div class="flip-back bg-gradient-to-br from-brand to-brandDark text-white text-center">
+                        <div class="back-accent"></div>
+                        <h3 class="text-sm font-semibold mb-2">About Ekaksh</h3>
+                        <p class="text-xs leading-relaxed text-white/90"></p>
+                    </div>
+                </div>
+            </div>
+
+        </div> </div> </section>
+
 <div id="footer-placeholder"></div>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
+      // Intersection Observer for scroll triggers
       const revObs = new IntersectionObserver((entries, obs) => {
         entries.forEach(e => { if (!e.isIntersecting) return; e.target.classList.add('is-visible'); obs.unobserve(e.target); });
       }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
-      document.querySelectorAll('.r-up').forEach(el => revObs.observe(el));
+      document.querySelectorAll('.r-up, .r-scale').forEach(el => revObs.observe(el));
 
       // Header/Footer loaders
       fetch('header.html').then(r => r.text()).then(d => document.getElementById('header-placeholder').innerHTML = d);
       fetch('footer.html').then(r => r.text()).then(d => document.getElementById('footer-placeholder').innerHTML = d);
+
+      /* Flip Cards Event Handlers */
+      let lastFlipped = null;
+      document.querySelectorAll('[data-flip]').forEach(inner => {
+          const card = inner.closest('.flip-card');
+          card.addEventListener('click', e => {
+              e.stopPropagation();
+              const isFlipped = inner.classList.contains('flipped');
+              if (lastFlipped && lastFlipped !== inner) lastFlipped.classList.remove('flipped');
+              inner.classList.toggle('flipped', !isFlipped);
+              lastFlipped = isFlipped ? null : inner;
+          });
+      });
+      document.addEventListener('click', () => {
+          document.querySelectorAll('[data-flip].flipped').forEach(inner => inner.classList.remove('flipped'));
+          lastFlipped = null;
+      });
+      document.addEventListener('keydown', e => {
+          if (e.key === 'Escape') {
+              document.querySelectorAll('[data-flip].flipped').forEach(inner => inner.classList.remove('flipped'));
+              lastFlipped = null;
+          }
+      });
     });
 </script>
 <script src="main.js"></script>
