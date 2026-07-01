@@ -67,6 +67,13 @@
           .carousel-item.next-1{transform:translateX(38%) scale(0.84)}
           .carousel-item.prev-2,.carousel-item.next-2{opacity:0}
         }
+.custom-hero-bg {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('images/map.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover; /* Ensures the map image scales to dynamically fill the box canvas area */
+}
+
     </style>
 </head>
 
@@ -77,46 +84,34 @@
 <div id="header-placeholder" class="sticky top-0 z-50 w-full"></div>
 
 <!-- HERO -->
-<section class="pt-36 pb-24 bg-cream overflow-hidden">
-    <div class="max-w-7xl mx-auto px-6">
-        <div class="r-fade mb-4">
-            <span class="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase px-4 py-1.5 rounded-sm border border-brand/25 text-brandDark" style="background:rgba(123,175,158,0.07);">
-                <span class="w-1.5 h-1.5 rounded-full bg-brand inline-block"></span>
-                Youth-Led · San Antonio, TX
-            </span>
-        </div>
-        <div class="grid md:grid-cols-2 gap-16 items-center">
-            <div>
-                <h1 class="r-up text-5xl md:text-6xl font-heading font-bold leading-tight mb-6">
-                    Start a<br><em class="text-brand not-italic">Chapter</em>
-                </h1>
-                <p class="r-up text-base text-gray-500 mb-10 leading-relaxed max-w-md" style="transition-delay:0.12s">
-                    Bring structured, lasting impact to your city by launching a <strong class="text-deep font-semibold">youth-led chapter</strong> of Streets To Shelters.
-                </p>
-                <div class="r-up flex flex-wrap gap-4" style="transition-delay:0.22s">
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfCpZuTW-6sPjbQLBSCpPMr75BQ4sCxHH_WluLateNQyB4rjw/viewform"
-                       target="_blank" rel="noopener" class="btn-primary">
-                        Apply Now
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
-                    </a>
-                    <a href="contact.html" class="btn-outline">Ask a Question</a>
-                </div>
-            </div>
-            <div class="r-scale" style="transition-delay:0.2s">
-                <div class="relative">
-                    <div class="rounded-2xl overflow-hidden shadow-2xl aspect-[4/3]">
-                        <img src="images/world-map.png" alt="Streets to Shelters chapters" class="w-full h-full object-cover">
-                    </div>
-                    <div class="absolute -bottom-5 -left-5 bg-white rounded-xl shadow-lg px-5 py-3.5 border border-gray-100 r-left" style="transition-delay:0.5s">
-                        <p class="text-xs text-gray-400 uppercase tracking-widest mb-0.5">Chapters Growing</p>
-                        <p class="text-2xl font-heading font-bold text-deep">TX+</p>
-                    </div>
-                    <div class="absolute -top-4 -right-4 bg-brand rounded-xl shadow-lg px-4 py-3 r-right" style="transition-delay:0.6s">
-                        <p class="text-xs text-white/65 uppercase tracking-widest mb-0.5">100%</p>
-                        <p class="text-base font-heading font-bold text-white">Student-Led</p>
+<section class="hero-section pt-36 pb-24 bg-cream overflow-hidden custom-hero-bg relative min-h-[650px]">
+    <div class="max-w-7xl mx-auto px-6 h-full relative">
+
+        <div class="grid md:grid-cols-2 gap-16 items-center h-full">
+
+            <div></div>
+
+            <div class="relative h-full min-h-[400px]">
+
+                <div class="absolute bottom-4 right-4 md:bottom-8 md:right-8 bg-white/40 backdrop-blur-md p-8 rounded-2xl border border-white/20 shadow-sm max-w-md w-full">
+                    <h1 class="r-up text-5xl md:text-6xl font-heading font-bold leading-tight mb-6">
+                        Start a Chapter
+                    </h1>
+                    <p class="r-up text-base text-gray-500 mb-10 leading-relaxed" style="transition-delay:0.12s">
+                        Bring structured, lasting impact to your city by launching a <strong class="text-deep font-semibold">youth-led chapter</strong> of Streets To Shelters.
+                    </p>
+                    <div class="r-up flex flex-wrap gap-4" style="transition-delay:0.22s">
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfCpZuTW-6sPjbQLBSCpPMr75BQ4sCxHH_WluLateNQyB4rjw/viewform"
+                           target="_blank" rel="noopener" class="btn-primary">
+                            Apply Now
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
+                        <a href="contact.html" class="btn-outline">Ask a Question</a>
                     </div>
                 </div>
+
             </div>
+
         </div>
     </div>
 </section>
@@ -155,11 +150,6 @@
 <!-- EXISTING CHAPTERS -->
 <section class="py-24 overflow-hidden" style="background:rgba(244,239,230,0.5);">
     <div class="max-w-6xl mx-auto px-6">
-        <div class="text-center mb-16 r-up">
-            <span class="text-xs font-semibold tracking-widest uppercase text-brand mb-4 block">On the Ground</span>
-            <h2 class="text-4xl font-heading font-bold">Existing <em class="text-brand">Chapters</em></h2>
-            <div class="w-10 h-px bg-brand mx-auto mt-6"></div>
-        </div>
 
         <!-- editorial split panel for San Antonio chapter -->
         <div class="grid md:grid-cols-2 gap-10 items-stretch mb-12 r-up">
@@ -174,7 +164,7 @@
                     <p class="text-cream/60 text-sm leading-relaxed mb-8">Leading monthly drives, direct shelter partnerships, and kit-assembly events across the city. The blueprint for every chapter that follows.</p>
                     <div class="grid grid-cols-2 gap-6 border-t border-white/10 pt-8">
                         <div>
-                            <p class="font-heading text-2xl font-bold text-cream">3+</p>
+                            <p class="font-heading text-2xl font-bold text-cream">4+</p>
                             <p class="text-cream/40 text-xs uppercase tracking-wide mt-1">Events Hosted</p>
                         </div>
                         <div>
@@ -250,7 +240,7 @@
                 Ready to lead <em class="text-brand">change?</em>
             </h2>
             <p class="text-base mb-10 max-w-xl mx-auto relative z-10 leading-relaxed" style="color:rgba(244,239,230,0.5);">
-                Every chapter starts with one student who decides to act. Fill out the form and our founding team will be in touch within 48 hours.
+                Every chapter starts with one student who decides to act. Fill out the form and our founding team will be in touch.
             </p>
             <div class="relative z-10 flex flex-wrap justify-center gap-4">
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSfCpZuTW-6sPjbQLBSCpPMr75BQ4sCxHH_WluLateNQyB4rjw/viewform"
@@ -259,6 +249,7 @@
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </a>
                 <a href="contact.html" style="border:1.5px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.8);padding:12px 28px;border-radius:4px;font-size:13px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:center;gap:9px;transition:border-color 0.28s,color 0.28s;">Ask a Question</a>
+                <a href="chapters.html" style="border:1.5px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.8);padding:12px 28px;border-radius:4px;font-size:13px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:center;gap:9px;transition:border-color 0.28s,color 0.28s;">Check out our chapters!</a>
             </div>
         </div>
     </div>

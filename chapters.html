@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Chapters | Streets to Shelters</title>
+    <link rel="icon" href="images/Logo1.png">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: { brand:'#7BAF9E', brandDark:'#5E8F80', cream:'#F4EFE6', deep:'#2B1F1C', creamdark:'#c3bfb8' },
+              fontFamily: { heading:['Playfair Display','serif'], body:['Inter','sans-serif'] }
+            }
+          }
+        }
+    </script>
+    <style>
+        @import url('main.css');
+       /* Shared Styles from your platform */
+       body { background-color: #F4EFE6; color: #2B1F1C; font-family: 'Inter', sans-serif; }
+       .r-up { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+       .r-up.is-visible { opacity: 1; transform: translateY(0); }
+
+       /* Standard Button Styles */
+       .btn-primary { display: inline-flex; align-items: center; gap: 8px; background-color: #7BAF9E; color: white; padding: 12px 24px; border-radius: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 13px; transition: background-color 0.3s ease; }
+       .btn-primary:hover { background-color: #5E8F80; }
+
+       /* Chapter Grid Specific Styling (Adapted from your 3-step grid) */
+       .chapter-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; border-top: 1px solid rgba(43,31,28,0.07); padding-top: 3rem; }
+       .chapter-card { padding: 40px; background: white; border: 1px solid rgba(43,31,28,0.07); border-radius: 12px; position: relative; overflow: hidden; transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s; }
+       .chapter-card::before { content:''; position:absolute; bottom:0; left:0; width:0; height:3px; background:#7BAF9E; transition:width 0.5s cubic-bezier(0.16,1,0.3,1); }
+       .chapter-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px -10px rgba(123,175,158,0.15); }
+       .chapter-card:hover::before { width:100%; }
+
+       .chapter-state { font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #7BAF9E; margin-bottom: 16px; display: block; }
+       .chapter-title { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: #2B1F1C; margin-bottom: 8px; line-height: 1.2; }
+       .chapter-status { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 24px; }
+       .status-active { background: rgba(123,175,158,0.15); color: #5E8F80; }
+       .status-forming { background: rgba(43,31,28,0.05); color: rgba(43,31,28,0.6); }
+       .chapter-body { font-size: 14px; font-weight: 400; line-height: 1.7; color: rgba(43,31,28,0.6); }
+       <style>
+
+       /* ==========================================================================
+          1. 3D FLIP CARD & TEAM CARD ARCHITECTURE
+          ========================================================================== */
+       .flip-card { perspective:1000px; height:420px; }
+       .flip-inner { position:relative;width:100%;height:100%;transition:transform 0.7s cubic-bezier(0.16,1,0.3,1);transform-style:preserve-3d; }
+
+       @media (hover: hover) and (pointer: fine) {
+         .flip-card:hover .flip-inner { transform:rotateY(180deg); }
+         .card-hover { transition:transform 0.5s cubic-bezier(0.175,0.885,0.32,1.275),box-shadow 0.5s ease;will-change:transform,box-shadow; }
+         .card-hover:hover { transform:translateY(-10px);box-shadow:0 25px 50px -12px rgba(123,175,158,0.25); }
+       }
+
+       .flip-inner.flipped { transform:rotateY(180deg) !important; }
+       .flip-front, .flip-back { position:absolute;inset:0;width:100%;height:100%;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:1rem;overflow:hidden; }
+       .flip-front { transform:translateZ(0.1px); }
+       .flip-back { transform:rotateY(180deg) translateZ(0.1px);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:2rem; }
+
+       /* ==========================================================================
+          2. TOUCH AND ACCESSIBILITY COMPONENT UTILITIES
+          ========================================================================== */
+       .tap-hint { display:none; }
+       @media (hover: none) {
+         .tap-hint { display:inline-flex;align-items:center;gap:4px;font-size:11px;color:#7BAF9E;background:rgba(123,175,158,0.1);border:1px solid rgba(123,175,158,0.3);border-radius:999px;padding:3px 10px;margin-top:8px;letter-spacing:0.02em;pointer-events:none; }
+       }
+
+       /* ==========================================================================
+          3. BRAND LAYOUT SEGMENTS & MEDIA PLACEHOLDERS
+          ========================================================================== */
+       .section-divider { width:40px;height:3px;background:#7BAF9E;border-radius:999px;margin:16px auto 0; }
+       .avatar-placeholder { width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#e8f3ef 0%,#d4e9e2 100%);font-size:2.5rem;font-weight:700;color:#7BAF9E;letter-spacing:-1px; }
+       .back-accent { width:32px;height:3px;background:rgba(255,255,255,0.4);border-radius:999px;margin:0 auto 1rem; }
+
+
+
+    </style>
+</head>
+<body>
+
+<div id="header-placeholder" class="sticky top-0 z-50 w-full"></div>
+
+<section class="pt-36 pb-20 bg-cream">
+    <div class="max-w-5xl mx-auto text-center px-6 r-up">
+        <span class="text-xs font-semibold tracking-widest uppercase text-brand mb-4 block">Our Network</span>
+        <h1 class="text-5xl md:text-6xl font-heading font-bold mb-6 leading-snug text-deep">
+            Streets to Shelters <br><em class="text-brand not-italic">Chapters</em>
+        </h1>
+        <p class="text-base text-gray-500 leading-relaxed max-w-2xl mx-auto mb-10">
+            We are a 100% student-led organization. See where we currently operate, or take the lead and bring our mission to your city.
+        </p>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfCpZuTW-6sPjbQLBSCpPMr75BQ4sCxHH_WluLateNQyB4rjw/viewform" target="_blank" class="btn-primary inline-flex">
+            Start a Chapter in Your City
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+    </div>
+</section>
+
+<section class="pb-32 bg-cream">
+    <div class="max-w-6xl mx-auto px-6">
+
+        <div class="chapter-grid r-up" style="transition-delay: 0.2s;">
+
+            <div class="chapter-card">
+                <span class="chapter-state">Texas</span>
+                <h3 class="chapter-title">San Antonio</h3>
+                <span class="chapter-status status-active">HQ / Founding Chapter</span>
+                <p class="chapter-body mb-6">
+                    The original chapter of Streets to Shelters. We actively assemble hygiene kits and run local donation drives to support shelters across the greater San Antonio area.
+                </p>
+
+
+            </div>
+
+            <div class="chapter-card">
+                <span class="chapter-state">Texas</span>
+                <h3 class="chapter-title">Houston</h3>
+                <span class="chapter-status status-forming">Active Chapter</span>
+                <p class="chapter-body mb-6">
+                    Organizing local supply drives and expanding resource distribution networks throughout the greater Houston area.
+                </p>
+
+
+
+
+            </div>
+
+
+            <div class="chapter-card bg-brand/5 border-brand/20 flex flex-col justify-between">
+                <div>
+
+                    <h3 class="chapter-title">Comments/Questions?</h3>
+                    <p class="chapter-body">
+                       We'd love to hear any thoughts or questions you might have! We'll be happy to answer them!
+                    </p>
+                </div>
+                <div class="mt-8">
+                    <a href="contact.html" target="_blank" class="btn-primary" style="width:100%; justify-content:center;">Contact Us</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<div id="footer-placeholder"></div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const revObs = new IntersectionObserver((entries, obs) => {
+        entries.forEach(e => { if (!e.isIntersecting) return; e.target.classList.add('is-visible'); obs.unobserve(e.target); });
+      }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.r-up').forEach(el => revObs.observe(el));
+
+      // Header/Footer loaders
+      fetch('header.html').then(r => r.text()).then(d => document.getElementById('header-placeholder').innerHTML = d);
+      fetch('footer.html').then(r => r.text()).then(d => document.getElementById('footer-placeholder').innerHTML = d);
+    });
+</script>
+<script src="main.js"></script>
+</body>
+</html>
