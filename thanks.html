@@ -15,7 +15,7 @@
         // Check if the temporary pass exists in the browser session
         if (sessionStorage.getItem("formSubmitted") !== "true") {
           // If it doesn't exist, redirect them away immediately
-          window.location.href = "index.html";
+          window.location.href = "/";
         } else {
           // If it does exist, delete it so they can't just refresh the page to see it again later
           sessionStorage.removeItem("formSubmitted");
@@ -133,7 +133,7 @@
             Want to support us further? Click the buttons below!
         </p>
 
-        <a href="index.html" class="btn-outline">Go Back Home</a>
+        <a href="/" class="btn-outline">Go Back Home</a>
         <a href="https://www.zeffy.com/en-US/donation-form/donate-to-spread-hope-for-thousands-of-homeless-shelters"
            target="_blank" rel="noopener" class="btn-primary">
             Donate
