@@ -73,6 +73,13 @@
        .section-divider { width:40px;height:3px;background:#7BAF9E;border-radius:999px;margin:16px auto 0; }
        .avatar-placeholder { width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#e8f3ef 0%,#d4e9e2 100%);font-size:2.5rem;font-weight:700;color:#7BAF9E;letter-spacing:-1px; }
        .back-accent { width:32px;height:3px;background:rgba(255,255,255,0.4);border-radius:999px;margin:0 auto 1rem; }
+
+        .custom-hero-bg {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('images/map.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover; /* Ensures the map image scales to dynamically fill the box canvas area */
+}
     </style>
 </head>
 <body>
@@ -91,7 +98,7 @@
 
                 <div class="absolute bottom-4 right-4 md:bottom-8 md:right-8 bg-white/40 backdrop-blur-md p-8 rounded-2xl border border-white/20 shadow-sm max-w-lg w-full">
                     <h1 class="text-5xl md:text-6xl font-heading font-bold mb-6 leading-snug text-deep">
-                        streets2shelters <br><em class="text-brand not-italic">Chapters</em>
+                        streets2shelters Chapters</em>
                     </h1>
                     <p class="text-base text-gray-500 leading-relaxed max-w-2xl mx-auto mb-10">
                         We are a 100% student-led organization. See where we currently operate, or take the lead and bring our mission to your city.
