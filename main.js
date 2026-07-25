@@ -52,16 +52,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, 100);
 
-// Clean .html from the address bar automatically
-if (window.location.pathname.endsWith('.html')) {
-  // Remove .html or index.html from the end of the path
-  let cleanPath = window.location.pathname.replace(/(\/index)?\.html$/, '');
+// Clean .html and /index from the address bar automatically
+let path = window.location.pathname;
+
+if (path.endsWith('.html') || path.endsWith('/index')) {
+  // Remove /index, /index.html, or just .html from the end of the path
+  let cleanPath = path.replace(/(\/index)?(\.html)?$/, '');
 
   // If cleanPath becomes empty (for homepage), set it to '/'
   if (cleanPath === '') {
     cleanPath = '/';
   }
 
-  // Update the browser's address bar silently
+  // Update the address bar silently without reloading
   window.history.replaceState(null, '', cleanPath + window.location.search + window.location.hash);
 }
