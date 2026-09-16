@@ -1,0 +1,6 @@
+# Block crawlers
+User-agent: *
+Disallow: /header.html
+Disallow: /footer.html
+Disallow: /thanks.html
+Disallow: /404.html
