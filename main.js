@@ -131,17 +131,36 @@ chatWindow.innerHTML = `
         </div>
 
         <div style="display:flex; align-items:center; gap:14px;">
-            <button id="s2s-clear-chat"
-                type="button"
-                style="
-                    background:none;
-                    border:none;
-                    color:white;
-                    font-size:12px;
-                    cursor:pointer;
-                ">
-                Clear chat
-            </button>
+
+        <button id="s2s-clear-chat"
+            type="button"
+            style="
+                display:flex;
+                align-items:center;
+                gap:7px;
+                padding:8px 11px;
+                background:rgba(255,255,255,0.15);
+                border:1px solid rgba(255,255,255,0.3);
+                border-radius:8px;
+                color:white;
+                font-size:12px;
+                font-weight:600;
+                cursor:pointer;
+                transition:background 0.2s ease;
+            ">
+
+            <svg width="15" height="15" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round"
+                 stroke-linejoin="round">
+                <path d="M3 6h18"/>
+                <path d="M8 6V4h8v2"/>
+                <path d="m19 6-1 14H6L5 6"/>
+                <path d="M10 11v5"/>
+                <path d="M14 11v5"/>
+            </svg>
+        </button>
+
 
             <button id="s2s-chat-close"
                 aria-label="Close chat"
@@ -510,43 +529,66 @@ function addMessageActions(message, text) {
         margin: -3px 0 14px 5px;
     `;
 
-    function createAction(label, icon) {
-        const button = document.createElement('button');
 
-        button.type = 'button';
-        button.innerHTML = `${icon} ${label}`;
+function createAction(label, icon) {
+    const button = document.createElement('button');
 
-        button.style.cssText = `
-            border: none;
-            background: transparent;
-            color: #68736F;
-            font-size: 12px;
-            cursor: pointer;
-            padding: 5px 0;
-            transition: color 0.2s;
-        `;
+    button.type = 'button';
+    button.innerHTML = `
+        ${icon}
+        <span>${label}</span>
+    `;
 
-        button.addEventListener('mouseenter', () => {
-            button.style.color = '#477F70';
-        });
+    button.style.cssText = `
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        padding: 8px 13px;
+        border: 1px solid #E4EAE6;
+        border-radius: 9px;
+        background: #FFFFFF;
+        color: #52665D;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    `;
 
-        button.addEventListener('mouseleave', () => {
-            button.style.color = '#68736F';
-        });
+    button.addEventListener('mouseenter', () => {
+        button.style.background = '#EDF5F1';
+        button.style.borderColor = '#A8C9B9';
+        button.style.color = '#477F70';
+    });
 
-        actions.appendChild(button);
+    button.addEventListener('mouseleave', () => {
+        button.style.background = '#FFFFFF';
+        button.style.borderColor = '#E4EAE6';
+        button.style.color = '#52665D';
+    });
 
-        return button;
-    }
+    actions.appendChild(button);
+
+    return button;
+}
+
 
     // COPY RESPONSE
-    const copyButton = createAction('Copy', '📋');
+    const copyButton = createAction('', `
+        <svg width="15" height="15" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round"
+             stroke-linejoin="round">
+            <rect x="8" y="8" width="13" height="13" rx="2"/>
+            <path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/>
+        </svg>
+    `);
 
     copyButton.addEventListener('click', async () => {
         try {
             await navigator.clipboard.writeText(text);
 
-            copyButton.innerHTML = '✓ Copied!';
+            copyButton.innerHTML = 'Copied!';
 
             setTimeout(() => {
                 copyButton.innerHTML = '📋 Copy';
@@ -559,7 +601,18 @@ function addMessageActions(message, text) {
     });
 
     // SHARE RESPONSE
-    const shareButton = createAction('Share', '↗');
+    const shareButton = createAction('', `
+        <svg width="15" height="15" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round"
+             stroke-linejoin="round">
+            <circle cx="18" cy="5" r="3"/>
+            <circle cx="6" cy="12" r="3"/>
+            <circle cx="18" cy="19" r="3"/>
+            <path d="m8.7 10.7 6.6-4.4"/>
+            <path d="m8.7 13.3 6.6 4.4"/>
+        </svg>
+    `);
 
     shareButton.addEventListener('click', async () => {
         const shareData = {
