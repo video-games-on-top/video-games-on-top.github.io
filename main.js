@@ -156,7 +156,7 @@ chatWindow.innerHTML = `
             </button>
         </div>
     </div>
-`;
+
 
 
     <div id="s2s-chat-messages" style="
