@@ -225,7 +225,32 @@ chatWindow.innerHTML = `
         });
 
 // CONVERSATION HISTORY
-const conversation = [];
+
+const STORAGE_KEY = 's2s-chat-history';
+
+let conversation = [];
+
+try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+
+    if (Array.isArray(saved)) {
+        conversation = saved;
+    }
+} catch (error) {
+    console.error('Could not load chat history:', error);
+}
+
+function saveConversation() {
+    try {
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(conversation.slice(-50))
+        );
+    } catch (error) {
+        console.error('Could not save chat history:', error);
+    }
+}
+
 
 // CHAT ELEMENTS
 const chatForm = chatWindow.querySelector('#s2s-chat-form');
@@ -258,15 +283,14 @@ function addMessage(text, sender) {
 
 // Format bold text and other inline Markdown
 
+
 function formatInline(text, element) {
-    // Match bold text, Markdown links, and ordinary text
-    const pattern = /(\*\*.*?\*\*|\[([^\]]+)\]\((https?:\/\/[^\s)]+)\))/g;
+    const pattern = /(\*\*.*?\*\*|\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)|(https?:\/\/[^\s<]+))/g;
 
     let lastIndex = 0;
     let match;
 
     while ((match = pattern.exec(text)) !== null) {
-        // Add normal text before the match
         element.appendChild(
             document.createTextNode(text.slice(lastIndex, match.index))
         );
@@ -275,25 +299,37 @@ function formatInline(text, element) {
             const bold = document.createElement('strong');
             bold.textContent = match[0].slice(2, -2);
             element.appendChild(bold);
+
         } else {
+            let url = match[3] || match[4];
+            let trailing = '';
+
+            // Remove punctuation that belongs to the sentence
+            while (/[.,!?;:]$/.test(url)) {
+                trailing = url.slice(-1) + trailing;
+                url = url.slice(0, -1);
+            }
+
             const link = document.createElement('a');
-            link.textContent = match[2];
-            link.href = match[3];
+            link.textContent = match[2] || url;
+            link.href = url;
             link.target = '_blank';
             link.rel = 'noopener noreferrer';
             link.style.color = '#477F70';
             link.style.textDecoration = 'underline';
+
             element.appendChild(link);
+            element.appendChild(document.createTextNode(trailing));
         }
 
         lastIndex = pattern.lastIndex;
     }
 
-    // Add remaining text
     element.appendChild(
         document.createTextNode(text.slice(lastIndex))
     );
 }
+
 
 
 // Format paragraphs and bullet points
@@ -334,6 +370,16 @@ function renderMessage(element, text) {
     });
 }
 
+// Restore previous messages
+conversation.forEach(message => {
+    const bubble = addMessage(message.content, message.role);
+
+    if (message.role === 'assistant') {
+        renderMessage(bubble, message.content);
+    }
+});
+
+
 // Reveal the AI response gradually
 async function typeMessage(element, text) {
     let displayedText = '';
@@ -367,6 +413,7 @@ chatForm.addEventListener('submit', async (event) => {
         role: 'user',
         content: userMessage
     });
+    saveConversation();
 
     chatInput.value = '';
     chatInput.disabled = true;
@@ -406,6 +453,7 @@ chatForm.addEventListener('submit', async (event) => {
             role: 'assistant',
             content: data.reply
         });
+        saveConversation();
 
         // Display the AI response
         await typeMessage(loadingMessage, data.reply);
