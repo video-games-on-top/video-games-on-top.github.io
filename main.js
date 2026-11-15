@@ -426,6 +426,9 @@ conversation.forEach(message => {
 
     if (message.role === 'assistant') {
         renderMessage(bubble, message.content);
+        addMessageActions(bubble, message.content);
+    } else {
+        bubble.textContent = message.content;
     }
 });
 
@@ -626,7 +629,7 @@ chatForm.addEventListener('submit', async (event) => {
     sendButton.disabled = true;
     sendButton.textContent = '...';
 
-    const loadingMessage = addMessage('S2S AI is thinking...', 'assistant');
+    const loadingIndicator = showTypingIndicator();
 
     try {
         const response = await fetch(
@@ -660,14 +663,24 @@ chatForm.addEventListener('submit', async (event) => {
         saveConversation();
 
         // Display the AI response
-        await typeMessage(loadingMessage, data.reply);
+        loadingIndicator.remove();
 
-    } catch (error) {
-        console.error('S2S AI error:', error);
+        const assistantMessage = addMessage('', 'assistant');
 
-        loadingMessage.textContent =
-            'Sorry, something went wrong. Please try again.';
-    }
+        await typeMessage(assistantMessage, data.reply);
+
+        addMessageActions(assistantMessage, data.reply);
+
+    }  catch (error) {
+          console.error('S2S AI error:', error);
+
+          loadingIndicator.remove();
+
+          addMessage(
+              'Sorry, something went wrong. Please try again.',
+              'assistant'
+          );
+      }
 
     chatInput.disabled = false;
     sendButton.disabled = false;
