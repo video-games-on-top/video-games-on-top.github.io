@@ -116,12 +116,12 @@ document.addEventListener('DOMContentLoaded', () => {
         <div style="
             background: #7BAF9E;
             color: white;
-            padding: 22px;
+            padding: 14px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         ">
-            <strong style="font-size:20px;">S2S AI</strong>
+            <strong style="font-size:18px;">S2S AI</strong>
 
             <button id="s2s-chat-close"
                 aria-label="Close chat"
@@ -152,12 +152,18 @@ document.addEventListener('DOMContentLoaded', () => {
     chatButton.addEventListener('click', () => {
         chatWindow.style.transform = 'translateX(0)';
         chatButton.style.display = 'none';
+
+        if (window.innerWidth > 768) {
+            document.body.style.transition = 'padding-right 0.3s ease';
+            document.body.style.paddingRight = '420px';
+        }
     });
 
     chatWindow.querySelector('#s2s-chat-close')
         .addEventListener('click', () => {
             chatWindow.style.transform = 'translateX(100%)';
             chatButton.style.display = 'block';
-        });
 
+            document.body.style.paddingRight = '0';
+        });
 });
