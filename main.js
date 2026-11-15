@@ -71,7 +71,6 @@ if (path.endsWith('.html') || path.endsWith('/index')) {
 // STREETS TO SHELTERS AI CHATBOT
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Create chatbot button
     const chatButton = document.createElement('button');
     chatButton.id = 's2s-chat-button';
     chatButton.textContent = 'Ask S2S AI';
@@ -92,6 +91,46 @@ document.addEventListener('DOMContentLoaded', () => {
         box-shadow: 0 4px 15px rgba(0,0,0,0.15);
     `;
 
+    const chatWindow = document.createElement('div');
+    chatWindow.id = 's2s-chat-window';
+
+    chatWindow.style.cssText = `
+        display: none;
+        position: fixed;
+        bottom: 85px;
+        left: 24px;
+        width: 350px;
+        height: 450px;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 5px 25px rgba(0,0,0,0.18);
+        z-index: 9999;
+        overflow: hidden;
+    `;
+
+    chatWindow.innerHTML = `
+        <div style="background:#7BAF9E; color:white; padding:18px;">
+            <strong>Streets To Shelters AI</strong>
+            <button id="s2s-chat-close"
+                style="float:right; background:none; border:none; color:white; font-size:22px; cursor:pointer;">
+                ×
+            </button>
+        </div>
+
+        <div style="padding:18px;">
+            Hi! I'm the Streets2Shelters AI assistant. How can I help?
+        </div>
+    `;
+
     document.body.appendChild(chatButton);
+    document.body.appendChild(chatWindow);
+
+    chatButton.addEventListener('click', () => {
+        chatWindow.style.display = 'block';
+    });
+
+    chatWindow.querySelector('#s2s-chat-close').addEventListener('click', () => {
+        chatWindow.style.display = 'none';
+    });
 
 });
