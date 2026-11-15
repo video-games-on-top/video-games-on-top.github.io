@@ -233,29 +233,96 @@ const chatInput = chatWindow.querySelector('#s2s-chat-input');
 const chatMessages = chatWindow.querySelector('#s2s-chat-messages');
 
 // DISPLAY A MESSAGE
+
 function addMessage(text, sender) {
     const message = document.createElement('div');
 
-    message.textContent = text;
-
     message.style.cssText = `
         max-width: 85%;
-        padding: 13px 15px;
-        border-radius: 12px;
+        padding: 13px 16px;
+        border-radius: 14px;
         font-size: 14px;
-        line-height: 1.5;
-        white-space: pre-wrap;
+        line-height: 1.65;
         overflow-wrap: anywhere;
         ${sender === 'user'
             ? 'background:#7BAF9E; color:white; align-self:flex-end;'
-            : 'background:white; color:#2B1F1C; align-self:flex-start;'}
+            : 'background:#F3F5F4; color:#2B1F1C; align-self:flex-start;'}
     `;
 
+    message.textContent = text;
     chatMessages.appendChild(message);
     chatMessages.scrollTop = chatMessages.scrollHeight;
 
     return message;
 }
+
+// Format bold text and other inline Markdown
+function formatInline(text, element) {
+    const parts = text.split(/(\*\*.*?\*\*)/g);
+
+    parts.forEach(part => {
+        if (part.startsWith('**') && part.endsWith('**')) {
+            const bold = document.createElement('strong');
+            bold.textContent = part.slice(2, -2);
+            element.appendChild(bold);
+        } else {
+            element.appendChild(document.createTextNode(part));
+        }
+    });
+}
+
+// Format paragraphs and bullet points
+function renderMessage(element, text) {
+    element.replaceChildren();
+
+    const lines = text.split('\n');
+    let currentList = null;
+
+    lines.forEach(line => {
+        const trimmed = line.trim();
+
+        if (!trimmed) {
+            currentList = null;
+            return;
+        }
+
+        if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
+            if (!currentList) {
+                currentList = document.createElement('ul');
+                currentList.style.paddingLeft = '20px';
+                currentList.style.margin = '8px 0';
+                element.appendChild(currentList);
+            }
+
+            const item = document.createElement('li');
+            item.style.marginBottom = '5px';
+            formatInline(trimmed.slice(2), item);
+            currentList.appendChild(item);
+        } else {
+            currentList = null;
+
+            const paragraph = document.createElement('p');
+            paragraph.style.margin = '0 0 10px 0';
+            formatInline(trimmed, paragraph);
+            element.appendChild(paragraph);
+        }
+    });
+}
+
+// Reveal the AI response gradually
+async function typeMessage(element, text) {
+    let displayedText = '';
+
+    for (let i = 0; i < text.length; i += 3) {
+        displayedText += text.slice(i, i + 3);
+
+        renderMessage(element, displayedText);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        await new Promise(resolve => setTimeout(resolve, 12));
+    }
+}
+
 
 // SEND MESSAGE TO CLOUDFLARE
 chatForm.addEventListener('submit', async (event) => {
@@ -316,7 +383,7 @@ chatForm.addEventListener('submit', async (event) => {
         });
 
         // Display the AI response
-        loadingMessage.textContent = data.reply;
+        await typeMessage(loadingMessage, data.reply);
 
     } catch (error) {
         console.error('S2S AI error:', error);
