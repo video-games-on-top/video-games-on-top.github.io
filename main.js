@@ -395,6 +395,160 @@ async function typeMessage(element, text) {
 }
 
 
+function showTypingIndicator() {
+    const indicator = document.createElement('div');
+
+    indicator.style.cssText = `
+        align-self: flex-start;
+        background: #F3F5F4;
+        padding: 13px 17px;
+        border-radius: 14px;
+        display: flex;
+        gap: 5px;
+        align-items: center;
+    `;
+
+    for (let i = 0; i < 3; i++) {
+        const dot = document.createElement('span');
+
+        dot.style.cssText = `
+            width: 7px;
+            height: 7px;
+            background: #7BAF9E;
+            border-radius: 50%;
+            animation: s2s-dot 1.2s infinite ease-in-out;
+            animation-delay: ${i * 0.2}s;
+        `;
+
+        indicator.appendChild(dot);
+    }
+
+    if (!document.getElementById('s2s-loading-style')) {
+        const style = document.createElement('style');
+        style.id = 's2s-loading-style';
+        style.textContent = `
+            @keyframes s2s-dot {
+                0%, 60%, 100% {
+                    transform: translateY(0);
+                    opacity: 0.4;
+                }
+                30% {
+                    transform: translateY(-5px);
+                    opacity: 1;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    chatMessages.appendChild(indicator);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    return indicator;
+}
+
+function addMessageActions(message, text) {
+    const actions = document.createElement('div');
+
+    actions.style.cssText = `
+        display: flex;
+        gap: 18px;
+        align-self: flex-start;
+        margin: -3px 0 14px 5px;
+    `;
+
+    function createAction(label, icon) {
+        const button = document.createElement('button');
+
+        button.type = 'button';
+        button.innerHTML = `${icon} ${label}`;
+
+        button.style.cssText = `
+            border: none;
+            background: transparent;
+            color: #68736F;
+            font-size: 12px;
+            cursor: pointer;
+            padding: 5px 0;
+            transition: color 0.2s;
+        `;
+
+        button.addEventListener('mouseenter', () => {
+            button.style.color = '#477F70';
+        });
+
+        button.addEventListener('mouseleave', () => {
+            button.style.color = '#68736F';
+        });
+
+        actions.appendChild(button);
+
+        return button;
+    }
+
+    // COPY RESPONSE
+    const copyButton = createAction('Copy', '📋');
+
+    copyButton.addEventListener('click', async () => {
+        try {
+            await navigator.clipboard.writeText(text);
+
+            copyButton.innerHTML = '✓ Copied!';
+
+            setTimeout(() => {
+                copyButton.innerHTML = '📋 Copy';
+            }, 2000);
+
+        } catch (error) {
+            console.error('Copy failed:', error);
+            copyButton.innerHTML = 'Copy failed';
+        }
+    });
+
+    // SHARE RESPONSE
+    const shareButton = createAction('Share', '↗');
+
+    shareButton.addEventListener('click', async () => {
+        const shareData = {
+            title: 'Streets To Shelters AI',
+            text: text,
+            url: window.location.origin
+        };
+
+        try {
+            if (navigator.share) {
+                await navigator.share(shareData);
+
+            } else {
+                await navigator.clipboard.writeText(
+                    `${text}\n\n${window.location.origin}`
+                );
+
+                shareButton.innerHTML = '✓ Link Copied!';
+
+                setTimeout(() => {
+                    shareButton.innerHTML = '↗ Share';
+                }, 2000);
+            }
+
+        } catch (error) {
+            if (error.name !== 'AbortError') {
+                console.error('Share failed:', error);
+                shareButton.innerHTML = 'Share failed';
+
+                setTimeout(() => {
+                    shareButton.innerHTML = '↗ Share';
+                }, 2000);
+            }
+        }
+    });
+
+    chatMessages.appendChild(actions);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+
+
 // SEND MESSAGE TO CLOUDFLARE
 chatForm.addEventListener('submit', async (event) => {
 
