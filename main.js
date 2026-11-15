@@ -298,7 +298,10 @@ function saveConversation() {
     }
 }
 
-
+// GENERATION CONTROL
+let isGenerating = false;
+let stopGeneration = false;
+let activeController = null;
 // CHAT ELEMENTS
 const chatForm = chatWindow.querySelector('#s2s-chat-form');
 const chatInput = chatWindow.querySelector('#s2s-chat-input');
@@ -311,6 +314,10 @@ clearChatButton.addEventListener('click', () => {
     );
 
     if (!confirmed) return;
+    if (activeController) {
+        stopGeneration = true;
+        activeController.abort();
+    }
 
     // Clear conversation history
     conversation = [];
@@ -449,7 +456,9 @@ function renderMessage(element, text) {
         }
     });
 }
-
+if (conversation.length > 0) {
+    chatMessages.replaceChildren();
+}
 // Restore previous messages
 conversation.forEach(message => {
     const bubble = addMessage(message.content, message.role);
@@ -468,6 +477,9 @@ async function typeMessage(element, text) {
     let displayedText = '';
 
     for (let i = 0; i < text.length; i += 3) {
+
+        if (stopGeneration) break;
+
         displayedText += text.slice(i, i + 3);
 
         renderMessage(element, displayedText);
@@ -475,6 +487,8 @@ async function typeMessage(element, text) {
 
         await new Promise(resolve => setTimeout(resolve, 12));
     }
+
+    return displayedText;
 }
 
 
@@ -529,6 +543,44 @@ function showTypingIndicator() {
 
     return indicator;
 }
+function setStopButton(stopping) {
+    const sendButton = chatForm.querySelector('button[type="submit"]');
+
+    if (stopping) {
+        sendButton.innerHTML = `
+            <svg width="17" height="17" viewBox="0 0 24 24"
+                 fill="currentColor">
+                <rect x="6" y="6" width="12" height="12" rx="2"/>
+            </svg>
+        `;
+        sendButton.setAttribute('aria-label', 'Stop generating');
+    } else {
+        sendButton.innerHTML = `
+            <svg width="20" height="20" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round"
+                 stroke-linejoin="round">
+                <path d="M22 2L11 13"/>
+                <path d="M22 2L15 22L11 13L2 9L22 2Z"/>
+            </svg>
+        `;
+        sendButton.setAttribute('aria-label', 'Send message');
+    }
+}
+chatForm.querySelector('button[type="submit"]')
+    .addEventListener('click', (event) => {
+
+        if (!isGenerating) return;
+
+        event.preventDefault();
+
+        stopGeneration = true;
+
+        if (activeController) {
+            activeController.abort();
+        }
+
+    });
 
 function addMessageActions(message, text) {
     const actions = document.createElement('div');
@@ -584,81 +636,81 @@ function createAction(label, icon) {
 }
 
 
-    // COPY RESPONSE
-    const copyButton = createAction('', `
-        <svg width="15" height="15" viewBox="0 0 24 24"
-             fill="none" stroke="currentColor"
-             stroke-width="2" stroke-linecap="round"
-             stroke-linejoin="round">
-            <rect x="8" y="8" width="13" height="13" rx="2"/>
-            <path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/>
-        </svg>
-    `);
 
-    copyButton.addEventListener('click', async () => {
-        try {
-            await navigator.clipboard.writeText(text);
+// COPY ICON
+const copyIcon = `
+    <svg width="15" height="15" viewBox="0 0 24 24"
+         fill="none" stroke="currentColor"
+         stroke-width="2" stroke-linecap="round"
+         stroke-linejoin="round">
+        <rect x="8" y="8" width="13" height="13" rx="2"/>
+        <path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/>
+    </svg>
+`;
 
-            copyButton.innerHTML = 'Copied!';
+const copyButton = createAction('', copyIcon);
+
+copyButton.addEventListener('click', async () => {
+    try {
+        await navigator.clipboard.writeText(text);
+
+        copyButton.innerHTML = 'Copied!';
+
+        setTimeout(() => {
+            copyButton.innerHTML = copyIcon;
+        }, 2000);
+
+    } catch (error) {
+        console.error('Copy failed:', error);
+    }
+});
+
+
+// SHARE ICON
+const shareIcon = `
+    <svg width="15" height="15" viewBox="0 0 24 24"
+         fill="none" stroke="currentColor"
+         stroke-width="2" stroke-linecap="round"
+         stroke-linejoin="round">
+        <circle cx="18" cy="5" r="3"/>
+        <circle cx="6" cy="12" r="3"/>
+        <circle cx="18" cy="19" r="3"/>
+        <path d="m8.7 10.7 6.6-4.4"/>
+        <path d="m8.7 13.3 6.6 4.4"/>
+    </svg>
+`;
+
+const shareButton = createAction('', shareIcon);
+
+shareButton.addEventListener('click', async () => {
+    const shareData = {
+        title: 'Streets To Shelters AI',
+        text: text,
+        url: window.location.origin
+    };
+
+    try {
+        if (navigator.share) {
+            await navigator.share(shareData);
+        } else {
+            await navigator.clipboard.writeText(
+                `${text}\n\n${window.location.origin}`
+            );
+
+            shareButton.innerHTML = '✓ Copied!';
 
             setTimeout(() => {
-                copyButton.innerHTML = '📋 Copy';
+                shareButton.innerHTML = shareIcon;
             }, 2000);
-
-        } catch (error) {
-            console.error('Copy failed:', error);
-            copyButton.innerHTML = 'Copy failed';
         }
-    });
 
-    // SHARE RESPONSE
-    const shareButton = createAction('', `
-        <svg width="15" height="15" viewBox="0 0 24 24"
-             fill="none" stroke="currentColor"
-             stroke-width="2" stroke-linecap="round"
-             stroke-linejoin="round">
-            <circle cx="18" cy="5" r="3"/>
-            <circle cx="6" cy="12" r="3"/>
-            <circle cx="18" cy="19" r="3"/>
-            <path d="m8.7 10.7 6.6-4.4"/>
-            <path d="m8.7 13.3 6.6 4.4"/>
-        </svg>
-    `);
-
-    shareButton.addEventListener('click', async () => {
-        const shareData = {
-            title: 'Streets To Shelters AI',
-            text: text,
-            url: window.location.origin
-        };
-
-        try {
-            if (navigator.share) {
-                await navigator.share(shareData);
-
-            } else {
-                await navigator.clipboard.writeText(
-                    `${text}\n\n${window.location.origin}`
-                );
-
-                shareButton.innerHTML = '✓ Link Copied!';
-
-                setTimeout(() => {
-                    shareButton.innerHTML = '↗ Share';
-                }, 2000);
-            }
-
-        } catch (error) {
-            if (error.name !== 'AbortError') {
-                console.error('Share failed:', error);
-                shareButton.innerHTML = 'Share failed';
-
-                setTimeout(() => {
-                    shareButton.innerHTML = '↗ Share';
-                }, 2000);
-            }
+    } catch (error) {
+        if (error.name !== 'AbortError') {
+            console.error('Share failed:', error);
         }
-    });
+    }
+});
+
 
     chatMessages.appendChild(actions);
     chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -667,35 +719,46 @@ function createAction(label, icon) {
 
 
 // SEND MESSAGE TO CLOUDFLARE
+
+// SEND MESSAGE TO CLOUDFLARE
 chatForm.addEventListener('submit', async (event) => {
 
-    // Stop the page from reloading
     event.preventDefault();
+
+    if (isGenerating) return;
 
     const userMessage = chatInput.value.trim();
 
     if (!userMessage) return;
 
-    // Display the visitor's message
+    // Display visitor message
     addMessage(userMessage, 'user');
 
-    // Save it to conversation history
     conversation.push({
         role: 'user',
         content: userMessage
     });
+
     saveConversation();
 
     chatInput.value = '';
     chatInput.disabled = true;
 
-    const sendButton = chatForm.querySelector('button');
-    sendButton.disabled = true;
-    sendButton.textContent = '...';
+    // Start generation
+    isGenerating = true;
+    stopGeneration = false;
+
+    activeController = new AbortController();
+
+    const sendButton = chatForm.querySelector('button[type="submit"]');
+
+    setStopButton(true);
+    sendButton.disabled = false;
 
     const loadingIndicator = showTypingIndicator();
 
     try {
+
         const response = await fetch(
             'https://streets-2-shelters-ai.advik-muddasani.workers.dev/',
             {
@@ -703,6 +766,7 @@ chatForm.addEventListener('submit', async (event) => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
+                signal: activeController.signal,
                 body: JSON.stringify({
                     messages: conversation.slice(-10)
                 })
@@ -719,38 +783,62 @@ chatForm.addEventListener('submit', async (event) => {
             throw new Error('The AI returned an empty response.');
         }
 
-        // Save the AI response
-        conversation.push({
-            role: 'assistant',
-            content: data.reply
-        });
-        saveConversation();
-
-        // Display the AI response
         loadingIndicator.remove();
 
-        const assistantMessage = addMessage('', 'assistant');
+        if (!stopGeneration) {
 
-        await typeMessage(assistantMessage, data.reply);
+            const assistantMessage = addMessage('', 'assistant');
 
-        addMessageActions(assistantMessage, data.reply);
+            const displayedText = await typeMessage(
+                assistantMessage,
+                data.reply
+            );
 
-    }  catch (error) {
-          console.error('S2S AI error:', error);
+            // Save only the text actually displayed
+            if (displayedText.length > 0 && !stopGeneration) {
 
-          loadingIndicator.remove();
+                conversation.push({
+                    role: 'assistant',
+                    content: displayedText
+                });
 
-          addMessage(
-              'Sorry, something went wrong. Please try again.',
-              'assistant'
-          );
-      }
+                saveConversation();
 
-    chatInput.disabled = false;
-    sendButton.disabled = false;
-    sendButton.textContent = 'Send';
-    chatInput.focus();
+                addMessageActions(
+                    assistantMessage,
+                    displayedText
+                );
+            }
+        }
+
+    } catch (error) {
+
+        loadingIndicator.remove();
+
+        if (error.name !== 'AbortError') {
+
+            console.error('S2S AI error:', error);
+
+            addMessage(
+                'Sorry, something went wrong. Please try again.',
+                'assistant'
+            );
+        }
+
+    } finally {
+
+        isGenerating = false;
+        stopGeneration = false;
+        activeController = null;
+
+        chatInput.disabled = false;
+
+        setStopButton(false);
+
+        chatInput.focus();
+    }
 
 });
 
-});
+
+
