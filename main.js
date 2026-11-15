@@ -70,8 +70,7 @@ if (path.endsWith('.html') || path.endsWith('/index')) {
 
 
 // STREETS TO SHELTERS AI CHATBOT
-document.addEventListener('DOMContentLoaded', () => {
-
+(() => {
     const chatButton = document.createElement('button');
     chatButton.id = 's2s-chat-button';
     chatButton.textContent = 'S2S AI';
@@ -838,7 +837,6 @@ chatForm.addEventListener('submit', async (event) => {
         chatInput.focus();
     }
 
-});
-
+})();
 
 
