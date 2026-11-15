@@ -67,3 +67,31 @@ if (path.endsWith('.html') || path.endsWith('/index')) {
   // Update the address bar silently without reloading
   window.history.replaceState(null, '', cleanPath + window.location.search + window.location.hash);
 }
+
+// STREETS TO SHELTERS AI CHATBOT
+document.addEventListener('DOMContentLoaded', () => {
+
+    // Create chatbot button
+    const chatButton = document.createElement('button');
+    chatButton.id = 's2s-chat-button';
+    chatButton.textContent = 'Ask Streets To Shelters AI';
+
+    chatButton.style.cssText = `
+        position: fixed;
+        bottom: 24px;
+        left: 24px;
+        z-index: 9999;
+        padding: 14px 20px;
+        background: #7BAF9E;
+        color: white;
+        border: none;
+        border-radius: 30px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    `;
+
+    document.body.appendChild(chatButton);
+
+});
