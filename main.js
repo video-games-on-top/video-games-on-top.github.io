@@ -113,6 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
 
 
+
 chatWindow.innerHTML = `
     <div style="
         background: #7BAF9E;
@@ -129,18 +130,34 @@ chatWindow.innerHTML = `
             </div>
         </div>
 
-        <button id="s2s-chat-close"
-            aria-label="Close chat"
-            style="
-                background:none;
-                border:none;
-                color:white;
-                font-size:26px;
-                cursor:pointer;
-            ">
-            ×
-        </button>
+        <div style="display:flex; align-items:center; gap:14px;">
+            <button id="s2s-clear-chat"
+                type="button"
+                style="
+                    background:none;
+                    border:none;
+                    color:white;
+                    font-size:12px;
+                    cursor:pointer;
+                ">
+                Clear chat
+            </button>
+
+            <button id="s2s-chat-close"
+                aria-label="Close chat"
+                style="
+                    background:none;
+                    border:none;
+                    color:white;
+                    font-size:26px;
+                    cursor:pointer;
+                ">
+                ×
+            </button>
+        </div>
     </div>
+`;
+
 
     <div id="s2s-chat-messages" style="
         flex:1;
@@ -256,7 +273,40 @@ function saveConversation() {
 const chatForm = chatWindow.querySelector('#s2s-chat-form');
 const chatInput = chatWindow.querySelector('#s2s-chat-input');
 const chatMessages = chatWindow.querySelector('#s2s-chat-messages');
+const clearChatButton = chatWindow.querySelector('#s2s-clear-chat');
 
+clearChatButton.addEventListener('click', () => {
+    const confirmed = confirm(
+        'Are you sure you want to delete your entire chat history?'
+    );
+
+    if (!confirmed) return;
+
+    // Clear conversation history
+    conversation = [];
+
+    // Delete saved browser history
+    localStorage.removeItem(STORAGE_KEY);
+
+    // Remove visible messages
+    chatMessages.replaceChildren();
+
+    // Show the welcome message again
+    const welcome = document.createElement('div');
+    welcome.textContent = 'Hi! Welcome to Streets To Shelters. How can I help you today?';
+    welcome.style.cssText = `
+        background: #F3F5F4;
+        color: #2B1F1C;
+        padding: 13px 16px;
+        border-radius: 14px;
+        max-width: 85%;
+        align-self: flex-start;
+        font-size: 14px;
+        line-height: 1.6;
+    `;
+
+    chatMessages.appendChild(welcome);
+});
 // DISPLAY A MESSAGE
 
 function addMessage(text, sender) {
