@@ -257,19 +257,44 @@ function addMessage(text, sender) {
 }
 
 // Format bold text and other inline Markdown
-function formatInline(text, element) {
-    const parts = text.split(/(\*\*.*?\*\*)/g);
 
-    parts.forEach(part => {
-        if (part.startsWith('**') && part.endsWith('**')) {
+function formatInline(text, element) {
+    // Match bold text, Markdown links, and ordinary text
+    const pattern = /(\*\*.*?\*\*|\[([^\]]+)\]\((https?:\/\/[^\s)]+)\))/g;
+
+    let lastIndex = 0;
+    let match;
+
+    while ((match = pattern.exec(text)) !== null) {
+        // Add normal text before the match
+        element.appendChild(
+            document.createTextNode(text.slice(lastIndex, match.index))
+        );
+
+        if (match[0].startsWith('**')) {
             const bold = document.createElement('strong');
-            bold.textContent = part.slice(2, -2);
+            bold.textContent = match[0].slice(2, -2);
             element.appendChild(bold);
         } else {
-            element.appendChild(document.createTextNode(part));
+            const link = document.createElement('a');
+            link.textContent = match[2];
+            link.href = match[3];
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            link.style.color = '#477F70';
+            link.style.textDecoration = 'underline';
+            element.appendChild(link);
         }
-    });
+
+        lastIndex = pattern.lastIndex;
+    }
+
+    // Add remaining text
+    element.appendChild(
+        document.createTextNode(text.slice(lastIndex))
+    );
 }
+
 
 // Format paragraphs and bullet points
 function renderMessage(element, text) {
