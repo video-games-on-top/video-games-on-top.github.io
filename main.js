@@ -224,16 +224,27 @@ chatWindow.innerHTML = `
             "
         >
 
-        <button type="submit" style="
+        <button type="submit" id="s2s-send-button" aria-label="Send message" style="
+            width:44px;
+            height:44px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
             background:#7BAF9E;
             color:white;
             border:none;
-            padding:0 18px;
-            border-radius:8px;
-            font-weight:600;
+            border-radius:12px;
             cursor:pointer;
+            transition:background 0.2s, transform 0.2s;
+            flex-shrink:0;
         ">
-            Send
+            <svg width="20" height="20" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round"
+                 stroke-linejoin="round">
+                <path d="M22 2L11 13"/>
+                <path d="M22 2L15 22L11 13L2 9L22 2Z"/>
+            </svg>
         </button>
     </form>
 `;
@@ -524,7 +535,7 @@ function addMessageActions(message, text) {
 
     actions.style.cssText = `
         display: flex;
-        gap: 18px;
+        gap: 10px;
         align-self: flex-start;
         margin: -3px 0 14px 5px;
     `;
