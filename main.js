@@ -223,4 +223,113 @@ chatWindow.innerHTML = `
 
             document.body.style.paddingRight = '0';
         });
+
+// CONVERSATION HISTORY
+const conversation = [];
+
+// CHAT ELEMENTS
+const chatForm = chatWindow.querySelector('#s2s-chat-form');
+const chatInput = chatWindow.querySelector('#s2s-chat-input');
+const chatMessages = chatWindow.querySelector('#s2s-chat-messages');
+
+// DISPLAY A MESSAGE
+function addMessage(text, sender) {
+    const message = document.createElement('div');
+
+    message.textContent = text;
+
+    message.style.cssText = `
+        max-width: 85%;
+        padding: 13px 15px;
+        border-radius: 12px;
+        font-size: 14px;
+        line-height: 1.5;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        ${sender === 'user'
+            ? 'background:#7BAF9E; color:white; align-self:flex-end;'
+            : 'background:white; color:#2B1F1C; align-self:flex-start;'}
+    `;
+
+    chatMessages.appendChild(message);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    return message;
+}
+
+// SEND MESSAGE TO CLOUDFLARE
+chatForm.addEventListener('submit', async (event) => {
+
+    // Stop the page from reloading
+    event.preventDefault();
+
+    const userMessage = chatInput.value.trim();
+
+    if (!userMessage) return;
+
+    // Display the visitor's message
+    addMessage(userMessage, 'user');
+
+    // Save it to conversation history
+    conversation.push({
+        role: 'user',
+        content: userMessage
+    });
+
+    chatInput.value = '';
+    chatInput.disabled = true;
+
+    const sendButton = chatForm.querySelector('button');
+    sendButton.disabled = true;
+    sendButton.textContent = '...';
+
+    const loadingMessage = addMessage('S2S AI is thinking...', 'assistant');
+
+    try {
+        const response = await fetch(
+            'https://streets-2-shelters-ai.advik-muddasani.workers.dev/',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    messages: conversation.slice(-10)
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || 'Request failed.');
+        }
+
+        if (!data.reply) {
+            throw new Error('The AI returned an empty response.');
+        }
+
+        // Save the AI response
+        conversation.push({
+            role: 'assistant',
+            content: data.reply
+        });
+
+        // Display the AI response
+        loadingMessage.textContent = data.reply;
+
+    } catch (error) {
+        console.error('S2S AI error:', error);
+
+        loadingMessage.textContent =
+            'Sorry, something went wrong. Please try again.';
+    }
+
+    chatInput.disabled = false;
+    sendButton.disabled = false;
+    sendButton.textContent = 'Send';
+    chatInput.focus();
+
+});
+
 });
