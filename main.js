@@ -74,12 +74,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Create chatbot button
     const chatButton = document.createElement('button');
     chatButton.id = 's2s-chat-button';
-    chatButton.textContent = 'Ask Streets To Shelters AI';
+    chatButton.textContent = 'Ask S2S AI';
 
     chatButton.style.cssText = `
         position: fixed;
         bottom: 24px;
-        left: 24px;
+        right: 24px;
         z-index: 9999;
         padding: 14px 20px;
         background: #7BAF9E;
