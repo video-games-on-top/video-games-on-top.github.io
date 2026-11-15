@@ -112,39 +112,96 @@ document.addEventListener('DOMContentLoaded', () => {
         flex-direction: column;
     `;
 
-    chatWindow.innerHTML = `
-        <div style="
-            background: #7BAF9E;
-            color: white;
-            padding: 14px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        ">
-            <strong style="font-size:18px;">S2S AI</strong>
 
-            <button id="s2s-chat-close"
-                aria-label="Close chat"
-                style="
-                    background: none;
-                    border: none;
-                    color: white;
-                    font-size: 28px;
-                    cursor: pointer;
-                ">
-                ×
-            </button>
+chatWindow.innerHTML = `
+    <div style="
+        background: #7BAF9E;
+        color: white;
+        padding: 14px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    ">
+        <div>
+            <strong style="font-size:18px;">S2S AI</strong>
+            <div style="font-size:11px; opacity:0.85;">
+                Streets To Shelters Assistant
+            </div>
         </div>
 
+        <button id="s2s-chat-close"
+            aria-label="Close chat"
+            style="
+                background:none;
+                border:none;
+                color:white;
+                font-size:26px;
+                cursor:pointer;
+            ">
+            ×
+        </button>
+    </div>
+
+    <div id="s2s-chat-messages" style="
+        flex:1;
+        padding:20px;
+        overflow-y:auto;
+        background:#F9F8F5;
+        display:flex;
+        flex-direction:column;
+        gap:12px;
+    ">
         <div style="
-            flex: 1;
-            padding: 24px;
-            overflow-y: auto;
-            color: #2B1F1C;
+            background:white;
+            padding:13px 15px;
+            border-radius:12px;
+            max-width:85%;
+            color:#2B1F1C;
+            font-size:14px;
+            line-height:1.5;
         ">
             Hi! I'm S2S AI. How can I help you today?
         </div>
-    `;
+    </div>
+
+    <form id="s2s-chat-form" style="
+        display:flex;
+        gap:8px;
+        padding:15px;
+        border-top:1px solid #eeeeee;
+        background:white;
+    ">
+        <input
+            id="s2s-chat-input"
+            type="text"
+            placeholder="Ask S2S AI something..."
+            autocomplete="off"
+            required
+            style="
+                flex:1;
+                min-width:0;
+                padding:12px;
+                border:1px solid #dddddd;
+                border-radius:8px;
+                outline:none;
+                font-size:14px;
+            "
+        >
+
+        <button type="submit" style="
+            background:#7BAF9E;
+            color:white;
+            border:none;
+            padding:0 18px;
+            border-radius:8px;
+            font-weight:600;
+            cursor:pointer;
+        ">
+            Send
+        </button>
+    </form>
+`;
+
 
     document.body.appendChild(chatButton);
     document.body.appendChild(chatWindow);
