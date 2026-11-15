@@ -68,19 +68,20 @@ if (path.endsWith('.html') || path.endsWith('/index')) {
   window.history.replaceState(null, '', cleanPath + window.location.search + window.location.hash);
 }
 
+
 // STREETS TO SHELTERS AI CHATBOT
 document.addEventListener('DOMContentLoaded', () => {
 
     const chatButton = document.createElement('button');
     chatButton.id = 's2s-chat-button';
-    chatButton.textContent = 'Ask S2S AI';
+    chatButton.textContent = 'S2S AI';
 
     chatButton.style.cssText = `
         position: fixed;
         bottom: 24px;
         right: 24px;
         z-index: 9999;
-        padding: 14px 20px;
+        padding: 14px 24px;
         background: #7BAF9E;
         color: white;
         border: none;
@@ -95,30 +96,53 @@ document.addEventListener('DOMContentLoaded', () => {
     chatWindow.id = 's2s-chat-window';
 
     chatWindow.style.cssText = `
-        display: none;
         position: fixed;
-        bottom: 85px;
-        left: 24px;
-        width: 350px;
-        height: 450px;
-        background: white;
-        border-radius: 16px;
-        box-shadow: 0 5px 25px rgba(0,0,0,0.18);
-        z-index: 9999;
-        overflow: hidden;
+        top: 0;
+        right: 0;
+        width: 420px;
+        max-width: 100%;
+        height: 100vh;
+        height: 100dvh;
+        background: #ffffff;
+        z-index: 10000;
+        box-shadow: -5px 0 25px rgba(0,0,0,0.15);
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        display: flex;
+        flex-direction: column;
     `;
 
     chatWindow.innerHTML = `
-        <div style="background:#7BAF9E; color:white; padding:18px;">
-            <strong>Streets To Shelters AI</strong>
+        <div style="
+            background: #7BAF9E;
+            color: white;
+            padding: 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        ">
+            <strong style="font-size:20px;">S2S AI</strong>
+
             <button id="s2s-chat-close"
-                style="float:right; background:none; border:none; color:white; font-size:22px; cursor:pointer;">
+                aria-label="Close chat"
+                style="
+                    background: none;
+                    border: none;
+                    color: white;
+                    font-size: 28px;
+                    cursor: pointer;
+                ">
                 ×
             </button>
         </div>
 
-        <div style="padding:18px;">
-            Hi! I'm the Streets2Shelters AI assistant. How can I help?
+        <div style="
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            color: #2B1F1C;
+        ">
+            Hi! I'm S2S AI. How can I help you today?
         </div>
     `;
 
@@ -126,11 +150,14 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(chatWindow);
 
     chatButton.addEventListener('click', () => {
-        chatWindow.style.display = 'block';
+        chatWindow.style.transform = 'translateX(0)';
+        chatButton.style.display = 'none';
     });
 
-    chatWindow.querySelector('#s2s-chat-close').addEventListener('click', () => {
-        chatWindow.style.display = 'none';
-    });
+    chatWindow.querySelector('#s2s-chat-close')
+        .addEventListener('click', () => {
+            chatWindow.style.transform = 'translateX(100%)';
+            chatButton.style.display = 'block';
+        });
 
 });
