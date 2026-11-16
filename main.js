@@ -647,7 +647,7 @@ const copyIcon = `
     </svg>
 `;
 
-const copyButton = createAction(copyIcon);
+const copyButton = createAction(copyIcon,'');
 
 copyButton.addEventListener('click', async () => {
     try {
@@ -679,7 +679,7 @@ const shareIcon = `
     </svg>
 `;
 
-const shareButton = createAction(shareIcon);
+const shareButton = createAction(shareIcon,'');
 
 shareButton.addEventListener('click', async () => {
     const shareData = {
