@@ -69,7 +69,7 @@ if (path.endsWith('.html') || path.endsWith('/index')) {
 }
 
 
-// STREETS TO SHELTERS AI CHATBOT
+// streets2shelters AI CHATBOT
 (() => {
     const chatButton = document.createElement('button');
     chatButton.id = 's2s-chat-button';
@@ -125,7 +125,7 @@ chatWindow.innerHTML = `
         <div>
             <strong style="font-size:18px;">S2S AI</strong>
             <div style="font-size:11px; opacity:0.85;">
-                Streets To Shelters Assistant
+                streets2shelters Assistant
             </div>
         </div>
 
@@ -329,7 +329,7 @@ clearChatButton.addEventListener('click', () => {
 
     // Show the welcome message again
     const welcome = document.createElement('div');
-    welcome.textContent = 'Hi! Welcome to Streets To Shelters. How can I help you today?';
+    welcome.textContent = 'Hi! Welcome to streets2shelters. How can I help you today?';
     welcome.style.cssText = `
         background: #F3F5F4;
         color: #2B1F1C;
@@ -683,7 +683,7 @@ const shareButton = createAction(shareIcon);
 
 shareButton.addEventListener('click', async () => {
     const shareData = {
-        title: 'Streets To Shelters AI',
+        title: 'streets2shelters AI',
         text: text,
         url: window.location.origin
     };
